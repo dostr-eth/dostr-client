@@ -23,11 +23,11 @@ import BaseButtonLoadMore from 'components/BaseButtonLoadMore.vue'
 
 const metaData = {
   // sets document title
-  title: 'astral - notifications',
+  title: 'Dostr - notifications',
 
   // meta tags
   meta: {
-    description: { name: 'description', content: 'Nostr notifications on astral' },
+    description: { name: 'description', content: 'Nostr notifications on Dostr' },
     keywords: { name: 'keywords', content: 'nostr decentralized social media' },
     equiv: { 'http-equiv': 'Content-Type', content: 'text/html; charset=UTF-8' },
   },

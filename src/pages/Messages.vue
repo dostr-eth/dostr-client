@@ -94,7 +94,7 @@ import { createMetaMixin } from 'quasar'
 
 const metaData = {
   // sets document title
-  title: 'astral - messages',
+  title: 'Dostr - messages',
 
   // meta tags
   meta: {

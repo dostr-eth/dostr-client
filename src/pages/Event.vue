@@ -46,7 +46,7 @@ import BaseButtonShowMore from 'components/BaseButtonShowMore'
 
 const metaData = {
   // sets document title
-  title: 'astral - thread',
+  title: 'Dostr - thread',
 
   // meta tags
   meta: {

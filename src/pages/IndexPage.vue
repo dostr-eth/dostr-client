@@ -1,8 +1,8 @@
 <template>
   <q-page class="flex column justify-center items-center">
     <img
-      alt="astral logo"
-      src="~assets/astral-logo.svg"
+      alt="dostr logo"
+      src="~assets/dostr-logo.svg"
       style="width: 200px; height: 200px;"
     >
     <TheKeyInitializationDialog v-if='!$store.state.keys.pub' />
@@ -23,7 +23,7 @@ export default defineComponent({
 
 <style lang='css' scoped>
 /*.q-page {
-  background-image: url("~assets/astral-logo.svg");
+  background-image: url("~assets/dostr-logo.svg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;

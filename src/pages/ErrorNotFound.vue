@@ -31,8 +31,8 @@
       </div>
     </div>
     <img
-      alt="astral logo"
-      src="~assets/astral-logo.svg"
+      alt="dostr logo"
+      src="~assets/dostr-logo.svg"
       style="width: 200px; height: 200px"
     >
   </q-page>
@@ -44,7 +44,7 @@ import { createMetaMixin } from 'quasar'
 
 const metaData = {
   // sets document title
-  title: 'astral - 404 page not found',
+  title: 'Dostr - 404 page not found',
 }
 
 export default defineComponent({

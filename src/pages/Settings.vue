@@ -231,11 +231,11 @@ import { utils } from 'lnurl-pay'
 
 const metaData = {
   // sets document title
-  title: 'astral - settings',
+  title: 'Dostr - settings',
 
   // meta tags
   meta: {
-    description: { name: 'description', content: 'Nostr and astral user configuration' },
+    description: { name: 'description', content: 'Nostr and Dostr user configuration' },
     keywords: { name: 'keywords', content: 'nostr decentralized social media' },
     equiv: { 'http-equiv': 'Content-Type', content: 'text/html; charset=UTF-8' },
   },

@@ -1,6 +1,6 @@
 <template>
   <q-layout>
-    <link v-if='!updatingFont' id='font-link' rel="stylesheet" :href="`https://fonts.googleapis.com/css2?family=${googleFontsName}`"/>
+    <link v-if='!updatingFont' id='font-link' rel="stylesheet" :href="`https://fonts.googleapis.com/css2?family=${googleFontsName}&display-swap`"/>
     <link id='emoji-font-link' rel="stylesheet" :href="`https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display-swap`"/>
     <q-dialog v-if='!$store.state.keys.pub' v-model='initializeKeys' persistent>
     <TheKeyInitializationDialog style='max-height: 85vh' @look-around='setLookingAroundMode'/>
@@ -178,7 +178,7 @@ export default defineComponent({
       hasLaunched: false,
       postEntryOpen: false,
       replyEvent: null,
-      googleFontsName: '',
+      googleFontsName: 'Open Sans',
       updatingFont: true,
       lookingAround: false,
     }
@@ -415,7 +415,7 @@ body {
   display: block;
   height: 100vh;
   overflow: auto;
-  font-family: var(--q-font), "Helvetica Neue", Helvetica, Arial, 'Noto Color Emoji', sans-serif;
+  font-family: "Titillium Web", "Helvetica Neue", Helvetica, Arial, 'Noto Color Emoji', sans-serif;
 }
 #layout-container {
   display: flex;
@@ -424,7 +424,7 @@ body {
   position: relative;
   flex-wrap: nowrap;
   background: var(--q-background);
-  font-family: var(--q-font), "Helvetica Neue", Helvetica, Arial, 'Noto Color Emoji', sans-serif;
+  font-family: "Titillium Web", "Helvetica Neue", Helvetica, Arial, 'Noto Color Emoji', sans-serif;
 }
 #left-drawer, #right-drawer {
   display: none;
