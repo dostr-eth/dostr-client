@@ -3,166 +3,188 @@
   <!-- <div v-if="showKeyInitialization"> -->
     <q-card class='relative-position full-width'>
       <q-btn icon='close' size='md' flat round class='absolute-top-right z-top' @click='$emit("look-around")'/>
-      <h1 class="text-h6 q-pr-md">welcome to astral</h1>
+      <h1 class="text-h6 q-pr-md">👋 Welcome to Dostr - Ethereum-flavoured Nostr</h1>
       <q-expansion-item
-        dense
-        expand-icon='help'
+        expand-icon='expand_more'
         expanded-icon='expand_less'
-        class="intro no-padding full-width items-center"
+        class="intro no-padding full-width items-center q-mb-md"
         header-class='items-center'
       >
         <template #header>
-          <span class='full-width'>click here to learn about Nostr, your keys, and how to use astral</span>
+          <span class='full-width'>🔑 Dostr uses Ethereum signatures to generate your Nostr keys. Click here to learn about Dostr</span>
         </template>
         <BaseInformation/>
-        <span style='padding: .2rem 0 0 .2rem;'>note: after login this same information can be found in
-        the <strong>faq</strong> section at the bottom of the settings page</span>
+        <span style='padding: .2rem 0 0 .2rem;'>ℹ️ This same information can be found in
+        the <strong>FAQ</strong> section at the bottom of the Settings page after Login</span>
       </q-expansion-item>
-      <h2 class="text-subtitle2 q-pr-md">enter your key</h2>
-      <q-form @submit="proceed">
-        <q-card-section class="key-entry no-padding">
-          <q-btn-group spread unelevated>
-            <q-btn
-              size="sm"
-              color="primary"
-              label="public key"
-              :outline="!watchOnly"
-              :text-color="!watchOnly ? '' : 'dark'"
-              value="true"
-              @click="watchOnly = true"
-              :disable='isBech32Sec'
-            />
-            <q-btn
-              size="sm"
-              color="primary"
-              label="private key"
-              :outline="watchOnly"
-              :text-color="watchOnly ? '' : 'dark'"
-              value="false"
-              @click="watchOnly = false"
-              :disable='isBech32Pub'
-            />
-          </q-btn-group>
-          <q-input
-            v-model="key"
-            ref="keyInput"
-            bottom-slots
-            outlined
-            :label="watchOnly ? 'enter public key' : 'enter private key'"
-            dense
-          >
-            <template #hint>
-              <p v-if="!key && watchOnly">
-                entering public key means you will need to enter private key
-                each time you post content (either manually or by Nostr browser
-                extension)
-              </p>
-              <p v-if="!key && !watchOnly">
-                entering private key means astral will automatically sign with
-                your private key each time you post content
-              </p>
-              <p v-if="key && !isKeyValid">not a valid key</p>
-              <p v-if="isKeyValid">key is valid</p>
-            </template>
-            <template #append>
-              <q-btn
-                v-if="!isKeyValid"
-                size="sm"
-                color="primary"
-                outline
-                @click="generate"
-              >
-                generate keys
-              </q-btn>
-              <q-btn
-                v-if="hasExtension && !isKeyValid"
-                size="sm"
-                color="primary"
-                outline
-                @click="getFromExtension"
-              >
-                use public key from extension
-              </q-btn>
-              <q-btn
-                type="submit"
-                unelevated
-                size="sm"
-                color="positive"
-                :label="isKeyValid ? 'proceed' : ''"
-                icon-right="login"
-                style='color: var(--q-background) !important;'
-                @click="proceed"
-                :disabled="!isKeyValid"
-              ></q-btn>
-            </template>
-          </q-input>
-        </q-card-section>
-      <!-- <div v-if='isBech32Key(key)'>
-      {{ hexKey }}
-      </div> -->
-      </q-form>
+      <div style="margin-left: 32%; width: 100%;" class="q-mb-md">
+        <q-btn
+          size="md"
+          color="primary"
+          label="Sign In With Ethereum"
+          :outline="watchOnly"
+          :text-color="watchOnly ? '' : 'dark'"
+          value="false"
+        />
+      </div>
+      <div style="margin-left: 47%; width: 100%;">
+        <h2 class="text-subtitle2 q-pr-md">OR</h2>
+      </div>
       <q-expansion-item
-        v-if='isKeyValid'
-        dense
-        dense-toggle
-        default-opened
-        id='bootstrap-relays'
+        expand-icon='expand_more'
+        expanded-icon='expand_less'
+        class="no-padding items-center q-mb-md"
+        header-class='items-center'
       >
         <template #header>
-          <div class='full-width flex row no-wrap items-center'>
-            <h2 class="text-subtitle2 q-pr-md">enter bootstrap relays (optional)</h2>
-            <q-icon name='info'>
-              <q-tooltip>
-              the selected relays below will be queried to load your user profile, follows, and relay data from Nostr network.
-              please ensure the list of selected relays includes relays you publish your Nostr data to, otherwise astral may
-              not be able to find your data.
-              </q-tooltip>
-            </q-icon>
-          </div>
+          <h2 class="text-subtitle1 q-pr-md">🔐 Enter your custom Nostr key</h2>
         </template>
-        <div class='flex row justify-between no-wrap items-end' >
-          <span>selected relays</span>
-          <div class='flex row items-end' id='new-relay-input'>
-            <q-input v-model='newRelay' placeholder='add a relay...' input-style='padding: 0; width: 10rem;' @keypress.enter='addNewRelay' dense borderless/>
-            <q-btn icon='add' color='positive' size='sm' flat dense @click.stop='addNewRelay'/>
-          </div>
-        </div>
-        <BaseSelectMultiple>
-          <template #selected>
-            <pre class='relay-list' style='border: 1px solid var(--q-primary);'>
-              <li
-                v-for='(relay, index) in Object.keys(selectedRelays)'
-                :key='index + "-" + relay'
-                class='relay-item'
-                @click.stop='delete selectedRelays[relay]'
-              >
-                <div class='flex row justify-between no-wrap'>
-                  <span style='overflow: auto;'>{{relay}}</span>
-                  <q-icon name='remove' size='xs' color='negative'/>
-                </div>
-              </li>
-            </pre>
-          </template>
-          <template #options>
-            <div style='max-height: 6.75rem;'>
-            <pre class='relay-list' >
-              <li
-                v-for='(relay, index) in optionalRelays'
-                :key='index + "-" + relay'
-                class='relay-item'
-                @click.stop='selectedRelays[relay]={read: true, write:false}'
-              >
-                <div class='flex row justify-between no-wrap'>
-                  <span style='overflow: auto;'>{{relay}}</span>
-                  <q-icon name='add' size='xs' color='positive' flat/>
-                </div>
-              </li>
-            </pre>
+        <q-form @submit="proceed">
+          <q-card-section class="key-entry no-padding">
+            <q-btn-group spread unelevated>
+              <q-btn
+                size="md"
+                color="primary"
+                label="public key"
+                :outline="!watchOnly"
+                :text-color="!watchOnly ? '' : 'dark'"
+                value="true"
+                @click="watchOnly = true"
+                :disable='isBech32Sec'
+              />
+              <q-btn
+                size="md"
+                color="primary"
+                label="private key"
+                :outline="watchOnly"
+                :text-color="watchOnly ? '' : 'dark'"
+                value="false"
+                @click="watchOnly = false"
+                :disable='isBech32Pub'
+              />
+            </q-btn-group>
+            <q-input
+              v-model="key"
+              ref="keyInput"
+              bottom-slots
+              outlined
+              :label="watchOnly ? 'enter public key' : 'enter private key'"
+              dense
+            >
+              <template #hint >
+                <p v-if="!key && watchOnly">
+                  ℹ️ entering public key means you will need to enter private key
+                  each time you post content either manually or by Nostr browser
+                  extension
+                </p>
+                <p v-if="!key && !watchOnly">
+                  ❗ entering private key means Dostr will automatically sign with
+                  your private key each time you post content
+                </p>
+                <p v-if="key && !isKeyValid">INVALID KEY ❌</p>
+                <p v-if="isKeyValid">VALID KEY ✅</p>
+              </template>
+              <template #append>
+                <q-btn
+                  v-if="!isKeyValid"
+                  size="sm"
+                  color="primary"
+                  outline
+                  @click="generate"
+                >
+                  generate keys
+                </q-btn>
+                <q-btn
+                  v-if="hasExtension && !isKeyValid"
+                  size="sm"
+                  color="primary"
+                  outline
+                  @click="getFromExtension"
+                >
+                  use public key from Nostr extension
+                </q-btn>
+                <q-btn
+                  type="submit"
+                  unelevated
+                  size="sm"
+                  color="positive"
+                  :label="isKeyValid ? 'proceed' : ''"
+                  icon-right="login"
+                  style='color: var(--q-background) !important;'
+                  @click="proceed"
+                  :disabled="!isKeyValid"
+                ></q-btn>
+              </template>
+            </q-input>
+          </q-card-section>
+        <!-- <div v-if='isBech32Key(key)'>
+        {{ hexKey }}
+        </div> -->
+        </q-form>
+        <q-expansion-item
+          v-if='isKeyValid'
+          class="q-mt-sm"
+          dense
+          dense-toggle
+          default-opened
+          id='bootstrap-relays'
+        >
+          <template #header>
+            <div class='full-width flex row no-wrap items-center'>
+              <h2 class="text-subtitle2 q-pr-sm">Enter Bootstrap Relays (optional)</h2>
+              <q-icon name='ℹ️'>
+                <q-tooltip>
+                  • The selected relays below will be queried to load your user profile, follows, and relay data from Nostr network.<br/>
+                  • Please ensure the list of selected relays includes relays you publish your Nostr data to, otherwise Dostr may
+                not be able to find your data.
+                </q-tooltip>
+              </q-icon>
             </div>
           </template>
-        </BaseSelectMultiple>
+          <div class='flex row justify-between no-wrap items-end q-mb-sm' >
+            <span class="q-ml-sm">↓ Selected relays</span>
+            <div class='flex row items-end' id='new-relay-input'>
+              <q-input v-model='newRelay' placeholder='add a new relay...' input-style='padding: 1; width: 10rem;' @keypress.enter='addNewRelay' dense borderless/>
+              <q-btn icon='add' color='positive' size='sm' flat dense @click.stop='addNewRelay'/>
+            </div>
+          </div>
+          <BaseSelectMultiple>
+            <template #selected>
+              <pre class='relay-list' style='border: 1px solid var(--q-primary);'>
+                <li
+                  v-for='(relay, index) in Object.keys(selectedRelays)'
+                  :key='index + "-" + relay'
+                  class='relay-item'
+                  @click.stop='delete selectedRelays[relay]'
+                >
+                  <div class='flex row justify-between no-wrap'>
+                    <span style='overflow: auto;'>{{relay}}</span>
+                    <q-icon name='remove' size='xs' color='negative'/>
+                  </div>
+                </li>
+              </pre>
+            </template>
+            <template #options>
+              <div style='max-height: 6.75rem;'>
+              <pre class='relay-list' >
+                <li
+                  v-for='(relay, index) in optionalRelays'
+                  :key='index + "-" + relay'
+                  class='relay-item'
+                  @click.stop='selectedRelays[relay]={read: true, write:false}'
+                >
+                  <div class='flex row justify-between no-wrap'>
+                    <span style='overflow: auto;'>{{relay}}</span>
+                    <q-icon name='add' size='xs' color='positive' flat/>
+                  </div>
+                </li>
+              </pre>
+              </div>
+            </template>
+          </BaseSelectMultiple>
+        </q-expansion-item>
+        <div style='min-height: 1rem;'/>
       </q-expansion-item>
-      <div style='min-height: 1rem;'/>
     </q-card>
   <!-- </div> -->
   <!-- </q-dialog> -->
@@ -341,12 +363,14 @@ export default defineComponent({
   column-gap: .5rem;
   width: 100%;
   min-height: 1px;
+  font-family: 'SF Mono';
   font-size: .8rem;
   white-space: nowrap;
-  padding: 0 .5rem;
-  border-radius: .5rem;
+  padding: 2px .5rem;
+  border-radius: 2px;
   overflow-y: auto;
   overflow-x: hidden;
+  border-color: green;
 }
 .relay-item {
   overflow: auto;

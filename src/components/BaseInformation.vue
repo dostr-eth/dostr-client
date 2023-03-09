@@ -8,22 +8,22 @@
       header-class='items-center'
     >
       <template #header>
-        <span class='full-width text-bold'>learn about Nostr</span>
+        <span class='full-width text-bold'>Learn about Dostr</span>
       </template>
       <q-card-section>
         <p>
-        the <a href='https://github.com/fiatjaf/nostr' target='_blank' rel='noopener noreferrer'>Nostr</a> protocol is
-        a decentralized and censorship resistant distributed information network that relies on clients and relays.
-        relays store user data. clients communicate with the relays to save and fetch said user data.
+        The <a href='https://github.com/dostr-eth' target='_blank' rel='noopener noreferrer'>Dostr</a> protocol is an Ethereum-flavoured
+        Nostr client. To understand Dostr, one must know Nostr. Nostr is a decentralized and censorship resistant distributed information network that relies on clients and relays.
+        Relays store user data and clients communicate with the relays to save and fetch said user data.
         </p>
         <ul>
-          <li>users choose which relays to store their data on, meaning no one centralized entity has the power
-          to remove your data from the network (so it is recommended to use multiple relays)</li>
-          <li>users choose which clients to use, meaning no one centralized website can stop you from accessing the network</li>
-          <li>any client can be used with any relay, meaning users can choose their relays and client independently</li>
+          <li>Users choose which relays to store their data on, meaning no one centralized entity has the power
+          to remove your data from the network. Thus, it is recommended to use multiple relays.</li>
+          <li>Users choose which clients to use, meaning no one centralized website can stop you from accessing the network.</li>
+          <li>Any client can be used with any relay, meaning users can choose their relays and client independently.</li>
         </ul>
         <p>
-        astral is a client for Nostr. while astral is implementing a social media usecase of Nostr, the possibilities of Nostr are endless.
+        Dostr is a client for Nostr. while astral is implementing a social media usecase of Nostr, the possibilities of Nostr are endless.
         <a href='https://jesterui.github.io/#/game/jester1y7du0yq7uzfzhxr2xgd64lmchfpf54evjsa59ff4f2mgh83h79rs9k7ffq' target='_blank' rel='noopener noreferrer'>Jester</a>
         is a beta peer to peer chess client implemented over Nostr.
         </p>

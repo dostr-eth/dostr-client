@@ -423,7 +423,9 @@ body {
   width: 100%;
   position: relative;
   flex-wrap: nowrap;
-  background: var(--q-background);
+  background-image: url('/background.png');
+  background-repeat: no-repeat;
+  background-size: cover;
   font-family: "Titillium Web", "Helvetica Neue", Helvetica, Arial, 'Noto Color Emoji', sans-serif;
 }
 #left-drawer, #right-drawer {
