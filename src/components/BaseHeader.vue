@@ -14,7 +14,7 @@ export default defineComponent({
   props: {
     separator: {
       type: Boolean,
-      default: true
+      default: true,
     },
     // reachedEnd: {
     //   type: Boolean,
@@ -27,4 +27,3 @@ export default defineComponent({
   },
 })
 </script>
-

@@ -1,84 +1,94 @@
 <template>
-  <q-page class='flex column no-wrap' >
-    <div id='header-placeholder' />
-    <div id='header' ref='header'>
-      <div class='flex row justify-evenly no-wrap full-width q-pt-sm q-px-sm'>
+  <q-page class="flex column no-wrap">
+    <div id="header-placeholder" />
+    <div id="header" ref="header">
+      <div class="flex row justify-evenly no-wrap full-width q-pt-sm q-px-sm">
         <BaseUserCard
-          v-if='hexPubkey'
-          :pubkey='hexPubkey'
-          :action-buttons='false'
-          style='width: 50%;'
+          v-if="hexPubkey"
+          :pubkey="hexPubkey"
+          :action-buttons="false"
+          style="width: 50%"
         />
         <BaseUserCard
-          v-if='$store.state.keys.pub'
-          :pubkey='$store.state.keys.pub'
-          :action-buttons='false'
-          :align-right='true'
-          style='width: 50%; self-justify: end;'
+          v-if="$store.state.keys.pub"
+          :pubkey="$store.state.keys.pub"
+          :action-buttons="false"
+          :align-right="true"
+          style="width: 50%; self-justify: end"
         />
       </div>
       <!-- <q-separator color='accent' size='1px' spaced/> -->
-      <div class='relative-position'>
-        <div class='absolute-top flex justify-center'>
+      <div class="relative-position">
+        <div class="absolute-top flex justify-center">
           <span
-              class='text-accent z-top q-px-sm'
-              style=''
-              id='current-datestamp'
-            >
-              {{ currentDatestamp }}
-            </span>
-          </div>
+            class="text-accent z-top q-px-sm"
+            style=""
+            id="current-datestamp"
+          >
+            {{ currentDatestamp }}
+          </span>
+        </div>
       </div>
     </div>
-    <div ref='messageScroll' id='message-scroll' @scroll='updateCurrentDatestamp' @touchmove='updateCurrentDatestamp' @touchend='delayedUpdateCurrentDatestamp'>
-      <q-infinite-scroll @load="loadMore" reverse ref='messagesScroll'>
+    <div
+      ref="messageScroll"
+      id="message-scroll"
+      @scroll="updateCurrentDatestamp"
+      @touchmove="updateCurrentDatestamp"
+      @touchend="delayedUpdateCurrentDatestamp"
+    >
+      <q-infinite-scroll @load="loadMore" reverse ref="messagesScroll">
         <div
           v-for="(event, index) in messagesGrouped"
           :key="event.id + '_' + event.taggedEvents?.length"
-          class='flex column items-self'
+          class="flex column items-self"
         >
           <div
-            v-if='index === 0 || dateUTC(messagesGrouped[index].created_at) !== dateUTC(messagesGrouped[index - 1].created_at)'
-            class='self-center text-accent datestamp'
-            :class='index === 0 ? "q-pb-sm" : "q-py-sm"'
+            v-if="
+              index === 0 ||
+              dateUTC(messagesGrouped[index].created_at) !==
+                dateUTC(messagesGrouped[index - 1].created_at)
+            "
+            class="self-center text-accent datestamp"
+            :class="index === 0 ? 'q-pb-sm' : 'q-py-sm'"
           >
-            {{dateUTC(event.created_at)}}
+            {{ dateUTC(event.created_at) }}
           </div>
           <BaseMessage
             :id="event.id"
             :event="event"
-            v-scroll-fire='markAsRead'
-            @mounted='scrollToBottom'
-            @reply='reply'
+            v-scroll-fire="markAsRead"
+            @mounted="scrollToBottom"
+            @reply="reply"
           />
         </div>
         <template #loading>
-          <div v-if='canLoadMore' class='row justify-center q-my-md'>
-            <q-spinner-orbit color="accent" size='md'/>
+          <div v-if="canLoadMore" class="row justify-center q-my-md">
+            <q-spinner-orbit color="accent" size="md" />
           </div>
         </template>
-        <div style='height: .5rem;' />
+        <div style="height: 0.5rem" />
       </q-infinite-scroll>
     </div>
-    <div class='full-width relative-position q-pt-xs'>
+    <div class="full-width relative-position q-pt-xs">
       <q-btn
-        v-if='unreadMessagesSet.size'
+        v-if="unreadMessagesSet.size"
         :label="unreadMessagesSet.size + ' unread'"
         icon-right="mail_lock"
         color="secondary"
-        class='q-ma-sm unread-messages-button'
+        class="q-ma-sm unread-messages-button"
         outline
-        size='sm'
-        @click.stop='scrollToBottom()'
+        size="sm"
+        @click.stop="scrollToBottom()"
       />
-      <div class='gt-xs'>
-        <q-separator color='accent' size='1px' />
+      <div class="gt-xs">
+        <q-separator color="accent" size="1px" />
         <BasePostEntry
-          :message-mode='messageMode'
-          :event='replyEvent'
-          @clear-event='replyEvent=null'
-          @sent='addSentMessage'
-          class='q-px-md q-pt-sm'
+          :message-mode="messageMode"
+          :event="replyEvent"
+          @clear-event="replyEvent = null"
+          @sent="addSentMessage"
+          class="q-px-md q-pt-sm"
         />
       </div>
     </div>
@@ -87,7 +97,13 @@
 
 <script>
 import helpersMixin from '../utils/mixin'
-import { dbProfile, streamProfile, dbMessages, streamPeerIncomingMessages, streamPeerOutgoingMessages } from '../query'
+import {
+  dbProfile,
+  streamProfile,
+  dbMessages,
+  streamPeerIncomingMessages,
+  streamPeerOutgoingMessages,
+} from '../query'
 import BaseMessage from 'components/BaseMessage.vue'
 import { useQuasar } from 'quasar'
 import { createMetaMixin } from 'quasar'
@@ -98,12 +114,17 @@ const metaData = {
 
   // meta tags
   meta: {
-    description: { name: 'description', content: `Nostr messages with ${window.location.pathname.split('/')[2]}` },
+    description: {
+      name: 'description',
+      content: `Nostr messages with ${window.location.pathname.split('/')[2]}`,
+    },
     keywords: { name: 'keywords', content: 'nostr decentralized social media' },
-    equiv: { 'http-equiv': 'Content-Type', content: 'text/html; charset=UTF-8' },
+    equiv: {
+      'http-equiv': 'Content-Type',
+      content: 'text/html; charset=UTF-8',
+    },
   },
 }
-
 
 export default {
   name: 'Messages',
@@ -113,7 +134,7 @@ export default {
     BaseMessage,
   },
 
-  setup () {
+  setup() {
     const $q = useQuasar()
     return $q
   },
@@ -141,28 +162,28 @@ export default {
       } else return null
     },
     hexPubkey() {
-      if (this.$route.params.pubkey) return this.bech32ToHex(this.$route.params.pubkey)
+      if (this.$route.params.pubkey)
+        return this.bech32ToHex(this.$route.params.pubkey)
       return ''
     },
     messagesGrouped() {
-      let grouped = this.messages
-        .reduce((acc, ev) => {
-          let event = Object.assign({}, ev)
-          if (!acc.length) return [event]
-          let last = acc[acc.length - 1]
-          if (
-            last.pubkey === event.pubkey &&
-            last.created_at + 120 >= event.created_at
-          ) {
-            last.appended = last.appended || []
-            last.appended.push(event)
-          } else {
-            acc.push(event)
-          }
-          return acc
-        }, [])
+      let grouped = this.messages.reduce((acc, ev) => {
+        let event = Object.assign({}, ev)
+        if (!acc.length) return [event]
+        let last = acc[acc.length - 1]
+        if (
+          last.pubkey === event.pubkey &&
+          last.created_at + 120 >= event.created_at
+        ) {
+          last.appended = last.appended || []
+          last.appended.push(event)
+        } else {
+          acc.push(event)
+        }
+        return acc
+      }, [])
       return grouped
-    }
+    },
   },
 
   async mounted() {
@@ -183,28 +204,51 @@ export default {
         await this.mutex
       }
 
-      this.mutex = new Promise(resolve => {
+      this.mutex = new Promise((resolve) => {
         this.unlock = resolve
       })
     },
 
     async start() {
       // load peer profile if it exists
-      let relays = Object.keys(this.$store.state.relays).length ? Object.keys(this.$store.state.relays) : Object.keys(this.$store.state.defaultRelays)
+      let relays = Object.keys(this.$store.state.relays).length
+        ? Object.keys(this.$store.state.relays)
+        : Object.keys(this.$store.state.defaultRelays)
       let profile = await dbProfile(this.hexPubkey)
-      if (profile) this.$store.dispatch('handleAddingProfileEventToCache', profile)
-      this.sub.streamProfile = await streamProfile({ authors: [this.hexPubkey], relays}, async events => {
-        for (let event of events) this.$store.dispatch('handleAddingProfileEventToCache', event)
-      })
+      if (profile)
+        this.$store.dispatch('handleAddingProfileEventToCache', profile)
+      this.sub.streamProfile = await streamProfile(
+        { authors: [this.hexPubkey], relays },
+        async (events) => {
+          for (let event of events)
+            this.$store.dispatch('handleAddingProfileEventToCache', event)
+        }
+      )
 
       this.sub.streamPeerIncomingMessages = await streamPeerIncomingMessages(
-        { authors: [this.$store.state.keys.pub], peers: [this.hexPubkey], relays, limit: 1000 },
+        {
+          authors: [this.$store.state.keys.pub],
+          peers: [this.hexPubkey],
+          relays,
+          limit: 1000,
+        },
         null,
-        () => { this.loadMore() })
+        () => {
+          this.loadMore()
+        }
+      )
       this.sub.streamPeerOutgoingMessages = await streamPeerOutgoingMessages(
-        { authors: [this.$store.state.keys.pub], peers: [this.hexPubkey], relays, limit: 1000 },
+        {
+          authors: [this.$store.state.keys.pub],
+          peers: [this.hexPubkey],
+          relays,
+          limit: 1000,
+        },
         null,
-        () => { this.loadMore() })
+        () => {
+          this.loadMore()
+        }
+      )
 
       // // listen for new messages
       // this.sub.listenMessages = await listenMessages(async event => {
@@ -221,12 +265,14 @@ export default {
       this.$store.commit('haveReadMessage', this.hexPubkey)
     },
 
-
     async scrollToBottom() {
-      return new Promise(resolve =>
+      return new Promise((resolve) =>
         setTimeout(() => {
-          this.$refs.messageScroll.scrollTop = this.$refs.messageScroll.scrollHeight
-          this.$emit('scroll-to-rect', { top: this.$refs.messageScroll.scrollHeight })
+          this.$refs.messageScroll.scrollTop =
+            this.$refs.messageScroll.scrollHeight
+          this.$emit('scroll-to-rect', {
+            top: this.$refs.messageScroll.scrollHeight,
+          })
           this.$store.commit('haveReadMessage', this.hexPubkey)
           this.unreadMessagesSet.clear()
           resolve()
@@ -312,8 +358,13 @@ export default {
 
     async addMessage(ev) {
       let messageScroll = this.$refs.messageScroll
-      let scrollToBottom = 100 > Math.abs((messageScroll.scrollHeight - messageScroll.clientHeight) - messageScroll.scrollTop) ||
-        messageScroll.scrollHeight === messageScroll.clientHeight
+      let scrollToBottom =
+        100 >
+          Math.abs(
+            messageScroll.scrollHeight -
+              messageScroll.clientHeight -
+              messageScroll.scrollTop
+          ) || messageScroll.scrollHeight === messageScroll.clientHeight
       let events = await this.processMessages([ev])
       if (!events.length) return
       let event = events[0]
@@ -323,7 +374,7 @@ export default {
         this.$store.commit('haveReadMessage', this.hexPubkey)
         this.scrollToBottom()
       } else if (event.pubkey === this.hexPubkey) {
-          this.unreadMessagesSet.add(event.id)
+        this.unreadMessagesSet.add(event.id)
       }
     },
 
@@ -334,14 +385,16 @@ export default {
 
     resizeHeaderPlaceholder() {
       setTimeout(() => {
-        document.querySelector('#header-placeholder').style.minHeight = `${document.querySelector('#header').clientHeight}px`
+        document.querySelector('#header-placeholder').style.minHeight = `${
+          document.querySelector('#header').clientHeight
+        }px`
       }, 1000)
     },
-  }
+  },
 }
 </script>
 
-<style lang='css' scoped>
+<style lang="css" scoped>
 #header {
   position: fixed;
   top: 0;
@@ -351,24 +404,23 @@ export default {
   background: var(--q-background);
 }
 #current-datestamp {
-  border-bottom-right-radius: .25rem;
-  border-bottom-left-radius: .25rem;
+  border-bottom-right-radius: 0.25rem;
+  border-bottom-left-radius: 0.25rem;
   background: var(--q-background);
 }
-.unread-messages-button{
+.unread-messages-button {
   position: absolute;
   top: -2.5rem;
-  left: .3rem;
+  left: 0.3rem;
   background: var(--q-background) !important;
 }
-  #message-scroll {
-    padding: 0 .3rem;
-  }
+#message-scroll {
+  padding: 0 0.3rem;
+}
 @media screen and (min-width: 600px) {
   .q-page {
     height: inherit;
     overflow: hidden;
-
   }
   #header-placeholder {
     display: none;
@@ -384,7 +436,7 @@ export default {
   #message-scroll {
     overflow: auto;
     height: 100%;
-    padding: 0 .3rem;
+    padding: 0 0.3rem;
   }
 }
 </style>

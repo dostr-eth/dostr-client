@@ -23,10 +23,7 @@ module.exports = configure(function (ctx) {
     // app boot file (/src/boot)
     // --> boot files are part of 'main.js'
     // https://v2.quasar.dev/quasar-cli-webpack/boot-files
-    boot: [
-      'global-components',
-      'i18n'
-    ],
+    boot: ['global-components', 'i18n'],
 
     // https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-css
     css: ['app.css'],
@@ -79,7 +76,7 @@ module.exports = configure(function (ctx) {
       extendWebpack(cfg) {
         cfg.plugins.push(
           new webpack.ProvidePlugin({
-            Buffer: ['buffer', 'Buffer']
+            Buffer: ['buffer', 'Buffer'],
           })
         )
         cfg.resolve.alias = cfg.resolve.alias || {}
@@ -110,7 +107,7 @@ module.exports = configure(function (ctx) {
       // },
       // proxy: {
       //   '/api': {
-      //     target: 'https://astral.ninja',
+      //     target: 'https://dostr.ninja',
       //     secure: false,
       //   }
       // }
@@ -122,7 +119,7 @@ module.exports = configure(function (ctx) {
         dark: true,
         notify: {
           closeBtn: true,
-        }
+        },
       },
 
       // iconSet: 'material-icons', // Quasar icon set
@@ -137,7 +134,6 @@ module.exports = configure(function (ctx) {
 
       // Quasar plugins
       plugins: ['Notify', 'Dialog', 'Meta'],
-
     },
 
     // animations: 'all', // --- includes all animations
@@ -184,9 +180,9 @@ module.exports = configure(function (ctx) {
       },
 
       manifest: {
-        name: `astral`,
-        short_name: `astral`,
-        description: `decentralized social platform (nostr client)`,
+        name: `dostr`,
+        short_name: `dostr`,
+        description: `ethereum-flavoured nostr client`,
         display: 'standalone',
         orientation: 'portrait',
         background_color: '#1f1f1f',

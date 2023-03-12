@@ -1,20 +1,18 @@
-      <!-- :disable="!$store.getters.canEncryptDecrypt" -->
+<!-- :disable="!$store.getters.canEncryptDecrypt" -->
 <template>
-    <q-btn
-      icon="mail_lock"
-      unelevated
-      clickable
-      :class='buttonClass'
-      :size='buttonSize'
-      class='button-message'
-      :to='buttonTo'
-      @click.stop
-      dense
-    >
-      <q-tooltip>
-        encrypted message
-      </q-tooltip>
-    </q-btn>
+  <q-btn
+    icon="mail_lock"
+    unelevated
+    clickable
+    :class="buttonClass"
+    :size="buttonSize"
+    class="button-message"
+    :to="buttonTo"
+    @click.stop
+    dense
+  >
+    <q-tooltip> encrypted message </q-tooltip>
+  </q-btn>
 </template>
 
 <script>
@@ -25,17 +23,17 @@ export default defineComponent({
   props: {
     buttonTo: {
       type: String,
-      required: true
+      required: true,
     },
     buttonClass: {
       type: String,
       required: false,
-      default: ''
+      default: '',
     },
     buttonSize: {
       type: String,
       required: false,
-      default: 'sm'
+      default: 'sm',
     },
   },
 
@@ -43,15 +41,15 @@ export default defineComponent({
     copy() {
       console.log(this.buttonText)
       navigator.clipboard.writeText(this.buttonText)
-    }
-  }
+    },
+  },
 })
 </script>
 
 <style>
 .button-message {
-  opacity: .6;
-  transition: all .3s ease-in-out;
+  opacity: 0.6;
+  transition: all 0.3s ease-in-out;
 }
 .button-message:hover {
   opacity: 1;

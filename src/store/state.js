@@ -1,62 +1,62 @@
-import {LocalStorage} from 'quasar'
+import { LocalStorage } from 'quasar'
 
 const isClientUsingTor = () => window.location.hostname.endsWith('.onion')
 
 const mainnetDefaultRelays = {
-    'wss://nostr-pub.wellorder.net': {read: true, write: true},
-    'wss://nostr.onsats.org': {read: true, write: true},
-    'wss://nostr-relay.wlvs.space': {read: true, write: true},
-    'wss://relay.damus.io': {read: true, write: true},
-    'wss://nostr.zebedee.cloud': {read: true, write: false},
-    'wss://relay.nostr.info': {read: true, write: true},
-    'wss://nostr-pub.semisol.dev': {read: true, write: false},
-    'wss://nostr.walletofsatoshi.com': {read: true, write: false},
-  }
-  // const default = [
-  //   ['wss://nostr.rocks', {read: true, write: true}],
-  //   ['wss://nostr.onsats.org', {read: true, write: true}],
-  //   ['wss://nostr-relay.wlvs.space', {read: true, write: true}],
-  //   ["wss://relay.damus.io", {read: true, write: true}],
-  // ]
-  const mainnetOptionalRelays = [
-    'wss://nostr-pub.wellorder.net',
-    'wss://nostr.swiss-enigma.ch',
-    'wss://nostr.cercatrova.me',
-    'wss://relay.damus.io',
-    'wss://relayer.fiatjaf.com',
-    'wss://nostr.rocks',
-    'wss://rsslay.fiatjaf.com',
-    'wss://nostr.zebedee.cloud',
-    'wss://nostr-2.zebedee.cloud',
-    'wss://expensive-relay.fiatjaf.com',
-    'wss://freedom-relay.herokuapp.com/ws',
-    'wss://nostr-relay.freeberty.net',
-    'wss://offchain.pub',
-    'wss://nostr-relay.wlvs.space',
-    'wss://nostr.onsats.org',
-    'wss://nostr-relay.untethr.me',
-    'wss://nostr.semisol.dev',
-    'wss://nostr-pub.semisol.dev',
-    'wss://nostr-verified.wellorder.net',
-    'wss://nostr.drss.io',
-    'wss://nostr.unknown.place',
-    'wss://nostr.openchain.fr',
-    'wss://nostr.delo.software',
-    'wss://relay.nostr.info',
-    'wss://relay.minds.com/nostr/v1/ws',
-    'wss://nostr.zaprite.io',
-    'wss://nostr.oxtr.dev',
-    'wss://nostr.ono.re',
-    'wss://relay.grunch.dev',
-    'wss://relay.cynsar.foundation',
-    'wss://nostr.sandwich.farm',
-    'wss://relay.nostr.ch',
-    'wss://nostr.mom',
-    'wss://nostr.walletofsatoshi.com',
-    'wss://nostr-relay.alekberg.net',
-    'wss://nostr.developer.li',
-    'wss://relay.current.fyi',
-    ]
+  'wss://nostr-pub.wellorder.net': { read: true, write: true },
+  'wss://nostr.onsats.org': { read: true, write: true },
+  'wss://nostr-relay.wlvs.space': { read: true, write: true },
+  'wss://relay.damus.io': { read: true, write: true },
+  'wss://nostr.zebedee.cloud': { read: true, write: false },
+  'wss://relay.nostr.info': { read: true, write: true },
+  'wss://nostr-pub.semisol.dev': { read: true, write: false },
+  'wss://nostr.walletofsatoshi.com': { read: true, write: false },
+}
+// const default = [
+//   ['wss://nostr.rocks', {read: true, write: true}],
+//   ['wss://nostr.onsats.org', {read: true, write: true}],
+//   ['wss://nostr-relay.wlvs.space', {read: true, write: true}],
+//   ["wss://relay.damus.io", {read: true, write: true}],
+// ]
+const mainnetOptionalRelays = [
+  'wss://nostr-pub.wellorder.net',
+  'wss://nostr.swiss-enigma.ch',
+  'wss://nostr.cercatrova.me',
+  'wss://relay.damus.io',
+  'wss://relayer.fiatjaf.com',
+  'wss://nostr.rocks',
+  'wss://rsslay.fiatjaf.com',
+  'wss://nostr.zebedee.cloud',
+  'wss://nostr-2.zebedee.cloud',
+  'wss://expensive-relay.fiatjaf.com',
+  'wss://freedom-relay.herokuapp.com/ws',
+  'wss://nostr-relay.freeberty.net',
+  'wss://offchain.pub',
+  'wss://nostr-relay.wlvs.space',
+  'wss://nostr.onsats.org',
+  'wss://nostr-relay.untethr.me',
+  'wss://nostr.semisol.dev',
+  'wss://nostr-pub.semisol.dev',
+  'wss://nostr-verified.wellorder.net',
+  'wss://nostr.drss.io',
+  'wss://nostr.unknown.place',
+  'wss://nostr.openchain.fr',
+  'wss://nostr.delo.software',
+  'wss://relay.nostr.info',
+  'wss://relay.minds.com/nostr/v1/ws',
+  'wss://nostr.zaprite.io',
+  'wss://nostr.oxtr.dev',
+  'wss://nostr.ono.re',
+  'wss://relay.grunch.dev',
+  'wss://relay.cynsar.foundation',
+  'wss://nostr.sandwich.farm',
+  'wss://relay.nostr.ch',
+  'wss://nostr.mom',
+  'wss://nostr.walletofsatoshi.com',
+  'wss://nostr-relay.alekberg.net',
+  'wss://nostr.developer.li',
+  'wss://relay.current.fyi',
+]
 
 //   for (let i = 0; i < 3; i++) {
 //     let pick = parseInt(Math.random() * optional.length)
@@ -71,34 +71,49 @@ const mainnetDefaultRelays = {
 const torDefaultRelays = {
   'ws://jgqaglhautb4k6e6i2g34jakxiemqp6z4wynlirltuukgkft2xuglmqd.onion': {
     read: true,
-    write: true
+    write: true,
   },
   'ws://wagvwfrdrikrqzp7h3b5lwl6btyuttu7mqpeji35ljzq36ovzgjhsfqd.onion': {
     read: true,
-    write: true
-  }
+    write: true,
+  },
 }
 
 export default function () {
-  const defaultRelays = isClientUsingTor() ? torDefaultRelays : mainnetDefaultRelays
-  const optionalRelaysList = isClientUsingTor() ? Object.keys(torDefaultRelays) : mainnetOptionalRelays
+  const defaultRelays = isClientUsingTor()
+    ? torDefaultRelays
+    : mainnetDefaultRelays
+  const optionalRelaysList = isClientUsingTor()
+    ? Object.keys(torDefaultRelays)
+    : mainnetOptionalRelays
   let config = LocalStorage.getItem('config')
   let { timestamps, preferences } = config || {}
   let { lastUserMainSync = 0, lastFeedLoad = 0 } = timestamps || {}
   let { color, font = 'Roboto', lightningTips } = preferences || {}
-  let { primary = '#ffffff', secondary = '#aaaaaa', accent = '#777777', background = '#1f1f1f' } = color || {}
-  let { enabled = true, lastMode = 'copy', lastWallet = null, presets = [10, 100, 1000], oneClick = { enabled: false, amount: 10 } } = lightningTips || {}
+  let {
+    primary = '#ffffff',
+    secondary = '#aaaaaa',
+    accent = '#777777',
+    background = '#1f1f1f',
+  } = color || {}
+  let {
+    enabled = true,
+    lastMode = 'copy',
+    lastWallet = null,
+    presets = [10, 100, 1000],
+    oneClick = { enabled: false, amount: 10 },
+  } = lightningTips || {}
   config = {
     timestamps: {
       lastUserMainSync,
-      lastFeedLoad
+      lastFeedLoad,
     },
     preferences: {
       color: {
         primary,
         secondary,
         accent,
-        background
+        background,
       },
       font,
       lightningTips: {
@@ -107,8 +122,8 @@ export default function () {
         lastWallet,
         presets,
         oneClick,
-      }
-    }
+      },
+    },
   }
 
   return {
@@ -133,6 +148,6 @@ export default function () {
     lastNotificationRead: LocalStorage.getItem('lastNotificationRead') || 0,
     unreadNotifications: 0,
 
-    config
+    config,
   }
 }

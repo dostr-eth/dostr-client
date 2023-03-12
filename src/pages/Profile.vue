@@ -1,13 +1,13 @@
 <template>
   <q-page>
-    <div id='profile-header'>
+    <div id="profile-header">
       <BaseUserCard
-        v-if='hexPubkey'
-        :pubkey='hexPubkey'
-        class='user-card-header q-ma-sm'
-        :header-mode='true'
-        :show-following='true'
-        :clickable='false'
+        v-if="hexPubkey"
+        :pubkey="hexPubkey"
+        class="user-card-header q-ma-sm"
+        :header-mode="true"
+        :show-following="true"
+        :clickable="false"
       />
     </div>
     <q-tabs
@@ -15,93 +15,107 @@
       dense
       outline
       align="left"
-      active-color='accent'
+      active-color="accent"
       :breakpoint="0"
     >
-      <q-tab name="posts" label='posts' />
-      <q-tab name="follows" label='follows' />
-      <q-tab name="followers" label='followers' />
-      <q-tab name="relays" label='relays' />
+      <q-tab name="posts" label="posts" />
+      <q-tab name="follows" label="follows" />
+      <q-tab name="followers" label="followers" />
+      <q-tab name="relays" label="relays" />
     </q-tabs>
     <q-tab-panels v-model="tab" animated>
-      <q-tab-panel name="posts" class='no-padding'>
-        <q-form
-          v-if='threads.length'
-          class='q-pa-sm'
-          @submit="search"
-        >
+      <q-tab-panel name="posts" class="no-padding">
+        <q-form v-if="threads.length" class="q-pa-sm" @submit="search">
           <q-input
             v-model="searchText"
             outlined
             rounded
-            :label='$t("searchPosts")'
+            :label="$t('searchPosts')"
             dense
-            color='secondary'
-            class='no-padding'
-            :loading='searching'
+            color="secondary"
+            class="no-padding"
+            :loading="searching"
             @submit="search"
             @keypress.ctrl.enter="search"
           >
             <template #append>
-              <BaseButtonClear :button-text='searchText' button-class='text-secondary' @clear='searchText=""'/>
+              <BaseButtonClear
+                :button-text="searchText"
+                button-class="text-secondary"
+                @clear="searchText = ''"
+              />
               <q-btn
-                text-color='secondary'
-                class='q-pa-xs'
+                text-color="secondary"
+                class="q-pa-xs"
                 icon="search"
                 type="submit"
                 unelevated
-                :disable='searching'
-                @click='search'
+                :disable="searching"
+                @click="search"
               />
             </template>
           </q-input>
         </q-form>
-        <div v-if='searchResults.length'>
-          <BasePostThread v-for="result in searchResults" :key="result[0].id" :events="result" @add-event='addEvent'/>
+        <div v-if="searchResults.length">
+          <BasePostThread
+            v-for="result in searchResults"
+            :key="result[0].id"
+            :events="result"
+            @add-event="addEvent"
+          />
         </div>
-        <div v-if='!searchText'>
-          <BasePostThread v-for="thread in threads" :key="thread[0].id" :events="thread" @add-event='addEvent'/>
-          <BaseButtonLoadMore :loading-more='loadingMore' :reached-end='reachedEnd' @click='loadMore' />
+        <div v-if="!searchText">
+          <BasePostThread
+            v-for="thread in threads"
+            :key="thread[0].id"
+            :events="thread"
+            @add-event="addEvent"
+          />
+          <BaseButtonLoadMore
+            :loading-more="loadingMore"
+            :reached-end="reachedEnd"
+            @click="loadMore"
+          />
         </div>
       </q-tab-panel>
 
-      <q-tab-panel name="follows" class='no-padding'>
-        <div v-if="!follows">{{ $t('noFollows') }}</div>
+      <q-tab-panel name="follows" class="no-padding">
+        <div v-if="!follows">{{ $t("noFollows") }}</div>
         <div v-else class="flex column relative">
-          <div class='q-pl-sm'>
+          <div class="q-pl-sm">
             <BaseUserCard
-              v-for="(pubkey) in follows"
+              v-for="pubkey in follows"
               :key="pubkey"
               :pubkey="pubkey"
-              :show-following='true'
+              :show-following="true"
             />
           </div>
         </div>
       </q-tab-panel>
 
-      <q-tab-panel name="followers" class='no-padding'>
-        <div v-if="!followers">{{ $t('noFollowers') }}</div>
+      <q-tab-panel name="followers" class="no-padding">
+        <div v-if="!followers">{{ $t("noFollowers") }}</div>
         <div v-else class="flex column relative">
-          <div class='q-pl-sm'>
+          <div class="q-pl-sm">
             <BaseUserCard
-              v-for="(pubkey) in Object.keys(followers)"
+              v-for="pubkey in Object.keys(followers)"
               :key="pubkey"
               :pubkey="pubkey"
-              :show-following='true'
+              :show-following="true"
             />
           </div>
         </div>
       </q-tab-panel>
 
-      <q-tab-panel name="relays" class='no-padding'>
-        <div v-if="!relays">{{ $t('noRelays') }}</div>
+      <q-tab-panel name="relays" class="no-padding">
+        <div v-if="!relays">{{ $t("noRelays") }}</div>
         <div v-else class="flex column relative">
-          <div class='q-pl-sm'>
+          <div class="q-pl-sm">
             <BaseRelayRecommend
-              v-for="(relay) in Object.keys(relays)"
+              v-for="relay in Object.keys(relays)"
               :key="relay"
               :url="relay"
-              :list-view='true'
+              :list-view="true"
             />
           </div>
         </div>
@@ -112,11 +126,18 @@
 
 <script>
 import { defineComponent } from 'vue'
-import {debounce} from 'quasar'
+import { debounce } from 'quasar'
 import helpersMixin from '../utils/mixin'
-import {addToThread} from '../utils/threads'
+import { addToThread } from '../utils/threads'
 import BaseUserCard from 'components/BaseUserCard.vue'
-import { dbProfile, streamProfile, dbStreamFollows, dbStreamFollowers, getNotes, dbQuery } from '../query'
+import {
+  dbProfile,
+  streamProfile,
+  dbStreamFollows,
+  dbStreamFollowers,
+  getNotes,
+  dbQuery,
+} from '../query'
 import BaseRelayRecommend from 'components/BaseRelayRecommend.vue'
 import BaseButtonLoadMore from 'components/BaseButtonLoadMore.vue'
 import BaseButtonClear from 'components/BaseButtonClear.vue'
@@ -130,7 +151,10 @@ const metaData = {
   meta: {
     description: { name: 'description', content: 'Nostr user profile' },
     keywords: { name: 'keywords', content: 'nostr decentralized social media' },
-    equiv: { 'http-equiv': 'Content-Type', content: 'text/html; charset=UTF-8' },
+    equiv: {
+      'http-equiv': 'Content-Type',
+      content: 'text/html; charset=UTF-8',
+    },
   },
 }
 
@@ -171,7 +195,8 @@ export default defineComponent({
       return []
     },
     hexPubkey() {
-      if (this.$route.params.pubkey) return this.bech32ToHex(this.$route.params.pubkey)
+      if (this.$route.params.pubkey)
+        return this.bech32ToHex(this.$route.params.pubkey)
       return ''
     },
   },
@@ -195,13 +220,20 @@ export default defineComponent({
     async start() {
       // this.useProfile(this.hexPubkey)
       this.loadingMore = true
-      let relays = Object.keys(this.$store.state.relays).length ? Object.keys(this.$store.state.relays) : Object.keys(this.$store.state.defaultRelays)
+      let relays = Object.keys(this.$store.state.relays).length
+        ? Object.keys(this.$store.state.relays)
+        : Object.keys(this.$store.state.defaultRelays)
 
       let profile = await dbProfile(this.hexPubkey)
-      if (profile) this.$store.dispatch('handleAddingProfileEventToCache', profile)
-      this.sub.streamProfile = await streamProfile({authors: [this.hexPubkey], relays}, async events => {
-        for (let event of events) this.$store.dispatch('handleAddingProfileEventToCache', event)
-      })
+      if (profile)
+        this.$store.dispatch('handleAddingProfileEventToCache', profile)
+      this.sub.streamProfile = await streamProfile(
+        { authors: [this.hexPubkey], relays },
+        async (events) => {
+          for (let event of events)
+            this.$store.dispatch('handleAddingProfileEventToCache', event)
+        }
+      )
       this.loadMore()
 
       // let timer = setTimeout(async() => {
@@ -216,24 +248,34 @@ export default defineComponent({
       //     timer = null
       //   }, 500)
       // })
-      this.sub.dbStreamFollows = await dbStreamFollows({author: this.hexPubkey, relays}, events => {
-        for (let event of events) {
-          if (this.followsEvent && event.created_at < this.followsEvent.created_at) continue
-          this.followsEvent = event
-          this.follows = event.tags
-            .filter(([t, v]) => t === 'p' && v)
-            .map(([_, v]) => v)
-          this.relays = event.content.length ? JSON.parse(event.content) : []
-          if (this.follows.length)
-            this.follows.forEach(pubkey => this.useProfile(pubkey))
+      this.sub.dbStreamFollows = await dbStreamFollows(
+        { author: this.hexPubkey, relays },
+        (events) => {
+          for (let event of events) {
+            if (
+              this.followsEvent &&
+              event.created_at < this.followsEvent.created_at
+            )
+              continue
+            this.followsEvent = event
+            this.follows = event.tags
+              .filter(([t, v]) => t === 'p' && v)
+              .map(([_, v]) => v)
+            this.relays = event.content.length ? JSON.parse(event.content) : []
+            if (this.follows.length)
+              this.follows.forEach((pubkey) => this.useProfile(pubkey))
+          }
         }
-      })
-      this.sub.dbStreamFollowers = await dbStreamFollowers({author: this.hexPubkey, relays}, events => {
-        for (let event of events) {
-          this.followers[event.pubkey] = true
-          this.useProfile(event.pubkey)
+      )
+      this.sub.dbStreamFollowers = await dbStreamFollowers(
+        { author: this.hexPubkey, relays },
+        (events) => {
+          for (let event of events) {
+            this.followers[event.pubkey] = true
+            this.useProfile(event.pubkey)
+          }
         }
-      })
+      )
     },
 
     stop() {
@@ -259,7 +301,7 @@ export default defineComponent({
       if (this.profilesUsed.has(pubkey)) return
 
       this.profilesUsed.add(pubkey)
-      this.$store.dispatch('useProfile', {pubkey})
+      this.$store.dispatch('useProfile', { pubkey })
     },
 
     addEvent(event) {
@@ -268,9 +310,18 @@ export default defineComponent({
 
     async loadMore() {
       this.loadingMore = true
-      let relays = Object.keys(this.$store.state.relays).length ? Object.keys(this.$store.state.relays) : Object.keys(this.$store.state.defaultRelays)
-      let until = this.threads.length ? this.threads[this.threads.length - 1][0].created_at : Math.round(Date.now() / 1000)
-      let notes = await getNotes({authors: [this.hexPubkey], until, limit: 100, relays})
+      let relays = Object.keys(this.$store.state.relays).length
+        ? Object.keys(this.$store.state.relays)
+        : Object.keys(this.$store.state.defaultRelays)
+      let until = this.threads.length
+        ? this.threads[this.threads.length - 1][0].created_at
+        : Math.round(Date.now() / 1000)
+      let notes = await getNotes({
+        authors: [this.hexPubkey],
+        until,
+        limit: 100,
+        relays,
+      })
       if (notes.length === 0) this.reachedEnd = true
       let threads = []
       this.processUserNotes(notes, threads)
@@ -287,23 +338,25 @@ export default defineComponent({
         FROM nostr
         WHERE json_extract(event,'$.kind') = 1 AND
           json_extract(event,'$.pubkey') = '${this.hexPubkey}' AND
-          json_extract(event,'$.content') LIKE '%${this.searchText.replace(' ', '%')}%'
+          json_extract(event,'$.content') LIKE '%${this.searchText.replace(
+            ' ',
+            '%'
+          )}%'
       `)
-      let searchResults = result.map(row => JSON.parse(row.event))
+      let searchResults = result.map((row) => JSON.parse(row.event))
       this.processUserNotes(searchResults, this.results, false)
       this.searching = false
     },
 
-
     debouncedSearch() {
       debounce(this.search(), 1000)
       console.log('debounced search')
-    }
-  }
+    },
+  },
 })
 </script>
 
-<style lang='css' scoped>
+<style lang="css" scoped>
 .q-tabs {
   border-bottom: 1px solid var(--q-accent);
 }

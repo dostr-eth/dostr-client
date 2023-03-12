@@ -1,4 +1,4 @@
-self.process = {env: {}}
+self.process = { env: {} }
 
 import initSqlJs from 'sql.js'
 import sqlWasm from './sql-wasm.wasm'
@@ -11,7 +11,8 @@ let currentTicket = null
 let interval = null
 
 function handleMessage({ data, ports }) {
-  let { action, ticket, withWorker } = typeof data === 'string' ? JSON.parse(data) : data
+  let { action, ticket, withWorker } =
+    typeof data === 'string' ? JSON.parse(data) : data
   if (!action) return
   // console.log('handleMessage (db)', data, ports)
   switch (action) {
@@ -35,7 +36,6 @@ function handleRelayMessage({ data }) {
   // console.log('tickets-db', tickets, queue)
   queueTickets(tickets)
 }
-
 
 function queueTickets(tickets) {
   queue.push(...tickets)
@@ -71,7 +71,7 @@ function processTicket(ticket) {
   // if (ticket.id.startsWith('dbStreamTagKin')) console.log('dbStreamTagKind processing ', ticket)
   switch (action) {
     // case 'stream':
-      case 'save': {
+    case 'save': {
       let eventsToSave = currentTicket.relayWork.eventsToSave
       // let eventsToSave = Object.values(currentTicket.relayWork.eventsToSave)
       delete currentTicket.relayWork.eventsToSave
@@ -89,7 +89,7 @@ function processTicket(ticket) {
     case 'stream': {
       let eventsToSave = currentTicket.relayWork.eventsToSave
       // let eventsToSave = Object.values(currentTicket.relayWork.eventsToSave)
-  // if (ticket.id.startsWith('dbStreamTagKin')) console.log('dbStreamTagKind events to save ', eventsToSave)
+      // if (ticket.id.startsWith('dbStreamTagKin')) console.log('dbStreamTagKind events to save ', eventsToSave)
       delete currentTicket.relayWork.eventsToSave
       eventWorker.postMessage({ action: 'stream', ticket: currentTicket })
       try {
@@ -118,13 +118,11 @@ function processTicket(ticket) {
   }
 }
 
-
 const cacheSize = 2000
 const pageSize = 8192
 const dbName = `events`
 let SQL = null
 let db = null
-
 
 async function initDb() {
   // if (db) return
@@ -158,10 +156,10 @@ function handleUpdatedEvent(event) {
 
 function createTables(db) {
   console.log('creating tables and indexes', db)
-  db.create_function('handleInsertedEvent', event => {
+  db.create_function('handleInsertedEvent', (event) => {
     handleInsertedEvent(event)
   })
-  db.create_function('handleUpdatedEvent', event => {
+  db.create_function('handleUpdatedEvent', (event) => {
     handleUpdatedEvent(event)
   })
   db.exec(`
@@ -249,8 +247,7 @@ function createTables(db) {
         json_extract(event,'$.seen_on') seen_on
       FROM nostr
       WHERE json_extract(event,'$.kind') = 0;
-    COMMIT;`
-  )
+    COMMIT;`)
   console.log('Done')
 }
 
@@ -287,22 +284,24 @@ function saveEventsToDb(events) {
   for (let i = 0; i < events.length; i++) {
     let { event, relay } = events[i]
     // let { event, relays } = events[i]
-    if (event.created_at > (Math.round(Date.now() / 1000) + (10 * 60))) continue
+    if (event.created_at > Math.round(Date.now() / 1000) + 10 * 60) continue
     // if (!relays?.length) relays = [null]
     // for (let relay of relays) {
-      event.first_seen = Math.round(Date.now() / 1000)
-      event.last_updated = Math.round(Date.now() / 1000)
-      event.seen_on = []
-      if (relay) event.seen_on.push(relay)
-      event.tags = event.tags.map(tag => tag.map(element => element.toLowerCase()))
-      stmt.run([event.id, JSON.stringify(event)])
+    event.first_seen = Math.round(Date.now() / 1000)
+    event.last_updated = Math.round(Date.now() / 1000)
+    event.seen_on = []
+    if (relay) event.seen_on.push(relay)
+    event.tags = event.tags.map((tag) =>
+      tag.map((element) => element.toLowerCase())
+    )
+    stmt.run([event.id, JSON.stringify(event)])
     // }
   }
   db.exec('COMMIT')
   stmt.free()
   let took = Date.now() - start
   console.debug('Done! Took: ' + took + ` for ${events.length} events`)
-  return events.map(({event, relays}) => {
+  return events.map(({ event, relays }) => {
     event.seen_on = relays || []
     return event
   })
@@ -342,10 +341,10 @@ const methods = {
 
     return result
       .sort((a, b) => b.last_message - a.last_message)
-      .map(row => {
+      .map((row) => {
         return {
           peer: row.peer,
-          lastMessage: row.last_message
+          lastMessage: row.last_message,
         }
       })
   },
@@ -362,8 +361,7 @@ const methods = {
       ORDER BY idx.created_at DESC
       LIMIT ${limit}
     `)
-    let messages = result
-      .map(row => JSON.parse(row.event))
+    let messages = result.map((row) => JSON.parse(row.event))
     return messages
   },
 
@@ -382,7 +380,7 @@ const methods = {
       FROM nostr
       WHERE id IN (${JSON.stringify(...ids)})
     `)
-    return result.map(row => JSON.parse(row.event))
+    return result.map((row) => JSON.parse(row.event))
   },
 
   dbMentions(pubkey, limit, until) {
@@ -396,7 +394,7 @@ const methods = {
       ORDER BY idx.created_at DESC
       LIMIT ${limit}
     `)
-    return result.map(row => JSON.parse(row.event))
+    return result.map((row) => JSON.parse(row.event))
   },
 
   dbUnreadMentionsCount(pubkey, since) {
@@ -441,7 +439,7 @@ const methods = {
         json_extract(event,'$.pubkey') = '${pubkey}'
       LIMIT 1
     `)
-    return result.map(row => JSON.parse(row.event))
+    return result.map((row) => JSON.parse(row.event))
   },
 
   dbFollowers(pubkey) {
@@ -453,14 +451,14 @@ const methods = {
       WHERE json_extract(event,'$.kind') = 3 AND
         idx.tag = ${pubkeyTag}
     `)
-    return result.map(row => JSON.parse(row.event))
+    return result.map((row) => JSON.parse(row.event))
   },
 
   dbTagKind(type, value, kind, callback) {
     let values = Array.isArray(value) ? value : [value]
     let kinds = Array.isArray(kind) ? kind : [kind]
     let tagList = `(
-      ${values.map(value => `'["${type}","${value}"]'`).join(',')}
+      ${values.map((value) => `'["${type}","${value}"]'`).join(',')}
     )`
     let result = queryDb(`
       SELECT n.event
@@ -469,7 +467,7 @@ const methods = {
       WHERE idx.kind IN (${JSON.stringify(...kinds)}) AND
         idx.tag IN ${tagList}
     `)
-    return result.map(row => JSON.parse(row.event))
+    return result.map((row) => JSON.parse(row.event))
   },
 
   dbQuery(sql) {
@@ -530,7 +528,6 @@ const methods = {
   //     subArgs: [pubkeys]
   //   }
   // },
-
 }
 
 async function run() {

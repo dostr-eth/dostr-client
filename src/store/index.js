@@ -1,4 +1,4 @@
-import {createStore} from 'vuex'
+import { createStore } from 'vuex'
 
 import state from './state'
 import * as getters from './getters'
@@ -27,5 +27,5 @@ export default createStore({
   getters,
   mutations,
   actions,
-  plugins: [storage, eventize, relayize, unread]
+  plugins: [storage, eventize, relayize, unread],
 })

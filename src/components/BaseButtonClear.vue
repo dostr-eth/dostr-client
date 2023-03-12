@@ -1,18 +1,18 @@
 <template>
-    <q-btn
-      v-if='buttonText'
-      unelevated
-      clickable
-      class='button-clear'
-      :class='"" + buttonClass'
-      :size='buttonSize'
-      dense
-      icon="cancel"
-      @click.stop='$emit("clear")'
-    >
-    </q-btn>
+  <q-btn
+    v-if="buttonText"
+    unelevated
+    clickable
+    class="button-clear"
+    :class="'' + buttonClass"
+    :size="buttonSize"
+    dense
+    icon="cancel"
+    @click.stop="$emit('clear')"
+  >
+  </q-btn>
 </template>
-      <!-- @click='buttonText=""' -->
+<!-- @click='buttonText=""' -->
 
 <script>
 import { defineComponent } from 'vue'
@@ -23,17 +23,17 @@ export default defineComponent({
   props: {
     buttonText: {
       type: String,
-      required: true
+      required: true,
     },
     buttonClass: {
       type: String,
       required: false,
-      default: ''
+      default: '',
     },
     buttonSize: {
       type: String,
       required: false,
-      default: 'sm'
+      default: 'sm',
     },
   },
 
@@ -48,8 +48,8 @@ export default defineComponent({
 
 <style>
 .button-clear {
-  opacity: .6;
-  transition: all .3s ease-in-out;
+  opacity: 0.6;
+  transition: all 0.3s ease-in-out;
 }
 .button-clear:hover {
   opacity: 1;

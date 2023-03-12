@@ -1,45 +1,41 @@
 <template>
   <q-page>
-    <BaseHeader>{{ $t('devTools') }}</BaseHeader>
-    <div class='q-py-md q-px-sm'>
-      <q-tabs
-        v-model="tab"
-        dense
-        outline
-        align="left"
-        active-color='accent'
-      >
-        <q-tab name="keyConverter" label='key converter' />
-        <q-tab name="sqlQuery" label='sql query' />
-        <q-tab name="nip05Tester" label='nip05 Tester' />
+    <BaseHeader>{{ $t("devTools") }}</BaseHeader>
+    <div class="q-py-md q-px-sm">
+      <q-tabs v-model="tab" dense outline align="left" active-color="accent">
+        <q-tab name="keyConverter" label="key converter" />
+        <q-tab name="sqlQuery" label="sql query" />
+        <q-tab name="nip05Tester" label="nip05 Tester" />
       </q-tabs>
       <!-- <div class="text-bold">sql query</div> -->
       <q-tab-panels v-model="tab">
-        <q-tab-panel name="keyConverter" class='flex column items-center full-width' style='gap: .5rem; background: var(--q-background)'>
-          <q-input v-model='keys.bech32' filled dense label='enter "npub", "note" key here' class='full-width'>
+        <q-tab-panel
+name="keyConverter" class="flex column items-center full-width"
+          style="gap: 0.5rem; background: var(--q-background)">
+          <q-input v-model="keys.bech32" filled dense label='enter "npub", "note" key here' class="full-width">
             <template #append>
-              <BaseButtonCopy color="secondary" :button-text='keys.bech32'/>
+              <BaseButtonCopy color="secondary" :button-text="keys.bech32" />
             </template>
           </q-input>
-          <div> - or - </div>
-          <div class='flex row no-wrap full-width' style='gap: 1rem;'>
-            <q-input v-model='keys.prefix' filled dense label='prefix' style='width: 10rem;'/>
-            <q-input v-model='keys.hex' filled dense label='enter hex key here' class='full-width'>
+          <div>- or -</div>
+          <div class="flex row no-wrap full-width" style="gap: 1rem">
+            <q-input v-model="keys.prefix" filled dense label="prefix" style="width: 10rem" />
+            <q-input v-model="keys.hex" filled dense label="enter hex key here" class="full-width">
               <template #append>
-                <BaseButtonCopy color="secondary" :button-text='keys.hex'/>
+                <BaseButtonCopy color="secondary" :button-text="keys.hex" />
               </template>
             </q-input>
           </div>
-          <q-btn spread label='convert' color='primary' outline class='full-width q-mt-md' @click='convertKeys'/>
+          <q-btn spread label="convert" color="primary" outline class="full-width q-mt-md" @click="convertKeys" />
         </q-tab-panel>
 
         <q-tab-panel name="sqlQuery">
-          <TheSqlEditor/>
+          <TheSqlEditor />
         </q-tab-panel>
         <q-tab-panel name="nip05Tester">
-          <q-input v-model='nip05Id' filled dense label='enter nip05 here' class='full-width'/>
-          <q-btn spread label='test' color='primary' outline class='full-width q-mt-md' @click='fetchNip05'/>
-          <pre id='nip05-response'></pre>
+          <q-input v-model="nip05Id" filled dense label="enter nip05 here" class="full-width" />
+          <q-btn spread label="test" color="primary" outline class="full-width q-mt-md" @click="fetchNip05" />
+          <pre id="nip05-response"></pre>
         </q-tab-panel>
       </q-tab-panels>
     </div>
@@ -56,13 +52,16 @@ import { nip05 } from 'nostr-tools'
 
 const metaData = {
   // sets document title
-  title: 'Dostr - dev tools',
+  title: 'Dostr - Dev Tools',
 
   // meta tags
   meta: {
-    description: { name: 'description', content: 'dev tools for Dostr client' },
-    keywords: { name: 'keywords', content: 'nostr decentralized social media' },
-    equiv: { 'http-equiv': 'Content-Type', content: 'text/html; charset=UTF-8' },
+    description: { name: 'description', content: 'Developer tools for Dostr client' },
+    keywords: { name: 'keywords', content: 'nostr dostr decentralized social media siwe siwx' },
+    equiv: {
+      'http-equiv': 'Content-Type',
+      content: 'text/html; charset=UTF-8',
+    },
   },
 }
 
@@ -98,12 +97,15 @@ export default defineComponent({
 
   methods: {
     convertKeys() {
-      if (this.keys.bech32 && this.isBech32Key(this.keys.bech32)) this.keys.hex = this.bech32ToHex(this.keys.bech32)
-      else if (this.keys.hex && this.isKey(this.keys.hex)) this.keys.bech32 = this.hexToBech32(this.keys.hex, this.keys.prefix)
-      else Notify.create({
-      message: `invalid key entered`,
-      color: 'negative'
-    })
+      if (this.keys.bech32 && this.isBech32Key(this.keys.bech32))
+        this.keys.hex = this.bech32ToHex(this.keys.bech32)
+      else if (this.keys.hex && this.isKey(this.keys.hex))
+        this.keys.bech32 = this.hexToBech32(this.keys.hex, this.keys.prefix)
+      else
+        Notify.create({
+          message: `invalid key entered`,
+          color: 'negative',
+        })
     },
     // handleError(e) {
     //   let src = e.target.src
@@ -111,43 +113,47 @@ export default defineComponent({
     //   e.target.src = proxySrc
     // }
     async fetchNip05() {
-        let profile = await nip05.queryProfile(this.nip05Id)
-        // let profile = await nip05.queryProfile(this.nip05Id)
-        console.log('nip05 response', profile)
-        document.querySelector('#nip05-response').innerText = JSON.stringify(profile, null, 2)
+      let profile = await nip05.queryProfile(this.nip05Id)
+      // let profile = await nip05.queryProfile(this.nip05Id)
+      console.log('NIP-05 Response: ', profile)
+      document.querySelector('#nip05-response').innerText = JSON.stringify(
+        profile,
+        null,
+        2
+      )
     },
-//  async queryProfile(fullname) {
-//   let [name, domain] = fullname.toLowerCase().split('@')
+    //  async queryProfile(fullname) {
+    //   let [name, domain] = fullname.toLowerCase().split('@')
 
-//   if (!domain) {
-//     // if there is no @, it is because it is just a domain, so assume the name is "_"
-//     domain = name
-//     name = '_'
-//   }
+    //   if (!domain) {
+    //     // if there is no @, it is because it is just a domain, so assume the name is "_"
+    //     domain = name
+    //     name = '_'
+    //   }
 
-//   if (!name.match(/^[a-z0-9-_]+$/)) return null
+    //   if (!name.match(/^[a-z0-9-_]+$/)) return null
 
-//   let res = await (
-//     await fetch(`https://${domain}/.well-known/nostr.json?name=${name}`)
-//   ).json()
-//         console.log('nip05 response', res)
+    //   let res = await (
+    //     await fetch(`https://${domain}/.well-known/nostr.json?name=${name}`)
+    //   ).json()
+    //         console.log('nip05 response', res)
 
-//   if (!res?.names?.[name]) return null
+    //   if (!res?.names?.[name]) return null
 
-//   let pubkey = res.names[name]
-//   let relays = (res.relays?.[pubkey] || []) // nip35
+    //   let pubkey = res.names[name]
+    //   let relays = (res.relays?.[pubkey] || []) // nip35
 
-//   return {
-//     pubkey,
-//     relays
-//   }
-//  }
-}
+    //   return {
+    //     pubkey,
+    //     relays
+    //   }
+    //  }
+  },
 })
 </script>
 
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 .q-tabs {
-  border-bottom: 1px solid $accent
+  border-bottom: 1px solid $accent;
 }
 </style>

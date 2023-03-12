@@ -2,14 +2,17 @@ const relayWorker = new Worker(new URL('./relay.worker.js', import.meta.url))
 const dbWorker = new Worker(new URL('./db.worker.js', import.meta.url))
 const eventWorker = new Worker(new URL('./event.worker.js', import.meta.url))
 
-
 const relayToDbChannel = new MessageChannel()
-relayWorker.postMessage({ action: 'setPort' }, [ relayToDbChannel.port1 ])
-dbWorker.postMessage({ action: 'setPort', withWorker: 'relay' }, [ relayToDbChannel.port2 ])
+relayWorker.postMessage({ action: 'setPort' }, [relayToDbChannel.port1])
+dbWorker.postMessage({ action: 'setPort', withWorker: 'relay' }, [
+  relayToDbChannel.port2,
+])
 
 const dbToEventChannel = new MessageChannel()
-dbWorker.postMessage({ action: 'setPort', withWorker: 'event' }, [ dbToEventChannel.port1 ])
-eventWorker.postMessage({ action: 'setPort' }, [ dbToEventChannel.port2 ])
+dbWorker.postMessage({ action: 'setPort', withWorker: 'event' }, [
+  dbToEventChannel.port1,
+])
+eventWorker.postMessage({ action: 'setPort' }, [dbToEventChannel.port2])
 
 const methods = {
   getRelayStatus(id) {
@@ -27,7 +30,7 @@ const methods = {
     let relayWork = {
       action: 'publish',
       relays,
-      event
+      event,
     }
     let dbWork = {
       action: 'save',
@@ -41,15 +44,21 @@ const methods = {
     return ticket
   },
   getFeed(settings, id) {
-    let {authors, limit = 10, relays, since = 0, until = Math.round(Date.now() / 1000)} = settings
+    let {
+      authors,
+      limit = 10,
+      relays,
+      since = 0,
+      until = Math.round(Date.now() / 1000),
+    } = settings
     let filter = {
       kinds: [1, 2],
       since,
       until,
-      limit
+      limit,
     }
     if (authors?.length) filter.authors = authors
-    relays = relays.map(url => normalizeRelayURL(url))
+    relays = relays.map((url) => normalizeRelayURL(url))
     let relayWork = {
       action: 'get',
       subName: 'feed',
@@ -68,12 +77,12 @@ const methods = {
     return ticket
   },
   getProfiles(settings, id) {
-    let {authors, relays} = settings
+    let { authors, relays } = settings
     let filter = {
       kinds: [0],
     }
     if (authors?.length) filter.authors = authors
-    relays = relays.map(url => normalizeRelayURL(url))
+    relays = relays.map((url) => normalizeRelayURL(url))
     let relayWork = {
       action: 'get',
       subName: 'profiles',
@@ -92,11 +101,11 @@ const methods = {
     return ticket
   },
   getEvents(settings, id) {
-    let {ids, relays} = settings
+    let { ids, relays } = settings
     let filter = {
       ids,
     }
-    relays = relays.map(url => normalizeRelayURL(url))
+    relays = relays.map((url) => normalizeRelayURL(url))
     let relayWork = {
       action: 'get',
       subName: 'events',
@@ -115,14 +124,19 @@ const methods = {
     return ticket
   },
   getNotes(settings, id) {
-    let {authors, limit = 10, until = Math.round(Date.now() / 1000), relays} = settings
+    let {
+      authors,
+      limit = 10,
+      until = Math.round(Date.now() / 1000),
+      relays,
+    } = settings
     let filter = {
       kinds: [1],
       authors,
       until,
-      limit
+      limit,
     }
-    relays = relays.map(url => normalizeRelayURL(url))
+    relays = relays.map((url) => normalizeRelayURL(url))
     let relayWork = {
       action: 'get',
       subName: 'events',
@@ -141,13 +155,13 @@ const methods = {
     return ticket
   },
   streamMainProfilesFollows(settings, id) {
-    let {authors, relays} = settings
+    let { authors, relays } = settings
     let filter = {
       kinds: [0, 3],
-      authors
+      authors,
     }
     // if (authors?.length) filter.authors = authors
-    relays = relays.map(url => normalizeRelayURL(url))
+    relays = relays.map((url) => normalizeRelayURL(url))
     let relayWork = {
       action: 'stream',
       subName: 'main',
@@ -167,19 +181,19 @@ const methods = {
     return ticket
   },
   streamMainMentions(settings, id) {
-    let {authors, relays, limit = 200} = settings
+    let { authors, relays, limit = 200 } = settings
     let filter = {
       kinds: [1],
       '#p': authors,
       limit,
     }
-    relays = relays.map(url => normalizeRelayURL(url))
+    relays = relays.map((url) => normalizeRelayURL(url))
     let relayWork = {
       action: 'stream',
       subName: 'main',
       filter,
       relays,
-      eose: true
+      eose: true,
     }
     let dbWork = {
       action: 'stream',
@@ -194,19 +208,19 @@ const methods = {
     return ticket
   },
   streamMainIncomingMessages(settings, id) {
-    let {authors, relays, limit = 200} = settings
+    let { authors, relays, limit = 200 } = settings
     let filter = {
       kinds: [4],
       '#p': authors,
       limit,
     }
-    relays = relays.map(url => normalizeRelayURL(url))
+    relays = relays.map((url) => normalizeRelayURL(url))
     let relayWork = {
       action: 'stream',
       subName: 'main',
       filter,
       relays,
-      eose: true
+      eose: true,
     }
     let dbWork = {
       action: 'stream',
@@ -221,19 +235,19 @@ const methods = {
     return ticket
   },
   streamMainOutgoingMessages(settings, id) {
-    let {authors, relays, limit = 200} = settings
+    let { authors, relays, limit = 200 } = settings
     let filter = {
       kinds: [4],
       authors,
       limit,
     }
-    relays = relays.map(url => normalizeRelayURL(url))
+    relays = relays.map((url) => normalizeRelayURL(url))
     let relayWork = {
       action: 'stream',
       subName: 'main',
       filter,
       relays,
-      eose: true
+      eose: true,
     }
     let dbWork = {
       action: 'stream',
@@ -248,14 +262,14 @@ const methods = {
     return ticket
   },
   streamPeerIncomingMessages(settings, id) {
-    let {authors, peers, relays, limit = 500} = settings
+    let { authors, peers, relays, limit = 500 } = settings
     let filter = {
       kinds: [4],
       '#p': authors,
       authors: peers,
       limit,
     }
-    relays = relays.map(url => normalizeRelayURL(url))
+    relays = relays.map((url) => normalizeRelayURL(url))
     let relayWork = {
       action: 'stream',
       subName: 'page',
@@ -276,14 +290,14 @@ const methods = {
     return ticket
   },
   streamPeerOutgoingMessages(settings, id) {
-    let {authors, peers, relays, limit = 500} = settings
+    let { authors, peers, relays, limit = 500 } = settings
     let filter = {
       kinds: [4],
       authors,
       '#p': peers,
       limit,
     }
-    relays = relays.map(url => normalizeRelayURL(url))
+    relays = relays.map((url) => normalizeRelayURL(url))
     let relayWork = {
       action: 'stream',
       subName: 'page',
@@ -304,12 +318,12 @@ const methods = {
     return ticket
   },
   streamProfile(settings, id) {
-    let {authors, relays} = settings
+    let { authors, relays } = settings
     let filter = {
       kinds: [0],
       authors,
     }
-    relays = relays.map(url => normalizeRelayURL(url))
+    relays = relays.map((url) => normalizeRelayURL(url))
     let relayWork = {
       action: 'stream',
       subName: 'page',
@@ -329,11 +343,11 @@ const methods = {
     return ticket
   },
   dbStreamEvent(settings, id) {
-    let {ids, relays} = settings
+    let { ids, relays } = settings
     let filter = {
       ids,
     }
-    relays = relays.map(url => normalizeRelayURL(url))
+    relays = relays.map((url) => normalizeRelayURL(url))
     let relayWork = {
       action: 'stream',
       subName: 'page',
@@ -346,8 +360,8 @@ const methods = {
       streamUpdates: true,
       call: {
         name: 'dbEvents',
-        args: [ids]
-      }
+        args: [ids],
+      },
     }
     let ticket = {
       id,
@@ -358,12 +372,12 @@ const methods = {
     return ticket
   },
   dbStreamFollows(settings, id) {
-    let {author, relays} = settings
+    let { author, relays } = settings
     let filter = {
       kinds: [3],
-      authors: [author]
+      authors: [author],
     }
-    relays = relays.map(url => normalizeRelayURL(url))
+    relays = relays.map((url) => normalizeRelayURL(url))
     let relayWork = {
       action: 'stream',
       subName: 'page',
@@ -376,8 +390,8 @@ const methods = {
       streamUpdates: true,
       call: {
         name: 'dbFollows',
-        args: [author]
-      }
+        args: [author],
+      },
     }
     let ticket = {
       id,
@@ -388,12 +402,12 @@ const methods = {
     return ticket
   },
   dbStreamFollowers(settings, id) {
-    let {author, relays} = settings
+    let { author, relays } = settings
     let filter = {
       kinds: [3],
-      '#p': [author]
+      '#p': [author],
     }
-    relays = relays.map(url => normalizeRelayURL(url))
+    relays = relays.map((url) => normalizeRelayURL(url))
     let relayWork = {
       action: 'stream',
       subName: 'page',
@@ -406,8 +420,8 @@ const methods = {
       streamUpdates: true,
       call: {
         name: 'dbFollowers',
-        args: [author]
-      }
+        args: [author],
+      },
     }
     let ticket = {
       id,
@@ -418,13 +432,13 @@ const methods = {
     return ticket
   },
   dbStreamTagKind(settings, id) {
-    let {type, values, kinds, limit = 500, relays} = settings
+    let { type, values, kinds, limit = 500, relays } = settings
     let filter = {
       ['#' + type]: values,
       kinds,
-      limit
+      limit,
     }
-    relays = relays.map(url => normalizeRelayURL(url))
+    relays = relays.map((url) => normalizeRelayURL(url))
     let relayWork = {
       action: 'stream',
       subName: 'page',
@@ -436,8 +450,8 @@ const methods = {
       streamEvents: true,
       call: {
         name: 'dbTagKind',
-        args: [type, values, kinds]
-      }
+        args: [type, values, kinds],
+      },
     }
     let ticket = {
       id,
@@ -452,8 +466,8 @@ const methods = {
       action: 'query',
       call: {
         name: 'dbSave',
-        args: [event]
-      }
+        args: [event],
+      },
     }
     let ticket = {
       id,
@@ -466,8 +480,8 @@ const methods = {
       action: 'query',
       call: {
         name: 'dbQuery',
-        args: [sql]
-      }
+        args: [sql],
+      },
     }
     let ticket = {
       id,
@@ -480,8 +494,8 @@ const methods = {
       action: 'query',
       call: {
         name: 'dbEvent',
-        args: [eventId]
-      }
+        args: [eventId],
+      },
     }
     let ticket = {
       id,
@@ -494,8 +508,8 @@ const methods = {
       action: 'query',
       call: {
         name: 'dbProfile',
-        args: [pubkey]
-      }
+        args: [pubkey],
+      },
     }
     let ticket = {
       id,
@@ -508,8 +522,8 @@ const methods = {
       action: 'query',
       call: {
         name: 'dbFollows',
-        args: [pubkey]
-      }
+        args: [pubkey],
+      },
     }
     let ticket = {
       id,
@@ -522,8 +536,8 @@ const methods = {
       action: 'query',
       call: {
         name: 'dbChats',
-        args: [pubkey]
-      }
+        args: [pubkey],
+      },
     }
     let ticket = {
       id,
@@ -536,8 +550,8 @@ const methods = {
       action: 'query',
       call: {
         name: 'dbMessages',
-        args: [userPubkey, peerPubkey, limit, until]
-      }
+        args: [userPubkey, peerPubkey, limit, until],
+      },
     }
     let ticket = {
       id,
@@ -550,8 +564,8 @@ const methods = {
       action: 'query',
       call: {
         name: 'dbMentions',
-        args: [pubkey, limit, until]
-      }
+        args: [pubkey, limit, until],
+      },
     }
     let ticket = {
       id,
@@ -564,8 +578,8 @@ const methods = {
       action: 'query',
       call: {
         name: 'dbUnreadMessagesCount',
-        args: [userPubkey, peerPubkey, since]
-      }
+        args: [userPubkey, peerPubkey, since],
+      },
     }
     let ticket = {
       id,
@@ -578,8 +592,8 @@ const methods = {
       action: 'query',
       call: {
         name: 'dbUnreadMentionsCount',
-        args: [pubkey, since]
-      }
+        args: [pubkey, since],
+      },
     }
     let ticket = {
       id,
@@ -667,7 +681,8 @@ eventWorker.onmessage = handleEventMessage
 
 async function handleMessage({ data }) {
   // todo handle update and cancel
-  let { name, args, id, cancel } = typeof data === 'string' ? JSON.parse(data) : data
+  let { name, args, id, cancel } =
+    typeof data === 'string' ? JSON.parse(data) : data
 
   let ticket = tickets[id]
   if (cancel) {
@@ -676,7 +691,11 @@ async function handleMessage({ data }) {
     delete tickets[id]
   } else if (ticket) {
     let updatedTicket = methods[name](...args, id)
-    if (JSON.stringify(ticket.relayWork) === JSON.stringify(updatedTicket.relayWork)) return
+    if (
+      JSON.stringify(ticket.relayWork) ===
+      JSON.stringify(updatedTicket.relayWork)
+    )
+      return
     updatedTicket.type = 'update'
     ticket = updatedTicket
     tickets[id] = ticket
@@ -699,7 +718,6 @@ async function handleMessage({ data }) {
 }
 
 self.onmessage = handleMessage
-
 
 function normalizeRelayURL(url) {
   let [host, ...qs] = url.trim().split('?')

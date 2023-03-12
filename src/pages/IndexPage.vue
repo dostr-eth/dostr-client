@@ -3,9 +3,9 @@
     <img
       alt="dostr logo"
       src="~assets/dostr-logo.svg"
-      style="width: 200px; height: 200px;"
-    >
-    <TheKeyInitializationDialog v-if='!$store.state.keys.pub' />
+      style="width: 200px; height: 200px"
+    />
+    <TheKeyInitializationDialog v-if="!$store.state.keys.pub" />
   </q-page>
 </template>
 
@@ -21,7 +21,7 @@ export default defineComponent({
 })
 </script>
 
-<style lang='css' scoped>
+<style lang="css" scoped>
 /*.q-page {
   background-image: url("~assets/dostr-logo.svg");
   background-position: center;

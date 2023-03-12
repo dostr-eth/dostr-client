@@ -1,28 +1,44 @@
 <template>
-  <q-list ref='thread' class='no-padding'>
-    <div v-if='fetchRootReply && ($store.state.eventsCache[reply] || $store.state.eventsCache[root]) && rootReplyThread.length'>
-      <BasePostThread :events="rootReplyThread" is-ancestors/>
+  <q-list ref="thread" class="no-padding">
+    <div
+      v-if="
+        fetchRootReply &&
+        ($store.state.eventsCache[reply] || $store.state.eventsCache[root]) &&
+        rootReplyThread.length
+      "
+    >
+      <BasePostThread :events="rootReplyThread" is-ancestors />
     </div>
     <div
       v-for="(event, index) in filledEvents"
       :key="event.id + index"
-      class='no-padding'
+      class="no-padding"
     >
-      <BaseButtonShowMore v-if="event.id === 'FILLER'" :root="event.root"/>
+      <BaseButtonShowMore v-if="event.id === 'FILLER'" :root="event.root" />
       <!-- <BaseButtonShowMore v-else-if="event.id === 'REPLIES'" :root="event.root" :reply-count='event.replyCount'/> -->
       <BasePost
         v-else
         :event="event"
         :position="position(index)"
-        :reply-depth='replyDepth'
-        :reply-count='event.replies?.length ? event.replies.length : (index === filledEvents.length - 1 ? (isAncestors ? 1 : 0) : 1)'
-        @resized='resize'
-        @add-event='addEvent'
+        :reply-depth="replyDepth"
+        :reply-count="
+          event.replies?.length
+            ? event.replies.length
+            : index === filledEvents.length - 1
+            ? isAncestors
+              ? 1
+              : 0
+            : 1
+        "
+        @resized="resize"
+        @add-event="addEvent"
         @click.stop="toEvent(event.id)"
       />
     </div>
-    <div v-if='(!replyDepth || replyDepth === 0) && !isAncestors' class='bottom-border'>
-    </div>
+    <div
+      v-if="(!replyDepth || replyDepth === 0) && !isAncestors"
+      class="bottom-border"
+    ></div>
   </q-list>
 </template>
 
@@ -35,10 +51,10 @@ export default {
   emits: ['resized', 'add-event'],
   mixins: [helpersMixin],
   props: {
-    events: {type: Array, required: true},
-    isAncestors: {type: Boolean, default: false},
-    replyDepth: {type: Number, default: 0},
-    fetchRootReply: {type: Boolean, default: false},
+    events: { type: Array, required: true },
+    isAncestors: { type: Boolean, default: false },
+    replyDepth: { type: Number, default: 0 },
+    fetchRootReply: { type: Boolean, default: false },
   },
   components: {
     BaseButtonShowMore,
@@ -52,15 +68,20 @@ export default {
 
   computed: {
     root() {
-      return this.events[0]?.interpolated?.replyEvents?.length ? this.events[0].interpolated.replyEvents[0] : null
+      return this.events[0]?.interpolated?.replyEvents?.length
+        ? this.events[0].interpolated.replyEvents[0]
+        : null
     },
     reply() {
-      return (this.root && this.events[0]?.interpolated?.replyEvents?.length > 1) ? this.events[0].interpolated.replyEvents[1] : null
+      return this.root && this.events[0]?.interpolated?.replyEvents?.length > 1
+        ? this.events[0].interpolated.replyEvents[1]
+        : null
     },
     rootReplyThread() {
       let thread = []
       if (this.reply && this.$store.state.eventsCache[this.reply]) {
-        if (this.root && this.$store.state.eventsCache[this.root]) thread.push(this.$store.state.eventsCache[this.root])
+        if (this.root && this.$store.state.eventsCache[this.root])
+          thread.push(this.$store.state.eventsCache[this.root])
         thread.push(this.$store.state.eventsCache[this.reply])
       }
       return thread
@@ -78,8 +99,11 @@ export default {
         let curr = this.events[i]
         let prev = this.events[i - 1]
         let currEventTags = curr.interpolated.replyEvents || []
-        if (currEventTags.length && currEventTags[currEventTags.length - 1] !== prev.id) {
-          filled.push({id: 'FILLER', root: prev.id})
+        if (
+          currEventTags.length &&
+          currEventTags[currEventTags.length - 1] !== prev.id
+        ) {
+          filled.push({ id: 'FILLER', root: prev.id })
         }
         filled.push(curr)
       }
@@ -155,16 +179,15 @@ export default {
       // if (this.resizing) return this.$refs.thread?.$el?.clientWidth
       return this.$refs.thread?.$el?.clientWidth
     },
-  }
+  },
 }
 </script>
 
-<style lang='scss'>
-
+<style lang="scss">
 .bottom-border {
   border-bottom: 2px solid var(--q-accent);
-  opacity: .25;
+  opacity: 0.25;
   height: 0;
-  margin: 0 .4rem;
+  margin: 0 0.4rem;
 }
 </style>

@@ -1,191 +1,324 @@
 <template>
   <!-- <q-dialog persistent> -->
   <!-- <div v-if="showKeyInitialization"> -->
-    <q-card class='relative-position full-width'>
-      <q-btn icon='close' size='md' flat round class='absolute-top-right z-top' @click='$emit("look-around")'/>
-      <h1 class="text-h6 q-pr-md">👋 Welcome to Dostr - Ethereum-flavoured Nostr</h1>
-      <q-expansion-item
-        expand-icon='expand_more'
-        expanded-icon='expand_less'
-        class="intro no-padding full-width items-center q-mb-md"
-        header-class='items-center'
-      >
-        <template #header>
-          <span class='full-width'>🔑 Dostr uses Ethereum signatures to generate your Nostr keys. Click here to learn about Dostr</span>
-        </template>
-        <BaseInformation/>
-        <span style='padding: .2rem 0 0 .2rem;'>ℹ️ This same information can be found in
-        the <strong>FAQ</strong> section at the bottom of the Settings page after Login</span>
-      </q-expansion-item>
-      <div style="margin-left: 32%; width: 100%;" class="q-mb-md">
-        <q-btn
-          size="md"
-          color="primary"
-          label="Sign In With Ethereum"
-          :outline="watchOnly"
-          :text-color="watchOnly ? '' : 'dark'"
-          value="false"
-        />
+  <q-card class="relative-position full-width">
+    <div style="width: 30%; display: flex; margin: 0 auto">
+      <img src="mascot_round.png" alt="mascot_round" class="image-fit" />
+    </div>
+    <q-btn
+      icon="close"
+      size="md"
+      flat
+      round
+      class="absolute-top-right z-top"
+      @click="$emit('look-around')"
+    />
+    <h1
+      style="text-align: center; justify-content: center; margin-bottom: -10px"
+      class="text-h4 spotnik"
+    >
+      Welcome to Dostr
+    </h1>
+    <h2
+      style="text-align: center; justify-content: center"
+      class="text-h6 spotnik"
+    >
+      Ethereum-flavoured Nostr
+    </h2>
+    <q-expansion-item
+      expand-icon="expand_more"
+      expanded-icon="expand_less"
+      class="intro full-width items-center q-mb-md"
+      header-class="items-center"
+    >
+      <template #header>
+        <span class="text-bold flex justify-between" style="margin: 0 auto">
+          <q-icon
+            name="info"
+          ></q-icon>
+          <span class="lt-md" style="font-size: 14px; margin: -3px 0 0 8px;">Learn about Dostr</span>
+          <span class="gt-sm" style="font-size: 16px; margin: -4px 0 0 10px;">Click here to learn about Dostr</span>
+        </span>
+      </template>
+      <div>
+        <BaseInformation />
       </div>
-      <div style="margin-left: 47%; width: 100%;">
-        <h2 class="text-subtitle2 q-pr-md">OR</h2>
+      <div style="margin-top: 5px">
+        <span
+          style="
+            padding: 0.2rem 0 0 0.2rem;
+            font-size: 10pt;
+            font-family: 'SF Mono';
+          "
+          >ℹ️ This same information can be found in the
+          <strong>FAQ</strong> section at the bottom of the
+          <strong>Settings</strong> page after Login</span
+        >
       </div>
-      <q-expansion-item
-        expand-icon='expand_more'
-        expanded-icon='expand_less'
-        class="no-padding items-center q-mb-md"
-        header-class='items-center'
-      >
-        <template #header>
-          <h2 class="text-subtitle1 q-pr-md">🔐 Enter your custom Nostr key</h2>
-        </template>
-        <q-form @submit="proceed">
-          <q-card-section class="key-entry no-padding">
-            <q-btn-group spread unelevated>
+    </q-expansion-item>
+    <hr style="margin-bottom: 25px" />
+    <div
+      style="display: flex; margin: 0; justify-content: center"
+      class="q-mb-md"
+    >
+      <div style="width: 4%; display: flex; margin-right: 5px">
+        <img src="ethereum.svg" alt="mascot_round" class="image-fit" />
+      </div>
+      <q-btn
+        size="md"
+        @click="siwe"
+        style="
+          background: linear-gradient(
+            75deg,
+            rgba(32, 139, 147, 1) 0%,
+            rgba(28, 85, 113, 1) 50%,
+            rgba(164, 90, 90, 1) 100%
+          );
+          border: 0px solid white;
+        "
+        text-color="white"
+        font-weight="900"
+        label="Sign-In With Ethereum"
+        value="true"
+      />
+      <div style="width: 4%; display: flex; margin-left: 5px">
+        <img src="ethereum.svg" alt="mascot_round" class="image-fit" />
+      </div>
+    </div>
+    <div style="margin-left: 47%; width: 100%">
+      <h2 class="text-subtitle1 q-pr-md">OR</h2>
+    </div>
+    <q-expansion-item
+      expand-icon="expand_more"
+      expanded-icon="expand_less"
+      class="no-padding items-center q-mb-md"
+      header-class="items-center"
+    >
+      <template #header>
+        <h2
+          class="text-subtitle1 text-bold q-pr-md flex justify-between gt-sm"
+          style="margin: 0 auto"
+        >
+          🔐 &nbsp;Enter your custom Nostr key
+        </h2>
+        <h2
+          class="text-subtitle1 text-bold q-pr-md flex justify-between lt-md"
+          style="margin: 0 auto; font-size: 12px;"
+        >
+          🔐 &nbsp;Enter your custom Nostr key
+        </h2>
+      </template>
+      <q-form @submit="proceed">
+        <q-card-section class="key-entry no-padding">
+          <q-btn-group spread unelevated>
+            <q-btn
+              size="md"
+              color="primary"
+              label="public key"
+              :outline="!watchOnly"
+              :text-color="!watchOnly ? '' : 'dark'"
+              value="true"
+              @click="watchOnly = true"
+              :disable="isBech32Sec"
+            />
+            <q-btn
+              size="md"
+              color="primary"
+              label="private key"
+              :outline="watchOnly"
+              :text-color="watchOnly ? '' : 'dark'"
+              value="false"
+              @click="watchOnly = false"
+              :disable="isBech32Pub"
+            />
+          </q-btn-group>
+          <q-input
+            v-model="key"
+            ref="keyInput"
+            bottom-slots
+            outlined
+            :label="watchOnly ? 'enter public key' : 'enter private key'"
+            style="width: inherit"
+            dense
+          >
+            <template #hint>
+              <p v-if="!key && watchOnly" style="font-size: 12px">
+                <q-icon
+                  name="info"
+                  style="font-size: 16px; margin-top: -2px"
+                ></q-icon>
+                INFO: Entering <b style="color: lightgreen">Public Key</b> means
+                you will need to <b style="color: orange">Sign</b> with your
+                <b style="color: orange">Private Key</b>
+                each time you post content either manually or using a browser
+                extension
+              </p>
+              <p v-if="!key && !watchOnly" style="font-size: 12px">
+                <span style="font-size: 14px">⚠️</span> WARNING: Entering your
+                <b style="color: orange">Private Key</b> means Dostr will
+                automatically <b style="color: orange">Sign</b> with your
+                <b style="color: orange">Private Key</b> each time you post
+                content
+              </p>
+              <div class="flex justify-center" style="margin-top: 10px">
+                <p
+                  v-if="key && !isKeyValid"
+                  style="font-size: 16px; color: white"
+                >
+                  INVALID KEY ❌
+                </p>
+                <p v-if="isKeyValid" style="font-size: 16px; color: white">
+                  VALID KEY ✅
+                </p>
+              </div>
+            </template>
+            <template #append>
               <q-btn
-                size="md"
-                color="primary"
-                label="public key"
-                :outline="!watchOnly"
-                :text-color="!watchOnly ? '' : 'dark'"
-                value="true"
-                @click="watchOnly = true"
-                :disable='isBech32Sec'
-              />
-              <q-btn
-                size="md"
-                color="primary"
-                label="private key"
-                :outline="watchOnly"
-                :text-color="watchOnly ? '' : 'dark'"
-                value="false"
-                @click="watchOnly = false"
-                :disable='isBech32Pub'
-              />
-            </q-btn-group>
-            <q-input
-              v-model="key"
-              ref="keyInput"
-              bottom-slots
-              outlined
-              :label="watchOnly ? 'enter public key' : 'enter private key'"
-              dense
+                type="submit"
+                unelevated
+                size="sm"
+                :color="isKeyValid ? 'positive' : 'negative'"
+                :font-weight="isKeyValid ? 'normal' : 'bold'"
+                :text-color="isKeyValid ? 'white' : 'white'"
+                :label="isKeyValid ? 'PROCEED' : 'ENTER KEY'"
+                :icon-right="isKeyValid ? 'login' : 'close'"
+                @click="proceed"
+                :disabled="!isKeyValid"
+                style="font-size: 12px; font-weight: 900"
+              ></q-btn>
+            </template>
+          </q-input>
+          <hr style="margin-top: 50px; margin-bottom: 25px" />
+          <div class="flex justify-between">
+            <h2
+              v-if="!isKeyValid"
+              class="text-subtitle1 text-bold q-pr-md flex justify-between"
+              style="margin: 0 auto"
             >
-              <template #hint >
-                <p v-if="!key && watchOnly">
-                  ℹ️ entering public key means you will need to enter private key
-                  each time you post content either manually or by Nostr browser
-                  extension
-                </p>
-                <p v-if="!key && !watchOnly">
-                  ❗ entering private key means Dostr will automatically sign with
-                  your private key each time you post content
-                </p>
-                <p v-if="key && !isKeyValid">INVALID KEY ❌</p>
-                <p v-if="isKeyValid">VALID KEY ✅</p>
-              </template>
-              <template #append>
-                <q-btn
-                  v-if="!isKeyValid"
-                  size="sm"
-                  color="primary"
-                  outline
-                  @click="generate"
-                >
-                  generate keys
-                </q-btn>
-                <q-btn
-                  v-if="hasExtension && !isKeyValid"
-                  size="sm"
-                  color="primary"
-                  outline
-                  @click="getFromExtension"
-                >
-                  use public key from Nostr extension
-                </q-btn>
-                <q-btn
-                  type="submit"
-                  unelevated
-                  size="sm"
-                  color="positive"
-                  :label="isKeyValid ? 'proceed' : ''"
-                  icon-right="login"
-                  style='color: var(--q-background) !important;'
-                  @click="proceed"
-                  :disabled="!isKeyValid"
-                ></q-btn>
-              </template>
-            </q-input>
-          </q-card-section>
+              🔑 Do not have a key?
+            </h2>
+          </div>
+          <q-btn-group style="margin-top: 20px" spread unelevated>
+            <q-btn
+              v-if="!isKeyValid"
+              size="md"
+              color="primary"
+              outline
+              @click="generate"
+            >
+              Generate Keys
+            </q-btn>
+            <q-btn
+              v-if="hasExtension && !isKeyValid"
+              size="md"
+              color="primary"
+              outline
+              @click="getFromExtension"
+            >
+              Use Nostr Extension
+            </q-btn>
+          </q-btn-group>
+        </q-card-section>
         <!-- <div v-if='isBech32Key(key)'>
         {{ hexKey }}
         </div> -->
-        </q-form>
-        <q-expansion-item
-          v-if='isKeyValid'
-          class="q-mt-sm"
-          dense
-          dense-toggle
-          default-opened
-          id='bootstrap-relays'
+      </q-form>
+      <q-expansion-item
+        v-if="isKeyValid"
+        class="q-mt-sm"
+        dense
+        dense-toggle
+        default-opened
+        id="bootstrap-relays"
+      >
+        <template #header>
+          <div class="full-width flex row no-wrap justify-center">
+            <h2 class="text-subtitle1 text-bold q-pr-sm gt-sm">
+              📡 &nbsp;Enter Bootstrap Relays (optional)
+            </h2>
+            <h2 class="text-subtitle1 text-bold q-pr-sm lt-md" style="font-size: 12px;">
+              📡 &nbsp;Enter Bootstrap Relays (optional)
+            </h2>
+          </div>
+        </template>
+        <div
+          class="flex row justify-between no-wrap items-end q-mb-sm"
+          style="margin-top: 20px"
         >
-          <template #header>
-            <div class='full-width flex row no-wrap items-center'>
-              <h2 class="text-subtitle2 q-pr-sm">Enter Bootstrap Relays (optional)</h2>
-              <q-icon name='ℹ️'>
-                <q-tooltip>
-                  • The selected relays below will be queried to load your user profile, follows, and relay data from Nostr network.<br/>
-                  • Please ensure the list of selected relays includes relays you publish your Nostr data to, otherwise Dostr may
-                not be able to find your data.
-                </q-tooltip>
-              </q-icon>
+          <span class="q-ml-sm text-bold gt-sm">↓ Selected relays</span>
+          <span class="q-ml-xs text-bold lt-md">↓ Relays</span>
+          <q-icon
+            class="gt-sm"
+            name="info"
+            style="font-size: 20px; margin-left: -75px; margin-top: -15px"
+          >
+            <q-tooltip style="font-size: 13px">
+              • The selected relays below will be queried to load your user
+              profile, follows, and relay data from Nostr network.<br />
+              • Please ensure the list of selected relays includes relays you
+              publish your Nostr data to, otherwise Dostr may not be able to
+              find your data.
+            </q-tooltip>
+          </q-icon>
+          <div class="flex items-end" id="new-relay-input">
+            <q-input
+              v-model="addRelay"
+              color="lightgreen"
+              ref="keyInput"
+              dense
+              bottom-slots
+              placeholder="add new relay"
+              style="padding-top: -10px"
+            >
+            </q-input>
+            <q-btn
+              icon="add"
+              color="positive"
+              size="md"
+              flat
+              dense
+              @click.stop="addNewRelay"
+            />
+          </div>
+        </div>
+        <BaseSelectMultiple>
+          <template #selected>
+            <pre class="relay-list" style="border: 1px solid var(--q-primary);">
+               <li
+                 v-for='(relay, index) in Object.keys(selectedRelays)'
+                 :key='index + "-" + relay'
+                 class='relay-item'
+                 @click.stop='delete selectedRelays[relay]'
+               >
+                 <div class='flex row justify-between no-wrap'>
+                   <span style='overflow: auto;'>{{ relay }}</span>
+                   <q-icon name='remove' size='xs' color='negative'/>
+                 </div>
+               </li>
+             </pre>
+          </template>
+          <template #options>
+            <div style="max-height: 6.75rem">
+              <pre class="relay-list">
+               <li
+                 v-for='(relay, index) in optionalRelays'
+                 :key='index + "-" + relay'
+                 class='relay-item'
+                 @click.stop='selectedRelays[relay] = { read: true, write: false }'
+               >
+                 <div class='flex row justify-between no-wrap'>
+                   <span style='overflow: auto;'>{{ relay }}</span>
+                   <q-icon name='add' size='xs' color='positive' flat/>
+                 </div>
+               </li>
+             </pre>
             </div>
           </template>
-          <div class='flex row justify-between no-wrap items-end q-mb-sm' >
-            <span class="q-ml-sm">↓ Selected relays</span>
-            <div class='flex row items-end' id='new-relay-input'>
-              <q-input v-model='newRelay' placeholder='add a new relay...' input-style='padding: 1; width: 10rem;' @keypress.enter='addNewRelay' dense borderless/>
-              <q-btn icon='add' color='positive' size='sm' flat dense @click.stop='addNewRelay'/>
-            </div>
-          </div>
-          <BaseSelectMultiple>
-            <template #selected>
-              <pre class='relay-list' style='border: 1px solid var(--q-primary);'>
-                <li
-                  v-for='(relay, index) in Object.keys(selectedRelays)'
-                  :key='index + "-" + relay'
-                  class='relay-item'
-                  @click.stop='delete selectedRelays[relay]'
-                >
-                  <div class='flex row justify-between no-wrap'>
-                    <span style='overflow: auto;'>{{relay}}</span>
-                    <q-icon name='remove' size='xs' color='negative'/>
-                  </div>
-                </li>
-              </pre>
-            </template>
-            <template #options>
-              <div style='max-height: 6.75rem;'>
-              <pre class='relay-list' >
-                <li
-                  v-for='(relay, index) in optionalRelays'
-                  :key='index + "-" + relay'
-                  class='relay-item'
-                  @click.stop='selectedRelays[relay]={read: true, write:false}'
-                >
-                  <div class='flex row justify-between no-wrap'>
-                    <span style='overflow: auto;'>{{relay}}</span>
-                    <q-icon name='add' size='xs' color='positive' flat/>
-                  </div>
-                </li>
-              </pre>
-              </div>
-            </template>
-          </BaseSelectMultiple>
-        </q-expansion-item>
-        <div style='min-height: 1rem;'/>
+        </BaseSelectMultiple>
       </q-expansion-item>
-    </q-card>
+      <div style="min-height: 1rem" />
+    </q-expansion-item>
+  </q-card>
   <!-- </div> -->
   <!-- </q-dialog> -->
 </template>
@@ -195,6 +328,7 @@ import { defineComponent } from 'vue'
 import helpersMixin from '../utils/mixin'
 // import { nip06 } from 'nostr-tools'
 import { generatePrivateKey, nip06 } from 'nostr-tools'
+import { connectWallet } from '../utils/interact'
 // import { decode } from 'bech32-buffer'
 import BaseSelectMultiple from 'components/BaseSelectMultiple.vue'
 import BaseInformation from 'components/BaseInformation.vue'
@@ -277,13 +411,17 @@ export default defineComponent({
     },
 
     optionalRelays() {
-      let options = this.$store.state.optionalRelaysList.filter(relay => {
-        if (this.newRelay.length && !relay.toLowerCase().includes(this.newRelay.toLowerCase())) return false
+      let options = this.$store.state.optionalRelaysList.filter((relay) => {
+        if (
+          this.newRelay.length &&
+          !relay.toLowerCase().includes(this.newRelay.toLowerCase())
+        )
+          return false
         if (this.selectedRelays[relay]) return false
         return true
       })
       return options
-    }
+    },
   },
 
   async created() {
@@ -342,47 +480,87 @@ export default defineComponent({
       })
     },
 
+    siwe() {
+      connectWallet()
+    },
+
     addNewRelay() {
-      if (this.newRelay && this.newRelay.length) this.selectedRelays[this.newRelay] = {read: true, write: false}
+      if (this.newRelay && this.newRelay.length)
+        this.selectedRelays[this.newRelay] = { read: true, write: false }
       this.newRelay = ''
-    }
+      this.focusKeyInput()
+    },
   },
 })
 </script>
 
-<style lang='css' scoped>
+<style lang="css" scoped>
 .q-card {
-  background: var(--q-background);
+  background: linear-gradient(
+    75deg,
+    rgba(32, 139, 147, 1) 0%,
+    rgba(28, 85, 113, 1) 50%,
+    rgba(164, 90, 90, 1) 100%
+  );
   padding: 1rem;
+}
+
+.q-btn {
+  padding: 4px 8px 4px 8px;
+  font-size: large;
+  font-family: "Spotnik";
+  font-weight: 900;
+}
+
+.q-input {
+  padding: 1rem;
+  font-size: normal;
+  font-family: "SF Mono";
+  font-weight: 800;
 }
 </style>
 
-<style lang='css'>
+<style lang="css">
 .relay-list {
   column-width: 15rem;
-  column-gap: .5rem;
+  column-gap: 0.5rem;
   width: 100%;
   min-height: 1px;
-  font-family: 'SF Mono';
-  font-size: .8rem;
+  font-family: "SF Mono";
+  font-size: 0.8rem;
   white-space: nowrap;
-  padding: 2px .5rem;
+  padding: 2px 0.5rem;
   border-radius: 2px;
   overflow-y: auto;
   overflow-x: hidden;
   border-color: green;
 }
+
 .relay-item {
   overflow: auto;
 }
+
+.spotnik {
+  font-family: "Spotnik";
+  font-weight: 900;
+}
+
+.image-fit {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+}
+
 #new-relay-input {
-   background: rgba(0, 0, 0, 0.05);
-   border-radius: .3rem;
-   padding: 0 0 0 .5rem;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 0.3rem;
+  padding: 0 0 0 0.5rem;
 }
+
 .body--dark #new-relay-input {
-   background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.08);
 }
+
 #new-relay-input .q-field--dense .q-field__control {
   height: 1.4rem !important;
 }

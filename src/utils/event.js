@@ -1,6 +1,6 @@
 import * as DOMPurify from 'dompurify'
 // import { Dialog } from 'quasar'
-import {getEventHash, signEvent} from 'nostr-tools'
+import { getEventHash, signEvent } from 'nostr-tools'
 
 export function cleanEvent(event) {
   return {
@@ -17,7 +17,8 @@ export function cleanEvent(event) {
 export function metadataFromEvent(event) {
   try {
     let metadata = JSON.parse(event.content)
-    for (let key of Object.keys(metadata)) metadata[key] = DOMPurify.sanitize(metadata[key])
+    for (let key of Object.keys(metadata))
+      metadata[key] = DOMPurify.sanitize(metadata[key])
     metadata.pubkey = event.pubkey
     metadata.created_at = event.created_at
     return metadata
@@ -28,15 +29,21 @@ export function metadataFromEvent(event) {
 }
 
 export function isValidEvent(event) {
-  if (event.tags.filter(([t, v]) => t === 'e' && (!v || v.includes(' '))).length) return false
+  if (
+    event.tags.filter(([t, v]) => t === 'e' && (!v || v.includes(' '))).length
+  )
+    return false
   if (event.content === 'this workshop is awesome!') return false
   if (event.content === 'Hello Nostr! :)') return false
   if (event.content.trim() === '') return false
-  if (event.seen_on?.length && event.seen_on.includes('wss://rsslay.nostr.net')) return false
+  if (event.seen_on?.length && event.seen_on.includes('wss://rsslay.nostr.net'))
+    return false
   try {
     JSON.parse(event.content)
     return false
-  } catch (error) { /* nothing to do */ }
+  } catch (error) {
+    /* nothing to do */
+  }
   return true
 }
 

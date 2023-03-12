@@ -1,39 +1,62 @@
 <template>
-  <q-page >
-  <!-- <div id='feed-scroll' style='max-height: 700px; overflow: auto;'> -->
+  <q-page>
+    <!-- <div id='feed-scroll' style='max-height: 700px; overflow: auto;'> -->
     <!-- <div> -->
-      <!-- <q-infinite-scroll @load='loadMore()' :offset='500' scroll-target='#feed-scroll'> -->
-      <BaseHeader :separator='false'>
-        <div class='flex row justify-start items-center' style='gap: 1rem;'>
-          <div>{{ $t('feed') }}</div>
-          <q-select borderless v-model="feedName" :options="['follows', 'global', 'bots']" />
+    <!-- <q-infinite-scroll @load='loadMore()' :offset='500' scroll-target='#feed-scroll'> -->
+    <BaseHeader :separator="false">
+      <div class="flex row justify-start" style="gap: 1rem; font-family: 'Spotnik'">
+        <div class="gt-sm">{{ $t("dostr") }}</div>
+        <div style="margin-top: -12px;" class="gt-sm">
+          <q-select
+            borderless
+            v-model="feedName"
+            :options="options"
+            option-value="value"
+            option-label="description"
+            emit-value
+            map-input
+            option-disable="inactive"
+          />
         </div>
-      </BaseHeader>
-      <BaseButtonLoadMore
-        v-if='unreadFeed.length'
-        :loading-more='loadingUnread'
-        :label='"load " + unreadFeed.length + " unread"'
-        @click='loadUnread'
+        <div style="margin-top: -12px; margin-left: 20%;" class="lt-md">
+          <q-select
+            borderless
+            v-model="feedName"
+            :options="options"
+            option-value="value"
+            option-label="description"
+            emit-value
+            map-input
+            option-disable="inactive"
+          />
+        </div>
+      </div>
+    </BaseHeader>
+    <BaseButtonLoadMore
+      v-if="unreadFeed.length"
+      :loading-more="loadingUnread"
+      :label="'load ' + unreadFeed.length + ' unread'"
+      @click="loadUnread"
+    />
+    <div v-for="(item, index) in items" :key="index">
+      <BasePostThread
+        :events="item"
+        class="full-width"
+        fetch-root-reply
+        @add-event="processEvent"
       />
       <div
-        v-for='(item, index) in items'
-        :key='index'
-      >
-        <BasePostThread
-          :events="item"
-          class='full-width'
-          fetch-root-reply
-          @add-event='processEvent'
-        />
-        <div v-if='index === items.length - 6' v-intersection='handleIntersectionObserver'></div>
-      </div>
-          <div v-if='loadingMore' class='row justify-center q-py-sm'>
-            <q-spinner-orbit color="accent" size='md' />
-          </div>
-      <!-- </q-infinite-scroll> -->
-      <!-- </div> -->
+        v-if="index === items.length - 6"
+        v-intersection="handleIntersectionObserver"
+      ></div>
+    </div>
+    <div v-if="loadingMore" class="row justify-center q-py-sm">
+      <q-spinner-orbit color="accent" size="md" />
+    </div>
+    <!-- </q-infinite-scroll> -->
     <!-- </div> -->
-      <!-- <q-tabs
+    <!-- </div> -->
+    <!-- <q-tabs
         v-model="tab"
         dense
         outline
@@ -69,9 +92,9 @@
 <script>
 import { defineComponent } from 'vue'
 import helpersMixin from '../utils/mixin'
-import {addToThread} from '../utils/threads'
-import {isValidEvent} from '../utils/event'
-import {getFeed, dbFollows} from '../query'
+import { addToThread } from '../utils/threads'
+import { isValidEvent } from '../utils/event'
+import { getFeed, dbFollows } from '../query'
 import BaseButtonLoadMore from 'components/BaseButtonLoadMore.vue'
 import { createMetaMixin } from 'quasar'
 
@@ -81,9 +104,18 @@ const metaData = {
 
   // meta tags
   meta: {
-    description: { name: 'description', content: 'decentralized social media feed built on Nostr' },
-    keywords: { name: 'keywords', content: 'nostr decentralized social media' },
-    equiv: { 'http-equiv': 'Content-Type', content: 'text/html; charset=UTF-8' },
+    description: {
+      name: 'description',
+      content: 'Ethereum-flavoured Nostr',
+    },
+    keywords: {
+      name: 'keywords',
+      content: 'nostr dostr decentralized social media siwe siwx'
+    },
+    equiv: {
+      'http-equiv': 'Content-Type',
+      content: 'text/html; charset=UTF-8',
+    },
   },
 }
 
@@ -101,7 +133,7 @@ export default defineComponent({
         this.stop()
         this.loadMore()
       }
-    }
+    },
   },
 
   // props: {
@@ -113,6 +145,25 @@ export default defineComponent({
 
   data() {
     return {
+      options: [
+        {
+          value: 'follows',
+          description: 'FOLLOWS',
+        },
+        {
+          value: 'global',
+          description: 'GLOBAL'
+        },
+        {
+          value: 'bots',
+          description: 'BOTS'
+        },
+        {
+          value: 'ai',
+          description: 'AI',
+          inactive: true
+        }
+      ],
       feed: [],
       // feed: {
       //   follows: [],
@@ -136,7 +187,8 @@ export default defineComponent({
       feedSet: new Set(),
       bots: [],
       // follows: [],
-      botTracker: '29f63b70d8961835b14062b195fc7d84fa810560b36dde0749e4bc084f0f8952',
+      botTracker:
+        '29f63b70d8961835b14062b195fc7d84fa810560b36dde0749e4bc084f0f8952',
       loadingMore: true,
       loadingUnread: false,
       // tab: 'follows',
@@ -153,7 +205,7 @@ export default defineComponent({
   computed: {
     items() {
       return this.feed
-    }
+    },
   },
 
   async mounted() {
@@ -192,7 +244,9 @@ export default defineComponent({
   methods: {
     async loadMore() {
       this.loadingMore = true
-      let relays = Object.keys(this.$store.state.relays).length ? Object.keys(this.$store.state.relays) : Object.keys(this.$store.state.defaultRelays)
+      let relays = Object.keys(this.$store.state.relays).length
+        ? Object.keys(this.$store.state.relays)
+        : Object.keys(this.$store.state.defaultRelays)
 
       // if (this.items.length < this.feed[this.tab].length) {
       //   console.log('just increased counts')
@@ -205,37 +259,42 @@ export default defineComponent({
       // let lastThread = this.feed[feedName][this.feed[feedName].length - 1]
       // let until = lastThread ? lastThread[lastThread.length - 1].latest_created_at : Math.round(Date.now() / 1000)
       // let loadedFeed = []
-      let settings = { relays, until: this.until + (5 * 60), limit: 100 }
-      if (this.feedName === 'follows') settings.authors = this.$store.state.follows
+      let settings = { relays, until: this.until + 5 * 60, limit: 100 }
+      if (this.feedName === 'follows')
+        settings.authors = this.$store.state.follows
       else if (this.feedName === 'bots') settings.authors = this.bots
 
       let results = await getFeed(settings)
-      if (results) for (let event of results) this.processEvent(event, loadedFeed)
+      if (results)
+        for (let event of results) this.processEvent(event, loadedFeed)
       this.feed = this.feed.concat(loadedFeed)
       // for (let feedName of Object.keys(this.feed)) {
       //   this.feed[feedName] = this.feed[feedName].concat(loadedFeed[feedName])
       // }
 
-        // console.log('loaded feed', results, this.feed, this.counts)
+      // console.log('loaded feed', results, this.feed, this.counts)
 
       // this.loadingMore = false
 
-     if (!this.refreshInterval) this.refreshInterval = setInterval(async () => {
-      // let results = await dbFeed(this.since)
-      let settings = { relays, since: this.since, limit: 100 }
-      if (this.feedName === 'follows') settings.authors = this.$store.state.follows
-      else if (this.feedName === 'bots') settings.authors = this.bots
-      let results = await getFeed(settings)
-      // let feed = this.feed.global.length ? this.unreadFeed : this.feed
-      if (results) for (let event of results) this.processEvent(event)
-      // for (let feedName of Object.keys(this.feed)) {
-      //   this.feed[feed] = this.feed[feed].concat(feed[feed])
-      // }
-      this.since = Math.round(Date.now() / 1000)
-      if (!this.bots.length) this.bots = await this.getFollows(this.botTracker)
+      if (!this.refreshInterval)
+        this.refreshInterval = setInterval(async () => {
+          // let results = await dbFeed(this.since)
+          let settings = { relays, since: this.since, limit: 100 }
+          if (this.feedName === 'follows')
+            settings.authors = this.$store.state.follows
+          else if (this.feedName === 'bots') settings.authors = this.bots
+          let results = await getFeed(settings)
+          // let feed = this.feed.global.length ? this.unreadFeed : this.feed
+          if (results) for (let event of results) this.processEvent(event)
+          // for (let feedName of Object.keys(this.feed)) {
+          //   this.feed[feed] = this.feed[feed].concat(feed[feed])
+          // }
+          this.since = Math.round(Date.now() / 1000)
+          if (!this.bots.length)
+            this.bots = await this.getFollows(this.botTracker)
 
-      if (this.loadingMore) this.loadingMore = false
-    }, 10000)
+          if (this.loadingMore) this.loadingMore = false
+        }, 10000)
     },
     stop() {
       if (this.refreshInterval) clearInterval(this.refreshInterval)
@@ -271,9 +330,15 @@ export default defineComponent({
       // this.debouncedAddToThread([event])
       let feed
       if (event.pubkey === this.$store.state.keys.pub) feed = activeFeed
-      else feed = (event.created_at > this.lastLoaded) ? unreadFeed : activeFeed
-      if (this.feedName === 'global' && (this.isBot(event) || this.isAI(event))) return
-      addToThread(feed, JSON.parse(JSON.stringify(event)), 'feed', event.pubkey !== this.$store.state.keys.pub)
+      else feed = event.created_at > this.lastLoaded ? unreadFeed : activeFeed
+      if (this.feedName === 'global' && (this.isBot(event) || this.isAI(event)))
+        return
+      addToThread(
+        feed,
+        JSON.parse(JSON.stringify(event)),
+        'feed',
+        event.pubkey !== this.$store.state.keys.pub
+      )
 
       // if (this.$store.state.follows.includes(event.pubkey)) addToThread(feed.follows, JSON.parse(JSON.stringify(event)), 'feed', event.pubkey !== this.$store.state.keys.pub)
       // if (this.isBot(event)) addToThread(feed.bots, JSON.parse(JSON.stringify(event)), 'feed', event.pubkey !== this.$store.state.keys.pub)
@@ -285,27 +350,38 @@ export default defineComponent({
       let events = await dbFollows(pubkey)
       if (!events?.length) return []
       let event = events[0]
-      return event.tags
-        .filter(([t, v]) => t === 'p' && v)
-        .map(([_, v]) => v)
+      return event.tags.filter(([t, v]) => t === 'p' && v).map(([_, v]) => v)
     },
 
     useProfile(pubkey) {
       // if (this.profilesUsed.has(pubkey)) return
 
       // this.profilesUsed.add(pubkey)
-      this.$store.dispatch('useProfile', {pubkey})
+      this.$store.dispatch('useProfile', { pubkey })
     },
 
     isBot(event) {
       if (this.bots.includes(event.pubkey)) return true
-      if (event.content.includes('https://www.minds.com/newsfeed/')) return true
+      if (event.content.includes('https://www.minds.com/newsfeed/'))
+        return true
       return false
     },
 
     isAI(event) {
-      if (event.pubkey === '5c10ed0678805156d39ef1ef6d46110fe1e7e590ae04986ccf48ba1299cb53e2') return true
-      if (event.tags.findIndex(([t, v]) => t === 'p' && v === '5c10ed0678805156d39ef1ef6d46110fe1e7e590ae04986ccf48ba1299cb53e2') >= 0) return true
+      if (
+        event.pubkey ===
+        '5c10ed0678805156d39ef1ef6d46110fe1e7e590ae04986ccf48ba1299cb53e2'
+      )
+        return true
+      if (
+        event.tags.findIndex(
+          ([t, v]) =>
+            t === 'p' &&
+            v ===
+              '5c10ed0678805156d39ef1ef6d46110fe1e7e590ae04986ccf48ba1299cb53e2'
+        ) >= 0
+      )
+        return true
       return false
     },
 
@@ -322,12 +398,16 @@ export default defineComponent({
     // itemKey(item) {
     //   return item[0].id
     // }
-  }
+  },
 })
 </script>
-<style lang='css' scoped>
+<style lang="css" scoped>
 .q-tabs {
-  border-bottom: 1px solid var(--q-accent)
+  border-bottom: 1px solid var(--q-accent);
+}
+
+.q-select {
+  font-family: 'Spotnik';
 }
 
 .q-page::-webkit-scrollbar {

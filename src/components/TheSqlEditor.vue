@@ -1,18 +1,28 @@
 <template>
   <div>
-    <textarea v-model='sql' id="editor"/>
-    <div style='display: flex; flex-direction: row; gap: 1rem; padding: .5rem 0; align-items: center'>
-      <q-btn id="execute" color='primary' outline @click='execEditorContents'>Execute</q-btn>
+    <textarea v-model="sql" id="editor" />
+    <div
+      style="
+        display: flex;
+        flex-direction: row;
+        gap: 1rem;
+        padding: 0.5rem 0;
+        align-items: center;
+      "
+    >
+      <q-btn id="execute" color="primary" outline @click="execEditorContents"
+        >Execute</q-btn
+      >
       <!-- <button id='savedb' class="btn btn-secondary btn-sm">Save the db</button> -->
       <!-- <label class="button">Load an SQLite database file: <input type='file' id='dbfile' /></label> -->
     </div>
     <div id="error" class="error"></div>
     <q-table
-      v-if='rows.length'
-      :rows='rows'
+      v-if="rows.length"
+      :rows="rows"
       dense
       wrap-cells
-      :rows-per-page-options='[10, 50, 100, 0]'
+      :rows-per-page-options="[10, 50, 100, 0]"
     />
     <pre id="output">Results will be displayed here</pre>
   </div>
@@ -21,19 +31,17 @@
 <script>
 import { defineComponent } from 'vue'
 import helpersMixin from '../utils/mixin'
-import {dbQuery} from '../query'
+import { dbQuery } from '../query'
 import CodeMirror from 'codemirror/lib/codemirror.js'
 import 'codemirror/lib/codemirror.css'
 import 'codemirror/mode/sql/sql.js'
 import 'codemirror/theme/dracula.css'
 
-
 export default defineComponent({
   name: 'TheSqlEditor',
   mixins: [helpersMixin],
 
-  components: {
-  },
+  components: {},
 
   data() {
     return {
@@ -48,8 +56,8 @@ export default defineComponent({
       tab: 'keyConverter',
       keys: {
         hex: '',
-        bech32: ''
-      }
+        bech32: '',
+      },
     }
   },
 
@@ -68,7 +76,7 @@ export default defineComponent({
     },
     error() {
       return document.getElementById('error')
-    }
+    },
   },
 
   mounted() {
@@ -84,18 +92,16 @@ export default defineComponent({
       extraKeys: {
         'Ctrl-Enter': this.execEditorContents,
         // "Ctrl-S": savedb,
-      }
+      },
     })
   },
 
-  activated() {
-  },
+  activated() {},
 
-  deactivated() {
-  },
+  deactivated() {},
 
   methods: {
-  // Execute the commands when the button is clicked
+    // Execute the commands when the button is clicked
     execEditorContents() {
       console.log('sql', this.codeEditor.getValue())
       this.noerror()
@@ -108,7 +114,7 @@ export default defineComponent({
       this.tic()
       this.output.textContent = 'Fetching results...'
       let results
-        results = await dbQuery(sql)
+      results = await dbQuery(sql)
       // try {
       //   results = await dbQuery(sql)
       // } catch (e) {
@@ -166,18 +172,20 @@ export default defineComponent({
     // },
 
     // Performance measurement functions
-    tic() { this.tictime = Date.now() },
+    tic() {
+      this.tictime = Date.now()
+    },
 
     toc(msg) {
       let took = Date.now() - this.tictime
       console.log((msg || 'toc') + ': ' + took + 'ms')
     },
-  }
+  },
 })
 </script>
 
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 .q-tabs {
-  border-bottom: 1px solid $accent
+  border-bottom: 1px solid $accent;
 }
 </style>

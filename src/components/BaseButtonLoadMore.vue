@@ -1,28 +1,22 @@
 <template>
   <div>
     <!-- <q-separator color='accent'/> -->
-    <q-btn-group
-    spread
-    dense
-    outline
-    rounded
-    text-color="accent"
-    >
+    <q-btn-group spread dense outline rounded text-color="accent">
       <q-btn
         dense
-        :loading='loadingMore'
+        :loading="loadingMore"
         outline
         rounded
         color="accent"
-        class='text-weight-light q-ma-sm'
-        style='letter-spacing: .1rem;'
-        :label='reachedEnd ? "reached end" : label'
-        :disable='reachedEnd'
+        class="text-weight-light q-ma-sm"
+        style="letter-spacing: 0.1rem"
+        :label="reachedEnd ? 'reached end' : label"
+        :disable="reachedEnd"
         @click="$emit('click')"
       >
         <template #loading>
-          <div class='row justify-center'>
-            <q-spinner-orbit color="accent" size='sm' />
+          <div class="row justify-center">
+            <q-spinner-orbit color="accent" size="sm" />
           </div>
         </template>
       </q-btn>
@@ -40,21 +34,21 @@ export default defineComponent({
   props: {
     loadingMore: {
       type: Boolean,
-      required: true
+      required: true,
     },
     reachedEnd: {
       type: Boolean,
-      default: false
+      default: false,
     },
     label: {
       type: String,
-      default: 'load more'
-    }
+      default: 'load more',
+    },
   },
 })
 </script>
 
-<style lang='css' scoped>
+<style lang="css" scoped>
 .q-btn-group {
   background: var(--q-background);
 }

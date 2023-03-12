@@ -1,43 +1,50 @@
 <template>
   <div
-    class='relative-position flex column'
-    :class='(sent ? "message-sent" : "message-received")'
+    class="relative-position flex column"
+    :class="sent ? 'message-sent' : 'message-received'"
     @click.stop
   >
-        <div
-          v-if='!isEmbeded'
-          class='text-accent timestamp'
-        >
-          {{timeUTC(event.created_at)}}
-        </div>
-    <div class='flex column message-bubbles'>
+    <div v-if="!isEmbeded" class="text-accent timestamp">
+      {{ timeUTC(event.created_at) }}
+    </div>
+    <div class="flex column message-bubbles">
       <div
-        v-for='(evt, idx) in sequence'
-        :key='idx'
-        class='message-bubble'
-        :class='((idx === 0) || (sequence.length === 1) ? " first-message" : "") +
-          (idx === sequence.length - 1 ? " last-message" : "")'
+        v-for="(evt, idx) in sequence"
+        :key="idx"
+        class="message-bubble"
+        :class="
+          (idx === 0 || sequence.length === 1 ? ' first-message' : '') +
+          (idx === sequence.length - 1 ? ' last-message' : '')
+        "
       >
         <div
-          v-if='!isEmbeded && taggedEvents[evt.id] && render'
-          class='flex column text-left full-width q-pb-xs embeded-message'
-          style='display: block;'
-          :clickable='false'
+          v-if="!isEmbeded && taggedEvents[evt.id] && render"
+          class="flex column text-left full-width q-pb-xs embeded-message"
+          style="display: block"
+          :clickable="false"
         >
-          <div v-for='(taggedEvent) in taggedEvents[evt.id]' :key='taggedEvent.id + "_" + taggedEvents[evt.id].length + "_" + render'>
-            <div v-if='taggedEvent.kind === 1 || taggedEvent.kind === 2' class='reposts'>
+          <div
+            v-for="taggedEvent in taggedEvents[evt.id]"
+            :key="
+              taggedEvent.id + '_' + taggedEvents[evt.id].length + '_' + render
+            "
+          >
+            <div
+              v-if="taggedEvent.kind === 1 || taggedEvent.kind === 2"
+              class="reposts"
+            >
               <BasePost
-                :event='taggedEvent'
-                :manual-focus='false'
-                :is-embeded='true'
+                :event="taggedEvent"
+                :manual-focus="false"
+                :is-embeded="true"
                 @contextmenu.capture.stop="toEvent(taggedEvent.id)"
               />
             </div>
             <BaseMessage
-              v-else-if='taggedEvent.kind === 4'
-              :event='taggedEvent'
-              class='no-padding no-margin'
-              :is-embeded='true'
+              v-else-if="taggedEvent.kind === 4"
+              :event="taggedEvent"
+              class="no-padding no-margin"
+              :is-embeded="true"
               clickable
               @mounted="$emit('mounted')"
               @click.capture.prevent.stop
@@ -45,50 +52,54 @@
           </div>
         </div>
 
-        <div v-if='isEmbeded' class='flex row justify-between q-gutter-md' :class='sent ? "reverse" : ""'>
-          <BaseUserName :pubkey='evt.pubkey' :fallback='true' />
-          <span> {{niceDateUTC(event.created_at)}} </span>
+        <div
+          v-if="isEmbeded"
+          class="flex row justify-between q-gutter-md"
+          :class="sent ? 'reverse' : ''"
+        >
+          <BaseUserName :pubkey="evt.pubkey" :fallback="true" />
+          <span> {{ niceDateUTC(event.created_at) }} </span>
         </div>
-        <BaseMarkdown :content='evt.interpolated.text' />
+        <BaseMarkdown :content="evt.interpolated.text" />
         <q-menu
-        v-if='!isEmbeded'
-          v-model='contextMenus[idx]'
+          v-if="!isEmbeded"
+          v-model="contextMenus[idx]"
           touch-position
           context-menu
-          :persistent='persistentMenu'
+          :persistent="persistentMenu"
           @click.stop
         >
-          <q-list dense class='flex column q-gutter-xs q-pa-xs'>
+          <q-list dense class="flex column q-gutter-xs q-pa-xs">
             <div v-close-popup>
               <BaseButtonReply
-                button-class='text-accent full-width justify-start'
-                :verbose='true'
-                @reply='reply(evt)'
+                button-class="text-accent full-width justify-start"
+                :verbose="true"
+                @reply="reply(evt)"
               />
             </div>
             <div v-close-popup>
               <BaseButtonCopy
-                button-class='text-accent full-width justify-start'
-                :button-text='evt.interpolated.text'
-                :verbose='true'
+                button-class="text-accent full-width justify-start"
+                :button-text="evt.interpolated.text"
+                :verbose="true"
               />
             </div>
-            <div >
+            <div>
               <BaseButtonInfo
-                button-class='text-accent full-width justify-start'
-                :event='evt'
-                :verbose='true'
-                @hide='hideMenu'
-                @dialog='togglePersistentMenu'
+                button-class="text-accent full-width justify-start"
+                :event="evt"
+                :verbose="true"
+                @hide="hideMenu"
+                @dialog="togglePersistentMenu"
               />
             </div>
             <div>
               <BaseButtonRelays
-                button-class='text-accent full-width justify-start'
-                :event='evt'
-                :verbose='true'
-                @hide='hideMenu'
-                @dialog='togglePersistentMenu'
+                button-class="text-accent full-width justify-start"
+                :event="evt"
+                :verbose="true"
+                @hide="hideMenu"
+                @dialog="togglePersistentMenu"
               />
             </div>
           </q-list>
@@ -112,8 +123,8 @@ export default {
   emits: ['reply', 'mounted'],
   mixins: [helpersMixin],
   props: {
-    event: {type: Object, required: true},
-    isEmbeded: {type: Boolean, default: false}
+    event: { type: Object, required: true },
+    isEmbeded: { type: Boolean, default: false },
   },
   components: {
     BaseButtonRelays,
@@ -135,13 +146,13 @@ export default {
       render: 1,
       contextMenus: [],
       persistentMenu: false,
-      taggedEvents: {}
+      taggedEvents: {},
     }
   },
 
   computed: {
     sequence() {
-      let sequence = [this.event].concat(this.event.appended).filter(x => x)
+      let sequence = [this.event].concat(this.event.appended).filter((x) => x)
       // this.interpolateMessageMentions(sequence)
       if (this.render) return sequence
       return sequence
@@ -157,13 +168,20 @@ export default {
       this.invisible = false
     }, 20)
     for (let ev of this.sequence) {
-      let tagged = ev.tags?.filter(([t, v]) => t === 'e' && v).map(([t, v]) => v) || []
+      let tagged =
+        ev.tags?.filter(([t, v]) => t === 'e' && v).map(([t, v]) => v) || []
       if (tagged.length) {
         this.taggedEvents[ev.id] = []
         this.processTaggedEvents(tagged, this.taggedEvents[ev.id])
       }
     }
-    if (this.event.created_at < this.$store.state.lastMessageRead[this.bech32ToHex(this.$route.params.pubkey)]) this.$emit('mounted')
+    if (
+      this.event.created_at <
+      this.$store.state.lastMessageRead[
+        this.bech32ToHex(this.$route.params.pubkey)
+      ]
+    )
+      this.$emit('mounted')
   },
 
   methods: {
@@ -172,17 +190,17 @@ export default {
     },
 
     hideMenu() {
-      this.contextMenus = this.contextMenus.map(menu => false)
+      this.contextMenus = this.contextMenus.map((menu) => false)
       this.togglePersistentMenu(false)
     },
 
     togglePersistentMenu(value) {
       this.persistentMenu = value
-    }
-  }
+    },
+  },
 }
 </script>
-<style lang='css'>
+<style lang="css">
 .message-sent,
 .message-received {
   max-width: min(90%, 400px);
@@ -196,9 +214,9 @@ export default {
   text-align: left;
 }
 .timestamp {
-  font-size: .7rem;
-  opacity: .9;
-  padding: .3rem .15rem 0;
+  font-size: 0.7rem;
+  opacity: 0.9;
+  padding: 0.3rem 0.15rem 0;
 }
 .message-sent .message-bubbles {
   border-right: 3px solid var(--q-primary);
@@ -210,31 +228,31 @@ export default {
 }
 .message-sent .first-message,
 .message-received .message-sent .first-message {
-  border-top-left-radius: .8rem;
+  border-top-left-radius: 0.8rem;
   border-top-right-radius: 0rem;
 }
 .message-sent .last-message,
 .message-received .message-sent .first-message {
-  border-bottom-left-radius: .8rem;
+  border-bottom-left-radius: 0.8rem;
   border-bottom-right-radius: 0;
 }
 .message-received .message-bubble {
 }
 .message-received .first-message,
 .message-sent .message-received .first-message {
-  border-top-right-radius: .8rem;
+  border-top-right-radius: 0.8rem;
   border-top-left-radius: 0rem;
 }
 .message-received .last-message,
 .message-sent .message-received .first-message {
-  border-bottom-right-radius:  .8rem;
-  border-bottom-left-radius:  0rem;
+  border-bottom-right-radius: 0.8rem;
+  border-bottom-left-radius: 0rem;
 }
 .message-bubbles {
-  gap: .5rem;
+  gap: 0.5rem;
 }
 .message-bubble {
-  padding: .5rem 1rem;
+  padding: 0.5rem 1rem;
   background: rgba(0, 0, 0, 0.08);
 }
 .body--dark .message-bubble {
@@ -249,12 +267,12 @@ export default {
 }
 .embeded-message .message-sent,
 .embeded-message .message-received {
-  font-size: .8rem;
+  font-size: 0.8rem;
   width: 100%;
   max-width: 100%;
 }
 .embeded-message .message-bubble {
-  padding: .25rem .5rem;
+  padding: 0.25rem 0.5rem;
 }
 .embeded-message .message-sent .message-bubbles {
   border-right: 2px solid var(--q-primary);
@@ -268,4 +286,3 @@ export default {
   display: none;
 }
 </style>
-

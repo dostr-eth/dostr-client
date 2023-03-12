@@ -1,32 +1,51 @@
 <template>
   <q-page>
-    <BaseHeader>{{ '#' + this.$route.params.hashtagId }}</BaseHeader>
-    <BasePostThread v-for="thread in threads" :key="thread[0].id" :events="thread" @add-event='processEvent'/>
+    <BaseHeader>{{ "#" + this.$route.params.hashtagId }}</BaseHeader>
+    <BasePostThread
+      v-for="thread in threads"
+      :key="thread[0].id"
+      :events="thread"
+      @add-event="processEvent"
+    />
   </q-page>
 </template>
 
 <script>
 import { defineComponent } from 'vue'
-import {dbStreamTagKind} from '../query'
+import { dbStreamTagKind } from '../query'
 import helpersMixin from '../utils/mixin'
-import {addToThread} from '../utils/threads'
+import { addToThread } from '../utils/threads'
 import { createMetaMixin } from 'quasar'
 
 export default defineComponent({
   name: 'Hashtag',
-  mixins: [helpersMixin, createMetaMixin(() => {
-    return {
-      // sets document title
-      title: `Dostr - #${window.location.pathname.split('/')[2]}`,
+  mixins: [
+    helpersMixin,
+    createMetaMixin(() => {
+      return {
+        // sets document title
+        title: `Dostr - #${window.location.pathname.split('/')[2]}`,
 
-      // meta tags
-      meta: {
-        description: { name: 'description', content: `Nostr events tagged with ${window.location.pathname.split('/')[2]}` },
-        keywords: { name: 'keywords', content: 'nostr decentralized social media' },
-        equiv: { 'http-equiv': 'Content-Type', content: 'text/html; charset=UTF-8' },
-      },
-    }
-  })],
+        // meta tags
+        meta: {
+          description: {
+            name: 'description',
+            content: `Nostr events tagged with ${
+              window.location.pathname.split('/')[2]
+            }`,
+          },
+          keywords: {
+            name: 'keywords',
+            content: 'nostr decentralized social media',
+          },
+          equiv: {
+            'http-equiv': 'Content-Type',
+            content: 'text/html; charset=UTF-8',
+          },
+        },
+      }
+    }),
+  ],
 
   data() {
     return {
@@ -45,7 +64,7 @@ export default defineComponent({
       if (curr !== prev && curr) {
         this.start()
       }
-    }
+    },
   },
 
   mounted() {
@@ -57,15 +76,24 @@ export default defineComponent({
   },
 
   methods: {
-
     async start() {
       this.threads = []
       this.eventsSet = new Set()
-      let relays = Object.keys(this.$store.state.relays).length ? Object.keys(this.$store.state.relays) : Object.keys(this.$store.state.defaultRelays)
+      let relays = Object.keys(this.$store.state.relays).length
+        ? Object.keys(this.$store.state.relays)
+        : Object.keys(this.$store.state.defaultRelays)
 
-      this.sub.hashtag = await dbStreamTagKind({type: 't', values: [this.$route.params.hashtagId.toLowerCase()], kinds: [1], relays}, events => {
-        for (let event of events) this.processEvent(event)
-      })
+      this.sub.hashtag = await dbStreamTagKind(
+        {
+          type: 't',
+          values: [this.$route.params.hashtagId.toLowerCase()],
+          kinds: [1],
+          relays,
+        },
+        (events) => {
+          for (let event of events) this.processEvent(event)
+        }
+      )
     },
 
     stop() {
@@ -79,11 +107,15 @@ export default defineComponent({
 
       this.interpolateEventMentions(event)
       this.eventsSet.add(event.id)
-      addToThread(this.threads, event, '', event.pubkey !== this.$store.state.keys.pub)
-      this.$store.dispatch('useProfile', {pubkey: event.pubkey})
+      addToThread(
+        this.threads,
+        event,
+        '',
+        event.pubkey !== this.$store.state.keys.pub
+      )
+      this.$store.dispatch('useProfile', { pubkey: event.pubkey })
       return
     },
-  }
+  },
 })
 </script>
-

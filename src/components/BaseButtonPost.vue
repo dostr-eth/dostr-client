@@ -2,24 +2,24 @@
   <q-btn
     unelevated
     clickable
-    :size='buttonSize'
-    class='button-post'
+    :size="buttonSize"
+    class="button-post"
     dense
-    @click='$emit("open")'
+    @click="$emit('open')"
   >
     <div
-      v-if='verbose'
-      class='gt-sm'
-      style='font-size: 1rem; font-weight: 700; letter-spacing: .05rem;'
+      v-if="verbose"
+      class="gt-sm"
+      style="font-size: 1rem; font-weight: 700; letter-spacing: 0.05rem"
     >
-      <span v-if='!isOpen'>&nbsp;{{ $t('post') }}&nbsp;</span>
-      <span v-if='isOpen'>&nbsp;{{ $t('close') }}&nbsp;</span>
+      <span v-if="!isOpen">&nbsp;{{ $t("post") }}&nbsp;</span>
+      <span v-if="isOpen">&nbsp;{{ $t("close") }}&nbsp;</span>
     </div>
     <q-icon
       :name="isOpen ? 'close' : 'chat_bubble_outline'"
-      :class='verbose ? "" : "flip-horizontal"'
-      :color='isOpen ? "" : "primary"'
-      :size='buttonSize'
+      :class="verbose ? '' : 'flip-horizontal'"
+      :color="isOpen ? '' : 'primary'"
+      :size="buttonSize"
     />
   </q-btn>
 </template>
@@ -33,7 +33,7 @@ export default defineComponent({
   props: {
     isOpen: {
       type: Boolean,
-      required: true
+      required: true,
     },
     // buttonColor: {
     //   type: String,
@@ -48,12 +48,12 @@ export default defineComponent({
     buttonSize: {
       type: String,
       required: false,
-      default: 'sm'
+      default: 'sm',
     },
     verbose: {
       type: Boolean,
       default: false,
-    }
+    },
   },
 
   // methods: {
@@ -67,7 +67,7 @@ export default defineComponent({
 
 <style>
 .button-post {
-  opacity: .8;
+  opacity: 0.8;
 }
 .button-post:hover {
   opacity: 1;

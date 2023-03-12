@@ -1,27 +1,27 @@
 <template>
-    <q-btn
-      v-if='buttonText'
-      icon="content_copy"
-      unelevated
-      clickable
-      @click='copy'
-      :class='"" + buttonClass'
-      :size='buttonSize'
-      class='button-copy'
-      dense
-      :label='(verbose || buttonLabel) ? (buttonLabel || "copy") : ""'
-      align="left"
-    >
-      <q-tooltip v-if='tooltipText'>
-        {{ tooltipText }}
-      </q-tooltip>
-    </q-btn>
+  <q-btn
+    v-if="buttonText"
+    icon="content_copy"
+    unelevated
+    clickable
+    @click="copy"
+    :class="'' + buttonClass"
+    :size="buttonSize"
+    class="button-copy"
+    dense
+    :label="verbose || buttonLabel ? buttonLabel || 'copy' : ''"
+    align="left"
+  >
+    <q-tooltip v-if="tooltipText">
+      {{ tooltipText }}
+    </q-tooltip>
+  </q-btn>
 </template>
 
 <script>
 import { defineComponent } from 'vue'
 import helpersMixin from '../utils/mixin'
-import {Notify} from 'quasar'
+import { Notify } from 'quasar'
 
 export default defineComponent({
   name: 'BaseButtonCopy',
@@ -29,21 +29,21 @@ export default defineComponent({
   props: {
     buttonText: {
       type: String,
-      required: true
+      required: true,
     },
     buttonLabel: {
       type: String,
-      default: null
+      default: null,
     },
     buttonClass: {
       type: String,
       required: false,
-      default: ''
+      default: '',
     },
     buttonSize: {
       type: String,
       required: false,
-      default: 'sm'
+      default: 'sm',
     },
     verbose: {
       type: Boolean,
@@ -52,12 +52,12 @@ export default defineComponent({
     tooltipText: {
       type: String,
       required: false,
-      default: ''
+      default: '',
     },
     element: {
       type: Object,
-      default: null
-    }
+      default: null,
+    },
   },
   computed: {
     copyText() {
@@ -74,18 +74,21 @@ export default defineComponent({
       console.log(text)
       await navigator.clipboard.writeText(text)
       Notify.create({
-        message: `copied ${this.copyText.length < 70 ? this.copyText : this.shorten(this.copyText, 30)}`,
+        message: `copied ${
+          this.copyText.length < 70
+            ? this.copyText
+            : this.shorten(this.copyText, 30)
+        }`,
       })
     },
-
-  }
+  },
 })
 </script>
 
 <style>
 .button-copy {
-  opacity: .7;
-  transition: all .3s ease-in-out;
+  opacity: 0.7;
+  transition: all 0.3s ease-in-out;
 }
 .button-copy:hover {
   opacity: 1;

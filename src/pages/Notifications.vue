@@ -1,15 +1,19 @@
 <template>
   <q-page>
-    <BaseHeader>{{ $t('notifications') }}</BaseHeader>
+    <BaseHeader class="spotnik">{{ $t("notifications") }}</BaseHeader>
     <div>
       <div v-for="event in notifications" :key="event.id">
         <BasePost
           :event="event"
           :highlighted="$store.state.lastNotificationRead < event.created_at"
         />
-        <div class='bottom-border'></div>
+        <div class="bottom-border"></div>
       </div>
-      <BaseButtonLoadMore :loading-more='loadingMore' :reached-end='reachedEnd' @click='loadMore' />
+      <BaseButtonLoadMore
+        :loading-more="loadingMore"
+        :reached-end="reachedEnd"
+        @click="loadMore"
+      />
     </div>
   </q-page>
 </template>
@@ -17,7 +21,7 @@
 <script>
 import helpersMixin from '../utils/mixin'
 import { addSorted } from '../utils/helpers'
-import {dbMentions} from '../query'
+import { dbMentions } from '../query'
 import { createMetaMixin } from 'quasar'
 import BaseButtonLoadMore from 'components/BaseButtonLoadMore.vue'
 
@@ -27,9 +31,15 @@ const metaData = {
 
   // meta tags
   meta: {
-    description: { name: 'description', content: 'Nostr notifications on Dostr' },
+    description: {
+      name: 'description',
+      content: 'Nostr notifications on Dostr',
+    },
     keywords: { name: 'keywords', content: 'nostr decentralized social media' },
-    equiv: { 'http-equiv': 'Content-Type', content: 'text/html; charset=UTF-8' },
+    equiv: {
+      'http-equiv': 'Content-Type',
+      content: 'text/html; charset=UTF-8',
+    },
   },
 }
 
@@ -73,7 +83,7 @@ export default {
 
       this.loadMore()
 
-      this.unsubscribe = this.$store.subscribe(({type, payload}, state) => {
+      this.unsubscribe = this.$store.subscribe(({ type, payload }, state) => {
         switch (type) {
           case 'setUnreadNotifications':
             this.loadNew()
@@ -86,7 +96,9 @@ export default {
     },
     async loadMore() {
       let until
-      if (this.notifications.length) until = this.notifications[this.notifications.length - 1].created_at - 1
+      if (this.notifications.length)
+        until =
+          this.notifications[this.notifications.length - 1].created_at - 1
       else until = Math.round(Date.now() / 1000)
       let loadedNotifications = await dbMentions(
         this.$store.state.keys.pub,
@@ -117,7 +129,7 @@ export default {
     processNotifications(notifications) {
       let notificationsFiltered = []
       for (let i = 0; i < notifications.length; i++) {
-      // await notifications.forEach(async (event) => {
+        // await notifications.forEach(async (event) => {
         let event = notifications[i]
         if (this.notificationsSet.has(event.id)) continue
 
@@ -125,7 +137,11 @@ export default {
         this.interpolateEventMentions(event)
         // if (event.tags.filter(([t, v]) => t === 'e' && v).length) this.processTaggedEvents(event)
         // notificationsFiltered.push(event)
-        addSorted(this.notifications, event, (a, b) => a.created_at < b.created_at)
+        addSorted(
+          this.notifications,
+          event,
+          (a, b) => a.created_at < b.created_at
+        )
         this.useProfile(event.pubkey)
       }
       return notificationsFiltered
@@ -134,11 +150,12 @@ export default {
     highlightUnreadNotifications() {
       if (
         this.notifications.length > 0 &&
-        this.notifications[0].created_at > this.$store.state.lastNotificationRead
+        this.notifications[0].created_at >
+          this.$store.state.lastNotificationRead
       ) {
         setTimeout(() => {
           this.$store.commit('haveReadNotifications')
-        }, 3000 * this.notifications.filter(n => n.created_at > this.$store.state.lastNotificationRead).length)
+        }, 3000 * this.notifications.filter((n) => n.created_at > this.$store.state.lastNotificationRead).length)
       }
     },
 
@@ -148,7 +165,10 @@ export default {
         return
       }
 
-      if (this.notifications[this.notifications.length - 1].created_at >= event.created_at) {
+      if (
+        this.notifications[this.notifications.length - 1].created_at >=
+        event.created_at
+      ) {
         this.notifications.push(event)
         return
       }
@@ -158,9 +178,10 @@ export default {
         return
       }
 
-      let insertIndex = this.notifications.findIndex((n, i, ns) =>
-        n.created_at <= event.created_at &&
-        (i === 0 || ns[i - 1].created_at >= event.created_at)
+      let insertIndex = this.notifications.findIndex(
+        (n, i, ns) =>
+          n.created_at <= event.created_at &&
+          (i === 0 || ns[i - 1].created_at >= event.created_at)
       )
       if (insertIndex >= 0) {
         this.notifications.splice(insertIndex, 0, event)
@@ -172,8 +193,8 @@ export default {
     },
 
     useProfile(pubkey) {
-      this.$store.dispatch('useProfile', {pubkey})
+      this.$store.dispatch('useProfile', { pubkey })
     },
-  }
+  },
 }
 </script>

@@ -6,7 +6,7 @@ import BasePostEntry from '../components/BasePostEntry.vue'
 import BasePostThread from '../components/BasePostThread.vue'
 import BaseHeader from '../components/BaseHeader.vue'
 
-export default ({app}) => {
+export default ({ app }) => {
   app.component('BasePost', BasePost)
   app.component('BaseUserName', BaseUserName)
   app.component('BaseUserAvatar', BaseUserAvatar)

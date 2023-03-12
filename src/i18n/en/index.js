@@ -1,5 +1,4 @@
 export default {
-
   // days
   Sunday: 'Sunday',
   Monday: 'Monday',
@@ -12,9 +11,9 @@ export default {
   // daysShort
   Sun: 'Sun',
   Mon: 'Mon',
-  Tues: 'Tues',
+  Tue: 'Tue',
   Wed: 'Wed',
-  Thurs: 'Thu',
+  Thu: 'Thu',
   Fri: 'Fri',
   Sat: 'Sat',
   second: 'sec',
@@ -100,7 +99,6 @@ export default {
   noFollowers: 'No Followers',
   noRelays: 'No Relays',
   dragDropReorder: 'Drag & Drop to re-order',
-
 }
 
 /*

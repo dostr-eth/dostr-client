@@ -7,7 +7,8 @@ const routes = [
       {
         path: '',
         // path: '/feed',
-        component: () => import(/* webpackChunkName: "about" */ 'pages/Feed.vue'),
+        component: () =>
+          import(/* webpackChunkName: "about" */ 'pages/Feed.vue'),
         name: 'feed',
       },
       {

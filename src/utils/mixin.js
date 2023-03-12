@@ -1,25 +1,58 @@
 import Tribute from 'tributejs'
-import {shorten, shortenList} from './helpers'
+import { shorten, shortenList } from './helpers'
 // import { stringify } from 'JSON'
-import {date} from 'quasar'
-import {nip04, nip19} from 'nostr-tools'
+import { date } from 'quasar'
+import { nip04, nip19 } from 'nostr-tools'
 // import { decode, encode } from 'bech32-buffer'
 // import { bech32 } from 'bech32'
 import { bech32 } from '@scure/base'
 import * as DOMPurify from 'dompurify'
 // import { utils } from 'lnurl-pay'
 import { Buffer } from 'buffer'
-import {Notify} from 'quasar'
+import { Notify } from 'quasar'
 import { requestInvoice, utils } from 'lnurl-pay'
 const { formatDate } = date
 
-
 function formatDateI18n(date, format) {
   return formatDate(date, format, {
-    days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-    daysShort: ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'],
-    months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-    monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    days: [
+      'Sunday',
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+    ],
+    daysShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+    months: [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ],
+    monthsShort: [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ],
   })
 }
 
@@ -28,10 +61,13 @@ function formatDateUTC(value, verbose = false) {
   let dateUtc = new Date(
     date.getUTCFullYear(),
     date.getUTCMonth(),
-    date.getUTCDate(),
-    )
+    date.getUTCDate()
+  )
   let now = Date.now()
-  if (now - dateUtc.getTime() < (1000 * 60 * 60 * 24 * 365) && now > dateUtc.getTime()) {
+  if (
+    now - dateUtc.getTime() < 1000 * 60 * 60 * 24 * 365 &&
+    now > dateUtc.getTime()
+  ) {
     if (verbose) return formatDateI18n(dateUtc, 'ddd D MMMM')
     return formatDateI18n(dateUtc, 'D MMMM')
   }
@@ -100,10 +136,11 @@ export default {
       return formatDateUTC(value, true)
     },
 
-
     timeUTC(value) {
       let date = new Date(value * 1000)
-      return `${String(date.getUTCHours()).padStart(2, '0')}:${String(date.getUTCMinutes()).padStart(2, '0')} ${this.$t('UTC')}`
+      return `${String(date.getUTCHours()).padStart(2, '0')}:${String(
+        date.getUTCMinutes()
+      ).padStart(2, '0')} ${this.$t('UTC')}`
     },
 
     interpolateMentions(text, tags, store) {
@@ -117,17 +154,26 @@ export default {
         return {
           text: text,
           replyEvents: [],
-          mentionEvents: tags.filter(([t, v]) => (t === 'e') && v).map(([_, v]) => v)
+          mentionEvents: tags
+            .filter(([t, v]) => t === 'e' && v)
+            .map(([_, v]) => v),
         }
       }
       const replacer = (match, index) => {
-        if (tags.length - 1 < Number(index) || tags[Number(index)].length < 2 || !['e', 'p'].includes(tags[Number(index)][0])) return match
+        if (
+          tags.length - 1 < Number(index) ||
+          tags[Number(index)].length < 2 ||
+          !['e', 'p'].includes(tags[Number(index)][0])
+        )
+          return match
         if (tags[Number(index)][0] === 'e') {
           const eventId = tags[Number(index)][1]
           mentions.mentionEvents.push(eventId)
           // if repost remove text
           if (match.length === text.length) return ''
-          return `[${shorten(this.hexToBech32(eventId, 'note'))}](/${this.hexToBech32(eventId, 'note')})`
+          return `[${shorten(
+            this.hexToBech32(eventId, 'note')
+          )}](/${this.hexToBech32(eventId, 'note')})`
         } else if (tags[Number(index)][0] === 'p') {
           const profile = tags[Number(index)][1]
           const displayName = store.getters.displayName(profile)
@@ -143,49 +189,85 @@ export default {
       }
 
       let replacedText = text.replace(/#\[(\d+)\]/g, replacer)
-      let hashtagReplacedText = replacedText.replace(/(?<s>^|[\s])#([\w]{1,63})\b/g, hashtagReplacer)
-      let untaggedProfileReplacedText = hashtagReplacedText.replace(/@([\w]{64})/g, untaggedProfileReplacer)
+      let hashtagReplacedText = replacedText.replace(
+        /(?<s>^|[\s])#([\w]{1,63})\b/g,
+        hashtagReplacer
+      )
+      let untaggedProfileReplacedText = hashtagReplacedText.replace(
+        /@([\w]{64})/g,
+        untaggedProfileReplacer
+      )
       let replacedTextFinal = untaggedProfileReplacedText
 
-      let rootIdx = tags.findIndex(([t, v, _, marker]) => (t === 'e') && v && marker === 'root')
+      let rootIdx = tags.findIndex(
+        ([t, v, _, marker]) => t === 'e' && v && marker === 'root'
+      )
       if (rootIdx >= 0) {
         let [_, v] = tags[rootIdx]
-        if (!mentions.mentionEvents.includes(v) && mentions.replyEvents.length < 2) mentions.replyEvents.push(v)
-        let replyIdx = tags.find(([t, v, _, marker]) => (t === 'e') && v && marker === 'reply')
+        if (
+          !mentions.mentionEvents.includes(v) &&
+          mentions.replyEvents.length < 2
+        )
+          mentions.replyEvents.push(v)
+        let replyIdx = tags.find(
+          ([t, v, _, marker]) => t === 'e' && v && marker === 'reply'
+        )
         if (replyIdx >= 0) {
           let [_, v] = tags[replyIdx]
-          if (!mentions.mentionEvents.includes(v) && mentions.replyEvents.length < 2) mentions.replyEvents.push(v)
+          if (
+            !mentions.mentionEvents.includes(v) &&
+            mentions.replyEvents.length < 2
+          )
+            mentions.replyEvents.push(v)
         }
       }
-      tags.filter(([t, v, _, marker]) => (t === 'e') && v && marker === 'mention').forEach(([t, v], index) => {
-        if (!mentions.mentionEvents.includes(v)) mentions.mentionEvents.push(v)
-      })
-      tags.filter(([t, v]) => (t === 'e') && v).forEach(([t, v], index) => {
-        if (!mentions.mentionEvents.includes(v) && !mentions.replyEvents.includes(v)) {
-          // if (index < 2) mentions.replyEvents.push(v)
-          if (mentions.replyEvents.length < 2) mentions.replyEvents.push(v)
-          else mentions.mentionEvents.push(v)
-        }
-      })
+      tags
+        .filter(([t, v, _, marker]) => t === 'e' && v && marker === 'mention')
+        .forEach(([t, v], index) => {
+          if (!mentions.mentionEvents.includes(v))
+            mentions.mentionEvents.push(v)
+        })
+      tags
+        .filter(([t, v]) => t === 'e' && v)
+        .forEach(([t, v], index) => {
+          if (
+            !mentions.mentionEvents.includes(v) &&
+            !mentions.replyEvents.includes(v)
+          ) {
+            // if (index < 2) mentions.replyEvents.push(v)
+            if (mentions.replyEvents.length < 2) mentions.replyEvents.push(v)
+            else mentions.mentionEvents.push(v)
+          }
+        })
 
       return {
         text: DOMPurify.sanitize(replacedTextFinal),
         replyEvents: mentions.replyEvents,
-        mentionEvents: mentions.mentionEvents
+        mentionEvents: mentions.mentionEvents,
       }
     },
 
     interpolateEventMentions(events, store = this.$store) {
       if (!Array.isArray(events)) events = [events]
       events.forEach((event) => {
-        if (!event.interpolated) event.interpolated = this.interpolateMentions(event.content, event.tags || [], store)
+        if (!event.interpolated)
+          event.interpolated = this.interpolateMentions(
+            event.content,
+            event.tags || [],
+            store
+          )
       })
     },
 
     interpolateMessageMentions(events, store = this.$store) {
       if (!Array.isArray(events)) events = [events]
       events.forEach((event) => {
-        if (!event.interpolated) event.interpolated = this.interpolateMentions(event.text, event.tags, store)
+        if (!event.interpolated)
+          event.interpolated = this.interpolateMentions(
+            event.text,
+            event.tags,
+            store
+          )
       })
     },
 
@@ -196,34 +278,41 @@ export default {
         menuContainer: document.getElementById('tribute-wrapper'),
         positionMenu: false,
 
-        selectTemplate: item => `${this.hexToBech32(item.original.value.pubkey, 'npub')}`,
+        selectTemplate: (item) =>
+          `${this.hexToBech32(item.original.value.pubkey, 'npub')}`,
 
-        menuItemTemplate: item => {
+        menuItemTemplate: (item) => {
           return `
             <div class="flex row no-wrap items-center" style="gap: .2rem; width: 100%;">
               <div style="border-radius: 10px">
-                <img src=${this.$store.getters.avatar(item.original.value.pubkey)} style="object-fit: cover; height: 1.5rem; width: 1.5rem;"/>
+                <img src=${this.$store.getters.avatar(
+                  item.original.value.pubkey
+                )} style="object-fit: cover; height: 1.5rem; width: 1.5rem;"/>
               </div>
                 <div class="text-bold">${item.string}</div>
-              ${this.$store.state.follows.includes(item.original.value.pubkey)
-                ? '<i class="notranslate material-icons text-secondary mr-1 -ml-1" aria-hidden="true" role="presentation">visibility</i>'
-                : ''}
-              ${item.original.value.nip05
-                ? '<i class="notranslate material-icons text-accent mr-1 -ml-1" aria-hidden="true" role="presentation">verified</i>'
-                : ''}
-                <div class="text-secondary text-caption">${shorten(this.hexToBech32(item.original.value.pubkey, 'npub'))}</div>
+              ${
+                this.$store.state.follows.includes(item.original.value.pubkey)
+                  ? '<i class="notranslate material-icons text-secondary mr-1 -ml-1" aria-hidden="true" role="presentation">visibility</i>'
+                  : ''
+              }
+              ${
+                item.original.value.nip05
+                  ? '<i class="notranslate material-icons text-accent mr-1 -ml-1" aria-hidden="true" role="presentation">verified</i>'
+                  : ''
+              }
+                <div class="text-secondary text-caption">${shorten(
+                  this.hexToBech32(item.original.value.pubkey, 'npub')
+                )}</div>
               </div>
             `
         },
 
         values: (_pattern, callback) => {
           callback(
-            this.$store.getters
-              .namedProfiles
-              .map(profile => ({
-                key: this.$store.getters.displayName(profile.pubkey),
-                value: profile,
-              }))
+            this.$store.getters.namedProfiles.map((profile) => ({
+              key: this.$store.getters.displayName(profile.pubkey),
+              value: profile,
+            }))
           )
         },
 
@@ -231,11 +320,10 @@ export default {
       })
 
       return {
-        attach: element => tribute.attach(element),
-        detach: element => tribute.detach(element),
+        attach: (element) => tribute.attach(element),
+        detach: (element) => tribute.detach(element),
       }
     },
-
 
     async processTaggedEvents(ids, events) {
       // let tagged = event.tags.filter(([t, v]) => t === 'e' && v).map(([t, v]) => v)
@@ -328,8 +416,8 @@ export default {
       }
       return ''
     },
-// note14s4haycwqpzpdfhm68wlmpwz4rrmlya9e3eeet9p50jekpk023zsrkfr69
-// npub19hmfe5xx4w27pr6xd2l8kwdmvnn5fm33llpsg8e8p007c23hasrq9ja0z2
+    // note14s4haycwqpzpdfhm68wlmpwz4rrmlya9e3eeet9p50jekpk023zsrkfr69
+    // npub19hmfe5xx4w27pr6xd2l8kwdmvnn5fm33llpsg8e8p007c23hasrq9ja0z2
     hexToBech32(key, prefix) {
       try {
         switch (prefix) {
@@ -348,8 +436,8 @@ export default {
       }
       return ''
     },
-// 8c0da4862130283ff9e67d889df264177a508974e2feb96de139804ea66d6168
-// 8c0da4862130283ff9e67d889df264177a508974e2feb96de139804ea66d6168
+    // 8c0da4862130283ff9e67d889df264177a508974e2feb96de139804ea66d6168
+    // 8c0da4862130283ff9e67d889df264177a508974e2feb96de139804ea66d6168
     // toHexString(buffer) {
     //   let hexString = buffer.reduce((s, byte) => {
     //     let hex = byte.toString(16)
@@ -375,9 +463,11 @@ export default {
       try {
         let url = utils.decodeUrlOrAddress(lnurl)
         if (!url) return null
-        let lnAddrRegex = /^https:\/\/(?<domain>[a-zA-z0-9.]+)\/.well-known\/lnurlp\/(?<user>[a-zA-Z0-9_-]+)/
+        let lnAddrRegex =
+          /^https:\/\/(?<domain>[a-zA-z0-9.]+)\/.well-known\/lnurlp\/(?<user>[a-zA-Z0-9_-]+)/
         let lnAddrMatch = url.match(lnAddrRegex)
-        if (lnAddrMatch) return `${lnAddrMatch.groups.user}@${lnAddrMatch.groups.domain}`
+        if (lnAddrMatch)
+          return `${lnAddrMatch.groups.user}@${lnAddrMatch.groups.domain}`
       } catch (error) {
         // console.log('lnurlToLnAddr error: ', error, ' for ', lnurl)
       }
@@ -422,20 +512,21 @@ export default {
               .then((res) => res.json())
               .catch((err) => {
                 Notify.create({
-                  message: 'Error fetching invoice from LNURL. ' + err.toString()
+                  message:
+                    'Error fetching invoice from LNURL. ' + err.toString(),
                 })
               })
-          }
+          },
         })
 
         return invoice
       } catch (e) {
         Notify.create({
-          message: 'Error fetching invoice from LNURL. ' + e.toString()
+          message: 'Error fetching invoice from LNURL. ' + e.toString(),
         })
 
         return this.lnString
       }
-    }
-  }
+    },
+  },
 }

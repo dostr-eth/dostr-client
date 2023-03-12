@@ -1,160 +1,220 @@
 <template>
-  <q-item unelevated class='q-pa-none post-entry-form flex coloumn' ref='postEntry' @click.stop @mouseup.stop @keypress.enter.stop @keydown.stop @keyup.stop>
-
+  <q-item
+    unelevated
+    class="q-pa-none post-entry-form flex coloumn"
+    ref="postEntry"
+    @click.stop
+    @mouseup.stop
+    @keypress.enter.stop
+    @keydown.stop
+    @keyup.stop
+  >
     <div
-      v-if='replyMode === "quote" || replyMode === "repost"'
-      class='reposts flex column q-px-sm q-py-xs'
-      :class='replyMode === "quote" ? "q-mb-sm" : ""'
-      :clickable='false'
+      v-if="replyMode === 'quote' || replyMode === 'repost'"
+      class="reposts flex column q-px-sm q-py-xs"
+      :class="replyMode === 'quote' ? 'q-mb-sm' : ''"
+      :clickable="false"
     >
       <BasePost
-        :event='event'
-        :clickable='false'
-        :is-embeded='true'
-        :reply-depth='-1'
+        :event="event"
+        :clickable="false"
+        :is-embeded="true"
+        :reply-depth="-1"
       />
     </div>
     <div
-      v-if='messageMode === "reply" && event'
-      :clickable='false'
-      class='embeded-message q-px-sm q-py-xs'
+      v-if="messageMode === 'reply' && event"
+      :clickable="false"
+      class="embeded-message q-px-sm q-py-xs"
     >
-      <div class='relative-position'>
-        <q-btn icon="close" flat dense @click.stop='$emit("clear-event")' size='xs' class='absolute-top-right z-top'/>
+      <div class="relative-position">
+        <q-btn
+          icon="close"
+          flat
+          dense
+          @click.stop="$emit('clear-event')"
+          size="xs"
+          class="absolute-top-right z-top"
+        />
       </div>
       <BaseMessage
-        v-if='event'
-        :event='event'
-        :clickable='false'
-        :is-embeded='true'
+        v-if="event"
+        :event="event"
+        :clickable="false"
+        :is-embeded="true"
       />
     </div>
     <div
-      v-show='replyMode !== "repost"'
-      class='relative-position full-width'
-      style='gap: 5px;'
+      v-show="replyMode !== 'repost'"
+      class="relative-position full-width"
+      style="gap: 5px"
       @click.stop
     >
       <!-- <div style='max-height: 0; overflow: visible; position: relative; z-index: 5;'> -->
-      <q-list id='tribute-wrapper' class='overflow-auto flex row z-top' style='max-height: 40vh' @click.stop='focusInput'>
+      <q-list
+        id="tribute-wrapper"
+        class="overflow-auto flex row z-top"
+        style="max-height: 40vh"
+        @click.stop="focusInput"
+      >
       </q-list>
       <!-- </div> -->
-      <div v-if='!messageMode && replyUserTags.length  && this.replyMode !== "embed"' class='flex row items-center' style='gap: .3rem;'>
-        <q-icon name='alternate_email' color='secondary' size='sm'/>
+      <div
+        v-if="
+          !messageMode && replyUserTags.length && this.replyMode !== 'embed'
+        "
+        class="flex row items-center"
+        style="gap: 0.3rem"
+      >
+        <q-icon name="alternate_email" color="secondary" size="sm" />
         <q-btn
-          v-for='pubkey in replyUserTags'
-          :key='pubkey'
-          color='secondary'
+          v-for="pubkey in replyUserTags"
+          :key="pubkey"
+          color="secondary"
           outline
           rounded
-          :label='$store.getters.displayName(pubkey)'
-          icon='close'
+          :label="$store.getters.displayName(pubkey)"
+          icon="close"
           dense
-          size='sm'
-          class='q-pr-sm'
+          size="sm"
+          class="q-pr-sm"
           no-caps
-          @click.stop='removeReplyUserTag(pubkey)'
+          @click.stop="removeReplyUserTag(pubkey)"
         />
       </div>
       <div class="input-area">
-        <BaseUserAvatar :pubkey='$store.state.keys.pub' class='avatar-image' />
+        <BaseUserAvatar :pubkey="$store.state.keys.pub" class="avatar-image" />
         <span id="input-placeholder"> {{ placeholderText }}</span>
-        <div v-show='!longForm' id="input-readonly-highlight" contenteditable="true" spellcheck="false"></div>
+        <div
+          v-show="!longForm"
+          id="input-readonly-highlight"
+          contenteditable="true"
+          spellcheck="false"
+        ></div>
         <div
           id="input-editable"
           :contenteditable="!sending && !mentionsUpdating"
-          :style='mentionsUpdating ? "opacity: .7;" : ""'
-          @input='updateText'
-          @keypress.delete='updateText'
-          @focus='textareaFocus'
-          @blur='textareaBlur'
+          :style="mentionsUpdating ? 'opacity: .7;' : ''"
+          @input="updateText"
+          @keypress.delete="updateText"
+          @focus="textareaFocus"
+          @blur="textareaBlur"
           @keypress.ctrl.enter="send"
-          @click.stop='updateText'
+          @click.stop="updateText"
           @touchstart.stop
           @mousedown.stop
+        ></div>
+        <div
+          id="input-readonly"
+          contenteditable="true"
+          spellcheck="false"
+        ></div>
+        <div
+          v-if="mentionsUpdating"
+          class="absolute-top full-width row justify-center q-my-md"
         >
-        </div>
-        <div id="input-readonly" contenteditable="true" spellcheck="false"></div>
-        <div v-if='mentionsUpdating' class='absolute-top full-width row justify-center q-my-md'>
-          <q-spinner-orbit color="accent" size='md'/>
+          <q-spinner-orbit color="accent" size="md" />
         </div>
       </div>
     </div>
-    <div style='font-size: .9rem;'>
-      <div v-if='links.length' class='q-pl-xs'>
-        <div class='text-secondary'>links added</div>
-        <ul dense style='font-size: .8rem; font-weight: 300;'>
-          <li v-for='(link, index) in links' :key='index' class='flex row justify-between no-wrap' dense>
-            <div class='col-11' style='overflow-x: auto'>
-            <strong>{{ linkName(link) }}</strong>
-            <span>{{ link.url }}</span>
+    <div style="font-size: 0.9rem">
+      <div v-if="links.length" class="q-pl-xs">
+        <div class="text-secondary">links added</div>
+        <ul dense style="font-size: 0.8rem; font-weight: 300">
+          <li
+            v-for="(link, index) in links"
+            :key="index"
+            class="flex row justify-between no-wrap"
+            dense
+          >
+            <div class="col-11" style="overflow-x: auto">
+              <strong>{{ linkName(link) }}</strong>
+              <span>{{ link.url }}</span>
             </div>
-            <q-btn icon="remove_circle" clickable @click.stop='removeLink(index)' flat color="negative" size='xs' class='no-padding'/>
+            <q-btn
+              icon="remove_circle"
+              clickable
+              @click.stop="removeLink(index)"
+              flat
+              color="negative"
+              size="xs"
+              class="no-padding"
+            />
           </li>
         </ul>
       </div>
     </div>
-    <div class='flex justify-between' :class='toolSelected ? "column" : "row"' @click.stop>
-      <div class='flex row justify-between'>
+    <div
+      class="flex justify-between"
+      :class="toolSelected ? 'column' : 'row'"
+      @click.stop
+    >
+      <div class="flex row justify-between">
         <q-btn-toggle
-          v-show='replyMode !== "repost"'
-          v-model='toolSelected'
-          class='flex'
+          v-show="replyMode !== 'repost'"
+          v-model="toolSelected"
+          class="flex"
           dense
           unelevated
-          toggle-color=''
-          toggle-text-color='accent'
-          :class='toolSelected ? "column" : "row"'
+          toggle-color=""
+          toggle-text-color="accent"
+          :class="toolSelected ? 'column' : 'row'"
           :options="[
-            {value: 'emoji', slot: 'emoji'},
-            {value: 'link', slot: 'link'},
-            {value: 'help', slot: 'help'},
-            ]"
+            { value: 'emoji', slot: 'emoji' },
+            { value: 'link', slot: 'link' },
+            { value: 'help', slot: 'help' },
+          ]"
         >
           <template #emoji>
             <q-btn
               unelevated
-              class='no-padding button-emoji'
+              class="no-padding button-emoji"
               dense
-              size='sm'
-              @click.stop='toggleTool("emoji")'
+              size="sm"
+              @click.stop="toggleTool('emoji')"
             >
               <q-icon>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0m0 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10"/><path d="M8 7a2 2 0 1 0-.001 3.999A2 2 0 0 0 8 7M16 7a2 2 0 1 0-.001 3.999A2 2 0 0 0 16 7M15.232 15c-.693 1.195-1.87 2-3.349 2-1.477 0-2.655-.805-3.347-2H15m3-2H6a6 6 0 1 0 12 0"/></svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  height="24"
+                >
+                  <path
+                    d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0m0 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10"
+                  />
+                  <path
+                    d="M8 7a2 2 0 1 0-.001 3.999A2 2 0 0 0 8 7M16 7a2 2 0 1 0-.001 3.999A2 2 0 0 0 16 7M15.232 15c-.693 1.195-1.87 2-3.349 2-1.477 0-2.655-.805-3.347-2H15m3-2H6a6 6 0 1 0 12 0"
+                  />
+                </svg>
               </q-icon>
-              <q-tooltip>
-                add emoji
-              </q-tooltip>
+              <q-tooltip> add emoji </q-tooltip>
             </q-btn>
           </template>
           <template #link>
             <q-btn
               unelevated
-              class='no-padding button-link'
+              class="no-padding button-link"
               dense
-              size='sm'
-              @click.stop='toggleTool("link")'
+              size="sm"
+              @click.stop="toggleTool('link')"
             >
-              <q-icon name='add_link' size='sm'/>
+              <q-icon name="add_link" size="sm" />
               <!-- </q-icon> -->
-              <q-tooltip>
-                add link
-              </q-tooltip>
+              <q-tooltip> add link </q-tooltip>
             </q-btn>
           </template>
           <template #help>
             <q-btn
               unelevated
-              class='no-padding button-link'
+              class="no-padding button-link"
               dense
-              size='sm'
-              @click.stop='toggleTool("help")'
+              size="sm"
+              @click.stop="toggleTool('help')"
             >
-              <q-icon name='help' size='xs'/>
+              <q-icon name="help" size="xs" />
               <!-- </q-icon> -->
-              <q-tooltip>
-                how to mention users and posts
-              </q-tooltip>
+              <q-tooltip> how to mention users and posts </q-tooltip>
             </q-btn>
           </template>
           <!-- <template #image>
@@ -169,55 +229,57 @@
             />
           </template> -->
         </q-btn-toggle>
-        <q-item v-if='toolSelected' class='col toolbox no-padding' ref='toolbox'>
-          <q-separator vertical color='accent' size='1px'/>
-          <q-tab-panels
-            v-model="toolSelected"
-            class='no-padding full-width'
-          >
-            <q-tab-panel name="emoji" class='no-padding' @click.stop>
+        <q-item
+          v-if="toolSelected"
+          class="col toolbox no-padding"
+          ref="toolbox"
+        >
+          <q-separator vertical color="accent" size="1px" />
+          <q-tab-panels v-model="toolSelected" class="no-padding full-width">
+            <q-tab-panel name="emoji" class="no-padding" @click.stop>
               <BaseEmojiPicker
-                @emoji-selected='insertEmoji'
-                :per-line='emojiPerRow'
-                class='full-width'
+                @emoji-selected="insertEmoji"
+                :per-line="emojiPerRow"
+                class="full-width"
               />
             </q-tab-panel>
-            <q-tab-panel name="link" class='q-pa-xs' @click.stop>
-              <BaseLinkForm
-                :links='links'
-                @link-added='addLink'
-              />
+            <q-tab-panel name="link" class="q-pa-xs" @click.stop>
+              <BaseLinkForm :links="links" @link-added="addLink" />
             </q-tab-panel>
-            <q-tab-panel name="help" class='q-pa-xs' @click.stop>
+            <q-tab-panel name="help" class="q-pa-xs" @click.stop>
               <div>
-                <span class='text-bold'>{{ "to mention a user: "}}</span>
-                {{ "type "}}
-                <code>{{`"@"`}}</code>
-                {{ " and select user from menu that pops up or paste in npub key"}}
+                <span class="text-bold">{{ "to mention a user: " }}</span>
+                {{ "type " }}
+                <code>{{ `"@"` }}</code>
+                {{
+                  " and select user from menu that pops up or paste in npub key"
+                }}
                 <!-- <code>{{`"@<pubkey-id>"`}}</code> -->
               </div>
               <!-- <br> -->
               <div>
-                <span class='text-bold'>{{ "to mention a post: "}}</span>
-                <span>paste in note id (you can copy note id from embed <q-icon name='link' size='sm'/> button at the bottom of every post)"</span>
+                <span class="text-bold">{{ "to mention a post: " }}</span>
+                <span
+                  >paste in note id (you can copy note id from embed
+                  <q-icon name="link" size="sm" /> button at the bottom of every
+                  post)"</span
+                >
                 <!-- <code>{{`"&<event-id>"`}}</code> -->
               </div>
             </q-tab-panel>
           </q-tab-panels>
         </q-item>
       </div>
-      <q-btn-group class='flex items-center' unelevated>
+      <q-btn-group class="flex items-center" unelevated>
         <q-btn
-          v-if='toolSelected'
+          v-if="toolSelected"
           icon="close"
           unelevated
-          class='col button-close'
+          class="col button-close"
           dense
-          @click.stop='closeTools'
+          @click.stop="closeTools"
         >
-          <q-tooltip>
-            cancel
-          </q-tooltip>
+          <q-tooltip> cancel </q-tooltip>
         </q-btn>
 
         <!-- <div v-if='charLeft() <= 0'>
@@ -237,17 +299,19 @@
             {icon: 'article', value: 'long'}
           ]"
         /> -->
-        <div v-if='text && !messageMode' class='char-left-label'>
-          <span v-if='(charLeft() <= 0) && !longForm' class='over-limit'>{{ charLeft() }}</span>
+        <div v-if="text && !messageMode" class="char-left-label">
+          <span v-if="charLeft() <= 0 && !longForm" class="over-limit">{{
+            charLeft()
+          }}</span>
           <q-circular-progress
-            v-if='charLeft() > 0'
-            :show-value='charLeft() <= 25'
-            :value='((text.length % charLimit) / charLimit) * 100'
+            v-if="charLeft() > 0"
+            :show-value="charLeft() <= 25"
+            :value="((text.length % charLimit) / charLimit) * 100"
             :size="charLeft() <= 25 ? '1.5rem' : '1.2rem'"
-            font-size='.6rem'
-            :thickness="charLeft() <= 25 ? .2 : .1"
+            font-size=".6rem"
+            :thickness="charLeft() <= 25 ? 0.2 : 0.1"
             :color="charLeft() <= 25 ? 'warning' : 'secondary'"
-            track-color='transparent'
+            track-color="transparent"
             class="no-padding"
             instant-feedback
           >
@@ -255,30 +319,34 @@
           </q-circular-progress>
         </div>
         <q-btn-toggle
-          v-if='!messageMode && (charLeft() <= 0)'
+          v-if="!messageMode && charLeft() <= 0"
           v-model="longForm"
           unelevated
           dense
           toggle-color="primary"
-          style='border: 1px solid var(--q-primary)'
+          style="border: 1px solid var(--q-primary)"
           text-color="primary"
-          class='q-ml-md'
+          class="q-ml-md"
           :options="[
-            {value: false, slot: 'short'},
-            {value: true, slot: 'long'}
+            { value: false, slot: 'short' },
+            { value: true, slot: 'long' },
           ]"
         >
           <template #short>
-            <q-icon name='short_text' size='xs' :style='longForm ? "" : "color: var(--q-background"'/>
-            <q-tooltip>
-              short form post
-            </q-tooltip>
+            <q-icon
+              name="short_text"
+              size="xs"
+              :style="longForm ? '' : 'color: var(--q-background'"
+            />
+            <q-tooltip> short form post </q-tooltip>
           </template>
           <template #long>
-            <q-icon name='format_align_left' size='xs' :style='longForm ? "color: var(--q-background" : ""'/>
-            <q-tooltip>
-              long form post
-            </q-tooltip>
+            <q-icon
+              name="format_align_left"
+              size="xs"
+              :style="longForm ? 'color: var(--q-background' : ''"
+            />
+            <q-tooltip> long form post </q-tooltip>
           </template>
         </q-btn-toggle>
         <q-btn
@@ -286,10 +354,13 @@
           unelevated
           color="primary"
           type="submit"
-          @click.stop='send'
-          :disable='!textValid()'
+          @click.stop="send"
+          :disable="!textValid()"
         >
-          <q-icon name="send" :style='"transform: translateX(" + sendIconTranslation + "px);"'/>
+          <q-icon
+            name="send"
+            :style="'transform: translateX(' + sendIconTranslation + 'px);'"
+          />
         </q-btn>
       </q-btn-group>
     </div>
@@ -300,12 +371,15 @@
 import { colors } from 'quasar'
 const { getPaletteColor } = colors
 import helpersMixin from '../utils/mixin'
-import {getPubKeyTagWithRelay, getEventIdTagWithRelay} from '../utils/helpers'
-import {cleanEvent} from '../utils/event'
+import {
+  getPubKeyTagWithRelay,
+  getEventIdTagWithRelay,
+} from '../utils/helpers'
+import { cleanEvent } from '../utils/event'
 import BaseEmojiPicker from 'components/BaseEmojiPicker.vue'
 import BaseLinkForm from 'components/BaseLinkForm.vue'
 import BaseMessage from 'components/BaseMessage.vue'
-import {publish} from '../query'
+import { publish } from '../query'
 // import { ref } from 'vue'
 
 export default {
@@ -322,22 +396,22 @@ export default {
     messageMode: {
       type: String,
       required: false,
-      default: ''
+      default: '',
     },
     replyMode: {
       type: String,
       required: false,
-      default: ''
+      default: '',
     },
     event: {
       type: Object,
       required: false,
-      default: null
+      default: null,
     },
     autoFocus: {
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
   },
 
   data() {
@@ -360,7 +434,7 @@ export default {
       textareaRange: null,
       // shortLong: 'short',
       longForm: false,
-      replyUserTags: [] // tags from previous reply authors
+      replyUserTags: [], // tags from previous reply authors
     }
   },
 
@@ -427,7 +501,8 @@ export default {
       else if (this.messageMode) return "what's your message?"
       else if (this.replyMode) {
         if (this.replyMode === 'reply') return "what's your reply?"
-        else if (this.replyMode === 'quote') return "what's your thought on this?"
+        else if (this.replyMode === 'quote')
+          return "what's your thought on this?"
       }
       return "what's happening?"
     },
@@ -456,9 +531,10 @@ export default {
       return null
     },
     hexPubkey() {
-      if (this.$route.params.pubkey) return this.bech32ToHex(this.$route.params.pubkey)
+      if (this.$route.params.pubkey)
+        return this.bech32ToHex(this.$route.params.pubkey)
       return ''
-    }
+    },
   },
 
   mounted() {
@@ -518,13 +594,16 @@ export default {
     },
 
     async sendPost() {
-      let tags = Object.values(this.mentions()).map(mention => mention.tag)
+      let tags = Object.values(this.mentions()).map((mention) => mention.tag)
       let text = await this.formatMentionsForPublishing(tags)
       this.appendHashtags(tags)
       text = this.appendLinks(text)
 
       // console.log('sendPost:', tags, this.tags, text)
-      let event = await this.$store.dispatch('sendPost', {message: text, tags})
+      let event = await this.$store.dispatch('sendPost', {
+        message: text,
+        tags,
+      })
       if (event) {
         return event
       }
@@ -533,14 +612,17 @@ export default {
     async sendReply() {
       // build tags
       // let tags = []
-      if (this.replyMode === 'repost' && this.text) this.textarea.innerHTML = ''
+      if (this.replyMode === 'repost' && this.text)
+        this.textarea.innerHTML = ''
 
       // save copy of mentions and remove for now
       // let mentions = Object.assign({}, this.mentions())
       let tags = []
       let textarea = this.textarea.cloneNode(true)
 
-      this.replyUserTags.forEach(async (pubkey) => tags.push(await getPubKeyTagWithRelay(pubkey)))
+      this.replyUserTags.forEach(async (pubkey) =>
+        tags.push(await getPubKeyTagWithRelay(pubkey))
+      )
       // // remove invalid tags and/or not p/e
       // let usableTags = this.event.tags.filter(
       //   ([t, v]) => (t === 'p' || t === 'e') && v
@@ -558,12 +640,14 @@ export default {
       // }
       // // remove ourselves
       // tags = tags.filter(([_, v]) => v !== this.$store.state.keys.pub)
-        // console.log('tags: ', tags)
+      // console.log('tags: ', tags)
       // add quoted/reposted event
       // remove invalid tags and/or not e
-      let usableTags = this.event.tags.filter(
-        ([t, v]) => (t === 'e') && v
-      ).map(([...values]) => { return [...values] })
+      let usableTags = this.event.tags
+        .filter(([t, v]) => t === 'e' && v)
+        .map(([...values]) => {
+          return [...values]
+        })
       if (this.replyMode === 'quote' || this.replyMode === 'repost') {
         // if quote or repost, only tag this event and add mention to text
         let last = await getEventIdTagWithRelay(this.event.id, 'mention')
@@ -572,9 +656,19 @@ export default {
         textarea.append(` #[${tags.length - 1}]`)
       } else {
         // add the first and the last events being replied to
-        let first = usableTags.find(([t, _, __, marker]) => t === 'e' && marker === 'root') || usableTags.find((tag) => tag[0] === 'e' && !tag[3])
-        if (!first && usableTags.filter(([t, _, __, marker]) => t === 'e' && marker === 'reply').length === 1)
-          first = usableTags.find(([t, _, __, marker]) => t === 'e' && marker === 'reply')
+        let first =
+          usableTags.find(
+            ([t, _, __, marker]) => t === 'e' && marker === 'root'
+          ) || usableTags.find((tag) => tag[0] === 'e' && !tag[3])
+        if (
+          !first &&
+          usableTags.filter(
+            ([t, _, __, marker]) => t === 'e' && marker === 'reply'
+          ).length === 1
+        )
+          first = usableTags.find(
+            ([t, _, __, marker]) => t === 'e' && marker === 'reply'
+          )
         if (first) {
           tags.push(await getEventIdTagWithRelay(first[1], 'root'))
           tags.push(await getEventIdTagWithRelay(this.event.id, 'reply'))
@@ -592,11 +686,13 @@ export default {
       //   message: text,
       //   tags: tags
       // })
-      let relays = Object.keys(this.$store.state.relays).length ? Object.keys(this.$store.state.relays) : Object.keys(this.$store.state.defaultRelays)
+      let relays = Object.keys(this.$store.state.relays).length
+        ? Object.keys(this.$store.state.relays)
+        : Object.keys(this.$store.state.defaultRelays)
       publish(cleanEvent(this.event), relays)
       return await this.$store.dispatch('sendPost', {
         message: text,
-        tags: tags
+        tags: tags,
       })
     },
 
@@ -606,11 +702,11 @@ export default {
       let tags = []
       // add the pubkey of the person we are messaging
       if (!tags.find(([_, v]) => v === this.hexPubkey)) {
-          tags.push(['p', this.hexPubkey])
+        tags.push(['p', this.hexPubkey])
       }
       if (this.event && !tags.find(([_, v]) => v === this.event.id)) {
-          tags.push(await getEventIdTagWithRelay(this.event.id, 'mention'))
-          // tags.push(['e', this.event.id])
+        tags.push(await getEventIdTagWithRelay(this.event.id, 'mention'))
+        // tags.push(['e', this.event.id])
       }
       // this.tags = this.tags.filter(([_, v]) => v !== this.$store.state.keys.pub)
       // let text = this.formatMentionsForPublishing(text, tags, mentions)
@@ -627,7 +723,7 @@ export default {
         now,
         pubkey: this.hexPubkey,
         text,
-        tags
+        tags,
       })
     },
 
@@ -636,7 +732,12 @@ export default {
       // const mentionRegex = /\B@(?<p>[a-f0-9]{64})\b/g
       // const mentionRegex = /@((?<t>[a-z]{1}):{1})?(?<p>[a-f0-9]{64})\b/g
       const mentionRegex = /(?<t>note|npub)(?<v>[a-z0-9]{59})\b/g
-      const textNodeTreeWalker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null, false)
+      const textNodeTreeWalker = document.createTreeWalker(
+        el,
+        NodeFilter.SHOW_TEXT,
+        null,
+        false
+      )
       let tagIndexMap = {}
       let node = textNodeTreeWalker.nextNode()
       while (node) {
@@ -678,12 +779,16 @@ export default {
       }
     },
 
-
     mentions(el = this.textarea) {
       if (this.text.length === 0) return {}
 
       let mentions = {}
-      const textNodeTreeWalker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null, false)
+      const textNodeTreeWalker = document.createTreeWalker(
+        el,
+        NodeFilter.SHOW_TEXT,
+        null,
+        false
+      )
       let node = textNodeTreeWalker.nextNode()
       let nodeCnt = 0
       while (node) {
@@ -691,12 +796,13 @@ export default {
           const mentionAnchorRegex = new RegExp(`(?<i>${key})\\b`, 'g')
           let matches = node.textContent.matchAll(mentionAnchorRegex)
           for (let match of matches) {
-            if (this.tags[match.groups.i]) mentions[nodeCnt + '.' + match.index + '_' + match.groups.i] = {
-              el: node,
-              pos: match.index,
-              tag: Array.from(tag),
-              length: match.groups.i.length,
-            }
+            if (this.tags[match.groups.i])
+              mentions[nodeCnt + '.' + match.index + '_' + match.groups.i] = {
+                el: node,
+                pos: match.index,
+                tag: Array.from(tag),
+                length: match.groups.i.length,
+              }
           }
         }
         node = textNodeTreeWalker.nextNode()
@@ -705,33 +811,44 @@ export default {
       return mentions
     },
 
-    async formatMentionsForPublishing(tags, parseProfile = true, textarea = this.textarea.cloneNode(true)) {
+    async formatMentionsForPublishing(
+      tags,
+      parseProfile = true,
+      textarea = this.textarea.cloneNode(true)
+    ) {
       // let textarea = this.textarea.cloneNode(true)
       let mentions = this.mentions(textarea)
-      let last = { el: null, offset: null}
+      let last = { el: null, offset: null }
       for (let key in mentions) {
         let mention = mentions[key]
-        let idx = tags.findIndex(([t, v]) => t === mention.tag[0] && v === mention.tag[1])
+        let idx = tags.findIndex(
+          ([t, v]) => t === mention.tag[0] && v === mention.tag[1]
+        )
         // console.log('idx', idx)
         if (idx === -1) {
           let tag
-          if (mention.tag[0] === 'p' && parseProfile) tag = await getPubKeyTagWithRelay(mention.tag[1])
-          else if (mention.tag[0] === 'e') tag = await getEventIdTagWithRelay(mention.tag[1], 'mention')
+          if (mention.tag[0] === 'p' && parseProfile)
+            tag = await getPubKeyTagWithRelay(mention.tag[1])
+          else if (mention.tag[0] === 'e')
+            tag = await getEventIdTagWithRelay(mention.tag[1], 'mention')
           if (tag) {
             tags.push(tag)
             idx = tags.length - 1
           }
         }
         if (last.el && last.el !== mention.el) last.offset = 0
-        let offset = (last.el && last.el === mention.el) ? last.offset : 0
+        let offset = last.el && last.el === mention.el ? last.offset : 0
         let range = new Range()
         range.setStart(mention.el, mention.pos + offset)
         range.setEnd(mention.el, mention.pos + mention.length + offset)
-        let newText = (mention.tag[0] === 'p' && !parseProfile) ? `@${mention.tag[1]}` : `#[${idx}]`
+        let newText =
+          mention.tag[0] === 'p' && !parseProfile
+            ? `@${mention.tag[1]}`
+            : `#[${idx}]`
         this.insertText(newText, range)
         last = {
           el: mention.el,
-          offset: newText.length - mention.length + last.offset || 0
+          offset: newText.length - mention.length + last.offset || 0,
         }
         // if (mention.tag[0] === 'p' && !parseProfile) {
         //   this.insertText(`@${mention.tag[1]}`, range)
@@ -756,23 +873,29 @@ export default {
         else this.setCaret(start.el, start.pos)
         this.updateText()
         console.log('updateMentionTags', this.tags)
-        Object.keys(this.tags).filter((key) => this.tags[key][0] === 'p').forEach((key) => {
-          if (!this.replyUserTags.includes(this.tags[key][1])) this.replyUserTags.push(this.tags[key][1])
-        })
+        Object.keys(this.tags)
+          .filter((key) => this.tags[key][0] === 'p')
+          .forEach((key) => {
+            if (!this.replyUserTags.includes(this.tags[key][1]))
+              this.replyUserTags.push(this.tags[key][1])
+          })
         this.mentionsUpdating = false
       }
     },
 
     startEndOfRange(range = this.caretRange) {
       return {
-        start: {el: range.startContainer, pos: range.startOffset},
-        end: {el: range.endContainer, pos: range.endOffset}
+        start: { el: range.startContainer, pos: range.startOffset },
+        end: { el: range.endContainer, pos: range.endOffset },
       }
     },
 
     insertText(insertedText, range = this.textareaRange) {
       let { start, end } = this.startEndOfRange(range)
-      let text = start.el.textContent.slice(0, start.pos) + insertedText + end.el.textContent.slice(end.pos)
+      let text =
+        start.el.textContent.slice(0, start.pos) +
+        insertedText +
+        end.el.textContent.slice(end.pos)
       // let nextSibling = end.el.nextSibling
       // while (nextSibling?.nodeName === '#text') {
       //   text = text + nextSibling.textContent
@@ -809,7 +932,8 @@ export default {
           return
         }
         this.sendIconTranslation += 3
-        if (this.sendIconTranslation > 50) this.sendIconTranslation -= (this.postEntryWidth + 40)
+        if (this.sendIconTranslation > 50)
+          this.sendIconTranslation -= this.postEntryWidth + 40
       }, 50)
     },
 
@@ -901,12 +1025,12 @@ export default {
       let mentions = Object.assign({}, this.mentions())
       for (let key in mentions) {
         let [_, mentionText] = key.split('_')
-          const mentionAnchorRegex = new RegExp(`(?<i>${mentionText})\\b`, 'g')
-          readonlyTextareaHtml = readonlyTextareaHtml.replaceAll(
-            mentionAnchorRegex,
-            (_, value) => this.colorText(mentionText).outerHTML
-          )
-        }
+        const mentionAnchorRegex = new RegExp(`(?<i>${mentionText})\\b`, 'g')
+        readonlyTextareaHtml = readonlyTextareaHtml.replaceAll(
+          mentionAnchorRegex,
+          (_, value) => this.colorText(mentionText).outerHTML
+        )
+      }
       this.readonlyTextarea.innerHTML = readonlyTextareaHtml
     },
 
@@ -914,24 +1038,29 @@ export default {
       // update over char limit highlighting
       if (this.overCharLimit()) {
         this.readonlyHighlightTextarea.innerHTML = this.textarea.innerHTML
-        let { el, pos } = this.charPos(this.charLimit, this.readonlyHighlightTextarea)
+        let { el, pos } = this.charPos(
+          this.charLimit,
+          this.readonlyHighlightTextarea
+        )
         let midword = el.length && el.length > pos
         let highlightRange = new Range()
         highlightRange.setStart(el, pos)
         highlightRange.setEndAfter(this.readonlyHighlightTextarea.lastChild)
         let highlightFragment = highlightRange.extractContents()
-        let htmlContent = [].map.call(highlightFragment.childNodes, (child, index) => {
-          if (index === 0 && midword) {
-            if (child.nodeName === '#text') return child.textContent
-            else return child.innerHTML
-          }
-          let span = document.createElement('span')
-          span.style.background = getPaletteColor('negative')
-          span.style.opacity = '.6'
-          span.innerHTML = child.innerHTML
-          child.innerHTML = span.outerHTML
-          return child.outerHTML
-        }).join('')
+        let htmlContent = [].map
+          .call(highlightFragment.childNodes, (child, index) => {
+            if (index === 0 && midword) {
+              if (child.nodeName === '#text') return child.textContent
+              else return child.innerHTML
+            }
+            let span = document.createElement('span')
+            span.style.background = getPaletteColor('negative')
+            span.style.opacity = '.6'
+            span.innerHTML = child.innerHTML
+            child.innerHTML = span.outerHTML
+            return child.outerHTML
+          })
+          .join('')
 
         let span = document.createElement('span')
         span.innerHTML = htmlContent
@@ -945,19 +1074,20 @@ export default {
     },
 
     charPos(char, el = this.textarea) {
-    // Loop through all child nodes
+      // Loop through all child nodes
       for (var node of el.childNodes) {
-        if (node.nodeType === 3) { // we have a text node
+        if (node.nodeType === 3) {
+          // we have a text node
           if (node.length >= char) {
-              return { el: node, pos: char, char: -1 }
+            return { el: node, pos: char, char: -1 }
           } else {
-              char -= node.length
+            char -= node.length
           }
         } else {
-            let result = this.charPos(char, node)
-            if (result.char === -1) {
-                return result // no need to finish the for loop
-            } else char = result.char
+          let result = this.charPos(char, node)
+          if (result.char === -1) {
+            return result // no need to finish the for loop
+          } else char = result.char
         }
       }
       return { char } // needed because of recursion stuff
@@ -978,15 +1108,13 @@ export default {
     extractUrls(text) {
       // eslint-disable-next-line no-useless-escape
       // const urlRegex = /(?:(?:https?|ftp):\/\/|\b(?:[a-z\d]+\.))(?:(?:[^\s()<>]+|\((?:[^\s()<>]+|(?:\([^\s()<>]+\)))?\))+(?:\((?:[^\s()<>]+|(?:\(?:[^\s()<>]+\)))?\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))?/ig
-      const urlRegex = /^(?:(?:https?|ftp):\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,}))\.?)(?::\d{2,5})?(?:[/?#]\S*)?$/i
+      const urlRegex =
+        /^(?:(?:https?|ftp):\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,}))\.?)(?::\d{2,5})?(?:[/?#]\S*)?$/i
 
-      text = text.replace(
-        urlRegex,
-        (url) => {
-          this.addLink({ url })
-          return ''
-        }
-      )
+      text = text.replace(urlRegex, (url) => {
+        this.addLink({ url })
+        return ''
+      })
 
       return text
     },
@@ -1010,18 +1138,25 @@ export default {
       if (!this.event) return []
       let event = Object.assign({}, this.event)
       if (!event.tags) event.tags = []
-      let usableTags = event.tags.filter(
-        ([t, v]) => (t === 'p') && this.isKey(v)
-      ).map(([...values]) => { return [...values] })
+      let usableTags = event.tags
+        .filter(([t, v]) => t === 'p' && this.isKey(v))
+        .map(([...values]) => {
+          return [...values]
+        })
 
       // add last 9 pubkeys mentioned
-      let pubkeys = usableTags.filter(([t, v]) => t === 'p').map(([_, v]) => v).slice(0, 9)
+      let pubkeys = usableTags
+        .filter(([t, v]) => t === 'p')
+        .map(([_, v]) => v)
+        .slice(0, 9)
       // plus the author of the note being replied to, if not present already
       if (!pubkeys.find((pubkey) => pubkey === event.pubkey)) {
         pubkeys.push(event.pubkey)
       }
       // remove ourselves
-      pubkeys = pubkeys.filter((pubkey) => pubkey !== this.$store.state.keys.pub)
+      pubkeys = pubkeys.filter(
+        (pubkey) => pubkey !== this.$store.state.keys.pub
+      )
       return pubkeys
     },
     removeReplyUserTag(pubkey) {
@@ -1036,16 +1171,19 @@ export default {
           this.updateText()
         }
       })
-      let tagIdx = Object.keys(this.tags).find((k) => pubkey === this.tags[k][1])
+      let tagIdx = Object.keys(this.tags).find(
+        (k) => pubkey === this.tags[k][1]
+      )
       delete this.tags[tagIdx]
       this.replyUserTags = this.replyUserTags.filter((pk) => pubkey !== pk)
-    }
-  }
+    },
+  },
 }
 </script>
 
-<style lang='scss' scoped>
-ul, li {
+<style lang="scss" scoped>
+ul,
+li {
   padding: 0;
   margin: 0;
 }
@@ -1056,16 +1194,16 @@ ul, li {
 }
 .avatar-image {
   position: absolute;
-  opacity: .4;
+  opacity: 0.4;
   pointer-events: none;
-  top: -.2rem;
+  top: -0.2rem;
 }
 
 .char-left-label {
 }
 .over-limit {
-  font-size: .9rem;
-  line-height: .8rem;
+  font-size: 0.9rem;
+  line-height: 0.8rem;
   color: $negative;
 }
 .toolbox {
@@ -1074,7 +1212,7 @@ ul, li {
 .button-emoji,
 .button-link,
 .button-close {
-  opacity: .6;
+  opacity: 0.6;
 }
 .button-image:hover,
 .button-emoji:hover,
@@ -1083,7 +1221,6 @@ ul, li {
   opacity: 1;
 }
 
-
 .input-area {
   position: relative;
   overflow-y: auto;
@@ -1091,7 +1228,7 @@ ul, li {
   outline: none;
   border: none;
   display: block;
-  margin: .3rem 0 0;
+  margin: 0.3rem 0 0;
 }
 .input-area::-webkit-scrollbar {
   width: 0px;
@@ -1099,7 +1236,7 @@ ul, li {
 .input-area #input-placeholder {
   position: absolute;
   pointer-events: none;
-  opacity: .5;
+  opacity: 0.5;
   outline: none;
   border: none;
 }
@@ -1115,7 +1252,7 @@ ul, li {
 }
 .input-area #input-editable {
   display: block;
-  opacity: .99;
+  opacity: 0.99;
   cursor: text;
 }
 .input-area #input-readonly {
@@ -1140,7 +1277,7 @@ ul, li {
 }
 </style>
 
-<style lang='scss'>
+<style lang="scss">
 #tribute-wrapper ul {
   list-style-type: none;
 }
@@ -1153,7 +1290,4 @@ ul, li {
 .body--dark #tribute-wrapper .tribute-container .highlight {
   background: rgba(255, 255, 255, 0.1);
 }
-
 </style>
-
-

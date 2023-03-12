@@ -1,7 +1,7 @@
-import {LocalStorage} from 'quasar'
+import { LocalStorage } from 'quasar'
 
 export default function (store) {
-  store.subscribe(({type, payload}, state) => {
+  store.subscribe(({ type, payload }, state) => {
     switch (type) {
       case 'setKeys':
         LocalStorage.set('keys', state.keys)

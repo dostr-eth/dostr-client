@@ -2,7 +2,6 @@
 
 // import {pool} from '../pool'
 
-
 // const addRelay = debounce((store, url) => {
 //   pool.addRelay(url)
 // }, 3000)
@@ -18,7 +17,7 @@
 // }, 3000)
 
 export default function (store) {
-  store.subscribe(({type, payload}, state) => {
+  store.subscribe(({ type, payload }, state) => {
     switch (type) {
       // case 'removeRelay':
       //   removeRelay(store, payload)

@@ -1,5 +1,5 @@
 <template>
-  <q-page class='fit flex column no-wrap'>
+  <q-page class="fit flex column no-wrap">
     <TheSearchMenu />
   </q-page>
 </template>
@@ -14,9 +14,15 @@ const metaData = {
 
   // meta tags
   meta: {
-    description: { name: 'description', content: 'Nostr search and follows on Dostr' },
+    description: {
+      name: 'description',
+      content: 'Nostr search and follows on Dostr',
+    },
     keywords: { name: 'keywords', content: 'nostr decentralized social media' },
-    equiv: { 'http-equiv': 'Content-Type', content: 'text/html; charset=UTF-8' },
+    equiv: {
+      'http-equiv': 'Content-Type',
+      content: 'text/html; charset=UTF-8',
+    },
   },
 }
 
@@ -24,7 +30,7 @@ export default {
   name: 'SearchFollow',
   mixins: [createMetaMixin(metaData)],
   components: {
-    TheSearchMenu
-  }
+    TheSearchMenu,
+  },
 }
 </script>

@@ -1,23 +1,51 @@
 <template>
-  <q-page id='settings-page'>
-    <BaseHeader>{{ $t('settings') }}</BaseHeader>
+  <q-page style="margin-bottom: 100px;" id="settings-page">
+    <BaseHeader class="spotnik">{{ $t("settings") }}</BaseHeader>
     <q-form class="q-gutter-md section" @submit="setMetadata">
-      <div v-if='editingMetadata' class='flex justify-between' style='display: flex; gap: .2rem;'>
-        <q-btn label="save" color="primary" outline size="sm" type="submit"/>
-        <q-btn label="cancel" color="negative" outline size="sm" @click='cancel("metadata")'/>
+      <div
+        v-if="editingMetadata"
+        class="flex justify-between"
+        style="display: flex; gap: 0.2rem"
+      >
+        <q-btn label="save" color="primary" outline size="sm" type="submit" />
+        <q-btn
+          label="cancel"
+          color="negative"
+          outline
+          size="sm"
+          @click="cancel('metadata')"
+        />
       </div>
-      <div class="text-bold flex justify-between no-wrap" style='font-size: 1.1rem;'>
-          {{ $t('profile') }}
-          <q-btn v-if='!editingMetadata' label="edit" color="primary" outline size="sm" :disable="!$store.getters.canSignEventsAutomatically" @click='editingMetadata = true'/>
+      <div
+        class="text-bold flex justify-between no-wrap"
+        style="font-size: 1.1rem"
+      >
+        {{ $t("profile") }}
+        <q-btn
+          v-if="!editingMetadata"
+          label="edit"
+          color="primary"
+          outline
+          size="sm"
+          :disable="!$store.getters.canSignEventsAutomatically"
+          @click="editingMetadata = true"
+        />
       </div>
-      <q-input v-model="metadata.name" dense filled type="text" label="Name" :disable='!editingMetadata'>
+      <q-input
+        v-model="metadata.name"
+        dense
+        filled
+        type="text"
+        label="Name"
+        :disable="!editingMetadata"
+      >
         <template #before>
           <q-icon name="alternate_email" />
         </template>
       </q-input>
       <q-input
         v-model="metadata.about"
-        :disable='!editingMetadata'
+        :disable="!editingMetadata"
         filled
         autogrow
         dense
@@ -27,7 +55,7 @@
       />
       <q-input
         v-model.trim="metadata.picture"
-        :disable='!editingMetadata'
+        :disable="!editingMetadata"
         filled
         dense
         type="text"
@@ -35,110 +63,166 @@
         maxlength="150"
       >
         <template #after>
-          <BaseUserAvatar v-if="metadata.picture" :pubkey='$store.state.keys.pub' rounded/>
+          <BaseUserAvatar
+            v-if="metadata.picture"
+            :pubkey="$store.state.keys.pub"
+            rounded
+          />
         </template>
       </q-input>
       <q-input
         v-model.trim="metadata.nip05"
-        :disable='!editingMetadata'
+        :disable="!editingMetadata"
         filled
         dense
         type="text"
         label="NIP-05 Identifier"
         maxlength="100"
       />
-      <div class='flex row no-wrap' style='gap: 1rem;'>
+      <div class="flex row no-wrap" style="gap: 1rem">
         <q-input
           v-model.trim="metadata.lud06"
-          :disable='!editingMetadata'
+          :disable="!editingMetadata"
           filled
           dense
           type="text"
           label="Lightning Address or LUD-06 Identifier"
           maxlength="150"
-          class='full-width'
+          class="full-width"
         />
-        <q-btn v-if='hasLnAddr' :label='showLnAddr ? "show lnurl" : "show ln address"' @click='convertLud06' outline dense no-wrap/>
+        <q-btn
+          v-if="hasLnAddr"
+          :label="showLnAddr ? 'show lnurl' : 'show ln address'"
+          @click="convertLud06"
+          outline
+          dense
+          no-wrap
+        />
       </div>
     </q-form>
 
-    <q-separator color='accent'/>
-      <ThePreferences @update-font='updateFont'/>
-    <q-separator color='accent'/>
-    <div class='section'>
-      <div v-if='editingRelays' class='flex justify-between' style='display: flex; gap: .2rem;'>
-        <q-btn label="save" color="primary" outline size="sm" @click='saveRelays'/>
-        <q-btn label="cancel" color="negative" outline size="sm" @click='cancel("relays")'/>
+    <q-separator color="accent" />
+    <ThePreferences @update-font="updateFont" />
+    <q-separator color="accent" />
+    <div class="section">
+      <div
+        v-if="editingRelays"
+        class="flex justify-between"
+        style="display: flex; gap: 0.2rem"
+      >
+        <q-btn
+          label="save"
+          color="primary"
+          outline
+          size="sm"
+          @click="saveRelays"
+        />
+        <q-btn
+          label="cancel"
+          color="negative"
+          outline
+          size="sm"
+          @click="cancel('relays')"
+        />
       </div>
-      <div class="text-bold flex justify-between no-wrap" style='font-size: 1.1rem;'>
-        {{ $t('relays') }}
-        <div class="text-normal flex row no-wrap" style='font-size: .9rem; gap: .4rem;'>
-          <q-btn v-if='!editingRelays' label="edit" color="primary" outline size="sm" :disable="!$store.getters.canSignEventsAutomatically" @click='editingRelays = true'/>
-          <div v-if='editingRelays'>read</div>
-          <div v-if='editingRelays'>write</div>
+      <div
+        class="text-bold flex justify-between no-wrap"
+        style="font-size: 1.1rem"
+      >
+        {{ $t("relays") }}
+        <div
+          class="text-normal flex row no-wrap"
+          style="font-size: 0.9rem; gap: 0.4rem"
+        >
+          <q-btn
+            v-if="!editingRelays"
+            label="edit"
+            color="primary"
+            outline
+            size="sm"
+            :disable="!$store.getters.canSignEventsAutomatically"
+            @click="editingRelays = true"
+          />
+          <div v-if="editingRelays">read</div>
+          <div v-if="editingRelays">write</div>
         </div>
       </div>
-      <q-list class='flex column q-pt-xs' style='gap: .2rem;'>
+      <q-list class="flex column q-pt-xs" style="gap: 0.2rem">
         <q-item
-          v-for="(url) in Object.keys(relays)"
+          v-for="url in Object.keys(relays)"
           :key="url"
-          class='flex justify-between items-center no-wrap no-padding'
-          style='min-height: 1.2rem'
+          class="flex justify-between items-center no-wrap no-padding"
+          style="min-height: 1.2rem"
         >
           <div>
-              <q-btn
-                v-if='!editingRelays && (relays[url].read || relays[url].write)'
-                color="secondary"
-                outline
-                size="sm"
-                label="Share"
-                :disable="
-                  hasJustSharedRelay ||
-                  !$store.getters.canSignEventsAutomatically
-                "
-                @click="shareRelay(url)"
-              />
-              <q-btn
-                v-if='editingRelays'
-                color="negative"
-                label='remove'
-                outline
-                size="sm"
-                @click="removeRelay(url)"
-              />
-              {{ url }}
+            <q-btn
+              v-if="!editingRelays && (relays[url].read || relays[url].write)"
+              color="secondary"
+              outline
+              size="sm"
+              label="Share"
+              :disable="
+                hasJustSharedRelay || !$store.getters.canSignEventsAutomatically
+              "
+              @click="shareRelay(url)"
+            />
+            <q-btn
+              v-if="editingRelays"
+              color="negative"
+              label="remove"
+              outline
+              size="sm"
+              @click="removeRelay(url)"
+            />
+            {{ url }}
           </div>
-          <div class="flex no-wrap items-center" style='gap: .6rem;'>
-              <q-toggle
-                v-if='editingRelays'
-                v-model='relays[url].read'
-                color='primary'
-                size='sm'
-                dense
-                class='no-padding'
-                :disable="!$store.getters.canSignEventsAutomatically"
-              />
-              <q-toggle
-                v-if='editingRelays'
-                v-model='relays[url].write'
-                color='primary'
-                size='sm'
-                dense
-                class='no-padding'
-                :disable="!$store.getters.canSignEventsAutomatically"
-              />
+          <div class="flex no-wrap items-center" style="gap: 0.6rem">
+            <q-toggle
+              v-if="editingRelays"
+              v-model="relays[url].read"
+              color="primary"
+              size="sm"
+              dense
+              class="no-padding"
+              :disable="!$store.getters.canSignEventsAutomatically"
+            />
+            <q-toggle
+              v-if="editingRelays"
+              v-model="relays[url].write"
+              color="primary"
+              size="sm"
+              dense
+              class="no-padding"
+              :disable="!$store.getters.canSignEventsAutomatically"
+            />
           </div>
         </q-item>
       </q-list>
-      <q-form v-if='editingRelays' class='q-py-xs' @submit="addRelay">
-          <div class='flex row no-wrap q-mx-sm q-mt-sm' id='new-relay-input'>
-            <q-input v-model='newRelay' placeholder='add a relay...' autofocus class='full-width' input-style='padding: 0;' @keypress.enter='addRelay' dense borderless/>
-            <q-btn icon='add' color='positive' size='sm' flat dense @click.stop='addRelay'/>
-          </div>
+      <q-form v-if="editingRelays" class="q-py-xs" @submit="addRelay">
+        <div class="flex row no-wrap q-mx-sm q-mt-sm" id="new-relay-input">
+          <q-input
+            v-model="newRelay"
+            placeholder="add a relay..."
+            autofocus
+            class="full-width"
+            input-style="padding: 0;"
+            @keypress.enter="addRelay"
+            dense
+            borderless
+          />
+          <q-btn
+            icon="add"
+            color="positive"
+            size="sm"
+            flat
+            dense
+            @click.stop="addRelay"
+          />
+        </div>
         <BaseSelectMultiple>
           <template #options>
-            <div style='max-height: 6.75rem;'>
-            <pre class='relay-list' >
+            <div style="max-height: 6.75rem">
+              <pre class="relay-list">
               <li
                 v-for='(relay, index) in optionalRelays'
                 :key='index + "-" + relay'
@@ -157,28 +241,48 @@
       </q-form>
     </div>
 
-    <q-separator color='accent'/>
-      <q-expansion-item
-        dense
-        expand-icon='help'
-        expanded-icon='expand_less'
-        class="full-width items-center"
-        header-class='items-center'
-      >
-        <template #header>
-          <div class="text-bold flex justify-between no-wrap full-width" style='font-size: 1.1rem;'>{{ $t('faq') }}</div>
-        </template>
-        <q-card-section>
-        <BaseInformation/>
-        </q-card-section>
-      </q-expansion-item>
-    <q-separator color='accent'/>
+    <q-separator color="accent" />
+    <q-expansion-item
+      dense
+      expand-icon="help"
+      expanded-icon="expand_less"
+      class="full-width items-center"
+      header-class="items-center"
+    >
+      <template #header>
+        <div
+          class="text-bold flex justify-between no-wrap full-width"
+          style="font-size: 1.1rem"
+        >
+          {{ $t("faq") }}
+        </div>
+      </template>
+      <q-card-section>
+        <BaseInformation />
+      </q-card-section>
+    </q-expansion-item>
+    <q-separator color="accent" />
 
-    <div class="flex no-wrap section" style='gap: .2rem;'>
-      <q-btn label="View your keys" color="primary" outline @click="keysDialog = true" />
+    <div class="flex no-wrap section" style="gap: 0.2rem">
+      <q-btn
+        label="View your keys"
+        color="primary"
+        outline
+        @click="keysDialog = true"
+      />
       <q-btn label="logout" color="primary" outline @click="logout" />
-      <q-btn label="Delete Local Data" color="negative" outline @click="hardReset" />
-      <q-btn label="dev tools" color='secondary' outline :to='{ name: "devTools"}' />
+      <q-btn
+        label="Delete Local Data"
+        color="negative"
+        outline
+        @click="hardReset"
+      />
+      <q-btn
+        label="dev tools"
+        color="secondary"
+        outline
+        :to="{ name: 'devTools' }"
+      />
     </div>
 
     <q-dialog v-model="keysDialog">
@@ -187,7 +291,9 @@
           <div class="text-lg text-bold tracking-wide leading-relaxed py-2">
             Your keys <q-icon name="vpn_key" />
           </div>
-          <p v-if="$store.state.keys.priv">Make sure you back up your private key!</p>
+          <p v-if="$store.state.keys.priv">
+            Make sure you back up your private key!
+          </p>
           <p v-else>Your private key is not here!</p>
           <div class="mt-1 text-xs">
             Posts are published using your private key. Others can see your
@@ -197,12 +303,7 @@
 
         <q-card-section>
           <p>Private Key:</p>
-          <q-input
-            v-model="nsecKey"
-            class="mb-2"
-            readonly
-            filled
-          />
+          <q-input v-model="nsecKey" class="mb-2" readonly filled />
           <p>Public Key:</p>
           <q-input v-model="npubKey" readonly filled />
         </q-card-section>
@@ -216,9 +317,9 @@
 </template>
 
 <script>
-import {LocalStorage} from 'quasar'
-import {nextTick} from 'vue'
-import {nip05} from 'nostr-tools'
+import { LocalStorage } from 'quasar'
+import { nextTick } from 'vue'
+import { nip05 } from 'nostr-tools'
 
 import helpersMixin from '../utils/mixin'
 // import { setCssVar } from 'quasar'
@@ -235,9 +336,15 @@ const metaData = {
 
   // meta tags
   meta: {
-    description: { name: 'description', content: 'Nostr and Dostr user configuration' },
-    keywords: { name: 'keywords', content: 'nostr decentralized social media' },
-    equiv: { 'http-equiv': 'Content-Type', content: 'text/html; charset=UTF-8' },
+    description: {
+      name: 'description',
+      content: 'Nostr and Dostr user configuration',
+    },
+    keywords: { name: 'keywords', content: 'nostr dostr decentralized social media siwe siwx' },
+    equiv: {
+      'http-equiv': 'Content-Type',
+      content: 'text/html; charset=UTF-8',
+    },
   },
 }
 
@@ -284,37 +391,47 @@ export default {
   },
   computed: {
     optionalRelays() {
-      let options = this.$store.state.optionalRelaysList.filter(relay => {
-        if (this.newRelay.length && !relay.toLowerCase().includes(this.newRelay.toLowerCase())) return false
+      let options = this.$store.state.optionalRelaysList.filter((relay) => {
+        if (
+          this.newRelay.length &&
+          !relay.toLowerCase().includes(this.newRelay.toLowerCase())
+        )
+          return false
         if (this.relays[relay]) return false
         return true
       })
       return options
     },
     npubKey() {
-      if (this.$store.state.keys.pub) return this.hexToBech32(this.$store.state.keys.pub, 'npub')
+      if (this.$store.state.keys.pub)
+        return this.hexToBech32(this.$store.state.keys.pub, 'npub')
       return null
     },
     nsecKey() {
-      if (this.$store.state.keys.priv) return this.hexToBech32(this.$store.state.keys.priv, 'nsec')
+      if (this.$store.state.keys.priv)
+        return this.hexToBech32(this.$store.state.keys.priv, 'nsec')
       return null
     },
     hasLnAddr() {
-      return utils.isLightningAddress(this.metadata.lud06) || (utils.isLnurl(this.metadata.lud06) && this.lnurlToLnAddr(this.metadata.lud06))
+      return (
+        utils.isLightningAddress(this.metadata.lud06) ||
+        (utils.isLnurl(this.metadata.lud06) &&
+          this.lnurlToLnAddr(this.metadata.lud06))
+      )
     },
     isLnurl() {
       return utils.isLnurl(this.metadata.lud06)
-    }
+    },
   },
 
   mounted() {
     if (!this.$store.state.keys.pub) this.$router.push('/')
     if (this.$store.state.keys.pub && this.$route.params.initUser) {
-          nextTick(() => {
-            setTimeout(() => {
-              this.keysDialog = true
-            }, 1000)
-          })
+      nextTick(() => {
+        setTimeout(() => {
+          this.keysDialog = true
+        }, 1000)
+      })
     }
 
     this.unsubscribe = this.$store.subscribe((mutation, state) => {
@@ -350,7 +467,10 @@ export default {
 
   methods: {
     cloneMetadata() {
-      this.metadata = Object.assign({}, this.$store.state.profilesCache[this.$store.state.keys.pub])
+      this.metadata = Object.assign(
+        {},
+        this.$store.state.profilesCache[this.$store.state.keys.pub]
+      )
       // this.metadata = {name, picture, about, nip05}
       if (this.metadata.lud06) {
         let lnAddr = this.lnurlToLnAddr(this.metadata.lud06)
@@ -360,26 +480,38 @@ export default {
       }
     },
     convertLud06() {
-      if (utils.isLightningAddress(this.metadata.lud06)) this.metadata.lud06 = this.lnAddrToLnurl(this.metadata.lud06)
-      else if (utils.isLnurl(this.metadata.lud06) && this.lnurlToLnAddr(this.metadata.lud06)) this.metadata.lud06 = this.lnurlToLnAddr(this.metadata.lud06)
+      if (utils.isLightningAddress(this.metadata.lud06))
+        this.metadata.lud06 = this.lnAddrToLnurl(this.metadata.lud06)
+      else if (
+        utils.isLnurl(this.metadata.lud06) &&
+        this.lnurlToLnAddr(this.metadata.lud06)
+      )
+        this.metadata.lud06 = this.lnurlToLnAddr(this.metadata.lud06)
       this.showLnAddr = !this.showLnAddr
     },
     cloneRelays() {
       // this.relays = JSON.parse(JSON.stringify(this.$store.state.relays))
-      this.relays = Object.assign({},
-        Object.keys(this.$store.state.relays).length ? this.$store.state.relays : this.$store.state.defaultRelays)
+      this.relays = Object.assign(
+        {},
+        Object.keys(this.$store.state.relays).length
+          ? this.$store.state.relays
+          : this.$store.state.defaultRelays
+      )
     },
     async setMetadata() {
       if (this.metadata.created_at) delete this.metadata.created_at
       if (this.metadata.nip05 === '') this.metadata.nip05 = undefined
       if (this.metadata.nip05) {
         try {
-          if ((await nip05.queryProfile(this.metadata.nip05)).pubkey !== this.$store.state.keys.pub)
+          if (
+            (await nip05.queryProfile(this.metadata.nip05)).pubkey !==
+            this.$store.state.keys.pub
+          )
             throw new Error('Failed to verify NIP05 identifier on server.')
         } catch (error) {
           this.$q.notify({
             message: 'Failed to verify NIP05 identifier on server.',
-            color: 'warning'
+            color: 'warning',
           })
 
           return
@@ -397,14 +529,17 @@ export default {
         if (!utils.isLnurl(this.metadata.lud06)) {
           this.$q.notify({
             message: 'Invalid lud06 identifier, must start with LNURL.',
-            color: 'warning'
+            color: 'warning',
           })
           return
         }
-        if (this.metadata.lud16 && !utils.isLightningAddress(this.metadata.lud16)) {
+        if (
+          this.metadata.lud16 &&
+          !utils.isLightningAddress(this.metadata.lud16)
+        ) {
           this.$q.notify({
             message: 'Invalid lud16 identifier, must be a lightning address.',
-            color: 'warning'
+            color: 'warning',
           })
           return
         }
@@ -415,7 +550,8 @@ export default {
       this.editingMetadata = false
     },
     addRelay() {
-      if (this.newRelay && this.newRelay.length) this.relays[this.newRelay] = { read: true, write: true }
+      if (this.newRelay && this.newRelay.length)
+        this.relays[this.newRelay] = { read: true, write: true }
       this.newRelay = ''
     },
     removeRelay(url) {
@@ -424,17 +560,19 @@ export default {
     saveRelays() {
       if (!Object.keys(this.relays).length) {
         this.$q
-        .dialog({
-          title: 'no relays saved!',
-          message: 'you must have at least one relay selected to save. please add a relay.',
-          ok: {color: 'accent'}
-        })
-        .onOk(() => {
-          return
-        })
+          .dialog({
+            title: 'no relays saved!',
+            message:
+              'you must have at least one relay selected to save. please add a relay.',
+            ok: { color: 'accent' },
+          })
+          .onOk(() => {
+            return
+          })
         return
       }
-      if (this.$store.getters.canSignEventsAutomatically) this.$store.commit('saveRelays', this.relays)
+      if (this.$store.getters.canSignEventsAutomatically)
+        this.$store.commit('saveRelays', this.relays)
       this.editingRelays = false
     },
     cancel(section) {
@@ -467,9 +605,10 @@ export default {
       this.$q
         .dialog({
           title: 'logout?',
-          message: 'this will not delete your local nostr database but will allow you to login as another user. continue?',
-          cancel: {color: 'accent'},
-          ok: {color: 'accent'}
+          message:
+            'this will not delete your local nostr database but will allow you to login as another user. continue?',
+          cancel: { color: 'accent' },
+          ok: { color: 'accent' },
         })
         .onOk(async () => {
           LocalStorage.clear()
@@ -481,8 +620,8 @@ export default {
         .dialog({
           title: 'delete all data?',
           message: 'do you really want to delete all data from this device?',
-          cancel: {color: 'accent'},
-          ok: {color: 'accent'}
+          cancel: { color: 'accent' },
+          ok: { color: 'accent' },
         })
         .onOk(async () => {
           LocalStorage.clear()
@@ -493,12 +632,12 @@ export default {
       // this.preferences.font = font
       this.$emit('update-font', font)
     },
-  }
+  },
 }
 </script>
 
-<style lang='css' scoped>
+<style lang="css" scoped>
 .section {
-  padding: .5rem;
+  padding: 0.5rem;
 }
 </style>

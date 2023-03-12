@@ -1,7 +1,7 @@
 <template>
   <div>
-  {{url}}
-  {{preview}}
+    {{ url }}
+    {{ preview }}
   </div>
 </template>
 
@@ -10,7 +10,7 @@ import fetch from 'cross-fetch'
 
 export default {
   name: 'BaseLinkPreview',
-  props: {url: {type: String, required: true}},
+  props: { url: { type: String, required: true } },
 
   data() {
     return {
@@ -22,10 +22,8 @@ export default {
     let res = await (await fetch(this.url)).json
     console.log('res', res)
     // if (res)
-  }
+  },
 }
 </script>
 
-<style lang='css' scoped>
-</style>
-
+<style lang="css" scoped></style>

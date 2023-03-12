@@ -1,32 +1,30 @@
 <template>
-  <div
-    class='flex row no-wrap'
-    style='gap: .3rem;'
-    :class='buttonGroupClass'
-    >
+  <div class="flex row no-wrap" style="gap: 0.3rem" :class="buttonGroupClass">
     <BaseButtonCopy
-      :button-text='npubKey'
-      button-size='sm'
-      text-color='secondary'
-      tooltip-text='copy pubkey'
+      :button-text="npubKey"
+      button-size="sm"
+      text-color="secondary"
+      tooltip-text="copy pubkey"
       @click.stop
     />
     <BaseButtonMessage
-      v-if='(pubkey !== $store.state.keys.pub) && ($store.state.keys.pub)'
+      v-if="pubkey !== $store.state.keys.pub && $store.state.keys.pub"
       :button-to="'/messages/' + npubKey"
-      button-size='sm'
-      text-color='primary'
+      button-size="sm"
+      text-color="primary"
       @click.stop
     />
     <BaseButtonFollow
-      v-if='(pubkey !== $store.state.keys.pub) && ($store.state.keys.pub)'
-      :pubkey='pubkey'
-      button-size='sm'
+      v-if="pubkey !== $store.state.keys.pub && $store.state.keys.pub"
+      :pubkey="pubkey"
+      button-size="sm"
       @click.stop
     />
     <BaseButtonLightning
-      v-if='(pubkey !== $store.state.keys.pub) && ($store.getters.profileLud06(pubkey))'
-      :pubkey='pubkey'
+      v-if="
+        pubkey !== $store.state.keys.pub && $store.getters.profileLud06(pubkey)
+      "
+      :pubkey="pubkey"
     />
   </div>
 </template>
@@ -45,12 +43,12 @@ export default defineComponent({
   props: {
     pubkey: {
       type: String,
-      required: true
+      required: true,
     },
     buttonGroupClass: {
       type: String,
       required: false,
-      default: ''
+      default: '',
     },
     // buttonSize: {
     //   type: String,
@@ -68,7 +66,7 @@ export default defineComponent({
   computed: {
     npubKey() {
       return this.hexToBech32(this.pubkey, 'npub')
-    }
+    },
   },
 })
 </script>

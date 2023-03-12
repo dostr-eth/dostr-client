@@ -1,42 +1,54 @@
 <template>
   <q-item
-    :clickable='clickable'
+    :clickable="clickable"
     unelevated
     outlined
-    class='no-padding flex row justify-start items-center cursor-pointer'
-    :class='(alignRight ? "text-right reverse" : "text-left") +
-      (headerMode ? " header-mode" : "") +
-      ((!hasTouch && !headerMode && actionButtons) ? " hidden-action-buttons" : "")'
+    class="no-padding flex row justify-start items-center cursor-pointer"
+    :class="
+      (alignRight ? 'text-right reverse' : 'text-left') +
+      (headerMode ? ' header-mode' : '') +
+      (!hasTouch && !headerMode && actionButtons
+        ? ' hidden-action-buttons'
+        : '')
+    "
     @click.stop="toProfile(pubkey)"
-    style='max-width: 100%; gap: .5rem'
+    style="max-width: 100%; gap: 0.5rem"
   >
     <div>
       <BaseUserAvatar
         :pubkey="pubkey"
-        :align-right='alignRight'
-        :size='headerMode ? "10rem" : "lg"'
-        :class='headerMode ? "self-center" : ""'
+        :align-right="alignRight"
+        :size="headerMode ? '10rem' : 'lg'"
+        :class="headerMode ? 'self-center' : ''"
       />
     </div>
     <q-item-section
-      :class='headerMode ? "self-start" : ""'
-      :style='!headerMode ? "white-space: nowrap; overflow: auto;" : ""'
+      :class="headerMode ? 'self-start' : ''"
+      :style="!headerMode ? 'white-space: nowrap; overflow: auto;' : ''"
     >
       <BaseUserName
         :pubkey="pubkey"
-        :header-mode='headerMode'
-        :show-verified='true'
-        :class='headerMode ? " text-h6" : ""'
-        :align-right='alignRight'
-        :show-following='showFollowing'
-        :wrap='wrap'
+        :header-mode="headerMode"
+        :show-verified="true"
+        :class="headerMode ? ' text-h6' : ''"
+        :align-right="alignRight"
+        :show-following="showFollowing"
+        :wrap="wrap"
       />
-      <div class='text-secondary pubkey' style='opacity: .9; font-size: 95%; font-weight: 300'>{{ shorten(npubKey) }}</div>
-      <BaseMarkdown v-if='headerMode' :content='$store.getters.profileDescription(pubkey)' />
+      <div
+        class="text-secondary pubkey"
+        style="opacity: 0.9; font-size: 95%; font-weight: 300"
+      >
+        {{ shorten(npubKey) }}
+      </div>
+      <BaseMarkdown
+        v-if="headerMode"
+        :content="$store.getters.profileDescription(pubkey)"
+      />
       <BaseUserCardActions
         v-if="actionButtons"
-        :pubkey='pubkey'
-        class='action-buttons'
+        :pubkey="pubkey"
+        class="action-buttons"
       />
     </q-item-section>
   </q-item>
@@ -59,17 +71,17 @@ export default defineComponent({
   props: {
     pubkey: {
       type: String,
-      required: true
+      required: true,
     },
     alignRight: {
       type: Boolean,
       required: false,
-      default: false
+      default: false,
     },
     clickable: {
       type: Boolean,
       required: false,
-      default: true
+      default: true,
     },
     // largeMode: {
     //   type: String,
@@ -79,27 +91,27 @@ export default defineComponent({
     headerMode: {
       type: Boolean,
       required: false,
-      default: false
+      default: false,
     },
     actionButtons: {
       type: Boolean,
       required: false,
-      default: true
+      default: true,
     },
-    showFollowing: {type: Boolean, default: false},
-    wrap: {type: Boolean, default: false},
+    showFollowing: { type: Boolean, default: false },
+    wrap: { type: Boolean, default: false },
   },
 
   setup() {
     const $q = useQuasar()
     let hasTouch = $q?.platform.has.touch || false
-    return {hasTouch}
+    return { hasTouch }
   },
 
   computed: {
     npubKey() {
       return this.hexToBech32(this.pubkey, 'npub')
-    }
+    },
   },
 })
 </script>

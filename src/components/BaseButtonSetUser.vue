@@ -1,23 +1,9 @@
 <template>
-  <q-btn
-    unelevated
-    clickable
-    :size='buttonSize'
-    class='button-set-user'
-    dense
-  >
-    <div
-      v-if='verbose'
-      class='gt-sm'
-      style='font-size: 1rem; font-weight: 700; letter-spacing: .05rem;'
-    >
-      <span>&nbsp;{{ $t('setUser') }}&nbsp;</span>
+  <q-btn unelevated clickable :size="buttonSize" class="button-set-user" dense style="margin-left: -10px;">
+    <div v-if="verbose" class="gt-sm" style="font-size: 1rem; font-weight: 700; letter-spacing: 0.05rem;">
+      <span>&nbsp;{{ $t("Sign In") }}&nbsp;</span>
     </div>
-    <q-icon
-      name='login'
-      color='primary'
-      :size='buttonSize'
-    />
+    <q-icon name="login" color="primary" :size="buttonSize" />
   </q-btn>
 </template>
 
@@ -40,12 +26,12 @@ export default defineComponent({
     buttonSize: {
       type: String,
       required: false,
-      default: 'sm'
+      default: 'sm',
     },
     verbose: {
       type: Boolean,
       default: false,
-    }
+    },
   },
 
   // methods: {
@@ -59,9 +45,14 @@ export default defineComponent({
 
 <style>
 .button-set-user {
-  opacity: .6;
+  opacity: 1;
+  font-family: 'Spotnik';
+  background: green;
 }
+
 .button-set-user:hover {
   opacity: 1;
+  transform: scale(1.1);
+  transform-origin: right;
 }
 </style>

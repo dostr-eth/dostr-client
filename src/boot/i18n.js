@@ -7,7 +7,7 @@ export default ({ app }) => {
     locale: 'en',
     fallbackLocale: 'en',
     globalInjection: true,
-    messages
+    messages,
   })
 
   // Tell app to use the I18n instance

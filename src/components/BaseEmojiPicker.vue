@@ -1,12 +1,12 @@
 <template>
   <Picker
-    :data='emojiIndex'
-    set='google'
-    :emoji-size='22'
-    :per-line='perLine'
-    :show-preview='false'
-    :show-skin-tomes='false'
-    @select='emojiSelected'
+    :data="emojiIndex"
+    set="google"
+    :emoji-size="22"
+    :per-line="perLine"
+    :show-preview="false"
+    :show-skin-tomes="false"
+    @select="emojiSelected"
     @click.stop
   />
 </template>
@@ -39,19 +39,19 @@ export default {
 
   data() {
     return {
-      emojiIndex: emojiIndex
+      emojiIndex: emojiIndex,
     }
   },
 
   methods: {
     emojiSelected(emoji) {
       this.$emit('emoji-selected', emoji)
-    }
-  }
+    },
+  },
 }
 </script>
 
-<style lang='css'>
+<style lang="css">
 .emoji-mart {
   flex-direction: row;
   background: var(--q-background);
@@ -72,14 +72,14 @@ export default {
 }
 .emoji-mart-anchor {
   color: inherit;
-  opacity: .6;
+  opacity: 0.6;
   padding: 0;
   border: 0;
   object-fit: cover;
   height: 1rem;
 }
 .emoji-mart-anchor svg {
-  transform: scale(.8)
+  transform: scale(0.8);
 }
 .emoji-mart-anchor:hover {
   color: inherit;
@@ -93,7 +93,7 @@ export default {
   display: none;
   visibility: hidden;
 }
-.emoji-mart-category{
+.emoji-mart-category {
   line-height: 0;
 }
 .emoji-mart-category .emoji-mart-emoji span {
@@ -107,7 +107,7 @@ export default {
   z-index: 2;
 }
 .emoji-mart-search input {
-  background:  rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.1);
   color: inherit;
   border: 0;
 }
@@ -115,9 +115,9 @@ export default {
   background-color: unset;
   background-color: unset;
   color: inherit;
-  padding: .1rem;
+  padding: 0.1rem;
   margin: 0;
-  font-size: .8rem;
+  font-size: 0.8rem;
   text-transform: lowercase;
   font-weight: 400;
 }
@@ -128,7 +128,7 @@ div#emoji-mart-list section:first-of-type h3:first-of-type {
   padding-top: 0;
 }
 .emoji-mart-emoji {
-  padding: .3rem;
+  padding: 0.3rem;
 }
 .emoji-mart-emoji:hover:before {
   display: none;

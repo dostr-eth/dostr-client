@@ -31,7 +31,7 @@ function handleDbMessage({ data }) {
       ticketResults[currentTicketId] = ticketResults[currentTicketId] || {
         ticket,
         events: {},
-        end: null
+        end: null,
       }
       ticketResults[currentTicketId].end = null
       // console.log('handleDbMessage stream ticket', currentTicketId, JSON.parse(JSON.stringify(ticketResults)))
@@ -42,7 +42,7 @@ function handleDbMessage({ data }) {
       ticketResults[currentTicketId].events[event.id] = event
 
       // console.log('handleDbMessage event', event, JSON.parse(JSON.stringify(ticketResults)))
-    // if (event.id === '86d15bcf6e26042083ecfc69542feabf05bbf56fe6969471efface442890ed47') console.log('adding root event 86d15bcf6e26042083ecfc69542feabf05bbf56fe6969471efface442890ed47 to results', currentTicket, currentTicketEvents, completedQueue)
+      // if (event.id === '86d15bcf6e26042083ecfc69542feabf05bbf56fe6969471efface442890ed47') console.log('adding root event 86d15bcf6e26042083ecfc69542feabf05bbf56fe6969471efface442890ed47 to results', currentTicket, currentTicketEvents, completedQueue)
       return
     case 'end':
       // if (Object.keys(currentTicketEvents).length) {
@@ -54,10 +54,11 @@ function handleDbMessage({ data }) {
       //     completedQueue[currentTicket.id] = currentTicket
       //   }
       // }
-      if (!Object.keys(ticketResults[currentTicketId].events).length) delete ticketResults[currentTicketId]
+      if (!Object.keys(ticketResults[currentTicketId].events).length)
+        delete ticketResults[currentTicketId]
       else ticketResults[currentTicketId].end = Date.now()
       currentTicketId = null
-  // if (log) console.log('handleDbMessage end', currentTicket, currentTicketEvents, completedQueue)
+      // if (log) console.log('handleDbMessage end', currentTicket, currentTicketEvents, completedQueue)
       return
   }
 }
@@ -66,7 +67,7 @@ function run() {
   self.onmessage = handleMessage
 
   setInterval(() => {
-  // if (Object.keys(completedQueue).length) console.log('setInterval', completedQueue)
+    // if (Object.keys(completedQueue).length) console.log('setInterval', completedQueue)
     // let tickets = Object.values(completedQueue)
     // completedQueue = {}
     // let ticket = tickets.shift()
@@ -74,7 +75,9 @@ function run() {
     //   self.postMessage({ action: 'complete', ticket })
     //   ticket = tickets.shift()
     // }
-    let completedTicketIds = Object.values(ticketResults).filter(({end}) => end < Date.now() - 1000).map(({ticket}) => ticket.id)
+    let completedTicketIds = Object.values(ticketResults)
+      .filter(({ end }) => end < Date.now() - 1000)
+      .map(({ ticket }) => ticket.id)
     // console.log('eventworker interval starting', ticketResults, completedTicketIds)
     for (let ticketId of completedTicketIds) {
       let { ticket, events, end } = ticketResults[ticketId]
@@ -83,7 +86,8 @@ function run() {
       ticket.results = Object.values(events)
       ticket.success = true
       // if (ticket.results.length) console.log('eventworker interval', { action: 'complete', ticket }, ticketResults)
-      if (ticket.results.length) self.postMessage({ action: 'complete', ticket })
+      if (ticket.results.length)
+        self.postMessage({ action: 'complete', ticket })
     }
     // for (let ticket of Object.values(completedQueue)) self.postMessage({ action: 'complete', ticket })
   }, 1000)
