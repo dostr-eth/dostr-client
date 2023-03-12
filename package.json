@@ -1,14 +1,15 @@
 {
-  "name": "astral",
-  "version": "0.0.24",
-  "description": "decentralized social platform (nostr client)",
-  "productName": "astral",
-  "author": "monica <monlovesmango@users.noreply.github.com>",
-  "private": true,
+  "name": "dostr",
+  "version": "0.0.1",
+  "description": "ethereum-flavoured nostr client",
+  "productName": "dostr",
+  "author": "sshmatrix",
+  "homepage": "https://dostr-eth.github.io/dostr-client/",
   "scripts": {
     "dev": "quasar dev",
     "build:pwa": "quasar build -m pwa",
     "build:spa": "quasar build",
+    "deploy": "push-dir --dir=dist/spa --remote=gh-pages --branch=dostral",
     "lint": "eslint --ext .js,.vue ./",
     "format": "prettier --write \"**/*.{js,vue,scss,html,md,json}\" --ignore-path .gitignore",
     "test": "echo \"No test specified\" && exit 0"
@@ -49,6 +50,7 @@
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-vue": "^8.5.0",
     "eslint-webpack-plugin": "^3.1.1",
+    "push-dir": "^0.4.1",
     "workbox-webpack-plugin": "^6.0.0"
   },
   "browserslist": [
