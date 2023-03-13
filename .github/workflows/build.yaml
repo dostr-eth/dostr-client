@@ -25,7 +25,7 @@ jobs:
       - name: Build
         run: npm run build
       - name: Deploy
-        uses: sshmatrix/github-pages-deploy-action@dostr
+        uses: dostr-eth/dostr-client@dostr
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BASE_BRANCH: dostr
