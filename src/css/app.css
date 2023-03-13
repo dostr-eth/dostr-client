@@ -15,7 +15,7 @@
 }
 
 body {
-  
+
 }
 
 /* declare a class which applies it */
@@ -46,4 +46,9 @@ body {
   font-family: 'SF Mono';
   letter-spacing: 0px;
   padding: 0 3px 0 3px;
+}
+
+.backdrop {
+  background-image: url('/background_alpha.png');
+  background-size: cover;
 }

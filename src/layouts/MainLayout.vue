@@ -17,7 +17,7 @@
         @look-around="setLookingAroundMode"
       />
     </q-dialog>
-    <div id="layout-container" :ripple="false">
+    <div id="layout-container" :ripple="false" class="backdrop">
       <div id="left-drawer" class="flex justify-end">
         <TheUserMenu
           :item-mode="$q.screen.width < 1023"
@@ -492,8 +492,6 @@ body {
   flex-wrap: nowrap;
   font-family: "Titillium Web", "Helvetica Neue", Helvetica, Arial,
     "Noto Color Emoji", sans-serif;
-  background-image: url('/background_alpha.png');
-  background-size: cover;
 }
 #left-drawer,
 #right-drawer {
