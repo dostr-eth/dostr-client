@@ -9,6 +9,7 @@
     "dev": "quasar dev",
     "build:pwa": "quasar build -m pwa",
     "build:spa": "quasar build",
+    "build": "quasar build",
     "deploy": "push-dir --dir=dist/spa --remote=gh-pages --branch=dostral",
     "lint": "eslint --ext .js,.vue ./",
     "format": "prettier --write \"**/*.{js,vue,scss,html,md,json}\" --ignore-path .gitignore",
