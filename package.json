@@ -4,7 +4,7 @@
   "description": "ethereum-flavoured nostr client",
   "productName": "dostr",
   "author": "sshmatrix",
-  "homepage": "https://dostr-eth.github.io/dostr-client/",
+  "homepage": "https://dostr-eth.github.io/",
   "scripts": {
     "dev": "quasar dev",
     "build:pwa": "quasar build -m pwa",
