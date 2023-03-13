@@ -1,0 +1,49 @@
+/* app global CSS */
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@200;300;400;600;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100;200;300;400;500;600;700;800&display=swap');
+
+@font-face {
+    font-family: 'SF Mono';
+    letter-spacing: -0.5px;
+    src: url('../assets/SF-Mono-Regular.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Spotnik';
+    src: url('../assets/Spotnik.woff2') format('woff2');
+}
+
+body {
+  
+}
+
+/* declare a class which applies it */
+.titillium-web {
+  font-family: 'Titillium Web', sans-serif;
+}
+
+.space-mono {
+  font-family: 'Space Mono', monospace;
+}
+
+.jetbrains-mono {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.q-expansion-item {
+  width: 100%;
+  border: 0px solid #5a7094;
+  border-radius: 2px;
+  background: none;
+  font-family: 'Spotnik'
+}
+
+.code {
+  border: 0px solid #5a7094;
+  border-radius: 2px;
+  background: grey;
+  font-family: 'SF Mono';
+  letter-spacing: 0px;
+  padding: 0 3px 0 3px;
+}
