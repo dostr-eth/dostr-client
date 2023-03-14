@@ -5,14 +5,14 @@
       <q-tabs v-model="tab" dense outline align="left" active-color="accent">
         <q-tab name="keyConverter" label="key converter" />
         <q-tab name="sqlQuery" label="sql query" />
-        <q-tab name="nip05Tester" label="nip05 Tester" />
+        <q-tab name="nip05Tester" label="nip-05 Tester" />
       </q-tabs>
       <!-- <div class="text-bold">sql query</div> -->
       <q-tab-panels v-model="tab">
-        <q-tab-panel
-name="keyConverter" class="flex column items-center full-width"
+        <q-tab-panel name="keyConverter" class="flex column items-center full-width"
           style="gap: 0.5rem; background: var(--q-background)">
-          <q-input v-model="keys.bech32" filled dense label='enter "npub", "note" key here' class="full-width">
+          <q-input v-model="keys.bech32" filled dense label='enter public key ("npub") or event ID ("note") here'
+            class="full-width">
             <template #append>
               <BaseButtonCopy color="secondary" :button-text="keys.bech32" />
             </template>
@@ -20,7 +20,7 @@ name="keyConverter" class="flex column items-center full-width"
           <div>- or -</div>
           <div class="flex row no-wrap full-width" style="gap: 1rem">
             <q-input v-model="keys.prefix" filled dense label="prefix" style="width: 10rem" />
-            <q-input v-model="keys.hex" filled dense label="enter hex key here" class="full-width">
+            <q-input v-model="keys.hex" filled dense label="enter hexadecimal key here" class="full-width">
               <template #append>
                 <BaseButtonCopy color="secondary" :button-text="keys.hex" />
               </template>
@@ -33,7 +33,7 @@ name="keyConverter" class="flex column items-center full-width"
           <TheSqlEditor />
         </q-tab-panel>
         <q-tab-panel name="nip05Tester">
-          <q-input v-model="nip05Id" filled dense label="enter nip05 here" class="full-width" />
+          <q-input v-model="nip05Id" filled dense label="enter NIP-05 identifier here" class="full-width" />
           <q-btn spread label="test" color="primary" outline class="full-width q-mt-md" @click="fetchNip05" />
           <pre id="nip05-response"></pre>
         </q-tab-panel>
@@ -52,7 +52,7 @@ import { nip05 } from 'nostr-tools'
 
 const metaData = {
   // sets document title
-  title: 'Dostr - Dev Tools',
+  title: 'Dostr - DevTools',
 
   // meta tags
   meta: {
@@ -103,7 +103,7 @@ export default defineComponent({
         this.keys.bech32 = this.hexToBech32(this.keys.hex, this.keys.prefix)
       else
         Notify.create({
-          message: `invalid key entered`,
+          message: `Invalid Key ❌`,
           color: 'negative',
         })
     },

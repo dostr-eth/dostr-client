@@ -1,6 +1,5 @@
 <template>
   <q-item
-    style="margin: -2px -2px 0 0;"
     unelevated
     class="q-pa-none post-entry-form flex column"
     ref="postEntry"
@@ -251,21 +250,18 @@
             </q-tab-panel>
             <q-tab-panel name="help" class="q-pa-xs" @click.stop>
               <div>
-                <span class="text-bold">{{ "to mention a user: " }}</span>
-                {{ "type " }}
-                <code>{{ `"@"` }}</code>
-                {{
-                  " and select user from menu that pops up or paste in npub key"
+                <span class="text-bold">{{ "ADD USER: " }}</span>
+                {{ "Type @ and select user from the dropdown menu that pops up, or paste user's public key"
                 }}
                 <!-- <code>{{`"@<pubkey-id>"`}}</code> -->
               </div>
               <!-- <br> -->
               <div>
-                <span class="text-bold">{{ "to mention a post: " }}</span>
+                <span class="text-bold">{{ "ADD POST: " }}</span>
                 <span
-                  >paste in note id (you can copy note id from embed
+                  >Paste the event ID, which can be copied from the
                   <q-icon name="link" size="sm" /> button at the bottom of every
-                  post)"</span
+                  post"</span
                 >
                 <!-- <code>{{`"&<event-id>"`}}</code> -->
               </div>
@@ -490,22 +486,22 @@ export default {
       return 0
     },
     label() {
-      if (this.messageMode === 'reply') return "what's your reply?".toUpperCase()
-      else if (this.messageMode) return "what's your message?".toUpperCase()
+      if (this.messageMode === 'reply') return "what's your reply?"
+      else if (this.messageMode) return "what's your message?"
       else if (this.replyMode) {
-        if (this.replyMode === 'reply') return "what's your reply?".toUpperCase()
-        else if (this.replyMode === 'quote') return "what's your thought?".toUpperCase()
+        if (this.replyMode === 'reply') return "what's your reply?"
+        else if (this.replyMode === 'quote') return "what's your thought?"
       }
-      return "what's happening?".toUpperCase()
+      return "what's happening?"
     },
     placeholderText() {
       if (this.text.length) return ''
-      else if (this.messageMode === 'reply') return 'reply to message'.toUpperCase()
-      else if (this.messageMode) return "what's your message?".toUpperCase()
+      else if (this.messageMode === 'reply') return 'reply to message'
+      else if (this.messageMode) return "what's your message?"
       else if (this.replyMode) {
-        if (this.replyMode === 'reply') return "what's your reply?".toUpperCase()
+        if (this.replyMode === 'reply') return "what's your reply?"
         else if (this.replyMode === 'quote')
-          return "what's your thought on this?".toUpperCase()
+          return "what's your thought on this?"
       }
       return "what's happening?"
     },
@@ -1194,14 +1190,9 @@ li {
   overflow: visible;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(310deg, rgba(175,0,179,1) 0%, rgba(145,11,67,1) 5%, rgba(128,18,18,1) 9%, rgba(0,0,0,1) 29%, rgba(0,0,0,1) 100%);
+  background: none;
 }
-@media screen and (max-width: 700px) {
-  .post-entry-form {
-    margin: 0 0 0 0;
-    background: none;
-  }
-}
+
 .avatar-image {
   position: absolute;
   opacity: 0.0;

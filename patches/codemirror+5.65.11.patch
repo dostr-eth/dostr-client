@@ -1,0 +1,13 @@
+diff --git a/node_modules/codemirror/lib/codemirror.css b/node_modules/codemirror/lib/codemirror.css
+index f4d5718..36d8780 100644
+--- a/node_modules/codemirror/lib/codemirror.css
++++ b/node_modules/codemirror/lib/codemirror.css
+@@ -2,7 +2,7 @@
+ 
+ .CodeMirror {
+   /* Set height, width, borders, and global font properties here */
+-  font-family: monospace;
++  font-family: 'SF Mono';
+   height: 300px;
+   color: black;
+   direction: ltr;

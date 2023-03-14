@@ -72,7 +72,7 @@
               tagged && $route.name != 'event' && !(isReply || isChildReply)
             "
             class="q-pl-sm"
-            style="font-size: 0.8rem"
+            style="font-size: 0.8rem; opacity: 0.7;"
           >
             <span>in reply to&nbsp;</span>
             <a @click.stop="toEvent(tagged)">
@@ -270,18 +270,19 @@
           @transition="calcConnectorValues(10)"
         >
           <q-tab-panel name="embed" class="no-padding" @click.stop>
-            <span class="text-caption">
-              Copy the formatted event ID below and paste it in any post to
+            <q-icon name="info"></q-icon>
+            <span class="text-caption" style="letter-spacing: -0.5px;">
+              Copy event ID below and paste it in any post to
               embed this event
             </span>
             <BaseButtonCopy
               :button-text="hexToBech32(event.id, 'note')"
               color="primary"
               flat
-              tooltip-text="copy event ID"
+              tooltip-text="COPY EVENT ID"
             />
             <br />
-            <span class="text-primary" style="word-break: break-all">
+            <span class="code" style="word-break: break-all">
               {{ hexToBech32(event.id, "note") }}
             </span>
           </q-tab-panel>

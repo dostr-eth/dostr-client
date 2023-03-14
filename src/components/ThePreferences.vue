@@ -8,7 +8,8 @@
       <div class="text-bold flex justify-between no-wrap spotnik" style="font-size: 1.1rem">
         {{ $t("preferences") }}
         <div class="text-normal flex row no-wrap" style="font-size: 0.9rem; gap: 0.4rem">
-          <q-btn v-if="!editingPreferences" label="edit" color="primary" outline size="sm"
+          <q-btn
+v-if="!editingPreferences" label="edit" color="primary" outline size="sm"
             @click="editingPreferences = true" />
         </div>
       </div>
@@ -19,12 +20,14 @@
         <div v-if="preferences.color" style="padding-left: 0.2rem; gap: 1rem" class="flex row">
           <div v-for="(colorName, index) in Object.keys(preferences.color)" :key="index" class="flex column items-center">
             <label :for="colorName" style="font-size: 12px;">{{ colorName.toUpperCase() }}</label>
-            <input type="color" :id="colorName" :name="colorName" :value="preferences.color[colorName]"
+            <input
+type="color" :id="colorName" :name="colorName" :value="preferences.color[colorName]"
               :disabled="!editingPreferences" @input="(event) => updateColor(event.target.value, colorName)" />
           </div>
           <!-- <div v-for='(colorName, index) in Object.keys(preferences.color)' :key='index' class='flex column items-center'>
             <label :for="colorName">{{ colorName }}</label> -->
-          <BaseSelect :allow-selection="editingPreferences" :selecting="choosingTheme" style="width: 200px;"
+          <BaseSelect
+:allow-selection="editingPreferences" :selecting="choosingTheme" style="width: 200px;"
             @toggle="choosingTheme = !choosingTheme">
             <template #default>{{ "Customise Theme" }}</template>
             <template #list-items>
@@ -35,36 +38,42 @@
           </BaseSelect>
           <!-- </div> -->
         </div>
-        <div class="text-bold flex justify-between no-wrap spotnik"
+        <div
+class="text-bold flex justify-between no-wrap spotnik"
           style="font-size: 13px; margin-top: 10px; color: skyblue;">
           {{ $t("font") }}
         </div>
-        <BaseSelect v-if="preferences.font" :allow-selection="editingPreferences" :selecting="choosingFont"
+        <BaseSelect
+v-if="preferences.font" :allow-selection="editingPreferences" :selecting="choosingFont"
           style="width: 200px" @toggle="choosingFont = !choosingFont">
           <template #default>{{ preferences.font }}</template>
           <template #list-items>
             <li v-for="(font, index) in fonts" :key="index" class="font-item" @click.stop="updateFont(font)">
-              <link :href="`https://fonts.googleapis.com/css2?family=${googleFontsName(
+              <link
+:href="`https://fonts.googleapis.com/css2?family=${googleFontsName(
                 font
               )}`" rel="stylesheet" />
               <span :style="`font-family: '${font}';`">{{ font }}</span>
             </li>
           </template>
         </BaseSelect>
-        <div class="text-bold flex justify-between no-wrap spotnik"
+        <div
+class="text-bold flex justify-between no-wrap spotnik"
           style="font-size: 13px; margin-top: 10px; color: skyblue;">
           {{ $t("Lightning Tips ⚡") }}
         </div>
         <div class="flex column q-px-sm" style="gap: 0.3rem">
           <div>
             OFF
-            <q-toggle v-model="preferences.lightningTips.enabled" :disable="!editingPreferences" color="accent"
+            <q-toggle
+v-model="preferences.lightningTips.enabled" :disable="!editingPreferences" color="accent"
               size="sm" />
             ON
           </div>
           <span style="white-space: nowrap; font-size: 12px;" class="spotnik"><strong>tip presets</strong></span>
           <div v-if="preferences.lightningTips.enabled" class="flex row no-wrap items-center" style="gap: 2rem">
-            <q-input v-for="(preset, index) in preferences.lightningTips.presets" :key="index"
+            <q-input
+v-for="(preset, index) in preferences.lightningTips.presets" :key="index"
               v-model="preferences.lightningTips.presets[index]" type="number" :label="'default ' + (index + 1)"
               :disable="!editingPreferences" dense filled suffix="sats" input-class="sf-mono" />
           </div>
@@ -85,11 +94,13 @@
             <div v-if="preferences.lightningTips.enabled" class="flex row no-wrap items-center" style="gap: 2rem">
               <div>
                 OFF
-                <q-toggle v-model="preferences.lightningTips.oneClick.enabled" :disable="!editingPreferences"
+                <q-toggle
+v-model="preferences.lightningTips.oneClick.enabled" :disable="!editingPreferences"
                   color="accent" size="sm" />
                 ON
               </div>
-              <q-input v-if="preferences.lightningTips.oneClick.enabled"
+              <q-input
+v-if="preferences.lightningTips.oneClick.enabled"
                 v-model="preferences.lightningTips.oneClick.amount" type="number" label="webln default tip amount"
                 :disable="!editingPreferences" dense filled suffix="sats" style="width: 10rem" />
             </div>
