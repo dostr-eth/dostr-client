@@ -1,5 +1,5 @@
 <template>
-  <q-page>
+  <q-page style="margin-top: 15px;">
     <BaseHeader class="spotnik">{{ $t("notifications") }}</BaseHeader>
     <div>
       <div v-for="event in notifications" :key="event.id">
@@ -35,7 +35,7 @@ const metaData = {
       name: 'description',
       content: 'Nostr notifications on Dostr',
     },
-    keywords: { name: 'keywords', content: 'nostr decentralized social media' },
+    keywords: { name: 'keywords', content: 'nostr dostr decentralized social media siwe siwx' },
     equiv: {
       'http-equiv': 'Content-Type',
       content: 'text/html; charset=UTF-8',

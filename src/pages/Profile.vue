@@ -11,11 +11,12 @@
       />
     </div>
     <q-tabs
+      class="spotnik"
       v-model="tab"
       dense
       outline
       align="left"
-      active-color="accent"
+      active-color="info"
       :breakpoint="0"
     >
       <q-tab name="posts" label="posts" />
@@ -23,7 +24,7 @@
       <q-tab name="followers" label="followers" />
       <q-tab name="relays" label="relays" />
     </q-tabs>
-    <q-tab-panels v-model="tab" animated>
+    <q-tab-panels v-model="tab" animated style="margin-top: 10px;">
       <q-tab-panel name="posts" class="no-padding">
         <q-form v-if="threads.length" class="q-pa-sm" @submit="search">
           <q-input
@@ -108,9 +109,9 @@
       </q-tab-panel>
 
       <q-tab-panel name="relays" class="no-padding">
-        <div v-if="!relays">{{ $t("noRelays") }}</div>
+        <div v-if="!relays">{{ $t("NoRelays") }}</div>
         <div v-else class="flex column relative">
-          <div class="q-pl-sm">
+          <div class="q-pl-sm sf-mono-tight">
             <BaseRelayRecommend
               v-for="relay in Object.keys(relays)"
               :key="relay"
@@ -360,7 +361,15 @@ export default defineComponent({
 .q-tabs {
   border-bottom: 1px solid var(--q-accent);
 }
+.q-tab {
+  color: white;
+}
+.q-tab:hover {
+  color: yellow;
+}
 .q-tab-panels {
   background: var(--q-background);
+  border-radius: 5px;
+  padding: 5px 5px 5px 5px;
 }
 </style>

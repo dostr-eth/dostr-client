@@ -16,6 +16,7 @@
             emit-value
             map-input
             option-disable="inactive"
+            popup-content-class="spotnik"
           />
         </div>
         <div style="margin-top: -12px; margin-left: 20%;" class="lt-md">
@@ -28,14 +29,16 @@
             emit-value
             map-input
             option-disable="inactive"
+            popup-content-class="spotnik"
           />
         </div>
       </div>
     </BaseHeader>
     <BaseButtonLoadMore
+      class="mt-2"
       v-if="unreadFeed.length"
       :loading-more="loadingUnread"
-      :label="'load ' + unreadFeed.length + ' unread'"
+      :label="'load '.toUpperCase() + unreadFeed.length + ' unread'.toUpperCase()"
       @click="loadUnread"
     />
     <div v-for="(item, index) in items" :key="index">

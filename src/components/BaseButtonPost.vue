@@ -9,7 +9,7 @@
   >
     <div
       v-if="verbose"
-      class="gt-sm"
+      class="gt-sm spotnik"
       style="font-size: 1rem; font-weight: 700; letter-spacing: 0.05rem"
     >
       <span v-if="!isOpen">&nbsp;{{ $t("post") }}&nbsp;</span>

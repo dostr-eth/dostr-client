@@ -3,8 +3,8 @@
     <BaseButtonCopy
       :button-text="npubKey"
       button-size="sm"
-      text-color="secondary"
-      tooltip-text="copy pubkey"
+      text-color="primary"
+      tooltip-text="COPY PUBLIC KEY"
       @click.stop
     />
     <BaseButtonMessage

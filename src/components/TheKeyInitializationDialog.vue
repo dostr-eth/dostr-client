@@ -48,7 +48,7 @@
           style="
             padding: 0.2rem 0 0 0.2rem;
             font-size: 10pt;
-            font-family: 'SF Mono';
+            font-family: 'Rajdhani';
           "
           >ℹ️ This same information can be found in the
           <strong>FAQ</strong> section at the bottom of the
@@ -105,7 +105,7 @@
           class="text-subtitle1 text-bold q-pr-md flex justify-between lt-md"
           style="margin: 0 auto; font-size: 12px;"
         >
-          🔐 &nbsp;Enter your custom Nostr key
+          🔐 &nbsp;Enter your Nostr key
         </h2>
       </template>
       <q-form @submit="proceed">
@@ -160,7 +160,7 @@
                 <b style="color: orange">Private Key</b> each time you post
                 content
               </p>
-              <div class="flex justify-center" style="margin-top: 10px">
+              <div class="flex justify-center spotnik" style="margin-top: 10px">
                 <p
                   v-if="key && !isKeyValid"
                   style="font-size: 16px; color: white"
@@ -253,9 +253,9 @@
             style="font-size: 20px; margin-left: -75px; margin-top: -15px"
           >
             <q-tooltip style="font-size: 13px">
-              • The selected relays below will be queried to load your user
+              ◦ The selected relays below will be queried to load your user
               profile, follows, and relay data from Nostr network.<br />
-              • Please ensure the list of selected relays includes relays you
+              ◦ Please ensure the list of selected relays includes relays you
               publish your Nostr data to, otherwise Dostr may not be able to
               find your data.
             </q-tooltip>

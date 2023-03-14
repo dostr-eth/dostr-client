@@ -210,6 +210,13 @@ export default defineComponent({
 .q-item {
   transition: all 0.2s ease-in-out;
 }
+.q-item:hover {
+  opacity: 1;
+  font-weight: bold;
+  padding: 8px 16px 8px 2px;
+  border: 0px solid white;
+  border-radius: 3px;
+}
 
 .menu-item {
   letter-spacing: 0.1rem;

@@ -10,15 +10,15 @@ import { createMetaMixin } from 'quasar'
 
 const metaData = {
   // sets document title
-  title: 'Dostr - search, follows',
+  title: 'Dostr - Search Follows',
 
   // meta tags
   meta: {
     description: {
       name: 'description',
-      content: 'Nostr search and follows on Dostr',
+      content: 'Nostr Search and Follows on Dostr',
     },
-    keywords: { name: 'keywords', content: 'nostr decentralized social media' },
+    keywords: { name: 'keywords', content: 'nostr dostr decentralized social media siwe siwx' },
     equiv: {
       'http-equiv': 'Content-Type',
       content: 'text/html; charset=UTF-8',

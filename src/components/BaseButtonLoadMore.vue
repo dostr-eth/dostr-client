@@ -7,7 +7,7 @@
         :loading="loadingMore"
         outline
         rounded
-        color="accent"
+        color="white"
         class="text-weight-light q-ma-sm"
         style="letter-spacing: 0.1rem"
         :label="reachedEnd ? 'reached end' : label"

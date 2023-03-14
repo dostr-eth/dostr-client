@@ -65,7 +65,7 @@
       </div>
     </q-card-section>
     <div v-if="$store.state.keys.pub" class="flex row justify-between no-wrap">
-      <h5 class="text-bold q-my-none spotnik">{{ $t("follows") }}</h5>
+      <h5 style="margin-left: 10px;" class="text-bold q-my-none spotnik">{{ $t("follows") }}</h5>
       <div>
         <q-btn
           v-if="!reordering"
@@ -83,7 +83,7 @@
     <q-card-section
       v-if="$store.state.keys.pub"
       class="no-padding"
-      style="overflow-y: auto"
+      style="overflow-y: auto; margin-left: 10px;"
     >
       <div v-if="$store.state.follows.length" class="q-mt-xs q-pl-sm">
         <q-list v-if="!reordering">

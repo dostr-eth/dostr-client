@@ -2,6 +2,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@200;300;400;600;700;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100;200;300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap');
+
 
 @font-face {
     font-family: 'SF Mono';
@@ -14,10 +18,6 @@
     src: url('../assets/Spotnik.woff2') format('woff2');
 }
 
-body {
-
-}
-
 /* declare a class which applies it */
 .titillium-web {
   font-family: 'Titillium Web', sans-serif;
@@ -27,8 +27,30 @@ body {
   font-family: 'Space Mono', monospace;
 }
 
+.sf-mono {
+  font-family: 'SF Mono', monospace;
+}
+
+.sf-mono-tight {
+  font-family: 'SF Mono', monospace;
+  letter-spacing: -0.5px;
+}
+
 .jetbrains-mono {
   font-family: 'JetBrains Mono', monospace;
+}
+
+.exo2 {
+  font-family: 'Exo 2', sans-serif;
+}
+
+.archivo {
+  font-family: 'Archivo', sans-serif;
+}
+
+.rajdhani {
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 500;
 }
 
 .q-expansion-item {
@@ -44,11 +66,41 @@ body {
   border-radius: 2px;
   background: grey;
   font-family: 'SF Mono';
+  font-size: 14px;
+  font-weight: normal;
+  letter-spacing: -0.5px;
+  padding: 0px 2px 0px 2px;
+}
+
+.code-flat {
+  border: 0px solid #5a7094;
+  border-radius: 2px;
+  font-family: 'SF Mono';
   letter-spacing: 0px;
   padding: 0 3px 0 3px;
 }
 
+.copy-btn-priv {
+  margin-left: 77%;
+  margin-top: -50px;
+  padding: 4px 8px 4px 8px;
+  border: 0px solid orange;
+  border-radius: 3px;
+  color: orange;
+  width: 90px;
+}
+
+.copy-btn-pub {
+  margin-left: 77%;
+  margin-top: -50px;
+  padding: 4px 8px 4px 8px;
+  border: 0px solid lightgreen;
+  border-radius: 3px;
+  color: lightgreen;
+  width: 90px;
+}
+
 .backdrop {
-  background-image: url('/background_alpha.png');
+  background-image: url('/background_alpha.png'), linear-gradient(313deg, rgba(102,114,255,1) 0%, rgba(83,124,193,1) 7%, rgba(61,136,119,1) 15%, rgba(59,59,59,1) 50%, rgba(87,87,87,1) 85%, rgba(153,73,73,1) 93%, rgba(172,51,184,1) 100%);
   background-size: cover;
 }

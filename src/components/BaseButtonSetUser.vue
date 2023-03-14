@@ -1,7 +1,7 @@
 <template>
   <q-btn unelevated clickable :size="buttonSize" class="button-set-user" dense style="margin-left: -10px;">
     <div v-if="verbose" class="gt-sm" style="font-size: 1rem; font-weight: 700; letter-spacing: 0.05rem;">
-      <span>&nbsp;{{ $t("Sign In") }}&nbsp;</span>
+      <span>&nbsp;{{ $t("Login") }}&nbsp;</span>
     </div>
     <q-icon name="login" color="primary" :size="buttonSize" />
   </q-btn>

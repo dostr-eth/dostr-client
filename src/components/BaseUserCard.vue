@@ -36,8 +36,7 @@
         :wrap="wrap"
       />
       <div
-        class="text-secondary pubkey"
-        style="opacity: 0.9; font-size: 95%; font-weight: 300"
+        class="text-primary sf-mono"
       >
         {{ shorten(npubKey) }}
       </div>

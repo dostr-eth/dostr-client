@@ -142,7 +142,7 @@
         v-touch-pan.prevent.mouse="moveFab"
       >
         <template #tooltip>
-          <q-tooltip style="font-size: 12px;">Click to Collapse/Expand or Drag to Move</q-tooltip>
+          <q-tooltip style="font-size: 12px;">CLICK TO COLLAPSE/EXPAND OR DRAG TO MOVE</q-tooltip>
         </template>
         <template #icon>
           <q-icon name="drag_indicator" />
@@ -159,7 +159,7 @@
           icon="keyboard_arrow_right"
           :disable="draggingFab"
         >
-          <q-tooltip style="font-size: 12px;">Forward</q-tooltip>
+          <q-tooltip style="font-size: 12px;">FORWARD</q-tooltip>
         </q-btn>
         <q-btn
           @click.stop="scrollToTop"
@@ -172,7 +172,7 @@
             draggingFab || $route.name === 'inbox' || $route.name === 'messages'
           "
         >
-          <q-tooltip style="font-size: 12px;">Scroll to top</q-tooltip>
+          <q-tooltip style="font-size: 12px;">'SCROLL TO TOP</q-tooltip>
         </q-btn>
         <q-btn
           @click.stop="back"
@@ -183,7 +183,7 @@
           icon="keyboard_arrow_left"
           :disable="draggingFab"
         >
-          <q-tooltip style="font-size: 12px;">Back</q-tooltip>
+          <q-tooltip style="font-size: 12px;">BACK</q-tooltip>
         </q-btn>
         <!-- <q-btn label='get relay status' @click='getRelayStat'/>s -->
       </q-fab>
@@ -480,7 +480,7 @@ body {
   -webkit-font-smoothing: antialiased;
   display: block;
   overflow: auto;
-  font-family: "Titillium Web", "Helvetica Neue", Helvetica, Arial,
+  font-family: "Rajdhani", "Titillium Web", "Helvetica Neue", Helvetica, Arial,
     "Noto Color Emoji", sans-serif;
 }
 #layout-container {
@@ -490,7 +490,7 @@ body {
   width: 100%;
   position: relative;
   flex-wrap: nowrap;
-  font-family: "Titillium Web", "Helvetica Neue", Helvetica, Arial,
+  font-family: "Rajdhani", "Titillium Web", "Helvetica Neue", Helvetica, Arial,
     "Noto Color Emoji", sans-serif;
 }
 #left-drawer,

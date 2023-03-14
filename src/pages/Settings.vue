@@ -1,103 +1,43 @@
 <template>
-  <q-page style="margin-bottom: 100px;" id="settings-page">
+  <q-page style="margin-top: 15px; margin-bottom: 100px;" id="settings-page">
     <BaseHeader class="spotnik">{{ $t("settings") }}</BaseHeader>
     <q-form class="q-gutter-md section" @submit="setMetadata">
-      <div
-        v-if="editingMetadata"
-        class="flex justify-between"
-        style="display: flex; gap: 0.2rem"
-      >
-        <q-btn label="save" color="primary" outline size="sm" type="submit" />
-        <q-btn
-          label="cancel"
-          color="negative"
-          outline
-          size="sm"
-          @click="cancel('metadata')"
-        />
+      <div v-if="editingMetadata" class="flex" style="margin-left: 80%; gap: 0.2rem">
+        <q-btn label="save" color="positive" outline size="sm" type="submit" />
+        <q-btn label="cancel" color="negative" outline size="sm"
+          @click="cancel('metadata')" />
       </div>
-      <div
-        class="text-bold flex justify-between no-wrap"
-        style="font-size: 1.1rem"
-      >
+      <div class="text-bold flex justify-between no-wrap spotnik" style="font-size: 1.1rem;">
         {{ $t("profile") }}
         <q-btn
-          v-if="!editingMetadata"
-          label="edit"
-          color="primary"
-          outline
-          size="sm"
-          :disable="!$store.getters.canSignEventsAutomatically"
-          @click="editingMetadata = true"
-        />
+v-if="!editingMetadata" label="edit" color="primary" outline size="sm"
+          :disable="!$store.getters.canSignEventsAutomatically" @click="editingMetadata = true" />
       </div>
-      <q-input
-        v-model="metadata.name"
-        dense
-        filled
-        type="text"
-        label="Name"
-        :disable="!editingMetadata"
-      >
+      <q-input v-model="metadata.name" dense filled type="text" label="Name" :disable="!editingMetadata">
         <template #before>
           <q-icon name="alternate_email" />
         </template>
       </q-input>
       <q-input
-        v-model="metadata.about"
-        :disable="!editingMetadata"
-        filled
-        autogrow
-        dense
-        type="text"
-        label="About (in 150 chars)"
-        maxlength="300"
-      />
+v-model="metadata.about" :disable="!editingMetadata" filled autogrow dense type="text"
+        label="About [max. 150 characters]" maxlength="300" />
       <q-input
-        v-model.trim="metadata.picture"
-        :disable="!editingMetadata"
-        filled
-        dense
-        type="text"
-        label="Picture URL"
-        maxlength="150"
-      >
+v-model.trim="metadata.picture" :disable="!editingMetadata" filled dense type="text" label="Picture URL"
+        maxlength="150">
         <template #after>
-          <BaseUserAvatar
-            v-if="metadata.picture"
-            :pubkey="$store.state.keys.pub"
-            rounded
-          />
+          <BaseUserAvatar v-if="metadata.picture" :pubkey="$store.state.keys.pub" rounded />
         </template>
       </q-input>
       <q-input
-        v-model.trim="metadata.nip05"
-        :disable="!editingMetadata"
-        filled
-        dense
-        type="text"
-        label="NIP-05 Identifier"
-        maxlength="100"
-      />
+v-model.trim="metadata.nip05" :disable="!editingMetadata" filled dense type="text"
+        label="NIP-05 Identifier" maxlength="100" />
       <div class="flex row no-wrap" style="gap: 1rem">
         <q-input
-          v-model.trim="metadata.lud06"
-          :disable="!editingMetadata"
-          filled
-          dense
-          type="text"
-          label="Lightning Address or LUD-06 Identifier"
-          maxlength="150"
-          class="full-width"
-        />
+v-model.trim="metadata.lud06" :disable="!editingMetadata" filled dense type="text"
+          label="Lightning Address or LUD-06 Identifier" maxlength="150" class="full-width" />
         <q-btn
-          v-if="hasLnAddr"
-          :label="showLnAddr ? 'show lnurl' : 'show ln address'"
-          @click="convertLud06"
-          outline
-          dense
-          no-wrap
-        />
+v-if="hasLnAddr" :label="showLnAddr ? 'show lnurl' : 'show ln address'" @click="convertLud06" outline dense
+          no-wrap />
       </div>
     </q-form>
 
@@ -105,136 +45,66 @@
     <ThePreferences @update-font="updateFont" />
     <q-separator color="accent" />
     <div class="section">
-      <div
-        v-if="editingRelays"
-        class="flex justify-between"
-        style="display: flex; gap: 0.2rem"
-      >
-        <q-btn
-          label="save"
-          color="primary"
-          outline
-          size="sm"
-          @click="saveRelays"
-        />
-        <q-btn
-          label="cancel"
-          color="negative"
-          outline
-          size="sm"
-          @click="cancel('relays')"
-        />
+      <div v-if="editingRelays" class="flex" style="margin-left: 79.5%; gap: 0.2rem">
+        <q-btn label="save" color="positive" outline size="sm" @click="saveRelays" />
+        <q-btn label="cancel" color="negative" outline size="sm" @click="cancel('relays')" />
       </div>
-      <div
-        class="text-bold flex justify-between no-wrap"
-        style="font-size: 1.1rem"
-      >
+      <div class="text-bold flex justify-between no-wrap spotnik" style="font-size: 1.1rem">
         {{ $t("relays") }}
-        <div
-          class="text-normal flex row no-wrap"
-          style="font-size: 0.9rem; gap: 0.4rem"
-        >
+        <div class="text-normal flex row no-wrap" style="font-size: 0.6rem; gap: 0.4rem">
           <q-btn
-            v-if="!editingRelays"
-            label="edit"
-            color="primary"
-            outline
-            size="sm"
-            :disable="!$store.getters.canSignEventsAutomatically"
-            @click="editingRelays = true"
-          />
-          <div v-if="editingRelays">read</div>
-          <div v-if="editingRelays">write</div>
+v-if="!editingRelays" label="edit" color="primary" outline size="sm"
+            :disable="!$store.getters.canSignEventsAutomatically" @click="editingRelays = true" />
+          <div v-if="editingRelays" style="margin-top: 8px;">read</div>
+          <div v-if="editingRelays" style="margin-top: 8px;">write</div>
         </div>
       </div>
       <q-list class="flex column q-pt-xs" style="gap: 0.2rem">
         <q-item
-          v-for="url in Object.keys(relays)"
-          :key="url"
-          class="flex justify-between items-center no-wrap no-padding"
-          style="min-height: 1.2rem"
-        >
+v-for="url in Object.keys(relays)" :key="url" class="flex justify-between items-center no-wrap no-padding"
+          style="min-height: 1.2rem">
           <div>
             <q-btn
-              v-if="!editingRelays && (relays[url].read || relays[url].write)"
-              color="secondary"
-              outline
-              size="sm"
-              label="Share"
-              :disable="
+v-if="!editingRelays && (relays[url].read || relays[url].write)" color="secondary" outline size="sm"
+              label="Share" :disable="
                 hasJustSharedRelay || !$store.getters.canSignEventsAutomatically
-              "
-              @click="shareRelay(url)"
-            />
-            <q-btn
-              v-if="editingRelays"
-              color="negative"
-              label="remove"
-              outline
-              size="sm"
-              @click="removeRelay(url)"
-            />
-            {{ url }}
+              " @click="shareRelay(url)" />
+            <q-btn v-if="editingRelays" color="negative" label="remove" outline size="sm" @click="removeRelay(url)" />
+            <span class="sf-mono" style="margin-left: 10px; font-size: 15px; letter-spacing: -0.5px;">{{ url }}</span>
           </div>
           <div class="flex no-wrap items-center" style="gap: 0.6rem">
             <q-toggle
-              v-if="editingRelays"
-              v-model="relays[url].read"
-              color="primary"
-              size="sm"
-              dense
-              class="no-padding"
-              :disable="!$store.getters.canSignEventsAutomatically"
-            />
+v-if="editingRelays" v-model="relays[url].read" color="primary" size="sm" dense class="no-padding"
+              :disable="!$store.getters.canSignEventsAutomatically" />
             <q-toggle
-              v-if="editingRelays"
-              v-model="relays[url].write"
-              color="primary"
-              size="sm"
-              dense
-              class="no-padding"
-              :disable="!$store.getters.canSignEventsAutomatically"
-            />
+v-if="editingRelays" v-model="relays[url].write" color="primary" size="sm" dense class="no-padding"
+              :disable="!$store.getters.canSignEventsAutomatically" />
           </div>
         </q-item>
       </q-list>
       <q-form v-if="editingRelays" class="q-py-xs" @submit="addRelay">
         <div class="flex row no-wrap q-mx-sm q-mt-sm" id="new-relay-input">
           <q-input
-            v-model="newRelay"
-            placeholder="add a relay..."
-            autofocus
-            class="full-width"
-            input-style="padding: 0;"
-            @keypress.enter="addRelay"
-            dense
-            borderless
-          />
-          <q-btn
-            icon="add"
-            color="positive"
-            size="sm"
-            flat
-            dense
-            @click.stop="addRelay"
-          />
+v-model="newRelay" placeholder="add a relay..." autofocus class="full-width" input-style="padding: 0;"
+            @keypress.enter="addRelay" dense borderless />
+          <q-btn icon="add" color="positive" size="sm" flat dense @click.stop="addRelay" />
         </div>
         <BaseSelectMultiple>
           <template #options>
             <div style="max-height: 6.75rem">
               <pre class="relay-list">
-              <li
-                v-for='(relay, index) in optionalRelays'
-                :key='index + "-" + relay'
-                class='relay-item'
-                @click.stop='relays[relay]={read: true, write: true}'
-              >
-                <div class='flex row justify-between no-wrap'>
-                  <span style='overflow: auto;'>{{relay}}</span>
-                  <q-icon name='add' size='xs' color='positive' flat/>
-                </div>
-              </li>
-            </pre>
+                <li
+                  v-for='(relay, index) in optionalRelays'
+                  :key='index + "-" + relay'
+                  class='relay-item'
+                  @click.stop='relays[relay] = { read: true, write: true }'
+                >
+                  <div class='flex row justify-between no-wrap'>
+                    <span style='overflow: auto;'>{{ relay }}</span>
+                    <q-icon name='add' size='xs' color='positive' flat/>
+                  </div>
+                </li>
+              </pre>
             </div>
           </template>
         </BaseSelectMultiple>
@@ -243,17 +113,10 @@
 
     <q-separator color="accent" />
     <q-expansion-item
-      dense
-      expand-icon="help"
-      expanded-icon="expand_less"
-      class="full-width items-center"
-      header-class="items-center"
-    >
+dense expand-icon="info" expanded-icon="expand_less" class="full-width items-center"
+      header-class="items-center">
       <template #header>
-        <div
-          class="text-bold flex justify-between no-wrap full-width"
-          style="font-size: 1.1rem"
-        >
+        <div class="text-bold flex justify-between no-wrap full-width" style="font-size: 1.1rem">
           {{ $t("faq") }}
         </div>
       </template>
@@ -264,52 +127,56 @@
     <q-separator color="accent" />
 
     <div class="flex no-wrap section" style="gap: 0.2rem">
-      <q-btn
-        label="View your keys"
-        color="primary"
-        outline
-        @click="keysDialog = true"
-      />
+      <q-btn label="View your keys" color="primary" outline @click="keysDialog = true" />
       <q-btn label="logout" color="primary" outline @click="logout" />
-      <q-btn
-        label="Delete Local Data"
-        color="negative"
-        outline
-        @click="hardReset"
-      />
-      <q-btn
-        label="dev tools"
-        color="secondary"
-        outline
-        :to="{ name: 'devTools' }"
-      />
+      <q-btn label="Delete Local Data" color="negative" outline @click="hardReset" />
+      <q-btn label="dev tools" color="secondary" outline :to="{ name: 'devTools' }" />
     </div>
 
-    <q-dialog v-model="keysDialog">
+    <q-dialog v-model="keysDialog" style="border: 0 solid black; border-radius: 5px;" class="rajdhani">
       <q-card class="px-4 py-2">
         <q-card-section>
-          <div class="text-lg text-bold tracking-wide leading-relaxed py-2">
-            Your keys <q-icon name="vpn_key" />
+          <div style="display: flex; margin: 0 auto 5px; justify-content: center;">
+            <div style="font-size: 24px;" class="spotnik text-bold tracking-wide leading-relaxed py-2">
+              YOUR KEYS <q-icon name="vpn_key" />
+            </div>
           </div>
-          <p v-if="$store.state.keys.priv">
-            Make sure you back up your private key!
-          </p>
-          <p v-else>Your private key is not here!</p>
-          <div class="mt-1 text-xs">
-            Posts are published using your private key. Others can see your
-            posts or follow you using only your public key.
+          <div style="display: flex; margin: 0 auto 5px; justify-content: center;">
+            <p style="font-size: 20px;" v-if="$store.state.keys.priv">
+              ⚠️&nbsp; Make sure you back up your <b style="color: orange;">Private Key</b>!
+            </p>
+            <p style="font-size: 18px;" v-else>Your <b style="color: orange;">Private Key</b> is not here!</p>
+          </div>
+          <div>
+            <div class="mt-1 text-lg justify-center items-center">
+              ◦ &nbsp; Posts are published using your <b style="color: orange;">Private Key</b>.
+            </div>
+            <div class="mt-1 text-lg justify-center items-center">
+              ◦ &nbsp; Others can see your posts or follow you using only your <b style="color: lightgreen;">Public
+                Key</b>.
+            </div>
           </div>
         </q-card-section>
-
         <q-card-section>
-          <p>Private Key:</p>
-          <q-input v-model="nsecKey" class="mb-2" readonly filled />
-          <p>Public Key:</p>
-          <q-input v-model="npubKey" readonly filled />
+          <p><b class="spotnik" style="color: orange;">PRIVATE KEY</b>:</p>
+          <q-btn
+icon="content_copy" size="sm" flat dense @click="copyCode(this.hexToBech32(this.$store.state.keys.priv, 'nsec'))"
+            class="copy-btn-priv">
+            &nbsp;Private Key
+          </q-btn>
+          <q-input style="margin-top: -20px;" v-model="nsecKey" class="mb-2 code-flat" readonly filled />
+          <div style="margin-top: 10px; border-top: 0px solid #b6c6e39f"></div>
+          <p><b class="spotnik" style="color: lightgreen;">PUBLIC KEY</b>:</p>
+          <q-btn
+icon="content_copy" size="sm" flat dense @click="copyCode(this.hexToBech32(this.$store.state.keys.pub, 'npub'))"
+            class="copy-btn-pub">
+            &nbsp;Public Key
+          </q-btn>
+          <q-input style="margin-top: -20px;" v-model="npubKey" readonly filled class="code-flat" />
         </q-card-section>
 
         <q-card-actions align="right" class="text-primary">
-          <q-btn v-close-popup outline label="Close" />
+          <q-btn icon="close" size="md" flat round class="absolute-top-right z-top" v-close-popup />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -317,7 +184,7 @@
 </template>
 
 <script>
-import { LocalStorage } from 'quasar'
+import { LocalStorage, copyToClipboard } from 'quasar'
 import { nextTick } from 'vue'
 import { nip05 } from 'nostr-tools'
 
@@ -332,13 +199,13 @@ import { utils } from 'lnurl-pay'
 
 const metaData = {
   // sets document title
-  title: 'Dostr - settings',
+  title: 'Dostr - Settings',
 
   // meta tags
   meta: {
     description: {
       name: 'description',
-      content: 'Nostr and Dostr user configuration',
+      content: 'Nostr &amp; Dostr user configuration',
     },
     keywords: { name: 'keywords', content: 'nostr dostr decentralized social media siwe siwx' },
     equiv: {
@@ -358,7 +225,6 @@ export default {
     BaseInformation,
     ThePreferences,
   },
-
   data() {
     return {
       keysDialog: false,
@@ -466,6 +332,16 @@ export default {
   },
 
   methods: {
+    copyCode(val) {
+      let toCopy = val
+      copyToClipboard(toCopy)
+        .then(() => {
+          // success!
+        })
+        .catch(() => {
+          // fail
+        })
+    },
     cloneMetadata() {
       this.metadata = Object.assign(
         {},
@@ -507,10 +383,10 @@ export default {
             (await nip05.queryProfile(this.metadata.nip05)).pubkey !==
             this.$store.state.keys.pub
           )
-            throw new Error('Failed to verify NIP05 identifier on server.')
+            throw new Error('Failed to verify NIP-05 identifier at endpoint.')
         } catch (error) {
           this.$q.notify({
-            message: 'Failed to verify NIP05 identifier on server.',
+            message: 'Failed to verify NIP-05 identifier at endpoint.',
             color: 'warning',
           })
 
@@ -528,7 +404,7 @@ export default {
         }
         if (!utils.isLnurl(this.metadata.lud06)) {
           this.$q.notify({
-            message: 'Invalid lud06 identifier, must start with LNURL.',
+            message: 'Invalid LUD-06 identifier. LUD-06 identifiers must start with LNURL.',
             color: 'warning',
           })
           return
@@ -538,7 +414,7 @@ export default {
           !utils.isLightningAddress(this.metadata.lud16)
         ) {
           this.$q.notify({
-            message: 'Invalid lud16 identifier, must be a lightning address.',
+            message: 'Invalid LUD-16 identifier. LUD-16 identifier must be a Lightning address.',
             color: 'warning',
           })
           return
@@ -561,9 +437,9 @@ export default {
       if (!Object.keys(this.relays).length) {
         this.$q
           .dialog({
-            title: 'no relays saved!',
+            title: 'No relays saved!',
             message:
-              'you must have at least one relay selected to save. please add a relay.',
+              'You must select at least one replay to save.',
             ok: { color: 'accent' },
           })
           .onOk(() => {
@@ -639,5 +515,13 @@ export default {
 <style lang="css" scoped>
 .section {
   padding: 0.5rem;
+}
+
+.q-card {
+  background: linear-gradient(75deg,
+      rgba(32, 139, 147, 1) 0%,
+      rgba(28, 85, 113, 1) 50%,
+      rgba(164, 90, 90, 1) 100%);
+  padding: 0.2rem;
 }
 </style>

@@ -32,7 +32,7 @@
           decentralised
           Ethereum identity such as ENS. You can read the <a
 href='https://github.com/dostr-eth/resources' target='_blank'
-            rel='noopener noreferrer'>full Dostr specs</a> here.
+            rel='noopener noreferrer'><b>full Dostr specs</b></a> here.
         </p>
       </q-card-section>
     </q-expansion-item>
@@ -49,7 +49,7 @@ href='https://github.com/dostr-eth/resources' target='_blank'
           without logging in, you do not need a keypair. Simply close this dialog box and off you go into the wild.
         </p>
         <p>
-          If you decide to login at a later stage, simply hit the <b>Login</b> <q-icon name='login' />
+          If you decide to login at a later stage, simply hit the <b>LOGIN</b> <q-icon name='login' />
           button in the user menu. Hitting this button will provide you with several keypair generation options to choose
           from.
         </p>
@@ -70,7 +70,7 @@ href='https://github.com/dostr-eth/resources' target='_blank'
           <q-item>
             <q-item-section class='tight-text'>
               <q-item-label><b style="color: lightgreen;">Public Key</b></q-item-label>
-              <q-item-label caption>
+              <q-item-label style="font-size: 14px;">
                 It is a publicly known unique identifier associated with your account on the Nostr
                 network. It can be shared freely and others can see your posts or
                 follow you using your public key. It is similar to a username.
@@ -80,7 +80,7 @@ href='https://github.com/dostr-eth/resources' target='_blank'
           <q-item>
             <q-item-section class='tight-text'>
               <q-item-label><b style="color: orange;">Private Key</b></q-item-label>
-              <q-item-label caption>
+              <q-item-label style="font-size: 14px;">
                 <strong>KEEP THIS SECRET!</strong> Private key is similar to a password and must be kept secret. If
                 a bad actor gets unauthorised access to your private key, they can impersonate you on Nostr network and
                 see your encrypted private messages.
@@ -236,9 +236,12 @@ dense dense-toggle group='generateKeys' class="no-padding full-width"
             header-class='items-center'>
             <template #header>
               <div class='full-width'>
-                <span class='text-bold'>Use Ethereum<img
+                <span class='text-bold gt-sm'>Use Ethereum<img
 src="ethereum.svg" alt="mascot_round" class="image-fit"
                     style="width: 3%; margin: -5px -3px -6px 8px; align-items: center;" /></span>
+                <span class='text-bold lt-md'>Use Ethereum<img
+src="ethereum.svg" alt="mascot_round" class="image-fit"
+                      style="width: 4%; margin: -5px -3px -6px 8px; align-items: center;" /></span>
               </div>
             </template>
             <q-card-section>
@@ -419,12 +422,14 @@ export default defineComponent({
 
 <style lang="css" scoped>
 .q-expansion-item {
-  font-family: "SF Mono";
+  font-family: "Rajdhani";
   font-weight: 400;
+  font-size: 16px;
 }
 
 .tight-text {
-  letter-spacing: -0.5px;
+  letter-spacing: 0px;
+  font-weight: 500;
 }
 
 a {
