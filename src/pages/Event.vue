@@ -1,6 +1,11 @@
 <template>
+<<<<<<< HEAD
   <q-page ref="page">
     <BaseHeader>{{ $t("thread") }}</BaseHeader>
+=======
+  <q-page ref="page" style="margin-top: 20px;">
+    <BaseHeader class="spotnik">{{ $t("thread") }}</BaseHeader>
+>>>>>>> dostral-8268ea5
     <div ref="ancestors" v-if="ancestorsCompiled.length || rootAncestor">
       <BasePostThread
         :events="ancestorsCompiled"
@@ -20,7 +25,11 @@
         class="column relative-position"
         style="
           border: 2px solid var(--q-accent);
+<<<<<<< HEAD
           border-radius: 1rem;
+=======
+          border-radius: 0.5rem;
+>>>>>>> dostral-8268ea5
           z-index: 1;
           background: var(--q-background);
         "
@@ -61,7 +70,11 @@ import BaseButtonShowMore from 'components/BaseButtonShowMore'
 
 const metaData = {
   // sets document title
+<<<<<<< HEAD
   title: 'Dostr - thread',
+=======
+  title: 'Dostr - Thread',
+>>>>>>> dostral-8268ea5
 
   // meta tags
   meta: {

@@ -12,7 +12,11 @@
     align="left"
     v-close-popup
   >
+<<<<<<< HEAD
     <q-tooltip v-if="!verbose"> metadata </q-tooltip>
+=======
+    <q-tooltip v-if="!verbose" class="tooltip"> METADATA </q-tooltip>
+>>>>>>> dostral-8268ea5
     <q-dialog v-model="metadataDialog" @before-hide="$emit('hide')">
       <q-card class="flex column no-wrap" style="max-height: 90%">
         <div class="flex row justify-end">

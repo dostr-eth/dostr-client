@@ -17,7 +17,11 @@
       dense
       outline
       rounded
+<<<<<<< HEAD
       color="accent"
+=======
+      color="info"
+>>>>>>> dostral-8268ea5
       class="text-weight-light q-ma-sm justify-between full-width"
       style="letter-spacing: 0.1rem; justify-content: space-between"
       label="show full post"
@@ -243,7 +247,11 @@ export default {
   props: {
     content: {
       type: String,
+<<<<<<< HEAD
       default: 'todo needs to be updated',
+=======
+      default: 'todo'.toUpperCase() + 'needs to be updated',
+>>>>>>> dostral-8268ea5
     },
     longForm: {
       type: Boolean,

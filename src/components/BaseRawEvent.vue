@@ -1,11 +1,19 @@
 <template>
   <q-card style="box-shadow: none">
     <q-card-section>
+<<<<<<< HEAD
       <div class="text-subtitle1">
         raw event data
         <BaseButtonCopy :button-text="json(cleaned)" />
       </div>
       <pre>{{ json(cleaned) }}</pre>
+=======
+      <div class="text-subtitle1 spotnik">
+        Raw Event Data
+        <BaseButtonCopy :button-text="json(cleaned)" />
+      </div>
+      <pre class="code">{{ json(cleaned) }}</pre>
+>>>>>>> dostral-8268ea5
     </q-card-section>
   </q-card>
 </template>

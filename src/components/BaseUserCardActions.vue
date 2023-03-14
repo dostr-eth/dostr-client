@@ -3,8 +3,13 @@
     <BaseButtonCopy
       :button-text="npubKey"
       button-size="sm"
+<<<<<<< HEAD
       text-color="secondary"
       tooltip-text="copy pubkey"
+=======
+      text-color="primary"
+      tooltip-text="COPY PUBLIC KEY"
+>>>>>>> dostral-8268ea5
       @click.stop
     />
     <BaseButtonMessage

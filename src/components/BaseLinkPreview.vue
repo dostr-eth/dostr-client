@@ -1,5 +1,9 @@
 <template>
+<<<<<<< HEAD
   <div>
+=======
+  <div class="code">
+>>>>>>> dostral-8268ea5
     {{ url }}
     {{ preview }}
   </div>

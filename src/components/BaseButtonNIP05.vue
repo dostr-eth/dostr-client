@@ -9,7 +9,11 @@
           <div
             class="text-subtitle1 flex row overflow-auto items-end q-gutter-sm"
           >
+<<<<<<< HEAD
             NIP05 identifier
+=======
+            NIP-05 Identifier
+>>>>>>> dostral-8268ea5
             <a :href="NIP05Link" target="_">{{ NIP05Link }}</a>
           </div>
           <pre v-if="NIP05Loaded">{{ NIP05Formatted }}</pre>
@@ -17,7 +21,11 @@
             <q-spinner-orbit color="accent" size="2rem" />
           </q-inner-loading>
           <div>
+<<<<<<< HEAD
             learn how to get NIP05 verified&nbsp;<a
+=======
+            Learn how to get NIP-05 verified&nbsp;<a
+>>>>>>> dostral-8268ea5
               href="https://gist.github.com/metasikander/609a538e6a03b2f67e5c8de625baed3e"
               target="_"
               >here</a
@@ -30,7 +38,11 @@
   <q-btn
     v-if="$store.getters.NIP05Id(pubkey)"
     icon="verified"
+<<<<<<< HEAD
     color="accent"
+=======
+    color="info"
+>>>>>>> dostral-8268ea5
     flat
     dense
     :size="buttonSize"
@@ -38,7 +50,11 @@
     clickable
     @click.stop="openNIP05"
   >
+<<<<<<< HEAD
     <q-tooltip> NIP05 verified </q-tooltip>
+=======
+    <q-tooltip class="tooltip"> NIP-05 verified </q-tooltip>
+>>>>>>> dostral-8268ea5
   </q-btn>
 </template>
 
@@ -90,7 +106,11 @@ export default {
         this.NIP05Data = await (await fetch(this.NIP05Link)).json()
       } catch (_) {
         Notify.create({
+<<<<<<< HEAD
           message: 'failed to fetch NIP05 identifier',
+=======
+          message: 'Failed to fetch NIP-05 Identifier',
+>>>>>>> dostral-8268ea5
           color: 'negative',
         })
       }

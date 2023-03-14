@@ -13,6 +13,10 @@ module.exports = {
 
   env: {
     browser: true,
+<<<<<<< HEAD
+=======
+    node: true,
+>>>>>>> dostral-8268ea5
     "vue/setup-compiler-macros": true,
   },
 

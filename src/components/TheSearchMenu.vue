@@ -65,7 +65,11 @@
       </div>
     </q-card-section>
     <div v-if="$store.state.keys.pub" class="flex row justify-between no-wrap">
+<<<<<<< HEAD
       <h5 class="text-bold q-my-none spotnik">{{ $t("follows") }}</h5>
+=======
+      <h5 style="margin-left: 10px;" class="text-bold q-my-none spotnik">{{ $t("follows") }}</h5>
+>>>>>>> dostral-8268ea5
       <div>
         <q-btn
           v-if="!reordering"
@@ -73,17 +77,28 @@
           icon="reorder"
           @click.stop="reorderFollows"
         >
+<<<<<<< HEAD
           <q-tooltip style="font-size: 12px;">{{ $t("reorderFollows") }}</q-tooltip>
         </q-btn>
         <q-btn v-if="reordering" flat icon="close" @click.stop="cancelReorder">
           <q-tooltip style="font-size: 12px;">{{ $t("cancel") }}</q-tooltip>
+=======
+          <q-tooltip class="tooltip">{{ $t("reorderFollows") }}</q-tooltip>
+        </q-btn>
+        <q-btn v-if="reordering" flat icon="close" @click.stop="cancelReorder">
+          <q-tooltip class="tooltip">{{ $t("cancel") }}</q-tooltip>
+>>>>>>> dostral-8268ea5
         </q-btn>
       </div>
     </div>
     <q-card-section
       v-if="$store.state.keys.pub"
       class="no-padding"
+<<<<<<< HEAD
       style="overflow-y: auto"
+=======
+      style="overflow-y: auto; margin-left: 10px;"
+>>>>>>> dostral-8268ea5
     >
       <div v-if="$store.state.follows.length" class="q-mt-xs q-pl-sm">
         <q-list v-if="!reordering">

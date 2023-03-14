@@ -1,8 +1,12 @@
 <template>
+<<<<<<< HEAD
   <img
     ref="qr"
     style="object-fit: cover; min-height: 200px; min-width: 200px; width: 100%"
   />
+=======
+  <img ref="qr" style="object-fit: cover; min-height: 200px; min-width: 200px; width: 100%" />
+>>>>>>> dostral-8268ea5
   <!-- <q-item  class='no-padding'>
   </q-item> -->
 </template>
@@ -49,9 +53,14 @@ export default defineComponent({
             parts.push(`M${x + border},${y + border}h1v1h-1z`)
         }
       }
+<<<<<<< HEAD
       let svg = `<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 ${
         qr.size + border * 2
       } ${qr.size + border * 2}" stroke="none">
+=======
+      let svg = `<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 ${qr.size + border * 2
+        } ${qr.size + border * 2}" stroke="none">
+>>>>>>> dostral-8268ea5
 	<rect width="100%" height="100%" fill="${lightColor}"/>
 	<path d="${parts.join(' ')}" fill="${darkColor}"/>
 </svg>

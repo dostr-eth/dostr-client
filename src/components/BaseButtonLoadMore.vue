@@ -7,7 +7,11 @@
         :loading="loadingMore"
         outline
         rounded
+<<<<<<< HEAD
         color="accent"
+=======
+        color="white"
+>>>>>>> dostral-8268ea5
         class="text-weight-light q-ma-sm"
         style="letter-spacing: 0.1rem"
         :label="reachedEnd ? 'reached end' : label"

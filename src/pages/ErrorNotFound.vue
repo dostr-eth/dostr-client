@@ -20,6 +20,7 @@
       />
     </div>
   </div> -->
+<<<<<<< HEAD
   <q-page class="flex flex-center">
     <div>
       <div style="font-size: 30vh">404</div>
@@ -33,6 +34,17 @@
       src="~assets/dostr-logo.svg"
       style="width: 200px; height: 200px"
     />
+=======
+  <q-page class="flex-center">
+    <div style="display: flex; margin: 0 auto; justify-content: center;">
+      <div style="font-size: 30vh">404</div>
+    </div>
+    <div style="display: flex; margin: 0 auto; justify-content: center;">
+      <div class="text-h2" style="opacity: 0.4">
+        {{ $t("404: Source Not Found") }}
+      </div>
+    </div>
+>>>>>>> dostral-8268ea5
   </q-page>
 </template>
 

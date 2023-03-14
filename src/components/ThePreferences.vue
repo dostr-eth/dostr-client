@@ -1,11 +1,19 @@
 <template>
   <div style="padding: 0.2rem 0.5rem 1rem" @click="closeSelects">
     <div v-if="Object.keys(preferences).length">
+<<<<<<< HEAD
       <div v-if="editingPreferences" class="flex justify-between" style="display: flex; gap: 0.2rem">
         <q-btn label="save" color="primary" outline size="sm" @click="savePreferences" />
         <q-btn label="cancel" color="negative" outline size="sm" @click="cancel('preferences')" />
       </div>
       <div class="text-bold flex justify-between no-wrap" style="font-size: 1.1rem">
+=======
+      <div v-if="editingPreferences" class="flex" style="margin-left: 79.5%; gap: 0.2rem">
+        <q-btn label="save" color="positive" outline size="sm" @click="savePreferences" />
+        <q-btn label="cancel" color="negative" outline size="sm" @click="cancel('preferences')" />
+      </div>
+      <div class="text-bold flex justify-between no-wrap spotnik" style="font-size: 1.1rem">
+>>>>>>> dostral-8268ea5
         {{ $t("preferences") }}
         <div class="text-normal flex row no-wrap" style="font-size: 0.9rem; gap: 0.4rem">
           <q-btn
@@ -13,13 +21,22 @@ v-if="!editingPreferences" label="edit" color="primary" outline size="sm"
             @click="editingPreferences = true" />
         </div>
       </div>
+<<<<<<< HEAD
       <div class="flex column q-px-sm" style="gap: 0.3rem">
         <div class="text-bold flex justify-between no-wrap" style="font-size: 1rem">
+=======
+      <div class="flex column q-px-sm" style="gap: 0.3rem; margin-top: 10px;">
+        <div class="text-bold flex justify-between no-wrap spotnik" style="font-size: 13px; color: skyblue;">
+>>>>>>> dostral-8268ea5
           {{ $t("colors") }}
         </div>
         <div v-if="preferences.color" style="padding-left: 0.2rem; gap: 1rem" class="flex row">
           <div v-for="(colorName, index) in Object.keys(preferences.color)" :key="index" class="flex column items-center">
+<<<<<<< HEAD
             <label :for="colorName">{{ colorName }}</label>
+=======
+            <label :for="colorName" style="font-size: 12px;">{{ colorName.toUpperCase() }}</label>
+>>>>>>> dostral-8268ea5
             <input
 type="color" :id="colorName" :name="colorName" :value="preferences.color[colorName]"
               :disabled="!editingPreferences" @input="(event) => updateColor(event.target.value, colorName)" />
@@ -27,7 +44,11 @@ type="color" :id="colorName" :name="colorName" :value="preferences.color[colorNa
           <!-- <div v-for='(colorName, index) in Object.keys(preferences.color)' :key='index' class='flex column items-center'>
             <label :for="colorName">{{ colorName }}</label> -->
           <BaseSelect
+<<<<<<< HEAD
 :allow-selection="editingPreferences" :selecting="choosingTheme" style="width: 200px"
+=======
+:allow-selection="editingPreferences" :selecting="choosingTheme" style="width: 200px;"
+>>>>>>> dostral-8268ea5
             @toggle="choosingTheme = !choosingTheme">
             <template #default>{{ "choose a theme..." }}</template>
             <template #list-items>
@@ -38,7 +59,11 @@ type="color" :id="colorName" :name="colorName" :value="preferences.color[colorNa
           </BaseSelect>
           <!-- </div> -->
         </div>
+<<<<<<< HEAD
         <div class="text-bold flex justify-between no-wrap" style="font-size: 1rem">
+=======
+        <div class="text-bold flex justify-between no-wrap spotnik" style="font-size: 13px; margin-top: 10px; color: skyblue;">
+>>>>>>> dostral-8268ea5
           {{ $t("font") }}
         </div>
         <BaseSelect
@@ -55,6 +80,7 @@ v-if="preferences.font" :allow-selection="editingPreferences" :selecting="choosi
             </li>
           </template>
         </BaseSelect>
+<<<<<<< HEAD
         <div class="text-bold flex justify-between no-wrap" style="font-size: 1rem">
           {{ $t("lightningTips") }}
         </div>
@@ -77,6 +103,30 @@ v-for="(preset, index) in preferences.lightningTips.presets" :key="index"
             <span style="white-space: nowrap"><strong>one click tip</strong></span>
             <div style="font-size: 0.9rem">
               note: you will need a webln enabled wallet like Alby to use this
+=======
+        <div class="text-bold flex justify-between no-wrap spotnik" style="font-size: 13px; margin-top: 10px; color: skyblue;">
+          {{ $t("Lightning Tips ⚡") }}
+        </div>
+        <div class="flex column q-px-sm" style="gap: 0.3rem">
+          <div>
+            OFF
+            <q-toggle
+v-model="preferences.lightningTips.enabled" :disable="!editingPreferences" color="accent"
+              size="sm" />
+            ON
+          </div>
+          <span style="white-space: nowrap; font-size: 12px;" class="spotnik"><strong>tip presets</strong></span>
+          <div v-if="preferences.lightningTips.enabled" class="flex row no-wrap items-center" style="gap: 2rem">
+            <q-input
+v-for="(preset, index) in preferences.lightningTips.presets" :key="index"
+              v-model="preferences.lightningTips.presets[index]" type="number" :label="'default ' + (index + 1)"
+              :disable="!editingPreferences" dense filled suffix="sats" input-class="sf-mono" />
+          </div>
+          <div v-if="hasWebLn" style="margin-top: 10px;">
+            <span style="white-space: nowrap; font-size: 12px; color: yellow;" class="spotnik"><strong>one-click tip</strong></span>
+            <div style="font-size: 0.9rem">
+              Note: you will need a webln enabled wallet like Alby to use this
+>>>>>>> dostral-8268ea5
               feature, and setting a budget in your webln wallet for dostr will
               give you a true one click experience. this will authorize a tip of
               a set default amount to the author of a note with one click of the
@@ -88,11 +138,19 @@ v-for="(preset, index) in preferences.lightningTips.presets" :key="index"
             </div>
             <div v-if="preferences.lightningTips.enabled" class="flex row no-wrap items-center" style="gap: 2rem">
               <div>
+<<<<<<< HEAD
                 off
                 <q-toggle
 v-model="preferences.lightningTips.oneClick.enabled" :disable="!editingPreferences"
                   color="accent" size="sm" />
                 on
+=======
+                OFF
+                <q-toggle
+v-model="preferences.lightningTips.oneClick.enabled" :disable="!editingPreferences"
+                  color="accent" size="sm" />
+                ON
+>>>>>>> dostral-8268ea5
               </div>
               <q-input
 v-if="preferences.lightningTips.oneClick.enabled"
@@ -430,6 +488,12 @@ export default {
       this.preferences.font = font
       this.$emit('update-font', font)
     },
+<<<<<<< HEAD
+=======
+    capitalise(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1)
+    },
+>>>>>>> dostral-8268ea5
     cancel(section) {
       if (section === 'preferences') {
         this.editingPreferences = false

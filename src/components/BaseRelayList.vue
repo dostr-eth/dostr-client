@@ -1,17 +1,29 @@
 <template>
   <div>
     <div>
+<<<<<<< HEAD
       <span class="text-bold" style="font-size: 1.1rem">relays</span>
       &nbsp;&lpar;
+=======
+      <span class="text-bold spotnik" style="font-size: 1.1rem">relays</span>
+      &nbsp;
+>>>>>>> dostral-8268ea5
       <span class="text-secondary">
         <q-icon name="visibility" size="xs" dense />
         seen
       </span>
+<<<<<<< HEAD
+=======
+      &nbsp;
+>>>>>>> dostral-8268ea5
       <span>
         <q-icon name="visibility_off" size="xs" dense />
         not seen
       </span>
+<<<<<<< HEAD
       &rpar;
+=======
+>>>>>>> dostral-8268ea5
     </div>
     <div style="overflow-x: scroll">
       <pre class="relay-list">
@@ -21,7 +33,11 @@
             {{ relay }}
           </div>
         </div>
+<<<<<<< HEAD
         <div v-if="missingFrom.length"  style='overflow: hidden;'>
+=======
+        <div v-if="missingFrom.length"  style='overflow: hidden; margin-left: -100px;'>
+>>>>>>> dostral-8268ea5
           <div v-for="relay in missingFrom" :key="relay" class='relay-item unseen-relay-item hide-scrollbar' clickable>
             <q-btn
               icon='visibility'

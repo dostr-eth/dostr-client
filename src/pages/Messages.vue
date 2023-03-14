@@ -49,7 +49,11 @@
               dateUTC(messagesGrouped[index].created_at) !==
                 dateUTC(messagesGrouped[index - 1].created_at)
             "
+<<<<<<< HEAD
             class="self-center text-accent datestamp"
+=======
+            class="self-center text-accent datestamp sf-mono"
+>>>>>>> dostral-8268ea5
             :class="index === 0 ? 'q-pb-sm' : 'q-py-sm'"
           >
             {{ dateUTC(event.created_at) }}
@@ -110,7 +114,11 @@ import { createMetaMixin } from 'quasar'
 
 const metaData = {
   // sets document title
+<<<<<<< HEAD
   title: 'Dostr - messages',
+=======
+  title: 'Dostr - Messages',
+>>>>>>> dostral-8268ea5
 
   // meta tags
   meta: {
@@ -118,7 +126,11 @@ const metaData = {
       name: 'description',
       content: `Nostr messages with ${window.location.pathname.split('/')[2]}`,
     },
+<<<<<<< HEAD
     keywords: { name: 'keywords', content: 'nostr decentralized social media' },
+=======
+    keywords: { name: 'keywords', content: 'nostr dostr decentralized social media siwe siwx' },
+>>>>>>> dostral-8268ea5
     equiv: {
       'http-equiv': 'Content-Type',
       content: 'text/html; charset=UTF-8',

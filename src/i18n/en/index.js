@@ -49,13 +49,18 @@ export default {
 
   // time related
   UTC: 'UTC',
+<<<<<<< HEAD
   now: 'now',
+=======
+  now: 'now'.toUpperCase(),
+>>>>>>> dostral-8268ea5
   // ago: 'ago',
   s: 's',
   m: 'm',
   h: 'h',
 
   // buttons, labels & tooltips
+<<<<<<< HEAD
   post: 'Post',
   follow: 'Follow',
   close: 'Close',
@@ -99,6 +104,51 @@ export default {
   noFollowers: 'No Followers',
   noRelays: 'No Relays',
   dragDropReorder: 'Drag & Drop to re-order',
+=======
+  post: 'Post'.toUpperCase(),
+  follow: 'Follow'.toUpperCase(),
+  close: 'Close'.toUpperCase(),
+  setUser: 'Set User'.toUpperCase(),
+  read: 'Read'.toUpperCase(),
+  write: 'Write'.toUpperCase(),
+  reorderFollows: 'Re-order Follows'.toUpperCase(),
+  cancel: 'Cancel'.toUpperCase(),
+  save: 'Save'.toUpperCase(),
+  searchProfiles: 'Search Profiles'.toUpperCase(),
+  searchPosts: 'Search Posts'.toUpperCase(),
+
+  // pages
+  feed: 'Feed'.toUpperCase(),
+  notifications: 'Notifications'.toUpperCase(),
+  messages: 'Messages'.toUpperCase(),
+  inbox: 'Inbox'.toUpperCase(),
+  settings: 'Settings'.toUpperCase(),
+  thread: 'Thread'.toUpperCase(),
+  event: 'Event'.toUpperCase(),
+  devTools: 'DevTools'.toUpperCase(),
+  notFound: 'Oops. Nothing here...',
+
+  // sections
+  follows: 'Follows'.toUpperCase(),
+  followers: 'Followers'.toUpperCase(),
+  replies: 'Replies'.toUpperCase(),
+  profile: 'Profile'.toUpperCase(),
+  relays: 'Relays'.toUpperCase(),
+  faq: 'FAQ',
+  users: 'Users'.toUpperCase(),
+  nip05Maintainer: 'NIP-05 Maintainer'.toUpperCase(),
+  inactiveRelays: 'Inactive Relays'.toUpperCase(),
+  preferences: 'Preferences'.toUpperCase(),
+  colors: 'Colors'.toUpperCase(),
+  font: 'Font'.toUpperCase(),
+  lightningTips: 'Lightning Tips'.toUpperCase(),
+
+  // text
+  noFollows: 'No Follows'.toUpperCase(),
+  noFollowers: 'No Followers'.toUpperCase(),
+  noRelays: 'No Relays'.toUpperCase(),
+  dragDropReorder: 'Drag & Drop to re-order'.toUpperCase(),
+>>>>>>> dostral-8268ea5
 }
 
 /*

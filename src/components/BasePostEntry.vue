@@ -1,7 +1,11 @@
 <template>
   <q-item
     unelevated
+<<<<<<< HEAD
     class="q-pa-none post-entry-form flex coloumn"
+=======
+    class="q-pa-none post-entry-form flex column"
+>>>>>>> dostral-8268ea5
     ref="postEntry"
     @click.stop
     @mouseup.stop

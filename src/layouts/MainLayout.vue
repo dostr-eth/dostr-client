@@ -17,7 +17,11 @@
         @look-around="setLookingAroundMode"
       />
     </q-dialog>
+<<<<<<< HEAD
     <div id="layout-container" :ripple="false">
+=======
+    <div id="layout-container" :ripple="false" class="backdrop">
+>>>>>>> dostral-8268ea5
       <div id="left-drawer" class="flex justify-end">
         <TheUserMenu
           :item-mode="$q.screen.width < 1023"
@@ -29,7 +33,11 @@
         />
       </div>
 
+<<<<<<< HEAD
       <div id="middle-page">
+=======
+      <div id="middle-page" style="margin-left: 15px;">
+>>>>>>> dostral-8268ea5
         <q-page-container ref="pageContainer">
           <!-- <TheKeyInitializationDialog v-if='!$store.state.keys.pub && !lookingAround' @look-around='lookingAround=true'/> -->
           <router-view v-slot="{ Component }">
@@ -125,7 +133,11 @@
       />
     </q-page-sticky>
     <q-page-sticky
+<<<<<<< HEAD
       style="margin-top: 50px;"
+=======
+      style="margin-top: 20px;"
+>>>>>>> dostral-8268ea5
       position="top-right"
       :offset="fabPos"
       id="navagation-buttons"
@@ -142,7 +154,11 @@
         v-touch-pan.prevent.mouse="moveFab"
       >
         <template #tooltip>
+<<<<<<< HEAD
           <q-tooltip style="font-size: 12px;">Click to Collapse/Expand or Drag to Move</q-tooltip>
+=======
+          <q-tooltip class="tooltip">CLICK TO COLLAPSE/EXPAND OR DRAG TO MOVE</q-tooltip>
+>>>>>>> dostral-8268ea5
         </template>
         <template #icon>
           <q-icon name="drag_indicator" />
@@ -159,7 +175,11 @@
           icon="keyboard_arrow_right"
           :disable="draggingFab"
         >
+<<<<<<< HEAD
           <q-tooltip style="font-size: 12px;">Forward</q-tooltip>
+=======
+          <q-tooltip class="tooltip">FORWARD</q-tooltip>
+>>>>>>> dostral-8268ea5
         </q-btn>
         <q-btn
           @click.stop="scrollToTop"
@@ -172,7 +192,11 @@
             draggingFab || $route.name === 'inbox' || $route.name === 'messages'
           "
         >
+<<<<<<< HEAD
           <q-tooltip style="font-size: 12px;">Scroll to top</q-tooltip>
+=======
+          <q-tooltip class="tooltip">SCROLL TO TOP</q-tooltip>
+>>>>>>> dostral-8268ea5
         </q-btn>
         <q-btn
           @click.stop="back"
@@ -183,7 +207,11 @@
           icon="keyboard_arrow_left"
           :disable="draggingFab"
         >
+<<<<<<< HEAD
           <q-tooltip style="font-size: 12px;">Back</q-tooltip>
+=======
+          <q-tooltip class="tooltip">BACK</q-tooltip>
+>>>>>>> dostral-8268ea5
         </q-btn>
         <!-- <q-btn label='get relay status' @click='getRelayStat'/>s -->
       </q-fab>
@@ -480,20 +508,33 @@ body {
   -webkit-font-smoothing: antialiased;
   display: block;
   overflow: auto;
+<<<<<<< HEAD
   font-family: "Titillium Web", "Helvetica Neue", Helvetica, Arial,
     "Noto Color Emoji", sans-serif;
 }
 #layout-container {
   padding-top: 30px;
+=======
+  font-family: "Rajdhani", "Titillium Web", "Helvetica Neue", Helvetica, Arial,
+    "Noto Color Emoji", sans-serif;
+}
+#layout-container {
+  padding-top: 0;
+>>>>>>> dostral-8268ea5
   display: flex;
   justify-content: center;
   width: 100%;
   position: relative;
   flex-wrap: nowrap;
+<<<<<<< HEAD
   font-family: "Titillium Web", "Helvetica Neue", Helvetica, Arial,
     "Noto Color Emoji", sans-serif;
   background-image: url('/background_alpha.png');
   background-size: cover;
+=======
+  font-family: "Rajdhani", "Titillium Web", "Helvetica Neue", Helvetica, Arial,
+    "Noto Color Emoji", sans-serif;
+>>>>>>> dostral-8268ea5
 }
 #left-drawer,
 #right-drawer {

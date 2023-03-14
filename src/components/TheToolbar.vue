@@ -1,7 +1,11 @@
 <template>
   <q-toolbar>
     <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
+<<<<<<< HEAD
     <q-toolbar-title class="flex justify-center">dostr</q-toolbar-title>
+=======
+    <q-toolbar-title class="flex justify-center spotnik">dostr</q-toolbar-title>
+>>>>>>> dostral-8268ea5
     <q-btn dense flat round icon="groups" @click="toggleRightDrawer" />
   </q-toolbar>
 </template>

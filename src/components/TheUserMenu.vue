@@ -210,6 +210,16 @@ export default defineComponent({
 .q-item {
   transition: all 0.2s ease-in-out;
 }
+<<<<<<< HEAD
+=======
+.q-item:hover {
+  opacity: 1;
+  font-weight: bold;
+  padding: 8px 16px 8px 2px;
+  border: 0px solid white;
+  border-radius: 3px;
+}
+>>>>>>> dostral-8268ea5
 
 .menu-item {
   letter-spacing: 0.1rem;

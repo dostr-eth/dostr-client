@@ -11,7 +11,11 @@
     @click.stop
     dense
   >
+<<<<<<< HEAD
     <q-tooltip> encrypted message </q-tooltip>
+=======
+    <q-tooltip class="tooltip"> ENCRYPTED MESSAGE </q-tooltip>
+>>>>>>> dostral-8268ea5
   </q-btn>
 </template>
 

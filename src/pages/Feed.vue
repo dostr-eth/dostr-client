@@ -5,8 +5,15 @@
     <!-- <q-infinite-scroll @load='loadMore()' :offset='500' scroll-target='#feed-scroll'> -->
     <BaseHeader :separator="false">
       <div class="flex row justify-start" style="gap: 1rem; font-family: 'Spotnik'">
+<<<<<<< HEAD
         <div class="gt-sm">{{ $t("dostr") }}</div>
         <div style="margin-top: -12px;" class="gt-sm">
+=======
+        <div class="gt-sm">
+          {{ $t("dostr") }}
+        </div>
+        <div style="margin-top: -10px;" class="gt-sm">
+>>>>>>> dostral-8268ea5
           <q-select
             borderless
             v-model="feedName"
@@ -16,9 +23,16 @@
             emit-value
             map-input
             option-disable="inactive"
+<<<<<<< HEAD
           />
         </div>
         <div style="margin-top: -12px; margin-left: 20%;" class="lt-md">
+=======
+            popup-content-class="spotnik"
+          />
+        </div>
+        <div style="margin-top: -8px; margin-left: 15%;" class="lt-md">
+>>>>>>> dostral-8268ea5
           <q-select
             borderless
             v-model="feedName"
@@ -28,16 +42,33 @@
             emit-value
             map-input
             option-disable="inactive"
+<<<<<<< HEAD
+=======
+            popup-content-class="spotnik"
+            popup-content-style="font-size: 10px;"
+            style="font-size: 12px;"
+>>>>>>> dostral-8268ea5
           />
         </div>
       </div>
     </BaseHeader>
+<<<<<<< HEAD
     <BaseButtonLoadMore
       v-if="unreadFeed.length"
       :loading-more="loadingUnread"
       :label="'load ' + unreadFeed.length + ' unread'"
       @click="loadUnread"
     />
+=======
+    <div style="margin-top: 5px;">
+      <BaseButtonLoadMore
+        v-if="unreadFeed.length"
+        :loading-more="loadingUnread"
+        :label="'load '.toUpperCase() + unreadFeed.length + ' unread'.toUpperCase()"
+        @click="loadUnread"
+      />
+    </div>
+>>>>>>> dostral-8268ea5
     <div v-for="(item, index) in items" :key="index">
       <BasePostThread
         :events="item"

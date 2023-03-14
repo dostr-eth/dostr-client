@@ -9,7 +9,11 @@
   >
     <div
       v-if="verbose"
+<<<<<<< HEAD
       class="gt-sm"
+=======
+      class="gt-sm spotnik"
+>>>>>>> dostral-8268ea5
       style="font-size: 1rem; font-weight: 700; letter-spacing: 0.05rem"
     >
       <span v-if="!isOpen">&nbsp;{{ $t("post") }}&nbsp;</span>

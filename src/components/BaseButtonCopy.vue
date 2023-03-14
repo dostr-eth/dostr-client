@@ -12,7 +12,11 @@
     :label="verbose || buttonLabel ? buttonLabel || 'copy' : ''"
     align="left"
   >
+<<<<<<< HEAD
     <q-tooltip v-if="tooltipText">
+=======
+    <q-tooltip class="tooltip" v-if="tooltipText">
+>>>>>>> dostral-8268ea5
       {{ tooltipText }}
     </q-tooltip>
   </q-btn>

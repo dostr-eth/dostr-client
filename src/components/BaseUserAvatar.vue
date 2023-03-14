@@ -1,5 +1,9 @@
 <template>
   <div
+<<<<<<< HEAD
+=======
+    style="margin-right: 10px; margin-left: 5px;"
+>>>>>>> dostral-8268ea5
     :class="
       (bordered ? 'bordered-avatar' : '') +
       (hoverEffect ? ' hovered-avatar' : '')
@@ -34,11 +38,19 @@ export default {
   },
   props: {
     pubkey: { type: String, required: true },
+<<<<<<< HEAD
     alignRight: { type: Boolean, default: false },
     size: { type: String, default: '' },
     round: { type: Boolean, default: false },
     bordered: { type: Boolean, default: false },
     showVerified: { type: Boolean, default: false },
+=======
+    alignRight: { type: Boolean, default: true },
+    size: { type: String, default: '' },
+    round: { type: Boolean, default: false },
+    bordered: { type: Boolean, default: true },
+    showVerified: { type: Boolean, default: true },
+>>>>>>> dostral-8268ea5
     hoverEffect: { type: Boolean, default: false },
   },
 }
@@ -51,7 +63,11 @@ export default {
   z-index: 1;
 }
 .hovered-avatar .q-avatar:hover {
+<<<<<<< HEAD
   transform: scale(1.5) translateX(0.25rem);
+=======
+  transform: scale(1.25) translateX(0.25rem);
+>>>>>>> dostral-8268ea5
 }
 .icon-right {
   position: absolute;

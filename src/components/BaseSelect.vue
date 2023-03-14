@@ -2,7 +2,11 @@
   <div style="cursor: pointer; padding-left: 0.2rem" class="relative-position">
     <div
       class="flex justify-between base-select no-wrap items-center"
+<<<<<<< HEAD
       style="border-radius: 0.5rem"
+=======
+      style="border-radius: 3px;"
+>>>>>>> dostral-8268ea5
       :style="
         allowSelection
           ? 'cursor: pointer; opacity: 1;'

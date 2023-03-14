@@ -24,7 +24,11 @@
     </div>
     <q-item-section
       :class="headerMode ? 'self-start' : ''"
+<<<<<<< HEAD
       :style="!headerMode ? 'white-space: nowrap; overflow: auto;' : ''"
+=======
+      :style="!headerMode ? 'white-space: nowrap; overflow: auto; padding-left: 8px;' : ''"
+>>>>>>> dostral-8268ea5
     >
       <BaseUserName
         :pubkey="pubkey"
@@ -36,8 +40,12 @@
         :wrap="wrap"
       />
       <div
+<<<<<<< HEAD
         class="text-secondary pubkey"
         style="opacity: 0.9; font-size: 95%; font-weight: 300"
+=======
+        class="text-primary sf-mono"
+>>>>>>> dostral-8268ea5
       >
         {{ shorten(npubKey) }}
       </div>
@@ -99,7 +107,11 @@ export default defineComponent({
       default: true,
     },
     showFollowing: { type: Boolean, default: false },
+<<<<<<< HEAD
     wrap: { type: Boolean, default: false },
+=======
+    wrap: { type: Boolean, default: true },
+>>>>>>> dostral-8268ea5
   },
 
   setup() {
