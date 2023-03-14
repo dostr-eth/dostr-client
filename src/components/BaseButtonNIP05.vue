@@ -30,7 +30,7 @@
   <q-btn
     v-if="$store.getters.NIP05Id(pubkey)"
     icon="verified"
-    color="accent"
+    color="info"
     flat
     dense
     :size="buttonSize"
@@ -38,7 +38,7 @@
     clickable
     @click.stop="openNIP05"
   >
-    <q-tooltip> NIP05 verified </q-tooltip>
+    <q-tooltip class="tooltip"> NIP-05 verified </q-tooltip>
   </q-btn>
 </template>
 
@@ -90,7 +90,7 @@ export default {
         this.NIP05Data = await (await fetch(this.NIP05Link)).json()
       } catch (_) {
         Notify.create({
-          message: 'failed to fetch NIP05 identifier',
+          message: 'Failed to fetch NIP-05 Identifier',
           color: 'negative',
         })
       }

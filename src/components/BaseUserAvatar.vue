@@ -1,5 +1,6 @@
 <template>
   <div
+    style="margin-right: 10px; margin-left: 5px;"
     :class="
       (bordered ? 'bordered-avatar' : '') +
       (hoverEffect ? ' hovered-avatar' : '')
@@ -34,11 +35,11 @@ export default {
   },
   props: {
     pubkey: { type: String, required: true },
-    alignRight: { type: Boolean, default: false },
+    alignRight: { type: Boolean, default: true },
     size: { type: String, default: '' },
     round: { type: Boolean, default: false },
-    bordered: { type: Boolean, default: false },
-    showVerified: { type: Boolean, default: false },
+    bordered: { type: Boolean, default: true },
+    showVerified: { type: Boolean, default: true },
     hoverEffect: { type: Boolean, default: false },
   },
 }
@@ -51,7 +52,7 @@ export default {
   z-index: 1;
 }
 .hovered-avatar .q-avatar:hover {
-  transform: scale(1.5) translateX(0.25rem);
+  transform: scale(1.25) translateX(0.25rem);
 }
 .icon-right {
   position: absolute;

@@ -252,7 +252,7 @@
             name="info"
             style="font-size: 20px; margin-left: -75px; margin-top: -15px"
           >
-            <q-tooltip style="font-size: 13px">
+            <q-tooltip class="tooltip">
               ◦ The selected relays below will be queried to load your user
               profile, follows, and relay data from Nostr network.<br />
               ◦ Please ensure the list of selected relays includes relays you

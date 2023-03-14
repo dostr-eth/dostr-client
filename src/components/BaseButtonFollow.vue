@@ -3,8 +3,8 @@
 :class="buttonClass + (isFollowing ? 'button-unfollow' : 'button-follow')" :size="buttonSize" unelevated
     :text-color="isFollowing ? '' : 'secondary'" dense @click.stop="toggleFollowing">
     <q-icon :name="isFollowing ? 'person_remove' : 'person_add'" :class="isFollowing ? 'flip-horizontal' : ''" />
-    <q-tooltip>
-      {{ isFollowing ? "unfollow" : "follow" }}
+    <q-tooltip class="tooltip">
+      {{ isFollowing ? "unfollow".toUpperCase() : "follow".toUpperCase() }}
     </q-tooltip>
   </q-btn>
 </template>

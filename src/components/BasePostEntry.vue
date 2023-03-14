@@ -1,7 +1,7 @@
 <template>
   <q-item
     unelevated
-    class="q-pa-none post-entry-form flex coloumn"
+    class="q-pa-none post-entry-form flex column"
     ref="postEntry"
     @click.stop
     @mouseup.stop

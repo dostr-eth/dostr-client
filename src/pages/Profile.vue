@@ -79,7 +79,6 @@
           />
         </div>
       </q-tab-panel>
-
       <q-tab-panel name="follows" class="no-padding">
         <div v-if="!follows">{{ $t("noFollows") }}</div>
         <div v-else class="flex column relative">
@@ -93,7 +92,6 @@
           </div>
         </div>
       </q-tab-panel>
-
       <q-tab-panel name="followers" class="no-padding">
         <div v-if="!followers">{{ $t("noFollowers") }}</div>
         <div v-else class="flex column relative">
@@ -107,7 +105,6 @@
           </div>
         </div>
       </q-tab-panel>
-
       <q-tab-panel name="relays" class="no-padding">
         <div v-if="!relays">{{ $t("NoRelays") }}</div>
         <div v-else class="flex column relative">
@@ -146,7 +143,7 @@ import { createMetaMixin } from 'quasar'
 
 const metaData = {
   // sets document title
-  title: 'Dostr - profile',
+  title: 'Dostr - Profile',
 
   // meta tags
   meta: {

@@ -15,8 +15,8 @@
       dense
       :disable="loading"
     >
-      <q-tooltip v-if="!loading">
-        tip with bitcoin lightning network
+      <q-tooltip class="tooltip" v-if="!loading">
+        TIP WITH BITCOIN LIGHTNING ⚡
       </q-tooltip>
       <q-dialog v-model="showLightningCard">
         <BaseLightningCard

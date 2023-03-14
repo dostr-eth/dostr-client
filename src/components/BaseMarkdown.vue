@@ -17,7 +17,7 @@
       dense
       outline
       rounded
-      color="accent"
+      color="info"
       class="text-weight-light q-ma-sm justify-between full-width"
       style="letter-spacing: 0.1rem; justify-content: space-between"
       label="show full post"
@@ -243,7 +243,7 @@ export default {
   props: {
     content: {
       type: String,
-      default: 'todo needs to be updated',
+      default: 'todo'.toUpperCase() + 'needs to be updated',
     },
     longForm: {
       type: Boolean,

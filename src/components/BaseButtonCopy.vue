@@ -12,7 +12,7 @@
     :label="verbose || buttonLabel ? buttonLabel || 'copy' : ''"
     align="left"
   >
-    <q-tooltip style="font-size: 12px;" v-if="tooltipText">
+    <q-tooltip class="tooltip" v-if="tooltipText">
       {{ tooltipText }}
     </q-tooltip>
   </q-btn>

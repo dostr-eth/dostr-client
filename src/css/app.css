@@ -6,7 +6,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@100;200;300;400;500;600;700;800;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap');
 
-
 @font-face {
     font-family: 'SF Mono';
     letter-spacing: -0.5px;
@@ -16,6 +15,16 @@
 @font-face {
     font-family: 'Spotnik';
     src: url('../assets/Spotnik.woff2') format('woff2');
+}
+
+html {
+   height: 100%;
+   width: 100%;
+}
+
+a {
+   text-decoration: none;
+   color: skyblue;
 }
 
 /* declare a class which applies it */
@@ -100,7 +109,21 @@
   width: 90px;
 }
 
+.tooltip {
+  font-size: 12px;
+  background: black;
+}
+
+.pubkey {
+  font-family: 'SF Mono';
+  margin-left: -10px;
+  font-size: 11px;
+  color: white;
+}
+
 .backdrop {
-  background-image: url('/background_alpha.png'), linear-gradient(313deg, rgba(102,114,255,1) 0%, rgba(83,124,193,1) 7%, rgba(61,136,119,1) 15%, rgba(59,59,59,1) 50%, rgba(87,87,87,1) 85%, rgba(153,73,73,1) 93%, rgba(172,51,184,1) 100%);
+  background-image: url('/background_alpha.png'), linear-gradient(319deg, rgba(5,11,6,1) 0%, rgba(0,0,0,1) 33%, rgba(0,0,0,1) 50%, rgba(20,18,18,1) 72%, rgba(41,32,32,1) 84%, rgba(82,62,62,1) 91%, rgba(153,73,73,1) 96%, rgba(172,51,184,1) 100%);
   background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }

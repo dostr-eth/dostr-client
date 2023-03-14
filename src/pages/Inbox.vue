@@ -5,9 +5,9 @@
         <span class="spotnik">{{ $t("inbox") }}</span>
         <q-btn
           v-if="$store.getters.unreadChats"
-          label="mark all as read"
+          label="Mark all as Read"
           @click.stop="markAllAsRead"
-          color="secondary"
+          color="info"
           outline
           dense
         />
@@ -41,14 +41,14 @@
           />
           <q-badge
             v-if="$store.state.unreadMessages[chat.peer]"
-            color="secondary"
+            color="warning"
             outline
             class="text-bold q-my-auto"
           >
             {{ $store.state.unreadMessages[chat.peer] }}
           </q-badge>
         </div>
-        <label class="no-padding text-right">
+        <label class="no-padding text-right sf-mono">
           {{ niceDateUTC(chat.lastMessage) }}
         </label>
       </q-item>
@@ -75,12 +75,12 @@ import { createMetaMixin } from 'quasar'
 
 const metaData = {
   // sets document title
-  title: 'Dostr - inbox',
+  title: 'Dostr - Inbox',
 
   // meta tags
   meta: {
-    description: { name: 'description', content: 'Nostr direct message inbox' },
-    keywords: { name: 'keywords', content: 'nostr decentralized social media' },
+    description: { name: 'description', content: 'Dostr Direct Message Inbox' },
+    keywords: { name: 'keywords', content: 'nostr dostr decentralized social media siwe siwx' },
     equiv: {
       'http-equiv': 'Content-Type',
       content: 'text/html; charset=UTF-8',

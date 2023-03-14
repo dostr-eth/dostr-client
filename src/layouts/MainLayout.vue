@@ -29,7 +29,7 @@
         />
       </div>
 
-      <div id="middle-page">
+      <div id="middle-page" style="margin-left: 15px;">
         <q-page-container ref="pageContainer">
           <!-- <TheKeyInitializationDialog v-if='!$store.state.keys.pub && !lookingAround' @look-around='lookingAround=true'/> -->
           <router-view v-slot="{ Component }">
@@ -125,7 +125,7 @@
       />
     </q-page-sticky>
     <q-page-sticky
-      style="margin-top: 50px;"
+      style="margin-top: 20px;"
       position="top-right"
       :offset="fabPos"
       id="navagation-buttons"
@@ -142,7 +142,7 @@
         v-touch-pan.prevent.mouse="moveFab"
       >
         <template #tooltip>
-          <q-tooltip style="font-size: 12px;">CLICK TO COLLAPSE/EXPAND OR DRAG TO MOVE</q-tooltip>
+          <q-tooltip class="tooltip">CLICK TO COLLAPSE/EXPAND OR DRAG TO MOVE</q-tooltip>
         </template>
         <template #icon>
           <q-icon name="drag_indicator" />
@@ -159,7 +159,7 @@
           icon="keyboard_arrow_right"
           :disable="draggingFab"
         >
-          <q-tooltip style="font-size: 12px;">FORWARD</q-tooltip>
+          <q-tooltip class="tooltip">FORWARD</q-tooltip>
         </q-btn>
         <q-btn
           @click.stop="scrollToTop"
@@ -172,7 +172,7 @@
             draggingFab || $route.name === 'inbox' || $route.name === 'messages'
           "
         >
-          <q-tooltip style="font-size: 12px;">'SCROLL TO TOP</q-tooltip>
+          <q-tooltip class="tooltip">SCROLL TO TOP</q-tooltip>
         </q-btn>
         <q-btn
           @click.stop="back"
@@ -183,7 +183,7 @@
           icon="keyboard_arrow_left"
           :disable="draggingFab"
         >
-          <q-tooltip style="font-size: 12px;">BACK</q-tooltip>
+          <q-tooltip class="tooltip">BACK</q-tooltip>
         </q-btn>
         <!-- <q-btn label='get relay status' @click='getRelayStat'/>s -->
       </q-fab>
@@ -484,7 +484,7 @@ body {
     "Noto Color Emoji", sans-serif;
 }
 #layout-container {
-  padding-top: 30px;
+  padding-top: 0;
   display: flex;
   justify-content: center;
   width: 100%;

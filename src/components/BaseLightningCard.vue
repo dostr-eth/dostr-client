@@ -13,12 +13,12 @@
       >
         <div v-if="pubkey" class="flex column items-center">
           <span class="text-bold" style="font-size: 1.1rem"
-            >lightning tip for</span
+            >⚡ Lightning Tip for</span
           >
           <BaseUserCard :pubkey="pubkey" :action-buttons="false" />
         </div>
         <div v-else class="text-bold" style="font-size: 1.1rem">
-          lightning {{ type }}
+          ⚡ Lightning {{ type }}
         </div>
         <div
           v-if="bolt11"
@@ -111,7 +111,7 @@
           :class="rowOrColumn === 'row' ? 'justify-end' : 'justify-center'"
         >
           <div
-            class="break-word-wrap"
+            class="break-word-wrap code"
             style="
               font-size: 0.7rem;
               overflow-y: auto;

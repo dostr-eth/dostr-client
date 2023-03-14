@@ -4,8 +4,7 @@
     <q-form class="q-gutter-md section" @submit="setMetadata">
       <div v-if="editingMetadata" class="flex" style="margin-left: 80%; gap: 0.2rem">
         <q-btn label="save" color="positive" outline size="sm" type="submit" />
-        <q-btn label="cancel" color="negative" outline size="sm"
-          @click="cancel('metadata')" />
+        <q-btn label="cancel" color="negative" outline size="sm" @click="cancel('metadata')" />
       </div>
       <div class="text-bold flex justify-between no-wrap spotnik" style="font-size: 1.1rem;">
         {{ $t("profile") }}
@@ -93,18 +92,18 @@ v-model="newRelay" placeholder="add a relay..." autofocus class="full-width" inp
           <template #options>
             <div style="max-height: 6.75rem">
               <pre class="relay-list">
-                <li
-                  v-for='(relay, index) in optionalRelays'
-                  :key='index + "-" + relay'
-                  class='relay-item'
-                  @click.stop='relays[relay] = { read: true, write: true }'
-                >
-                  <div class='flex row justify-between no-wrap'>
-                    <span style='overflow: auto;'>{{ relay }}</span>
-                    <q-icon name='add' size='xs' color='positive' flat/>
-                  </div>
-                </li>
-              </pre>
+                  <li
+                    v-for='(relay, index) in optionalRelays'
+                    :key='index + "-" + relay'
+                    class='relay-item'
+                    @click.stop='relays[relay] = { read: true, write: true }'
+                  >
+                    <div class='flex row justify-between no-wrap'>
+                      <span style='overflow: auto;'>{{ relay }}</span>
+                      <q-icon name='add' size='xs' color='positive' flat/>
+                    </div>
+                  </li>
+                </pre>
             </div>
           </template>
         </BaseSelectMultiple>
@@ -160,16 +159,16 @@ dense expand-icon="info" expanded-icon="expand_less" class="full-width items-cen
         <q-card-section>
           <p><b class="spotnik" style="color: orange;">PRIVATE KEY</b>:</p>
           <q-btn
-icon="content_copy" size="sm" flat dense @click="copyCode(this.hexToBech32(this.$store.state.keys.priv, 'nsec'))"
-            class="copy-btn-priv">
+icon="content_copy" size="sm" flat dense
+            @click="copyCode(this.hexToBech32(this.$store.state.keys.priv, 'nsec'))" class="copy-btn-priv">
             &nbsp;Private Key
           </q-btn>
           <q-input style="margin-top: -20px;" v-model="nsecKey" class="mb-2 code-flat" readonly filled />
           <div style="margin-top: 10px; border-top: 0px solid #b6c6e39f"></div>
           <p><b class="spotnik" style="color: lightgreen;">PUBLIC KEY</b>:</p>
           <q-btn
-icon="content_copy" size="sm" flat dense @click="copyCode(this.hexToBech32(this.$store.state.keys.pub, 'npub'))"
-            class="copy-btn-pub">
+icon="content_copy" size="sm" flat dense
+            @click="copyCode(this.hexToBech32(this.$store.state.keys.pub, 'npub'))" class="copy-btn-pub">
             &nbsp;Public Key
           </q-btn>
           <q-input style="margin-top: -20px;" v-model="npubKey" readonly filled class="code-flat" />
@@ -437,7 +436,7 @@ export default {
       if (!Object.keys(this.relays).length) {
         this.$q
           .dialog({
-            title: 'No relays saved!',
+            title: 'NO RELAYS SAVED!',
             message:
               'You must select at least one replay to save.',
             ok: { color: 'accent' },
@@ -480,9 +479,9 @@ export default {
     async logout() {
       this.$q
         .dialog({
-          title: 'logout?',
+          title: 'LOG OUT?',
           message:
-            'this will not delete your local nostr database but will allow you to login as another user. continue?',
+            'This will not delete your local Nostr database and will allow you to login as another user. Continue?',
           cancel: { color: 'accent' },
           ok: { color: 'accent' },
         })
@@ -494,8 +493,8 @@ export default {
     async hardReset() {
       this.$q
         .dialog({
-          title: 'delete all data?',
-          message: 'do you really want to delete all data from this device?',
+          title: 'DELETE ALL DATA?',
+          message: 'Do you really want to delete all your data from this device?',
           cancel: { color: 'accent' },
           ok: { color: 'accent' },
         })

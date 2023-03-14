@@ -10,7 +10,8 @@
     "build:pwa": "eslint --ext .js,.vue ./ --fix && quasar build -m pwa",
     "build:spa": "eslint --ext .js,.vue ./ --fix && quasar build",
     "build:ghp": "eslint --ext .js,.vue ./ --fix && quasar build && node postbuild/replacer.js",
-    "deploy": "git add dist && git commit -m 'gh-pages' && git push origin `git subtree split --prefix dist/spa origin gh-pages`:gh-pages --force && git subtree push --prefix dist/spa origin gh-pages",
+    "force-ghp-deploy": "git add dist && git commit -m 'gh-pages' && git push origin `git subtree split --prefix dist/spa origin gh-pages`:gh-pages --force && git subtree push --prefix dist/spa origin gh-pages",
+    "ghp-deploy": "git add dist && git commit -m 'gh-pages' && git subtree push --prefix dist/spa origin gh-pages",
     "lint": "eslint --ext .js,.vue ./",
     "format": "prettier --write \"**/*.{js,vue,scss,html,md,json}\" --ignore-path .gitignore",
     "test": "echo \"No test specified\" && exit 0"

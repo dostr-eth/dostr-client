@@ -27,7 +27,7 @@ import BaseButtonLoadMore from 'components/BaseButtonLoadMore.vue'
 
 const metaData = {
   // sets document title
-  title: 'Dostr - notifications',
+  title: 'Dostr - Notifications',
 
   // meta tags
   meta: {

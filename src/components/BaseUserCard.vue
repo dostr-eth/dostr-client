@@ -24,7 +24,7 @@
     </div>
     <q-item-section
       :class="headerMode ? 'self-start' : ''"
-      :style="!headerMode ? 'white-space: nowrap; overflow: auto;' : ''"
+      :style="!headerMode ? 'white-space: nowrap; overflow: auto; padding-left: 8px;' : ''"
     >
       <BaseUserName
         :pubkey="pubkey"
@@ -98,7 +98,7 @@ export default defineComponent({
       default: true,
     },
     showFollowing: { type: Boolean, default: false },
-    wrap: { type: Boolean, default: false },
+    wrap: { type: Boolean, default: true },
   },
 
   setup() {

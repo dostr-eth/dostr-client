@@ -51,8 +51,8 @@
           :hover-effect="true"
           style="z-index: 1"
         />
-        <div class="q-pb-xs">
-          <q-item-label caption class="text-secondary" style="opacity: 0.7">
+        <div class="q-pb-xs sf-mono pubkey">
+          <q-item-label caption class="text-secondary" style="opacity: 1">
             <span @click.stop="toProfile(event.pubkey)">{{
               shorten(hexToBech32(event.pubkey, "npub"))
             }}</span>
@@ -86,7 +86,7 @@
         style="z-index: 1"
         @click.stop
       >
-        <q-item-label class="q-pr-xs" style="opacity: 0.8; font-size: 90%">{{
+        <q-item-label class="q-pr-xs sf-mono" style="opacity: 0.8; font-size: 90%">{{
           niceDate(event.created_at)
         }}</q-item-label>
         <q-fab
@@ -214,18 +214,18 @@
               />
             </q-tab>
             <q-tab name="embed" class="no-padding">
-              <q-icon name="link">
-                <q-tooltip> embed </q-tooltip>
+              <q-icon name="link" size="sm">
+                <q-tooltip class="tooltip"> EMBED </q-tooltip>
               </q-icon>
             </q-tab>
             <q-tab name="repost" class="no-padding">
-              <q-icon name="repeat">
-                <q-tooltip> repost </q-tooltip>
+              <q-icon name="repeat" size="sm">
+                <q-tooltip class="tooltip"> REPOST </q-tooltip>
               </q-icon>
             </q-tab>
             <q-tab name="quote" class="no-padding">
-              <q-icon name="format_quote">
-                <q-tooltip> quote </q-tooltip>
+              <q-icon name="format_quote" size="sm">
+                <q-tooltip class="tooltip"> QUOTE </q-tooltip>
               </q-icon>
             </q-tab>
             <q-tab name="reply" class="no-padding no-wrap flex row">
@@ -234,10 +234,11 @@
                 style="gap: 0.5rem"
               >
                 <q-icon
+                  size="sm"
                   name="chat_bubble_outline"
                   class="flip-horizontal relative-position"
                 >
-                  <q-tooltip> reply </q-tooltip>
+                  <q-tooltip class="tooltip"> REPLY </q-tooltip>
                 </q-icon>
                 <span v-if="replyCount" style="position: abosolute; right: 0">{{
                   replyCount
@@ -250,7 +251,7 @@
               @click.stop="replyMode = null"
             >
               <q-icon name="close" color="accent">
-                <q-tooltip> cancel </q-tooltip>
+                <q-tooltip class="tooltip"> CANCEL </q-tooltip>
               </q-icon>
             </q-tab>
           </q-tabs>
@@ -270,7 +271,7 @@
         >
           <q-tab-panel name="embed" class="no-padding" @click.stop>
             <span class="text-caption">
-              copy the formatted event ID below and paste it in any post to
+              Copy the formatted event ID below and paste it in any post to
               embed this event
             </span>
             <BaseButtonCopy
@@ -564,8 +565,9 @@ export default defineComponent({
   min-width: 100%;
   max-width: 100%;
   overflow: hidden;
-  font-size: 0.9rem;
+  font-size: 16px;
 }
+
 .post-highlighted {
   width: "100%";
   font-size: 1.2rem;

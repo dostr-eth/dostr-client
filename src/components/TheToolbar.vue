@@ -1,7 +1,7 @@
 <template>
   <q-toolbar>
     <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
-    <q-toolbar-title class="flex justify-center">dostr</q-toolbar-title>
+    <q-toolbar-title class="flex justify-center spotnik">dostr</q-toolbar-title>
     <q-btn dense flat round icon="groups" @click="toggleRightDrawer" />
   </q-toolbar>
 </template>

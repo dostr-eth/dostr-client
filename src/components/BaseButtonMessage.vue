@@ -11,7 +11,7 @@
     @click.stop
     dense
   >
-    <q-tooltip> encrypted message </q-tooltip>
+    <q-tooltip class="tooltip"> ENCRYPTED MESSAGE </q-tooltip>
   </q-btn>
 </template>
 

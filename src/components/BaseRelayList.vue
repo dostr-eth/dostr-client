@@ -1,17 +1,17 @@
 <template>
   <div>
     <div>
-      <span class="text-bold" style="font-size: 1.1rem">relays</span>
-      &nbsp;&lpar;
+      <span class="text-bold spotnik" style="font-size: 1.1rem">relays</span>
+      &nbsp;
       <span class="text-secondary">
         <q-icon name="visibility" size="xs" dense />
         seen
       </span>
+      &nbsp;
       <span>
         <q-icon name="visibility_off" size="xs" dense />
         not seen
       </span>
-      &rpar;
     </div>
     <div style="overflow-x: scroll">
       <pre class="relay-list">
@@ -21,7 +21,7 @@
             {{ relay }}
           </div>
         </div>
-        <div v-if="missingFrom.length"  style='overflow: hidden;'>
+        <div v-if="missingFrom.length"  style='overflow: hidden; margin-left: -100px;'>
           <div v-for="relay in missingFrom" :key="relay" class='relay-item unseen-relay-item hide-scrollbar' clickable>
             <q-btn
               icon='visibility'
