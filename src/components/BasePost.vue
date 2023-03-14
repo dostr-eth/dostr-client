@@ -565,7 +565,7 @@ export default defineComponent({
   min-width: 100%;
   max-width: 100%;
   overflow: hidden;
-  font-size: 16px;
+  font-size: 15px;
 }
 
 .post-highlighted {

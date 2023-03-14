@@ -1,5 +1,6 @@
 <template>
   <q-item
+    style="margin: -2px -2px 0 0;"
     unelevated
     class="q-pa-none post-entry-form flex column"
     ref="postEntry"
@@ -25,7 +26,7 @@
     <div
       v-if="messageMode === 'reply' && event"
       :clickable="false"
-      class="embeded-message q-px-sm q-py-xs"
+      class="embeded-message q-px-md q-py-md"
     >
       <div class="relative-position">
         <q-btn
@@ -188,11 +189,12 @@
                   />
                 </svg>
               </q-icon>
-              <q-tooltip> add emoji </q-tooltip>
+              <q-tooltip class="tooltip"> ADD EMOJI </q-tooltip>
             </q-btn>
           </template>
           <template #link>
             <q-btn
+              style="margin-left: 5px;"
               unelevated
               class="no-padding button-link"
               dense
@@ -201,20 +203,21 @@
             >
               <q-icon name="add_link" size="sm" />
               <!-- </q-icon> -->
-              <q-tooltip> add link </q-tooltip>
+              <q-tooltip class="tooltip"> ADD A LINK </q-tooltip>
             </q-btn>
           </template>
           <template #help>
             <q-btn
+              style="margin-left: 5px;"
               unelevated
               class="no-padding button-link"
               dense
               size="sm"
               @click.stop="toggleTool('help')"
             >
-              <q-icon name="help" size="xs" />
+              <q-icon name="info" size="xs" />
               <!-- </q-icon> -->
-              <q-tooltip> how to mention users and posts </q-tooltip>
+              <q-tooltip class="tooltip"> HOW TO MENTION USERS AND POSTS </q-tooltip>
             </q-btn>
           </template>
           <!-- <template #image>
@@ -279,7 +282,7 @@
           dense
           @click.stop="closeTools"
         >
-          <q-tooltip> cancel </q-tooltip>
+          <q-tooltip class="tooltip"> CANCEL </q-tooltip>
         </q-btn>
 
         <!-- <div v-if='charLeft() <= 0'>
@@ -338,7 +341,7 @@
               size="xs"
               :style="longForm ? '' : 'color: var(--q-background'"
             />
-            <q-tooltip> short form post </q-tooltip>
+            <q-tooltip class="tooltip"> short form post </q-tooltip>
           </template>
           <template #long>
             <q-icon
@@ -346,7 +349,7 @@
               size="xs"
               :style="longForm ? 'color: var(--q-background' : ''"
             />
-            <q-tooltip> long form post </q-tooltip>
+            <q-tooltip class="tooltip"> long form post </q-tooltip>
           </template>
         </q-btn-toggle>
         <q-btn
@@ -487,22 +490,22 @@ export default {
       return 0
     },
     label() {
-      if (this.messageMode === 'reply') return "what's your reply?"
-      else if (this.messageMode) return "what's your message?"
+      if (this.messageMode === 'reply') return "what's your reply?".toUpperCase()
+      else if (this.messageMode) return "what's your message?".toUpperCase()
       else if (this.replyMode) {
-        if (this.replyMode === 'reply') return "what's your reply?"
-        else if (this.replyMode === 'quote') return "what's your thought?"
+        if (this.replyMode === 'reply') return "what's your reply?".toUpperCase()
+        else if (this.replyMode === 'quote') return "what's your thought?".toUpperCase()
       }
-      return "what's happening?"
+      return "what's happening?".toUpperCase()
     },
     placeholderText() {
       if (this.text.length) return ''
-      else if (this.messageMode === 'reply') return 'reply to message'
-      else if (this.messageMode) return "what's your message?"
+      else if (this.messageMode === 'reply') return 'reply to message'.toUpperCase()
+      else if (this.messageMode) return "what's your message?".toUpperCase()
       else if (this.replyMode) {
-        if (this.replyMode === 'reply') return "what's your reply?"
+        if (this.replyMode === 'reply') return "what's your reply?".toUpperCase()
         else if (this.replyMode === 'quote')
-          return "what's your thought on this?"
+          return "what's your thought on this?".toUpperCase()
       }
       return "what's happening?"
     },
@@ -1191,10 +1194,17 @@ li {
   overflow: visible;
   display: flex;
   flex-direction: column;
+  background: linear-gradient(310deg, rgba(175,0,179,1) 0%, rgba(145,11,67,1) 5%, rgba(128,18,18,1) 9%, rgba(0,0,0,1) 29%, rgba(0,0,0,1) 100%);
+}
+@media screen and (max-width: 700px) {
+  .post-entry-form {
+    margin: 0 0 0 0;
+    background: none;
+  }
 }
 .avatar-image {
   position: absolute;
-  opacity: 0.4;
+  opacity: 0.0;
   pointer-events: none;
   top: -0.2rem;
 }

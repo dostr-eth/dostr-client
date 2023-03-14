@@ -26,26 +26,26 @@
           :class="rowOrColumn === 'row' ? 'items-start' : 'items-center'"
         >
           <div v-if="bolt11.description">
-            <strong>desc:</strong> {{ bolt11.description }}
+            <strong style="color: skyblue;">summary:</strong> {{ bolt11.description }}
           </div>
           <div>
-            <strong>amount:</strong>
+            <strong style="color: lightgreen;">amount:</strong>
             {{ bolt11.amount ? `${bolt11.amount} sats` : "none specified" }}
           </div>
           <div v-if="bolt11.created">
-            <strong>created date:</strong> {{ dateUTC(bolt11.created) }}
+            <strong style="color: skyblue;">creation date:</strong> {{ dateUTC(bolt11.created) }}
           </div>
           <div v-if="bolt11.created">
-            <strong>created time:</strong> {{ timeUTC(bolt11.created) }}
+            <strong style="color: skyblue;">creation time:</strong> {{ timeUTC(bolt11.created) }}
           </div>
           <div v-if="bolt11.expires">
-            <strong>expires date:</strong> {{ dateUTC(bolt11.expires) }}
+            <strong style="color: orange;">expiry date:</strong> {{ dateUTC(bolt11.expires) }}
           </div>
           <div v-if="bolt11.expires">
-            <strong>expires time:</strong> {{ timeUTC(bolt11.expires) }}
+            <strong style="color: orange;">expiry time:</strong> {{ timeUTC(bolt11.expires) }}
           </div>
           <div v-if="bolt11.error">
-            <strong>error:</strong> {{ bolt11.error }}
+            <strong style="color: orangered;">error:</strong> {{ bolt11.error }}
           </div>
         </div>
         <div

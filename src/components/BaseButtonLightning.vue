@@ -69,7 +69,7 @@ export default defineComponent({
     size: {
       type: String,
       required: false,
-      default: 'sm',
+      default: 'md',
     },
     // verbose: {
     //   type: Boolean,

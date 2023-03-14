@@ -2,7 +2,7 @@
   <q-page style="margin-top: 15px; margin-bottom: 100px;" id="settings-page">
     <BaseHeader class="spotnik">{{ $t("settings") }}</BaseHeader>
     <q-form class="q-gutter-md section" @submit="setMetadata">
-      <div v-if="editingMetadata" class="flex" style="margin-left: 80%; gap: 0.2rem">
+      <div v-if="editingMetadata" class="flex" style="margin-left: 78%; gap: 0.2rem">
         <q-btn label="save" color="positive" outline size="sm" type="submit" />
         <q-btn label="cancel" color="negative" outline size="sm" @click="cancel('metadata')" />
       </div>
@@ -44,7 +44,7 @@ v-if="hasLnAddr" :label="showLnAddr ? 'show lnurl' : 'show ln address'" @click="
     <ThePreferences @update-font="updateFont" />
     <q-separator color="accent" />
     <div class="section">
-      <div v-if="editingRelays" class="flex" style="margin-left: 79.5%; gap: 0.2rem">
+      <div v-if="editingRelays" class="flex" style="margin-left: 77.5%; gap: 0.2rem">
         <q-btn label="save" color="positive" outline size="sm" @click="saveRelays" />
         <q-btn label="cancel" color="negative" outline size="sm" @click="cancel('relays')" />
       </div>

@@ -9,11 +9,13 @@
         />
         <div class="bottom-border"></div>
       </div>
-      <BaseButtonLoadMore
+      <div style="margin-top: 15px;">
+        <BaseButtonLoadMore
         :loading-more="loadingMore"
         :reached-end="reachedEnd"
         @click="loadMore"
       />
+      </div>
     </div>
   </q-page>
 </template>

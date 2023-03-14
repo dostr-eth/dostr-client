@@ -21,19 +21,20 @@
             popup-content-class="spotnik"
           />
         </div>
-        <div style="margin-top: -8px; margin-left: 15%;" class="lt-md">
+        <div style="margin-top: -8px; margin-left: 5%;" class="lt-md">
           <q-select
             borderless
             v-model="feedName"
             :options="options"
             option-value="value"
             option-label="description"
+            label="feed"
+            stack-label
             emit-value
             map-input
             option-disable="inactive"
             popup-content-class="spotnik"
             popup-content-style="font-size: 10px;"
-            style="font-size: 12px;"
           />
         </div>
       </div>

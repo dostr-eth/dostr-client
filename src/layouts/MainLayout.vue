@@ -490,8 +490,9 @@ body {
   width: 100%;
   position: relative;
   flex-wrap: nowrap;
-  font-family: "Rajdhani", "Titillium Web", "Helvetica Neue", Helvetica, Arial,
+  font-family: "SF Mono", "Rajdhani", "Titillium Web", "Helvetica Neue", Helvetica, Arial,
     "Noto Color Emoji", sans-serif;
+  letter-spacing: -0.5px;
 }
 #left-drawer,
 #right-drawer {
