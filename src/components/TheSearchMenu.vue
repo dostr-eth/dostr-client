@@ -73,10 +73,10 @@
           icon="reorder"
           @click.stop="reorderFollows"
         >
-          <q-tooltip class="tooltip">{{ $t("reorderFollows") }}</q-tooltip>
+          <q-tooltip class="tooltip" anchor="center left" self="center right" :offset="[10, 10]">{{ $t("reorderFollows") }}</q-tooltip>
         </q-btn>
         <q-btn v-if="reordering" flat icon="close" @click.stop="cancelReorder">
-          <q-tooltip class="tooltip">{{ $t("cancel") }}</q-tooltip>
+          <q-tooltip class="tooltip" anchor="center left" self="center right" :offset="[10, 10]">{{ $t("cancel") }}</q-tooltip>
         </q-btn>
       </div>
     </div>

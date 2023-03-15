@@ -23,7 +23,7 @@
         :size="headerMode ? 'sm' : 'xs'"
         color="secondary"
       >
-        <q-tooltip> following </q-tooltip>
+        <q-tooltip class="tooltip" anchor="top middle" self="bottom middle" :offset="[10, 10]"> following </q-tooltip>
       </q-icon>
     </div>
     <div

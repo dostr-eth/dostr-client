@@ -15,7 +15,7 @@
       dense
       :disable="loading"
     >
-      <q-tooltip class="tooltip" v-if="!loading">
+      <q-tooltip class="tooltip" v-if="!loading" anchor="center left" self="center right" :offset="[10, 10]">
         TIP WITH BITCOIN LIGHTNING ⚡
       </q-tooltip>
       <q-dialog v-model="showLightningCard">

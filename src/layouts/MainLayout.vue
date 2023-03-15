@@ -142,7 +142,7 @@
         v-touch-pan.prevent.mouse="moveFab"
       >
         <template #tooltip>
-          <q-tooltip class="tooltip">CLICK TO COLLAPSE/EXPAND OR DRAG TO MOVE</q-tooltip>
+          <q-tooltip class="tooltip" anchor="center left" self="center right" :offset="[10, 10]">CLICK TO COLLAPSE/EXPAND OR DRAG TO MOVE</q-tooltip>
         </template>
         <template #icon>
           <q-icon name="drag_indicator" />
@@ -159,7 +159,7 @@
           icon="keyboard_arrow_right"
           :disable="draggingFab"
         >
-          <q-tooltip class="tooltip">FORWARD</q-tooltip>
+          <q-tooltip class="tooltip" anchor="center left" self="center right" :offset="[10, 10]">FORWARD</q-tooltip>
         </q-btn>
         <q-btn
           @click.stop="scrollToTop"
@@ -172,7 +172,7 @@
             draggingFab || $route.name === 'inbox' || $route.name === 'messages'
           "
         >
-          <q-tooltip class="tooltip">SCROLL TO TOP</q-tooltip>
+          <q-tooltip class="tooltip" anchor="center left" self="center right" :offset="[10, 10]">SCROLL TO TOP</q-tooltip>
         </q-btn>
         <q-btn
           @click.stop="back"
@@ -183,7 +183,7 @@
           icon="keyboard_arrow_left"
           :disable="draggingFab"
         >
-          <q-tooltip class="tooltip">BACK</q-tooltip>
+          <q-tooltip class="tooltip" anchor="center left" self="center right" :offset="[10, 10]">BACK</q-tooltip>
         </q-btn>
         <!-- <q-btn label='get relay status' @click='getRelayStat'/>s -->
       </q-fab>

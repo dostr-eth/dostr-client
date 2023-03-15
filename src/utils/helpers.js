@@ -8,12 +8,13 @@ export function shorten(str, number = 5) {
   return str ? str.slice(0, number) + '...' + str.slice(-number) : ''
 }
 
-export function shortenUrl(str, number = 12) {
+export function shortenUrl(str, number = 27) {
   if (!str) return ''
+  if (str.length < number) return str
   let prefix = str.slice(0, 6)
   if (['wss://'].includes(prefix))
-    return str.slice(prefix.length, number + prefix.length) + '...' + str.slice(-number)
-  return str ? str.slice(0, number) + '...' + str.slice(-number) : ''
+    return str.slice(prefix.length, number + prefix.length) + '...'
+  return str ? str.slice(0, number) + '...' : ''
 }
 
 export function shortenList(list, number = 3) {

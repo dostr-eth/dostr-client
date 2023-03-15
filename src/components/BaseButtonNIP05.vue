@@ -38,7 +38,7 @@
     clickable
     @click.stop="openNIP05"
   >
-    <q-tooltip class="tooltip"> NIP-05 verified </q-tooltip>
+    <q-tooltip class="tooltip" anchor="center left" self="center right" :offset="[10, 10]"> NIP-05 verified </q-tooltip>
   </q-btn>
 </template>
 

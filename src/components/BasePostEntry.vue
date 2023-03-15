@@ -335,17 +335,17 @@
             <q-icon
               name="short_text"
               size="xs"
-              :style="longForm ? '' : 'color: var(--q-background'"
+              :style="longForm ? '' : 'color: var(--q-background)'"
             />
-            <q-tooltip class="tooltip"> short form post </q-tooltip>
+            <q-tooltip class="tooltip"> SHORT FORM POST </q-tooltip>
           </template>
           <template #long>
             <q-icon
               name="format_align_left"
               size="xs"
-              :style="longForm ? 'color: var(--q-background' : ''"
+              :style="longForm ? 'color: var(--q-background)' : ''"
             />
-            <q-tooltip class="tooltip"> long form post </q-tooltip>
+            <q-tooltip class="tooltip"> LONG FORM LOST </q-tooltip>
           </template>
         </q-btn-toggle>
         <q-btn

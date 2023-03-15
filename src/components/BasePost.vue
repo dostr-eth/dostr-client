@@ -215,17 +215,17 @@
             </q-tab>
             <q-tab name="embed" class="no-padding">
               <q-icon name="link" size="sm">
-                <q-tooltip class="tooltip"> EMBED </q-tooltip>
+                <q-tooltip class="tooltip" anchor="top middle" self="bottom middle" :offset="[10, 10]"> EMBED </q-tooltip>
               </q-icon>
             </q-tab>
             <q-tab name="repost" class="no-padding">
               <q-icon name="repeat" size="sm">
-                <q-tooltip class="tooltip"> REPOST </q-tooltip>
+                <q-tooltip class="tooltip" anchor="top middle" self="bottom middle" :offset="[10, 10]"> REPOST </q-tooltip>
               </q-icon>
             </q-tab>
             <q-tab name="quote" class="no-padding">
               <q-icon name="format_quote" size="sm">
-                <q-tooltip class="tooltip"> QUOTE </q-tooltip>
+                <q-tooltip class="tooltip" anchor="top middle" self="bottom middle" :offset="[10, 10]"> QUOTE </q-tooltip>
               </q-icon>
             </q-tab>
             <q-tab name="reply" class="no-padding no-wrap flex row">
@@ -238,7 +238,7 @@
                   name="chat_bubble_outline"
                   class="flip-horizontal relative-position"
                 >
-                  <q-tooltip class="tooltip"> REPLY </q-tooltip>
+                  <q-tooltip class="tooltip" anchor="top middle" self="bottom middle" :offset="[10, 10]"> REPLY </q-tooltip>
                 </q-icon>
                 <span v-if="replyCount" style="position: abosolute; right: 0">{{
                   replyCount
@@ -251,7 +251,7 @@
               @click.stop="replyMode = null"
             >
               <q-icon name="close" color="accent">
-                <q-tooltip class="tooltip"> CANCEL </q-tooltip>
+                <q-tooltip class="tooltip" anchor="top middle" self="bottom middle" :offset="[10, 10]"> CANCEL </q-tooltip>
               </q-icon>
             </q-tab>
           </q-tabs>

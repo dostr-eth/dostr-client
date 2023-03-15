@@ -115,9 +115,12 @@ a {
 }
 
 .tooltip-url {
-  font-size: 12px;
-  background: black;
+  font-size: 13px;
+  background: #0062ff;
   font-family: 'SF Mono';
+  border: 0px solid skyblue;
+  color: white;
+  font-weight: 600;
 }
 
 .pubkey {
