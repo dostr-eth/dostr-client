@@ -4,8 +4,16 @@ export function shorten(str, number = 5) {
   if (!str) return ''
   let prefix = str.slice(0, 4)
   if (['npub', 'nsec', 'note'].includes(prefix))
-    return str.slice(0, number + prefix.length) + '…' + str.slice(-number)
-  return str ? str.slice(0, number) + '…' + str.slice(-number) : ''
+    return str.slice(0, number + prefix.length) + '...' + str.slice(-number)
+  return str ? str.slice(0, number) + '...' + str.slice(-number) : ''
+}
+
+export function shortenUrl(str, number = 12) {
+  if (!str) return ''
+  let prefix = str.slice(0, 6)
+  if (['wss://'].includes(prefix))
+    return str.slice(prefix.length, number + prefix.length) + '...' + str.slice(-number)
+  return str ? str.slice(0, number) + '...' + str.slice(-number) : ''
 }
 
 export function shortenList(list, number = 3) {

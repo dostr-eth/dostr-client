@@ -1,5 +1,5 @@
 import Tribute from 'tributejs'
-import { shorten, shortenList } from './helpers'
+import { shorten, shortenUrl, shortenList } from './helpers'
 // import { stringify } from 'JSON'
 import { date } from 'quasar'
 import { nip04, nip19 } from 'nostr-tools'
@@ -106,6 +106,7 @@ export default {
     },
 
     shorten,
+    shortenUrl,
     shortenList,
 
     // niceDate(value) {

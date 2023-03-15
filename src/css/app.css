@@ -114,6 +114,12 @@ a {
   background: black;
 }
 
+.tooltip-url {
+  font-size: 12px;
+  background: black;
+  font-family: 'SF Mono';
+}
+
 .pubkey {
   font-family: 'SF Mono';
   margin-left: -10px;

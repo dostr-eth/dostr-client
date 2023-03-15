@@ -5,7 +5,7 @@
         <q-btn label="save" color="positive" outline size="sm" @click="savePreferences" />
         <q-btn label="cancel" color="negative" outline size="sm" @click="cancel('preferences')" />
       </div>
-      <div v-if="editingPreferences" class="flex lt-md" style="margin-left: 67%; gap: 0.2rem">
+      <div v-if="editingPreferences" class="flex lt-md" style="margin-left: 65%; gap: 0.2rem">
         <q-btn label="save" color="positive" outline size="sm" @click="savePreferences" />
         <q-btn label="cancel" color="negative" outline size="sm" @click="cancel('preferences')" />
       </div>
