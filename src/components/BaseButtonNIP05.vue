@@ -90,8 +90,9 @@ export default {
         this.NIP05Data = await (await fetch(this.NIP05Link)).json()
       } catch (_) {
         Notify.create({
-          message: 'Failed to fetch NIP-05 Identifier',
+          message: '❌ Failed to fetch NIP-05 Identifier',
           color: 'negative',
+          classes: 'notify'
         })
       }
     },

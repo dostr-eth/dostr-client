@@ -114,6 +114,12 @@ a {
   background: black;
 }
 
+.notify {
+  font-size: 12px;
+  font-family: 'SF Mono';
+  letter-spacing: -0.5px;
+}
+
 .tooltip-url {
   font-size: 13px;
   background: #0062ff;

@@ -79,6 +79,7 @@ export default defineComponent({
             ? this.copyText
             : this.shorten(this.copyText, 30)
         }`,
+        classes: 'notify'
       })
     },
   },

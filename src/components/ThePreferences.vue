@@ -69,7 +69,7 @@ class="text-bold flex justify-between no-wrap spotnik"
           <div>
             OFF
             <q-toggle
-v-model="preferences.lightningTips.enabled" :disable="!editingPreferences" color="accent"
+v-model="preferences.lightningTips.enabled" :disable="!editingPreferences" checked-icon="check" unchecked-icon="clear" color="yellow" keep-color
               size="sm" />
             ON
           </div>

@@ -107,6 +107,7 @@ export default defineComponent({
         Notify.create({
           message: `Invalid Key ❌`,
           color: 'negative',
+          classes: 'notify'
         })
     },
     // handleError(e) {
