@@ -150,13 +150,13 @@ dense expand-icon="info" expanded-icon="expand_less" class="full-width items-cen
 
     <div class="flex no-wrap section gt-sm" style="gap: 0.2rem">
       <q-btn label="view your keys" color="primary" outline @click="keysDialog = true" />
-      <q-btn label="logout" color="primary" outline @click="logout" />
+      <q-btn label="log out" color="orange" outline @click="logout" />
       <q-btn label="delete local data" color="negative" outline @click="hardReset" />
       <q-btn label="dev tools" color="secondary" outline :to="{ name: 'devTools' }" />
     </div>
     <div class="flex section lt-md" style="align: center; gap: 0.2rem">
       <q-btn style="width: 100%;" label="view your keys" color="primary" outline @click="keysDialog = true" />
-      <q-btn style="width: 100%;" label="logout" color="primary" outline @click="logout" />
+      <q-btn style="width: 100%;" label="logout" color="orange" outline @click="logout" />
       <q-btn style="width: 100%;" label="delete local data" color="negative" outline @click="hardReset" />
       <q-btn style="width: 100%;" label="dev tools" color="secondary" outline :to="{ name: 'devTools' }" />
     </div>
@@ -164,23 +164,23 @@ dense expand-icon="info" expanded-icon="expand_less" class="full-width items-cen
     <q-dialog v-model="keysDialog" style="border: 0 solid black; border-radius: 5px;" class="rajdhani">
       <q-card class="px-4 py-2">
         <q-card-section>
-          <div style="display: flex; margin: 0 auto 5px; justify-content: center;">
+          <div style="display: flex; margin: 5px auto 15px; justify-content: center;">
             <div style="font-size: 24px;" class="spotnik text-bold tracking-wide leading-relaxed py-2">
               YOUR KEYS <q-icon name="vpn_key" />
             </div>
           </div>
-          <div style="display: flex; margin: 0 auto 5px; justify-content: center;">
-            <p style="font-size: 20px;" v-if="$store.state.keys.priv">
-              ⚠️&nbsp; Make sure you back up your <b style="color: orange;">Private Key</b>!
+          <div style="display: flex; margin: 10px auto 10px; justify-content: center;">
+            <p class="sf-mono-tight" style="font-size: 20px;" v-if="$store.state.keys.priv">
+              ⚠️&nbsp; Please backup your <b style="color: orange;">Private Key</b>!
             </p>
             <p style="font-size: 18px;" v-else>Your <b style="color: orange;">Private Key</b> is not here!</p>
           </div>
           <div>
-            <div class="mt-1 text-lg justify-center items-center">
-              ◦ &nbsp; Posts are published using your <b style="color: orange;">Private Key</b>.
+            <div class="mt-1 text-lg justify-center items-center sf-mono-tight">
+              ◦&nbsp;Posts are published using your <b style="color: orange;">Private Key</b>.
             </div>
-            <div class="mt-1 text-lg justify-center items-center">
-              ◦ &nbsp; Others can see your posts or follow you using only your <b style="color: lightgreen;">Public
+            <div class="mt-1 text-lg justify-center items-center sf-mono-tight">
+              ◦&nbsp;Others can see your posts or follow you using only your <b style="color: lightgreen;">Public
                 Key</b>.
             </div>
           </div>
@@ -188,17 +188,19 @@ dense expand-icon="info" expanded-icon="expand_less" class="full-width items-cen
         <q-card-section>
           <p><b class="spotnik" style="color: orange;">PRIVATE KEY</b>:</p>
           <q-btn
-icon="content_copy" size="sm" flat dense
+icon="content_copy" size="sm" flat
             @click="copyCode(this.hexToBech32(this.$store.state.keys.priv, 'nsec'))" class="copy-btn-priv">
             &nbsp;Private Key
+            <q-tooltip class="tooltip" anchor="center left" self="center right" :offset="[10, 10]">{{ $t("COPY PRIVATE KEY") }}</q-tooltip>
           </q-btn>
           <q-input style="margin-top: -20px;" v-model="nsecKey" class="mb-2 code-flat" readonly filled />
           <div style="margin-top: 10px; border-top: 0px solid #b6c6e39f"></div>
           <p><b class="spotnik" style="color: lightgreen;">PUBLIC KEY</b>:</p>
           <q-btn
-icon="content_copy" size="sm" flat dense
+icon="content_copy" size="sm" flat
             @click="copyCode(this.hexToBech32(this.$store.state.keys.pub, 'npub'))" class="copy-btn-pub">
             &nbsp;Public Key
+            <q-tooltip class="tooltip" anchor="center left" self="center right" :offset="[10, 10]">{{ $t("COPY PUBLIC KEY") }}</q-tooltip>
           </q-btn>
           <q-input style="margin-top: -20px;" v-model="npubKey" readonly filled class="code-flat" />
         </q-card-section>
@@ -471,7 +473,7 @@ export default {
           .dialog({
             title: 'NO RELAYS SAVED!',
             message:
-              'You must select at least one replay to save',
+              '⚠️ You must select at least one replay to save',
             ok: { color: 'accent' },
           })
           .onOk(() => {
@@ -514,9 +516,10 @@ export default {
         .dialog({
           title: 'LOG OUT?',
           message:
-            'This will not delete your local Nostr database and will allow you to login as another user. Continue?',
+            'ℹ️ This will not delete your local Nostr database and will allow you to login as another user. Continue?',
           cancel: { color: 'accent' },
           ok: { color: 'accent' },
+          class: 'dialog'
         })
         .onOk(async () => {
           LocalStorage.clear()
@@ -526,10 +529,11 @@ export default {
     async hardReset() {
       this.$q
         .dialog({
-          title: 'DELETE ALL DATA?',
-          message: 'Do you really want to delete all your data from this device?',
+          title: '⚠️ DELETE ALL DATA?',
+          message: 'ℹ️ Do you really want to delete all your data from this device?',
           cancel: { color: 'accent' },
-          ok: { color: 'accent' },
+          ok: { color: 'negative' },
+          class: 'dialog'
         })
         .onOk(async () => {
           LocalStorage.clear()
