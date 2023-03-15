@@ -101,8 +101,8 @@
           :item-key="pubkey + '_reordering'"
         >
           <template #header>
-            <div class="flex row justify-between items-start">
-              <span>{{ $t("dragDropReorder") }}</span>
+            <div style="margin-bottom: 15px;" class="flex row justify-between items-start">
+              <span style="font-size: 13px; color: grey; margin-left: 5px; margin-top: 4px;">{{ $t("dragDropReorder") }}</span>
               <q-btn
                 outline
                 size="sm"

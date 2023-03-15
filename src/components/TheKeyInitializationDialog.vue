@@ -1,7 +1,7 @@
 <template>
   <!-- <q-dialog persistent> -->
   <!-- <div v-if="showKeyInitialization"> -->
-  <q-card class="relative-position full-width">
+  <q-card class="relative-position full-width" style="overflow-x: hidden;">
     <div style="width: 30%; display: flex; margin: 0 auto">
       <img src="mascot_round.png" alt="mascot_round" class="image-fit" />
     </div>

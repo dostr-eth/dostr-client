@@ -1,5 +1,5 @@
 <template>
-  <q-page class="fit flex column no-wrap">
+  <q-page class="fit flex column no-wrap" style="padding-top: 100px;">
     <TheSearchMenu />
   </q-page>
 </template>
@@ -10,7 +10,7 @@ import { createMetaMixin } from 'quasar'
 
 const metaData = {
   // sets document title
-  title: 'Dostr - Search Follows',
+  title: 'Dostr - Search & Follows',
 
   // meta tags
   meta: {

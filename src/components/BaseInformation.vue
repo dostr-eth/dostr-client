@@ -2,7 +2,7 @@
   <div style='border: 1px solid #b6c6e39f; border-radius: 5px;'>
     <q-expansion-item dense dense-toggle group='info' class="no-padding full-width" header-class='items-center'>
       <template #header>
-        <span class='full-width text-bold text-uppercase'>What is Dostr?</span>
+        <span class='full-width text-bold text-uppercase text-head'>What is Dostr?</span>
       </template>
       <q-card-section class='tight-text'>
         <p>
@@ -422,14 +422,21 @@ export default defineComponent({
 
 <style lang="css" scoped>
 .q-expansion-item {
-  font-family: "Rajdhani";
+  font-family: "SF Mono";
   font-weight: 400;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .tight-text {
-  letter-spacing: 0px;
-  font-weight: 500;
+  letter-spacing: -0.5px;
+  font-weight: 400;
+}
+
+.text-head {
+  font-family: "Rajdhani";
+  letter-spacing: 0.5px;
+  font-size: 17px;
+  font-weight: 600;
 }
 
 a {

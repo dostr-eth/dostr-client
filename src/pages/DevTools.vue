@@ -1,6 +1,6 @@
 <template>
-  <q-page>
-    <BaseHeader>{{ $t("devTools") }}</BaseHeader>
+  <q-page style="margin-top: 15px;">
+    <BaseHeader style="margin-left: 30px;">{{ $t("devTools") }}</BaseHeader>
     <div class="q-py-md q-px-sm">
       <q-tabs v-model="tab" dense outline align="left" active-color="accent">
         <q-tab name="keyConverter" label="key converter" />
@@ -9,9 +9,11 @@
       </q-tabs>
       <!-- <div class="text-bold">sql query</div> -->
       <q-tab-panels v-model="tab">
-        <q-tab-panel name="keyConverter" class="flex column items-center full-width"
+        <q-tab-panel
+name="keyConverter" class="flex column items-center full-width"
           style="gap: 0.5rem; background: var(--q-background)">
-          <q-input v-model="keys.bech32" filled dense label='enter public key ("npub") or event ID ("note") here'
+          <q-input
+v-model="keys.bech32" filled dense label='enter public key ("npub") or event ID ("note") here'
             class="full-width">
             <template #append>
               <BaseButtonCopy color="secondary" :button-text="keys.bech32" />

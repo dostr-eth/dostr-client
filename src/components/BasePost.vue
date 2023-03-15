@@ -571,7 +571,7 @@ export default defineComponent({
 
 .post-highlighted {
   width: "100%";
-  font-size: 1.2rem;
+  font-size: 1.0rem;
   border: 0;
 }
 .post-highlighted .reposts {
@@ -584,11 +584,10 @@ export default defineComponent({
 .reposts .post-padding {
   border: 0;
 }
-.post-is-reply,
-.post-has-reply,
-.post-is-child-reply,
-.post-has-child-reply {
-}
+.post-is-reply
+.post-has-reply
+.post-is-child-reply
+.post-has-child-reply
 .post-is-child-reply,
 .post-has-reply {
   border-bottom: 0;

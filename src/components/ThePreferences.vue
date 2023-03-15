@@ -1,7 +1,11 @@
 <template>
   <div style="padding: 0.2rem 0.5rem 1rem" @click="closeSelects">
     <div v-if="Object.keys(preferences).length">
-      <div v-if="editingPreferences" class="flex" style="margin-left: 77.5%; gap: 0.2rem">
+      <div v-if="editingPreferences" class="flex gt-sm" style="margin-left: 77%; gap: 0.2rem">
+        <q-btn label="save" color="positive" outline size="sm" @click="savePreferences" />
+        <q-btn label="cancel" color="negative" outline size="sm" @click="cancel('preferences')" />
+      </div>
+      <div v-if="editingPreferences" class="flex lt-md" style="margin-left: 67%; gap: 0.2rem">
         <q-btn label="save" color="positive" outline size="sm" @click="savePreferences" />
         <q-btn label="cancel" color="negative" outline size="sm" @click="cancel('preferences')" />
       </div>
@@ -38,25 +42,24 @@ type="color" :id="colorName" :name="colorName" :value="preferences.color[colorNa
           </BaseSelect>
           <!-- </div> -->
         </div>
-        <div
-class="text-bold flex justify-between no-wrap spotnik"
+        <!--
+        <div class="text-bold flex justify-between no-wrap spotnik"
           style="font-size: 13px; margin-top: 10px; color: skyblue;">
           {{ $t("font") }}
         </div>
-        <BaseSelect
-v-if="preferences.font" :allow-selection="editingPreferences" :selecting="choosingFont"
+        <BaseSelect v-if="preferences.font" :allow-selection="editingPreferences" :selecting="choosingFont"
           style="width: 200px" @toggle="choosingFont = !choosingFont">
           <template #default>{{ preferences.font }}</template>
           <template #list-items>
             <li v-for="(font, index) in fonts" :key="index" class="font-item" @click.stop="updateFont(font)">
-              <link
-:href="`https://fonts.googleapis.com/css2?family=${googleFontsName(
+              <link :href="`https://fonts.googleapis.com/css2?family=${googleFontsName(
                 font
               )}`" rel="stylesheet" />
               <span :style="`font-family: '${font}';`">{{ font }}</span>
             </li>
           </template>
         </BaseSelect>
+        -->
         <div
 class="text-bold flex justify-between no-wrap spotnik"
           style="font-size: 13px; margin-top: 10px; color: skyblue;">

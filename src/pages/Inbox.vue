@@ -1,6 +1,6 @@
 <template>
-  <q-page>
-    <BaseHeader>
+  <q-page style="margin-top: 15px;">
+    <BaseHeader style="margin-left: 30px;">
       <div class="flex row no-wrap justify-start" style="gap: 1rem">
         <span class="spotnik">{{ $t("inbox") }}</span>
         <q-btn

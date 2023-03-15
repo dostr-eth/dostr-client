@@ -122,7 +122,10 @@ a {
 }
 
 .backdrop {
+  /*
   background-image: url('/background_alpha.png'), linear-gradient(319deg, rgba(5,11,6,1) 0%, rgba(0,0,0,1) 33%, rgba(0,0,0,1) 50%, rgba(20,18,18,1) 72%, rgba(41,32,32,1) 84%, rgba(82,62,62,1) 91%, rgba(153,73,73,1) 96%, rgba(172,51,184,1) 100%);
+  */
+  background-image: url('/background_alpha.png');
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;

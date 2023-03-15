@@ -13,12 +13,12 @@
     />
     <q-dialog v-if="!$store.state.keys.pub" v-model="initializeKeys" persistent>
       <TheKeyInitializationDialog
-        style="max-height: 85vh"
+        style="max-height: 85vh;"
         @look-around="setLookingAroundMode"
       />
     </q-dialog>
     <div id="layout-container" :ripple="false" class="backdrop">
-      <div id="left-drawer" class="flex justify-end">
+      <div id="left-drawer" class="flex justify-end" style="margin-right: 25px;">
         <TheUserMenu
           :item-mode="$q.screen.width < 1023"
           :show-compact-mode-items="$q.screen.width < 700"
@@ -29,7 +29,7 @@
         />
       </div>
 
-      <div id="middle-page" style="margin-left: 15px;">
+      <div id="middle-page">
         <q-page-container ref="pageContainer">
           <!-- <TheKeyInitializationDialog v-if='!$store.state.keys.pub && !lookingAround' @look-around='lookingAround=true'/> -->
           <router-view v-slot="{ Component }">

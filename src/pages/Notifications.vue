@@ -1,6 +1,6 @@
 <template>
   <q-page style="margin-top: 15px;">
-    <BaseHeader class="spotnik">{{ $t("notifications") }}</BaseHeader>
+    <BaseHeader style="margin-left: 30px;" class="spotnik">{{ $t("notifications") }}</BaseHeader>
     <div>
       <div v-for="event in notifications" :key="event.id">
         <BasePost
@@ -9,7 +9,7 @@
         />
         <div class="bottom-border"></div>
       </div>
-      <div style="margin-top: 15px;">
+      <div style="margin-top: 45px;">
         <BaseButtonLoadMore
         :loading-more="loadingMore"
         :reached-end="reachedEnd"

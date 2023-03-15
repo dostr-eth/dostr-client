@@ -1200,15 +1200,13 @@ li {
   top: -0.2rem;
 }
 
-.char-left-label {
-}
+.char-left-label
 .over-limit {
   font-size: 0.9rem;
   line-height: 0.8rem;
   color: $negative;
 }
-.toolbox {
-}
+.toolbox
 .button-image,
 .button-emoji,
 .button-link,

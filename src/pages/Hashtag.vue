@@ -1,6 +1,6 @@
 <template>
-  <q-page>
-    <BaseHeader>{{ "#" + this.$route.params.hashtagId }}</BaseHeader>
+  <q-page style="margin-top: 15px;">
+    <BaseHeader style="margin-left: 30px;">{{ "#" + this.$route.params.hashtagId }}</BaseHeader>
     <BasePostThread
       v-for="thread in threads"
       :key="thread[0].id"

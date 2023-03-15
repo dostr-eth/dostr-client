@@ -3,12 +3,12 @@
     <div>
       <span class="text-bold spotnik" style="font-size: 1.1rem">relays</span>
       &nbsp;
-      <span class="text-secondary">
+      <span class="text-secondary spotnik">
         <q-icon name="visibility" size="xs" dense />
         seen
       </span>
       &nbsp;
-      <span>
+      <span class="spotnik">
         <q-icon name="visibility_off" size="xs" dense />
         not seen
       </span>
@@ -21,7 +21,7 @@
             {{ relay }}
           </div>
         </div>
-        <div v-if="missingFrom.length"  style='overflow: hidden; margin-left: -100px;'>
+        <div v-if="missingFrom.length"  style='overflow: hidden;'>
           <div v-for="relay in missingFrom" :key="relay" class='relay-item unseen-relay-item hide-scrollbar' clickable>
             <q-btn
               icon='visibility'
@@ -79,9 +79,9 @@ export default {
 
 <style lang="scss" scoped>
 .relay-list {
-  column-width: 260px;
+  column-width: auto;
   column-gap: 0;
-  width: 780px;
+  width: auto;
   max-height: 100px;
   min-height: 1px;
   font-size: 0.8rem;

@@ -13,6 +13,7 @@
     "
     @click.stop="toProfile(pubkey)"
     style="max-width: 100%; gap: 0.5rem"
+    :style="headerMode ? 'margin-top: 100px;' : ''"
   >
     <div>
       <BaseUserAvatar

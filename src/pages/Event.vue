@@ -1,6 +1,7 @@
 <template>
-  <q-page ref="page" style="margin-top: 20px;">
-    <BaseHeader class="spotnik">{{ $t("thread") }}</BaseHeader>
+  <q-page ref="page" style="margin-top: 15px;">
+    <BaseHeader style="margin-left: 30px;" class="gt-sm spotnik">{{ $t("thread") }}</BaseHeader>
+    <BaseHeader style="margin-left: 30px; margin-bottom: 50px;" class="lt-md spotnik">{{ $t("thread") }}</BaseHeader>
     <div ref="ancestors" v-if="ancestorsCompiled.length || rootAncestor">
       <BasePostThread
         :events="ancestorsCompiled"

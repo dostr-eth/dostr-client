@@ -1,8 +1,12 @@
 <template>
   <q-page style="margin-top: 15px; margin-bottom: 100px;" id="settings-page">
-    <BaseHeader class="spotnik">{{ $t("settings") }}</BaseHeader>
-    <q-form class="q-gutter-md section" @submit="setMetadata">
-      <div v-if="editingMetadata" class="flex" style="margin-left: 78%; gap: 0.2rem">
+    <BaseHeader style="margin-left: 30px;" class="spotnik">{{ $t("settings") }}</BaseHeader>
+    <q-form class="q-gutter-md section" @submit="setMetadata" style="margin-top: 15px;">
+      <div v-if="editingMetadata" class="flex gt-sm" style="margin-left: 78%; gap: 0.2rem">
+        <q-btn label="save" color="positive" outline size="sm" type="submit" />
+        <q-btn label="cancel" color="negative" outline size="sm" @click="cancel('metadata')" />
+      </div>
+      <div v-if="editingMetadata" class="flex lt-md" style="margin-left: 68%; gap: 0.2rem">
         <q-btn label="save" color="positive" outline size="sm" type="submit" />
         <q-btn label="cancel" color="negative" outline size="sm" @click="cancel('metadata')" />
       </div>
@@ -40,11 +44,15 @@ v-if="hasLnAddr" :label="showLnAddr ? 'show lnurl' : 'show ln address'" @click="
       </div>
     </q-form>
 
-    <q-separator color="accent" />
+    <q-separator color="accent" style="margin-bottom: 5px;"/>
     <ThePreferences @update-font="updateFont" />
     <q-separator color="accent" />
     <div class="section">
-      <div v-if="editingRelays" class="flex" style="margin-left: 77.5%; gap: 0.2rem">
+      <div v-if="editingRelays" class="flex gt-sm" style="margin-left: 77%; gap: 0.2rem">
+        <q-btn label="save" color="positive" outline size="sm" @click="saveRelays" />
+        <q-btn label="cancel" color="negative" outline size="sm" @click="cancel('relays')" />
+      </div>
+      <div v-if="editingRelays" class="flex lt-md" style="margin-left: 67%; gap: 0.2rem">
         <q-btn label="save" color="positive" outline size="sm" @click="saveRelays" />
         <q-btn label="cancel" color="negative" outline size="sm" @click="cancel('relays')" />
       </div>
@@ -61,15 +69,15 @@ v-if="!editingRelays" label="edit" color="primary" outline size="sm"
       <q-list class="flex column q-pt-xs" style="gap: 0.2rem">
         <q-item
 v-for="url in Object.keys(relays)" :key="url" class="flex justify-between items-center no-wrap no-padding"
-          style="min-height: 1.2rem">
-          <div>
+          style="min-height: 1.2rem;">
+          <div style="display: inline-block; overflow-y: hidden; white-space: nowrap;">
             <q-btn
 v-if="!editingRelays && (relays[url].read || relays[url].write)" color="secondary" outline size="sm"
               label="Share" :disable="
                 hasJustSharedRelay || !$store.getters.canSignEventsAutomatically
               " @click="shareRelay(url)" />
             <q-btn v-if="editingRelays" color="negative" label="remove" outline size="sm" @click="removeRelay(url)" />
-            <span class="sf-mono" style="margin-left: 10px; font-size: 15px; letter-spacing: -0.5px;">{{ url }}</span>
+            <span class="sf-mono ellipses" style="margin-left: 10px; font-size: 13px; letter-spacing: -0.5px; white-space: nowrap;">{{ url }}</span>
           </div>
           <div class="flex no-wrap items-center" style="gap: 0.6rem">
             <q-toggle
@@ -84,7 +92,7 @@ v-if="editingRelays" v-model="relays[url].write" color="primary" size="sm" dense
       <q-form v-if="editingRelays" class="q-py-xs" @submit="addRelay">
         <div class="flex row no-wrap q-mx-sm q-mt-sm" id="new-relay-input">
           <q-input
-v-model="newRelay" placeholder="add a relay..." autofocus class="full-width" input-style="padding: 0;"
+v-model="newRelay" placeholder="add a relay..." autofocus class="full-width" input-style="padding: 2px 2px 2px 2px;"
             @keypress.enter="addRelay" dense borderless />
           <q-btn icon="add" color="positive" size="sm" flat dense @click.stop="addRelay" />
         </div>
@@ -92,18 +100,18 @@ v-model="newRelay" placeholder="add a relay..." autofocus class="full-width" inp
           <template #options>
             <div style="max-height: 6.75rem">
               <pre class="relay-list">
-                  <li
-                    v-for='(relay, index) in optionalRelays'
-                    :key='index + "-" + relay'
-                    class='relay-item'
-                    @click.stop='relays[relay] = { read: true, write: true }'
-                  >
-                    <div class='flex row justify-between no-wrap'>
-                      <span style='overflow: auto;'>{{ relay }}</span>
-                      <q-icon name='add' size='xs' color='positive' flat/>
-                    </div>
-                  </li>
-                </pre>
+                    <li
+                      v-for='(relay, index) in optionalRelays'
+                      :key='index + "-" + relay'
+                      class='relay-item'
+                      @click.stop='relays[relay] = { read: true, write: true }'
+                    >
+                      <div class='flex row justify-between no-wrap'>
+                        <span style='overflow: auto;'>{{ relay }}</span>
+                        <q-icon name='add' size='xs' color='positive' flat/>
+                      </div>
+                    </li>
+                  </pre>
             </div>
           </template>
         </BaseSelectMultiple>

@@ -1,9 +1,9 @@
 <template>
-  <q-page>
+  <q-page style="margin-top: 15px;">
     <!-- <div id='feed-scroll' style='max-height: 700px; overflow: auto;'> -->
     <!-- <div> -->
     <!-- <q-infinite-scroll @load='loadMore()' :offset='500' scroll-target='#feed-scroll'> -->
-    <BaseHeader :separator="false">
+    <BaseHeader style="margin-left: 30px;" :separator="false">
       <div class="flex row justify-start" style="gap: 1rem; font-family: 'Spotnik'">
         <div class="gt-sm">
           {{ $t("dostr") }}
@@ -29,12 +29,12 @@
             option-value="value"
             option-label="description"
             label="feed"
-            stack-label
+            bottom-slots
             emit-value
             map-input
             option-disable="inactive"
             popup-content-class="spotnik"
-            popup-content-style="font-size: 10px;"
+            popup-content-style="font-size: 12px;"
           />
         </div>
       </div>
@@ -109,7 +109,7 @@ import { createMetaMixin } from 'quasar'
 
 const metaData = {
   // sets document title
-  title: 'Dostr',
+  title: 'Dostr - Feed',
 
   // meta tags
   meta: {
@@ -165,7 +165,8 @@ export default defineComponent({
         },
         {
           value: 'bots',
-          description: 'BOTS'
+          description: 'BOTS',
+          icon: 'donut_small'
         },
         {
           value: 'ai',
@@ -417,6 +418,8 @@ export default defineComponent({
 
 .q-select {
   font-family: 'Spotnik';
+  font-size: 10px;
+  overflow: hidden;
 }
 
 .q-page::-webkit-scrollbar {
