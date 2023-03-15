@@ -78,10 +78,10 @@ v-if="!editingRelays && (relays[url].read || relays[url].write)" color="secondar
               label="Share" :disable="
                 hasJustSharedRelay || !$store.getters.canSignEventsAutomatically
               " @click="shareRelay(url)">
-              <q-tooltip anchor="top right" self="center left" :offset="[0, 40]" class="tooltip-url">{{ url }}</q-tooltip>
+              <q-tooltip anchor="top right" self="center left" :offset="[0, 40]" class="tooltip-url lt-md">{{ url }}</q-tooltip>
             </q-btn>
             <q-btn v-if="editingRelays" color="negative" label="remove" outline size="sm" @click="removeRelay(url)">
-              <q-tooltip anchor="center right" self="center left" :offset="[0, 40]" class="tooltip-url">{{ url }}</q-tooltip>
+              <q-tooltip anchor="center right" self="center left" :offset="[0, 40]" class="tooltip-url lt-md">{{ url }}</q-tooltip>
             </q-btn>
             <span
 class="sf-mono ellipses gt-sm"
@@ -148,11 +148,17 @@ dense expand-icon="info" expanded-icon="expand_less" class="full-width items-cen
     </q-expansion-item>
     <q-separator color="accent" />
 
-    <div class="flex no-wrap section" style="gap: 0.2rem">
-      <q-btn label="View your keys" color="primary" outline @click="keysDialog = true" />
+    <div class="flex no-wrap section gt-sm" style="gap: 0.2rem">
+      <q-btn label="view your keys" color="primary" outline @click="keysDialog = true" />
       <q-btn label="logout" color="primary" outline @click="logout" />
-      <q-btn label="Delete Local Data" color="negative" outline @click="hardReset" />
+      <q-btn label="delete local data" color="negative" outline @click="hardReset" />
       <q-btn label="dev tools" color="secondary" outline :to="{ name: 'devTools' }" />
+    </div>
+    <div class="flex section lt-md" style="align: center; gap: 0.2rem">
+      <q-btn style="width: 100%;" label="view your keys" color="primary" outline @click="keysDialog = true" />
+      <q-btn style="width: 100%;" label="logout" color="primary" outline @click="logout" />
+      <q-btn style="width: 100%;" label="delete local data" color="negative" outline @click="hardReset" />
+      <q-btn style="width: 100%;" label="dev tools" color="secondary" outline :to="{ name: 'devTools' }" />
     </div>
 
     <q-dialog v-model="keysDialog" style="border: 0 solid black; border-radius: 5px;" class="rajdhani">
@@ -406,10 +412,10 @@ export default {
             (await nip05.queryProfile(this.metadata.nip05)).pubkey !==
             this.$store.state.keys.pub
           )
-            throw new Error('Failed to verify NIP-05 identifier at endpoint.')
+            throw new Error('Failed to verify NIP-05 identifier at endpoint')
         } catch (error) {
           this.$q.notify({
-            message: 'Failed to verify NIP-05 identifier at endpoint.',
+            message: 'Failed to verify NIP-05 identifier at endpoint',
             color: 'warning',
           })
 
@@ -427,7 +433,7 @@ export default {
         }
         if (!utils.isLnurl(this.metadata.lud06)) {
           this.$q.notify({
-            message: 'Invalid LUD-06 identifier. LUD-06 identifiers must start with LNURL.',
+            message: 'Invalid LUD-06 identifier. LUD-06 identifiers must start with LNURL',
             color: 'warning',
           })
           return
@@ -437,7 +443,7 @@ export default {
           !utils.isLightningAddress(this.metadata.lud16)
         ) {
           this.$q.notify({
-            message: 'Invalid LUD-16 identifier. LUD-16 identifier must be a Lightning address.',
+            message: 'Invalid LUD-16 identifier. LUD-16 identifier must be a Lightning address',
             color: 'warning',
           })
           return
@@ -465,7 +471,7 @@ export default {
           .dialog({
             title: 'NO RELAYS SAVED!',
             message:
-              'You must select at least one replay to save.',
+              'You must select at least one replay to save',
             ok: { color: 'accent' },
           })
           .onOk(() => {

@@ -1,5 +1,5 @@
 <template>
-  <q-page class="flex column no-wrap">
+  <q-page class="flex column no-wrap" style="padding-top: 75px;">
     <div id="header-placeholder">
     </div>
     <div id="header" ref="header">
