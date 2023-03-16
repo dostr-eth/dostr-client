@@ -145,8 +145,9 @@ export async function sendChatMessage(store, { now, pubkey, text, tags }) {
     // return event
   } catch (error) {
     Notify.create({
-      message: `could not encrypt message: ${error}`,
+      message: `❌ Could not encrypt message: ${error}`,
       color: 'negative',
+      classes: 'notify'
     })
     return
   }
@@ -314,16 +315,18 @@ export async function publishEvent(store, { unpublishedEvent }) {
     }
     if ([0, 3].includes(event.kind)) {
       Notify.create({
-        message: `published updated ${eventTypeWordy} event`,
+        message: `🎉 Published updated ${eventTypeWordy} event`,
         color: 'positive',
+        classes: 'notify'
       })
     }
     return event
   } catch (error) {
     console.log(`could not publish ${eventTypeWordy} event: ${error}`)
     Notify.create({
-      message: `could not publish ${eventTypeWordy} event: ${error}`,
+      message: `❌ Could not publish ${eventTypeWordy} event: ${error}`,
       color: 'negative',
+      classes: 'notify'
     })
     return
   }

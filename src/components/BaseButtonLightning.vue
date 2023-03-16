@@ -16,10 +16,14 @@
       :disable="loading"
     >
 <<<<<<< HEAD
+<<<<<<< HEAD
       <q-tooltip v-if="!loading">
         tip with bitcoin lightning network
 =======
       <q-tooltip class="tooltip" v-if="!loading">
+=======
+      <q-tooltip class="tooltip" v-if="!loading" anchor="center left" self="center right" :offset="[10, 10]">
+>>>>>>> dostral
         TIP WITH BITCOIN LIGHTNING ⚡
 >>>>>>> dostral-8268ea5
       </q-tooltip>
@@ -74,7 +78,7 @@ export default defineComponent({
     size: {
       type: String,
       required: false,
-      default: 'sm',
+      default: 'md',
     },
     // verbose: {
     //   type: Boolean,
@@ -98,9 +102,10 @@ export default defineComponent({
       const invoice = await this.getInvoice(this.lnString, this.amount)
       if (invoice.startsWith('lnurl')) {
         Notify.create({
-          message: `invoice couldn't be fetched for ${this.$store.getters.displayName(
+          message: `⚠️ Invoice couldn't be fetched for ${this.$store.getters.displayName(
             this.pubkey
-          )}, please use a different pay method`,
+          )}. Please use a different pay method`,
+          classes: 'notify'
         })
         this.loading = false
         return
@@ -109,13 +114,15 @@ export default defineComponent({
       try {
         await window.webln.sendPayment(invoice)
         Notify.create({
-          message: `${
+          message: `⚡ ${
             this.amount
-          } sats sent to ${this.$store.getters.displayName(this.pubkey)}`,
+          } sats sent to ${this.$store.getters.displayName(this.pubkey)} 🎉`,
+          classes: 'notify'
         })
       } catch {
         Notify.create({
-          message: `one click tip unsuccessful`,
+          message: `❌ One-Click Tip Unsuccessful`,
+          classes: 'notify'
         })
       }
 

@@ -12,10 +12,14 @@
     dense
   >
 <<<<<<< HEAD
+<<<<<<< HEAD
     <q-tooltip> encrypted message </q-tooltip>
 =======
     <q-tooltip class="tooltip"> ENCRYPTED MESSAGE </q-tooltip>
 >>>>>>> dostral-8268ea5
+=======
+    <q-tooltip class="tooltip" anchor="center left" self="center right" :offset="[10, 10]"> ENCRYPTED MESSAGE </q-tooltip>
+>>>>>>> dostral
   </q-btn>
 </template>
 

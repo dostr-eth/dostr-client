@@ -1,6 +1,7 @@
 <template>
-  <q-page class="flex column no-wrap">
-    <div id="header-placeholder" />
+  <q-page class="flex column no-wrap" style="padding-top: 75px;">
+    <div id="header-placeholder">
+    </div>
     <div id="header" ref="header">
       <div class="flex row justify-evenly no-wrap full-width q-pt-sm q-px-sm">
         <BaseUserCard
@@ -414,6 +415,9 @@ export default {
   width: calc(100vw - 2px);
   left: 1px;
   background: var(--q-background);
+}
+#header-placeholder {
+  display: absolute;
 }
 #current-datestamp {
   border-bottom-right-radius: 0.25rem;

@@ -1,9 +1,9 @@
 <template>
-  <q-page>
+  <q-page style="margin-top: 15px;">
     <!-- <div id='feed-scroll' style='max-height: 700px; overflow: auto;'> -->
     <!-- <div> -->
     <!-- <q-infinite-scroll @load='loadMore()' :offset='500' scroll-target='#feed-scroll'> -->
-    <BaseHeader :separator="false">
+    <BaseHeader style="margin-left: 30px;" :separator="false">
       <div class="flex row justify-start" style="gap: 1rem; font-family: 'Spotnik'">
 <<<<<<< HEAD
         <div class="gt-sm">{{ $t("dostr") }}</div>
@@ -31,23 +31,33 @@
             popup-content-class="spotnik"
           />
         </div>
+<<<<<<< HEAD
         <div style="margin-top: -8px; margin-left: 15%;" class="lt-md">
 >>>>>>> dostral-8268ea5
+=======
+        <div style="margin-top: -8px; margin-left: 5%;" class="lt-md">
+>>>>>>> dostral
           <q-select
             borderless
             v-model="feedName"
             :options="options"
             option-value="value"
             option-label="description"
+            label="feed"
+            bottom-slots
             emit-value
             map-input
             option-disable="inactive"
 <<<<<<< HEAD
 =======
             popup-content-class="spotnik"
+<<<<<<< HEAD
             popup-content-style="font-size: 10px;"
             style="font-size: 12px;"
 >>>>>>> dostral-8268ea5
+=======
+            popup-content-style="font-size: 12px;"
+>>>>>>> dostral
           />
         </div>
       </div>
@@ -131,7 +141,7 @@ import { createMetaMixin } from 'quasar'
 
 const metaData = {
   // sets document title
-  title: 'Dostr',
+  title: 'Dostr - Feed',
 
   // meta tags
   meta: {
@@ -187,7 +197,8 @@ export default defineComponent({
         },
         {
           value: 'bots',
-          description: 'BOTS'
+          description: 'BOTS',
+          icon: 'donut_small'
         },
         {
           value: 'ai',
@@ -439,6 +450,8 @@ export default defineComponent({
 
 .q-select {
   font-family: 'Spotnik';
+  font-size: 10px;
+  overflow: hidden;
 }
 
 .q-page::-webkit-scrollbar {

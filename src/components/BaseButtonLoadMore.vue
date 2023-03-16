@@ -55,5 +55,6 @@ export default defineComponent({
 <style lang="css" scoped>
 .q-btn-group {
   background: var(--q-background);
+  margin-top: 20px;
 }
 </style>

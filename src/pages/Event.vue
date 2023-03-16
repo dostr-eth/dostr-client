@@ -1,11 +1,17 @@
 <template>
 <<<<<<< HEAD
+<<<<<<< HEAD
   <q-page ref="page">
     <BaseHeader>{{ $t("thread") }}</BaseHeader>
 =======
   <q-page ref="page" style="margin-top: 20px;">
     <BaseHeader class="spotnik">{{ $t("thread") }}</BaseHeader>
 >>>>>>> dostral-8268ea5
+=======
+  <q-page ref="page" style="margin-top: 15px;">
+    <BaseHeader style="margin-left: 30px;" class="gt-sm spotnik">{{ $t("thread") }}</BaseHeader>
+    <BaseHeader style="margin-left: 30px; margin-bottom: 50px;" class="lt-md spotnik">{{ $t("thread") }}</BaseHeader>
+>>>>>>> dostral
     <div ref="ancestors" v-if="ancestorsCompiled.length || rootAncestor">
       <BasePostThread
         :events="ancestorsCompiled"
@@ -50,7 +56,7 @@
     </div>
 
     <div v-if="childrenThreadsFiltered.length">
-      <div class="text-h6 text-bold q-px-sm">{{ $t("replies") }}</div>
+      <div class="text-h6 text-bold q-px-sm spotnik">{{ $t("replies") }}</div>
       <div v-for="thread in childrenThreadsFiltered" :key="thread[0].id">
         <BasePostThread :events="thread" @add-event="processChildEvent" />
       </div>
@@ -78,8 +84,8 @@ const metaData = {
 
   // meta tags
   meta: {
-    description: { name: 'description', content: 'Nostr event thread' },
-    keywords: { name: 'keywords', content: 'nostr decentralized social media' },
+    description: { name: 'description', content: 'Nostr Event Thread' },
+    keywords: { name: 'keywords', content: 'nostr dostr decentralized social media siwe siwx' },
     equiv: {
       'http-equiv': 'Content-Type',
       content: 'text/html; charset=UTF-8',

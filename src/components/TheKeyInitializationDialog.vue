@@ -1,7 +1,7 @@
 <template>
   <!-- <q-dialog persistent> -->
   <!-- <div v-if="showKeyInitialization"> -->
-  <q-card class="relative-position full-width">
+  <q-card class="relative-position full-width" style="overflow-x: hidden;">
     <div style="width: 30%; display: flex; margin: 0 auto">
       <img src="mascot_round.png" alt="mascot_round" class="image-fit" />
     </div>
@@ -265,12 +265,16 @@
             style="font-size: 20px; margin-left: -75px; margin-top: -15px"
           >
 <<<<<<< HEAD
+<<<<<<< HEAD
             <q-tooltip style="font-size: 13px">
               • The selected relays below will be queried to load your user
               profile, follows, and relay data from Nostr network.<br />
               • Please ensure the list of selected relays includes relays you
 =======
             <q-tooltip class="tooltip">
+=======
+            <q-tooltip class="tooltip" anchor="top right" self="bottom middle" :offset="[10, 10]">
+>>>>>>> dostral
               ◦ The selected relays below will be queried to load your user
               profile, follows, and relay data from Nostr network.<br />
               ◦ Please ensure the list of selected relays includes relays you

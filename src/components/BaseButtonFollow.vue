@@ -4,10 +4,14 @@
     :text-color="isFollowing ? '' : 'secondary'" dense @click.stop="toggleFollowing">
     <q-icon :name="isFollowing ? 'person_remove' : 'person_add'" :class="isFollowing ? 'flip-horizontal' : ''" />
 <<<<<<< HEAD
+<<<<<<< HEAD
     <q-tooltip>
       {{ isFollowing ? "unfollow" : "follow" }}
 =======
     <q-tooltip class="tooltip">
+=======
+    <q-tooltip class="tooltip" anchor="center left" self="center right" :offset="[10, 10]">
+>>>>>>> dostral
       {{ isFollowing ? "unfollow".toUpperCase() : "follow".toUpperCase() }}
 >>>>>>> dostral-8268ea5
     </q-tooltip>
@@ -47,11 +51,12 @@ export default defineComponent({
       if (!this.$store.state.follows.length) {
         this.$q
           .dialog({
-            title: 'set your first follow?',
-            message: `if you are a new user click proceed. if you are a user that already has a follows list, dostr has not been
-            able to find it yet. if you hit proceed it will clear your follows list and replace it with this single follow.`,
+            title: 'set your first follow?'.toUpperCase(),
+            message: `✅ If you are a new user, click PROCEED.</br>⚠️ If you are a user who already has a 'Follows' list, Dostr has not been
+            able to find it yet.</br>❌ If you hit PROCEED, it will clear your 'Follows' list and replace it with this single follow.`,
             cancel: { color: 'accent' },
             ok: { color: 'accent', label: 'proceed' },
+            html: true,
           })
           .onOk(() => {
             this.follow()
@@ -73,7 +78,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.button-follow,
+.button-follow
 .button-unfollow {
   opacity: 0.6;
   transition: all 0.3s ease-in-out;

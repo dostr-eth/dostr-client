@@ -3,8 +3,12 @@
   <q-page>
 =======
   <q-page style="margin-top: 15px;">
+<<<<<<< HEAD
 >>>>>>> dostral-8268ea5
     <BaseHeader class="spotnik">{{ $t("notifications") }}</BaseHeader>
+=======
+    <BaseHeader style="margin-left: 30px;" class="spotnik">{{ $t("notifications") }}</BaseHeader>
+>>>>>>> dostral
     <div>
       <div v-for="event in notifications" :key="event.id">
         <BasePost
@@ -13,11 +17,13 @@
         />
         <div class="bottom-border"></div>
       </div>
-      <BaseButtonLoadMore
+      <div style="margin-top: 45px;">
+        <BaseButtonLoadMore
         :loading-more="loadingMore"
         :reached-end="reachedEnd"
         @click="loadMore"
       />
+      </div>
     </div>
   </q-page>
 </template>

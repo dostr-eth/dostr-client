@@ -78,6 +78,7 @@
           @click.stop="reorderFollows"
         >
 <<<<<<< HEAD
+<<<<<<< HEAD
           <q-tooltip style="font-size: 12px;">{{ $t("reorderFollows") }}</q-tooltip>
         </q-btn>
         <q-btn v-if="reordering" flat icon="close" @click.stop="cancelReorder">
@@ -88,6 +89,12 @@
         <q-btn v-if="reordering" flat icon="close" @click.stop="cancelReorder">
           <q-tooltip class="tooltip">{{ $t("cancel") }}</q-tooltip>
 >>>>>>> dostral-8268ea5
+=======
+          <q-tooltip class="tooltip" anchor="center left" self="center right" :offset="[10, 10]">{{ $t("reorderFollows") }}</q-tooltip>
+        </q-btn>
+        <q-btn v-if="reordering" flat icon="close" @click.stop="cancelReorder">
+          <q-tooltip class="tooltip" anchor="center left" self="center right" :offset="[10, 10]">{{ $t("cancel") }}</q-tooltip>
+>>>>>>> dostral
         </q-btn>
       </div>
     </div>
@@ -116,8 +123,8 @@
           :item-key="pubkey + '_reordering'"
         >
           <template #header>
-            <div class="flex row justify-between items-start">
-              <span>{{ $t("dragDropReorder") }}</span>
+            <div style="margin-bottom: 15px;" class="flex row justify-between items-start">
+              <span style="font-size: 13px; color: grey; margin-left: 5px; margin-top: 4px;">{{ $t("dragDropReorder") }}</span>
               <q-btn
                 outline
                 size="sm"
@@ -213,8 +220,9 @@ export default defineComponent({
       if (!this.validSearch) {
         Notify.create({
           message:
-            'Invalid format! Please enter full public key or NIP05 identifier',
+            'Invalid format! Please enter full public key or NIP-05 identifier',
           color: 'negative',
+          classes: 'notify'
         })
         return
       }
@@ -275,8 +283,9 @@ export default defineComponent({
       this.searching = false
       Notify.create({
         message:
-          'No user found! Please enter full public key or NIP05 identifier and double check search string',
+          'No user found! Please enter full public key or NIP-05 Identifier and double-check search string',
         color: 'negative',
+        classes: 'notify'
       })
     },
 

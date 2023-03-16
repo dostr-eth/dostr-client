@@ -109,28 +109,51 @@ a {
 }
 
 .copy-btn-priv {
-  margin-left: 77%;
-  margin-top: -50px;
+  margin-left: 75%;
+  margin-top: -53px;
   padding: 4px 8px 4px 8px;
   border: 0px solid orange;
   border-radius: 3px;
   color: orange;
   width: 90px;
+  font-size: 12px;
 }
 
 .copy-btn-pub {
-  margin-left: 77%;
-  margin-top: -50px;
+  margin-left: 75%;
+  margin-top: -53px;
   padding: 4px 8px 4px 8px;
   border: 0px solid lightgreen;
   border-radius: 3px;
   color: lightgreen;
   width: 90px;
+  font-size: 12px;
 }
 
 .tooltip {
   font-size: 12px;
   background: black;
+}
+
+.notify {
+  font-size: 12px;
+  font-family: 'SF Mono';
+  letter-spacing: -0.5px;
+}
+
+.dialog {
+  font-size: 13px;
+  font-family: 'SF Mono';
+  letter-spacing: -0.5px;
+}
+
+.tooltip-url {
+  font-size: 13px;
+  background: #0062ff;
+  font-family: 'SF Mono';
+  border: 0px solid skyblue;
+  color: white;
+  font-weight: 600;
 }
 
 .pubkey {
@@ -141,7 +164,10 @@ a {
 }
 
 .backdrop {
+  /*
   background-image: url('/background_alpha.png'), linear-gradient(319deg, rgba(5,11,6,1) 0%, rgba(0,0,0,1) 33%, rgba(0,0,0,1) 50%, rgba(20,18,18,1) 72%, rgba(41,32,32,1) 84%, rgba(82,62,62,1) 91%, rgba(153,73,73,1) 96%, rgba(172,51,184,1) 100%);
+  */
+  background-image: url('/background_alpha.png');
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;

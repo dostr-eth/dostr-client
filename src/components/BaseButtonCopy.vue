@@ -13,10 +13,14 @@
     align="left"
   >
 <<<<<<< HEAD
+<<<<<<< HEAD
     <q-tooltip v-if="tooltipText">
 =======
     <q-tooltip class="tooltip" v-if="tooltipText">
 >>>>>>> dostral-8268ea5
+=======
+    <q-tooltip anchor="top middle" self="bottom middle" :offset="[10, 10]" class="tooltip" v-if="tooltipText">
+>>>>>>> dostral
       {{ tooltipText }}
     </q-tooltip>
   </q-btn>
@@ -78,11 +82,12 @@ export default defineComponent({
       console.log(text)
       await navigator.clipboard.writeText(text)
       Notify.create({
-        message: `copied ${
+        message: `Copied ${
           this.copyText.length < 70
             ? this.copyText
             : this.shorten(this.copyText, 30)
         }`,
+        classes: 'notify'
       })
     },
   },

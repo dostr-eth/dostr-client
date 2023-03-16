@@ -2,6 +2,7 @@
   <div style="padding: 0.2rem 0.5rem 1rem" @click="closeSelects">
     <div v-if="Object.keys(preferences).length">
 <<<<<<< HEAD
+<<<<<<< HEAD
       <div v-if="editingPreferences" class="flex justify-between" style="display: flex; gap: 0.2rem">
         <q-btn label="save" color="primary" outline size="sm" @click="savePreferences" />
         <q-btn label="cancel" color="negative" outline size="sm" @click="cancel('preferences')" />
@@ -9,6 +10,13 @@
       <div class="text-bold flex justify-between no-wrap" style="font-size: 1.1rem">
 =======
       <div v-if="editingPreferences" class="flex" style="margin-left: 79.5%; gap: 0.2rem">
+=======
+      <div v-if="editingPreferences" class="flex gt-sm" style="margin-left: 77%; gap: 0.2rem">
+        <q-btn label="save" color="positive" outline size="sm" @click="savePreferences" />
+        <q-btn label="cancel" color="negative" outline size="sm" @click="cancel('preferences')" />
+      </div>
+      <div v-if="editingPreferences" class="flex lt-md" style="margin-left: 65%; gap: 0.2rem">
+>>>>>>> dostral
         <q-btn label="save" color="positive" outline size="sm" @click="savePreferences" />
         <q-btn label="cancel" color="negative" outline size="sm" @click="cancel('preferences')" />
       </div>
@@ -50,7 +58,7 @@ type="color" :id="colorName" :name="colorName" :value="preferences.color[colorNa
 :allow-selection="editingPreferences" :selecting="choosingTheme" style="width: 200px;"
 >>>>>>> dostral-8268ea5
             @toggle="choosingTheme = !choosingTheme">
-            <template #default>{{ "choose a theme..." }}</template>
+            <template #default>{{ "Customise Theme" }}</template>
             <template #list-items>
               <li v-for="(theme, index) in Object.keys(themes)" :key="index" @click.stop="updateTheme(themes[theme])">
                 <span>{{ theme }}</span>
@@ -60,26 +68,31 @@ type="color" :id="colorName" :name="colorName" :value="preferences.color[colorNa
           <!-- </div> -->
         </div>
 <<<<<<< HEAD
+<<<<<<< HEAD
         <div class="text-bold flex justify-between no-wrap" style="font-size: 1rem">
 =======
         <div class="text-bold flex justify-between no-wrap spotnik" style="font-size: 13px; margin-top: 10px; color: skyblue;">
 >>>>>>> dostral-8268ea5
+=======
+        <!--
+        <div class="text-bold flex justify-between no-wrap spotnik"
+          style="font-size: 13px; margin-top: 10px; color: skyblue;">
+>>>>>>> dostral
           {{ $t("font") }}
         </div>
-        <BaseSelect
-v-if="preferences.font" :allow-selection="editingPreferences" :selecting="choosingFont"
+        <BaseSelect v-if="preferences.font" :allow-selection="editingPreferences" :selecting="choosingFont"
           style="width: 200px" @toggle="choosingFont = !choosingFont">
           <template #default>{{ preferences.font }}</template>
           <template #list-items>
             <li v-for="(font, index) in fonts" :key="index" class="font-item" @click.stop="updateFont(font)">
-              <link
-:href="`https://fonts.googleapis.com/css2?family=${googleFontsName(
+              <link :href="`https://fonts.googleapis.com/css2?family=${googleFontsName(
                 font
               )}`" rel="stylesheet" />
               <span :style="`font-family: '${font}';`">{{ font }}</span>
             </li>
           </template>
         </BaseSelect>
+<<<<<<< HEAD
 <<<<<<< HEAD
         <div class="text-bold flex justify-between no-wrap" style="font-size: 1rem">
           {{ $t("lightningTips") }}
@@ -105,13 +118,19 @@ v-for="(preset, index) in preferences.lightningTips.presets" :key="index"
               note: you will need a webln enabled wallet like Alby to use this
 =======
         <div class="text-bold flex justify-between no-wrap spotnik" style="font-size: 13px; margin-top: 10px; color: skyblue;">
+=======
+        -->
+        <div
+class="text-bold flex justify-between no-wrap spotnik"
+          style="font-size: 13px; margin-top: 10px; color: skyblue;">
+>>>>>>> dostral
           {{ $t("Lightning Tips ⚡") }}
         </div>
         <div class="flex column q-px-sm" style="gap: 0.3rem">
           <div>
             OFF
             <q-toggle
-v-model="preferences.lightningTips.enabled" :disable="!editingPreferences" color="accent"
+v-model="preferences.lightningTips.enabled" :disable="!editingPreferences" checked-icon="check" unchecked-icon="clear" color="yellow" keep-color
               size="sm" />
             ON
           </div>
@@ -123,7 +142,8 @@ v-for="(preset, index) in preferences.lightningTips.presets" :key="index"
               :disable="!editingPreferences" dense filled suffix="sats" input-class="sf-mono" />
           </div>
           <div v-if="hasWebLn" style="margin-top: 10px;">
-            <span style="white-space: nowrap; font-size: 12px; color: yellow;" class="spotnik"><strong>one-click tip</strong></span>
+            <span style="white-space: nowrap; font-size: 12px; color: yellow;" class="spotnik"><strong>one-click
+                tip</strong></span>
             <div style="font-size: 0.9rem">
               Note: you will need a webln enabled wallet like Alby to use this
 >>>>>>> dostral-8268ea5

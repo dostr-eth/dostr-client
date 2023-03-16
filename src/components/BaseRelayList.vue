@@ -7,16 +7,24 @@
 =======
       <span class="text-bold spotnik" style="font-size: 1.1rem">relays</span>
       &nbsp;
+<<<<<<< HEAD
 >>>>>>> dostral-8268ea5
       <span class="text-secondary">
+=======
+      <span class="text-secondary spotnik">
+>>>>>>> dostral
         <q-icon name="visibility" size="xs" dense />
         seen
       </span>
 <<<<<<< HEAD
 =======
       &nbsp;
+<<<<<<< HEAD
 >>>>>>> dostral-8268ea5
       <span>
+=======
+      <span class="spotnik">
+>>>>>>> dostral
         <q-icon name="visibility_off" size="xs" dense />
         not seen
       </span>
@@ -34,10 +42,14 @@
           </div>
         </div>
 <<<<<<< HEAD
+<<<<<<< HEAD
         <div v-if="missingFrom.length"  style='overflow: hidden;'>
 =======
         <div v-if="missingFrom.length"  style='overflow: hidden; margin-left: -100px;'>
 >>>>>>> dostral-8268ea5
+=======
+        <div v-if="missingFrom.length"  style='overflow: hidden;'>
+>>>>>>> dostral
           <div v-for="relay in missingFrom" :key="relay" class='relay-item unseen-relay-item hide-scrollbar' clickable>
             <q-btn
               icon='visibility'
@@ -95,9 +107,9 @@ export default {
 
 <style lang="scss" scoped>
 .relay-list {
-  column-width: 260px;
+  column-width: auto;
   column-gap: 0;
-  width: 780px;
+  width: auto;
   max-height: 100px;
   min-height: 1px;
   font-size: 0.8rem;

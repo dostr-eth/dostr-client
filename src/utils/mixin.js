@@ -1,5 +1,5 @@
 import Tribute from 'tributejs'
-import { shorten, shortenList } from './helpers'
+import { shorten, shortenUrl, shortenList } from './helpers'
 // import { stringify } from 'JSON'
 import { date } from 'quasar'
 import { nip04, nip19 } from 'nostr-tools'
@@ -106,6 +106,7 @@ export default {
     },
 
     shorten,
+    shortenUrl,
     shortenList,
 
     // niceDate(value) {
@@ -513,7 +514,8 @@ export default {
               .catch((err) => {
                 Notify.create({
                   message:
-                    'Error fetching invoice from LNURL. ' + err.toString(),
+                    '❌ Error fetching invoice from LNURL: ' + err.toString(),
+                    classes: 'notify'
                 })
               })
           },
@@ -522,7 +524,8 @@ export default {
         return invoice
       } catch (e) {
         Notify.create({
-          message: 'Error fetching invoice from LNURL. ' + e.toString(),
+          message: '❌ Error fetching invoice from LNURL: ' + e.toString(),
+          classes: 'notify'
         })
 
         return this.lnString

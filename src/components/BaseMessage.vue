@@ -224,8 +224,7 @@ export default {
 .message-received .message-bubbles {
   border-left: 3px solid var(--q-secondary);
 }
-.message-sent .message-bubble {
-}
+.message-sent .message-bubble
 .message-sent .first-message,
 .message-received .message-sent .first-message {
   border-top-left-radius: 0.8rem;
@@ -236,8 +235,7 @@ export default {
   border-bottom-left-radius: 0.8rem;
   border-bottom-right-radius: 0;
 }
-.message-received .message-bubble {
-}
+.message-received .message-bubble
 .message-received .first-message,
 .message-sent .message-received .first-message {
   border-top-right-radius: 0.8rem;

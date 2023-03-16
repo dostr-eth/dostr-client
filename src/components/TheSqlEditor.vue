@@ -24,7 +24,7 @@
       wrap-cells
       :rows-per-page-options="[10, 50, 100, 0]"
     />
-    <pre id="output">Results will be displayed here</pre>
+    <pre id="output" class="code">Results will be displayed here</pre>
   </div>
 </template>
 

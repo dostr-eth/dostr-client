@@ -42,9 +42,13 @@
       >
 =======
   <q-page style="margin-top: 15px; margin-bottom: 100px;" id="settings-page">
-    <BaseHeader class="spotnik">{{ $t("settings") }}</BaseHeader>
-    <q-form class="q-gutter-md section" @submit="setMetadata">
-      <div v-if="editingMetadata" class="flex" style="margin-left: 80%; gap: 0.2rem">
+    <BaseHeader style="margin-left: 30px;" class="spotnik">{{ $t("settings") }}</BaseHeader>
+    <q-form class="q-gutter-md section" @submit="setMetadata" style="margin-top: 15px;">
+      <div v-if="editingMetadata" class="flex gt-sm" style="margin-left: 77%; gap: 0.2rem">
+        <q-btn label="save" color="positive" outline size="sm" type="submit" />
+        <q-btn label="cancel" color="negative" outline size="sm" @click="cancel('metadata')" />
+      </div>
+      <div v-if="editingMetadata" class="flex lt-md" style="margin-left: 65%; gap: 0.2rem">
         <q-btn label="save" color="positive" outline size="sm" type="submit" />
         <q-btn label="cancel" color="negative" outline size="sm" @click="cancel('metadata')" />
       </div>
@@ -140,10 +144,11 @@ v-if="hasLnAddr" :label="showLnAddr ? 'show lnurl' : 'show ln address'" @click="
       </div>
     </q-form>
 
-    <q-separator color="accent" />
+    <q-separator color="accent" style="margin-bottom: 5px;" />
     <ThePreferences @update-font="updateFont" />
     <q-separator color="accent" />
     <div class="section">
+<<<<<<< HEAD
 <<<<<<< HEAD
       <div
         v-if="editingRelays"
@@ -187,6 +192,13 @@ v-if="hasLnAddr" :label="showLnAddr ? 'show lnurl' : 'show ln address'" @click="
           <div v-if="editingRelays">write</div>
 =======
       <div v-if="editingRelays" class="flex" style="margin-left: 79.5%; gap: 0.2rem">
+=======
+      <div v-if="editingRelays" class="flex gt-sm" style="margin-left: 77%; gap: 0.2rem">
+        <q-btn label="save" color="positive" outline size="sm" @click="saveRelays" />
+        <q-btn label="cancel" color="negative" outline size="sm" @click="cancel('relays')" />
+      </div>
+      <div v-if="editingRelays" class="flex lt-md" style="margin-left: 65%; gap: 0.2rem">
+>>>>>>> dostral
         <q-btn label="save" color="positive" outline size="sm" @click="saveRelays" />
         <q-btn label="cancel" color="negative" outline size="sm" @click="cancel('relays')" />
       </div>
@@ -196,9 +208,14 @@ v-if="hasLnAddr" :label="showLnAddr ? 'show lnurl' : 'show ln address'" @click="
           <q-btn
 v-if="!editingRelays" label="edit" color="primary" outline size="sm"
             :disable="!$store.getters.canSignEventsAutomatically" @click="editingRelays = true" />
+<<<<<<< HEAD
           <div v-if="editingRelays" style="margin-top: 8px;">read</div>
           <div v-if="editingRelays" style="margin-top: 8px;">write</div>
 >>>>>>> dostral-8268ea5
+=======
+          <div v-if="editingRelays" style="margin: 10px 7px 0 0; color: lightgreen;">read</div>
+          <div v-if="editingRelays" style="margin: 10px 0 0; color: orange;">write</div>
+>>>>>>> dostral
         </div>
       </div>
       <q-list class="flex column q-pt-xs" style="gap: 0.2rem">
@@ -252,30 +269,46 @@ v-if="!editingRelays" label="edit" color="primary" outline size="sm"
             />
 =======
 v-for="url in Object.keys(relays)" :key="url" class="flex justify-between items-center no-wrap no-padding"
-          style="min-height: 1.2rem">
-          <div>
+          style="min-height: 1.2rem;">
+          <div
+class="flex row justify-between no-wrap"
+            style="display: inline-block; overflow-y: hidden; white-space: nowrap;">
             <q-btn
 v-if="!editingRelays && (relays[url].read || relays[url].write)" color="secondary" outline size="sm"
               label="Share" :disable="
                 hasJustSharedRelay || !$store.getters.canSignEventsAutomatically
-              " @click="shareRelay(url)" />
-            <q-btn v-if="editingRelays" color="negative" label="remove" outline size="sm" @click="removeRelay(url)" />
-            <span class="sf-mono" style="margin-left: 10px; font-size: 15px; letter-spacing: -0.5px;">{{ url }}</span>
+              " @click="shareRelay(url)">
+              <q-tooltip anchor="top right" self="center left" :offset="[0, 40]" class="tooltip-url lt-md">{{ url }}</q-tooltip>
+            </q-btn>
+            <q-btn v-if="editingRelays" color="negative" label="remove" outline size="sm" @click="removeRelay(url)">
+              <q-tooltip anchor="center right" self="center left" :offset="[0, 40]" class="tooltip-url lt-md">{{ url }}</q-tooltip>
+            </q-btn>
+            <span
+class="sf-mono ellipses gt-sm"
+              style="margin-left: 10px; margin-right: 5px; max-width: 90%; font-size: 13px; letter-spacing: -0.5px; white-space: nowrap; overflow: auto;">{{
+                url }}</span>
+            <span
+class="sf-mono ellipses lt-md"
+              style="margin-left: 10px; margin-right: 5px; max-width: 90%; font-size: 13px; letter-spacing: -0.5px; white-space: nowrap; overflow: auto;">{{
+                shortUrl(url) }}</span>
           </div>
-          <div class="flex no-wrap items-center" style="gap: 0.6rem">
+          <div class="flex no-wrap items-center" style="gap: 0.6rem; margin-right: 5px;">
             <q-toggle
-v-if="editingRelays" v-model="relays[url].read" color="primary" size="sm" dense class="no-padding"
+v-if="editingRelays" v-model="relays[url].read" size="sm" dense checked-icon="check"
+              unchecked-icon="clear" color="green-6" keep-color class="no-padding"
               :disable="!$store.getters.canSignEventsAutomatically" />
             <q-toggle
-v-if="editingRelays" v-model="relays[url].write" color="primary" size="sm" dense class="no-padding"
+v-if="editingRelays" v-model="relays[url].write" size="sm" dense color="orange" checked-icon="check"
+              unchecked-icon="clear" keep-color class="no-padding"
               :disable="!$store.getters.canSignEventsAutomatically" />
 >>>>>>> dostral-8268ea5
           </div>
         </q-item>
       </q-list>
       <q-form v-if="editingRelays" class="q-py-xs" @submit="addRelay">
-        <div class="flex row no-wrap q-mx-sm q-mt-sm" id="new-relay-input">
+        <div class="flex row no-wrap q-mx-sm q-mt-sm" id="new-relay-input" style="margin-bottom: 10px;">
           <q-input
+<<<<<<< HEAD
 <<<<<<< HEAD
             v-model="newRelay"
             placeholder="add a relay..."
@@ -297,6 +330,10 @@ v-if="editingRelays" v-model="relays[url].write" color="primary" size="sm" dense
 =======
 v-model="newRelay" placeholder="add a relay..." autofocus class="full-width" input-style="padding: 0;"
             @keypress.enter="addRelay" dense borderless />
+=======
+v-model="newRelay" placeholder="add a relay..." autofocus class="full-width"
+            input-style="padding: 2px 2px 2px 2px;" @keypress.enter="addRelay" dense borderless />
+>>>>>>> dostral
           <q-btn icon="add" color="positive" size="sm" flat dense @click.stop="addRelay" />
 >>>>>>> dostral-8268ea5
         </div>
@@ -304,6 +341,7 @@ v-model="newRelay" placeholder="add a relay..." autofocus class="full-width" inp
           <template #options>
             <div style="max-height: 6.75rem">
               <pre class="relay-list">
+<<<<<<< HEAD
 <<<<<<< HEAD
               <li
                 v-for='(relay, index) in optionalRelays'
@@ -331,6 +369,20 @@ v-model="newRelay" placeholder="add a relay..." autofocus class="full-width" inp
                   </li>
                 </pre>
 >>>>>>> dostral-8268ea5
+=======
+                          <li
+                            v-for='(relay, index) in optionalRelays'
+                            :key='index + "-" + relay'
+                            class='relay-item'
+                            @click.stop='relays[relay] = { read: true, write: true }'
+                          >
+                            <div class='flex row justify-between no-wrap'>
+                              <span>{{ relay }}</span>
+                              <q-icon name='add' size='xs' color='positive' flat/>
+                            </div>
+                          </li>
+                        </pre>
+>>>>>>> dostral
             </div>
           </template>
         </BaseSelectMultiple>
@@ -366,6 +418,7 @@ dense expand-icon="info" expanded-icon="expand_less" class="full-width items-cen
     </q-expansion-item>
     <q-separator color="accent" />
 
+<<<<<<< HEAD
     <div class="flex no-wrap section" style="gap: 0.2rem">
 <<<<<<< HEAD
       <q-btn
@@ -418,29 +471,41 @@ dense expand-icon="info" expanded-icon="expand_less" class="full-width items-cen
       <q-btn label="View your keys" color="primary" outline @click="keysDialog = true" />
       <q-btn label="logout" color="primary" outline @click="logout" />
       <q-btn label="Delete Local Data" color="negative" outline @click="hardReset" />
+=======
+    <div class="flex no-wrap section gt-sm" style="gap: 0.2rem">
+      <q-btn label="view your keys" color="primary" outline @click="keysDialog = true" />
+      <q-btn label="log out" color="orange" outline @click="logout" />
+      <q-btn label="delete local data" color="negative" outline @click="hardReset" />
+>>>>>>> dostral
       <q-btn label="dev tools" color="secondary" outline :to="{ name: 'devTools' }" />
+    </div>
+    <div class="flex section lt-md" style="align: center; gap: 0.2rem">
+      <q-btn style="width: 100%;" label="view your keys" color="primary" outline @click="keysDialog = true" />
+      <q-btn style="width: 100%;" label="logout" color="orange" outline @click="logout" />
+      <q-btn style="width: 100%;" label="delete local data" color="negative" outline @click="hardReset" />
+      <q-btn style="width: 100%;" label="dev tools" color="secondary" outline :to="{ name: 'devTools' }" />
     </div>
 
     <q-dialog v-model="keysDialog" style="border: 0 solid black; border-radius: 5px;" class="rajdhani">
       <q-card class="px-4 py-2">
         <q-card-section>
-          <div style="display: flex; margin: 0 auto 5px; justify-content: center;">
+          <div style="display: flex; margin: 5px auto 15px; justify-content: center;">
             <div style="font-size: 24px;" class="spotnik text-bold tracking-wide leading-relaxed py-2">
               YOUR KEYS <q-icon name="vpn_key" />
             </div>
           </div>
-          <div style="display: flex; margin: 0 auto 5px; justify-content: center;">
-            <p style="font-size: 20px;" v-if="$store.state.keys.priv">
-              ⚠️&nbsp; Make sure you back up your <b style="color: orange;">Private Key</b>!
+          <div style="display: flex; margin: 10px auto 10px; justify-content: center;">
+            <p class="sf-mono-tight" style="font-size: 20px;" v-if="$store.state.keys.priv">
+              ⚠️&nbsp; Please backup your <b style="color: orange;">Private Key</b>!
             </p>
             <p style="font-size: 18px;" v-else>Your <b style="color: orange;">Private Key</b> is not here!</p>
           </div>
           <div>
-            <div class="mt-1 text-lg justify-center items-center">
-              ◦ &nbsp; Posts are published using your <b style="color: orange;">Private Key</b>.
+            <div class="mt-1 text-lg justify-center items-center sf-mono-tight">
+              ◦&nbsp;Posts are published using your <b style="color: orange;">Private Key</b>.
             </div>
-            <div class="mt-1 text-lg justify-center items-center">
-              ◦ &nbsp; Others can see your posts or follow you using only your <b style="color: lightgreen;">Public
+            <div class="mt-1 text-lg justify-center items-center sf-mono-tight">
+              ◦&nbsp;Others can see your posts or follow you using only your <b style="color: lightgreen;">Public
                 Key</b>.
             </div>
           </div>
@@ -448,17 +513,19 @@ dense expand-icon="info" expanded-icon="expand_less" class="full-width items-cen
         <q-card-section>
           <p><b class="spotnik" style="color: orange;">PRIVATE KEY</b>:</p>
           <q-btn
-icon="content_copy" size="sm" flat dense
+icon="content_copy" size="sm" flat
             @click="copyCode(this.hexToBech32(this.$store.state.keys.priv, 'nsec'))" class="copy-btn-priv">
             &nbsp;Private Key
+            <q-tooltip class="tooltip" anchor="center left" self="center right" :offset="[10, 10]">{{ $t("COPY PRIVATE KEY") }}</q-tooltip>
           </q-btn>
           <q-input style="margin-top: -20px;" v-model="nsecKey" class="mb-2 code-flat" readonly filled />
           <div style="margin-top: 10px; border-top: 0px solid #b6c6e39f"></div>
           <p><b class="spotnik" style="color: lightgreen;">PUBLIC KEY</b>:</p>
           <q-btn
-icon="content_copy" size="sm" flat dense
+icon="content_copy" size="sm" flat
             @click="copyCode(this.hexToBech32(this.$store.state.keys.pub, 'npub'))" class="copy-btn-pub">
             &nbsp;Public Key
+            <q-tooltip class="tooltip" anchor="center left" self="center right" :offset="[10, 10]">{{ $t("COPY PUBLIC KEY") }}</q-tooltip>
           </q-btn>
           <q-input style="margin-top: -20px;" v-model="npubKey" readonly filled class="code-flat" />
         </q-card-section>
@@ -489,6 +556,7 @@ import BaseInformation from 'components/BaseInformation.vue'
 import ThePreferences from 'components/ThePreferences.vue'
 import { createMetaMixin } from 'quasar'
 import { utils } from 'lnurl-pay'
+import { shortenUrl } from '../utils/helpers'
 
 const metaData = {
   // sets document title
@@ -692,6 +760,7 @@ export default {
             this.$store.state.keys.pub
           )
 <<<<<<< HEAD
+<<<<<<< HEAD
             throw new Error('Failed to verify NIP05 identifier on server.')
         } catch (error) {
           this.$q.notify({
@@ -702,6 +771,12 @@ export default {
           this.$q.notify({
             message: 'Failed to verify NIP-05 identifier at endpoint.',
 >>>>>>> dostral-8268ea5
+=======
+            throw new Error('Failed to verify NIP-05 identifier at endpoint')
+        } catch (error) {
+          this.$q.notify({
+            message: 'Failed to verify NIP-05 identifier at endpoint',
+>>>>>>> dostral
             color: 'warning',
           })
 
@@ -720,10 +795,14 @@ export default {
         if (!utils.isLnurl(this.metadata.lud06)) {
           this.$q.notify({
 <<<<<<< HEAD
+<<<<<<< HEAD
             message: 'Invalid lud06 identifier, must start with LNURL.',
 =======
             message: 'Invalid LUD-06 identifier. LUD-06 identifiers must start with LNURL.',
 >>>>>>> dostral-8268ea5
+=======
+            message: 'Invalid LUD-06 identifier. LUD-06 identifiers must start with LNURL',
+>>>>>>> dostral
             color: 'warning',
           })
           return
@@ -734,10 +813,14 @@ export default {
         ) {
           this.$q.notify({
 <<<<<<< HEAD
+<<<<<<< HEAD
             message: 'Invalid lud16 identifier, must be a lightning address.',
 =======
             message: 'Invalid LUD-16 identifier. LUD-16 identifier must be a Lightning address.',
 >>>>>>> dostral-8268ea5
+=======
+            message: 'Invalid LUD-16 identifier. LUD-16 identifier must be a Lightning address',
+>>>>>>> dostral
             color: 'warning',
           })
           return
@@ -753,6 +836,9 @@ export default {
         this.relays[this.newRelay] = { read: true, write: true }
       this.newRelay = ''
     },
+    shortUrl(url) {
+      return shortenUrl(url)
+    },
     removeRelay(url) {
       delete this.relays[url]
     },
@@ -767,8 +853,12 @@ export default {
 =======
             title: 'NO RELAYS SAVED!',
             message:
+<<<<<<< HEAD
               'You must select at least one replay to save.',
 >>>>>>> dostral-8268ea5
+=======
+              '⚠️ You must select at least one replay to save',
+>>>>>>> dostral
             ok: { color: 'accent' },
           })
           .onOk(() => {
@@ -816,10 +906,15 @@ export default {
 =======
           title: 'LOG OUT?',
           message:
+<<<<<<< HEAD
             'This will not delete your local Nostr database and will allow you to login as another user. Continue?',
 >>>>>>> dostral-8268ea5
+=======
+            'ℹ️ This will not delete your local Nostr database and will allow you to login as another user. Continue?',
+>>>>>>> dostral
           cancel: { color: 'accent' },
           ok: { color: 'accent' },
+          class: 'dialog'
         })
         .onOk(async () => {
           LocalStorage.clear()
@@ -830,14 +925,20 @@ export default {
       this.$q
         .dialog({
 <<<<<<< HEAD
+<<<<<<< HEAD
           title: 'delete all data?',
           message: 'do you really want to delete all data from this device?',
 =======
           title: 'DELETE ALL DATA?',
           message: 'Do you really want to delete all your data from this device?',
 >>>>>>> dostral-8268ea5
+=======
+          title: '⚠️ DELETE ALL DATA?',
+          message: 'ℹ️ Do you really want to delete all your data from this device?',
+>>>>>>> dostral
           cancel: { color: 'accent' },
-          ok: { color: 'accent' },
+          ok: { color: 'negative' },
+          class: 'dialog'
         })
         .onOk(async () => {
           LocalStorage.clear()

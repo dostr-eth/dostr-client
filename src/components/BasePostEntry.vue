@@ -29,7 +29,7 @@
     <div
       v-if="messageMode === 'reply' && event"
       :clickable="false"
-      class="embeded-message q-px-sm q-py-xs"
+      class="embeded-message q-px-md q-py-md"
     >
       <div class="relative-position">
         <q-btn
@@ -192,11 +192,12 @@
                   />
                 </svg>
               </q-icon>
-              <q-tooltip> add emoji </q-tooltip>
+              <q-tooltip class="tooltip"> ADD EMOJI </q-tooltip>
             </q-btn>
           </template>
           <template #link>
             <q-btn
+              style="margin-left: 5px;"
               unelevated
               class="no-padding button-link"
               dense
@@ -205,20 +206,21 @@
             >
               <q-icon name="add_link" size="sm" />
               <!-- </q-icon> -->
-              <q-tooltip> add link </q-tooltip>
+              <q-tooltip class="tooltip"> ADD A LINK </q-tooltip>
             </q-btn>
           </template>
           <template #help>
             <q-btn
+              style="margin-left: 5px;"
               unelevated
               class="no-padding button-link"
               dense
               size="sm"
               @click.stop="toggleTool('help')"
             >
-              <q-icon name="help" size="xs" />
+              <q-icon name="info" size="xs" />
               <!-- </q-icon> -->
-              <q-tooltip> how to mention users and posts </q-tooltip>
+              <q-tooltip class="tooltip"> HOW TO MENTION USERS AND POSTS </q-tooltip>
             </q-btn>
           </template>
           <!-- <template #image>
@@ -252,21 +254,18 @@
             </q-tab-panel>
             <q-tab-panel name="help" class="q-pa-xs" @click.stop>
               <div>
-                <span class="text-bold">{{ "to mention a user: " }}</span>
-                {{ "type " }}
-                <code>{{ `"@"` }}</code>
-                {{
-                  " and select user from menu that pops up or paste in npub key"
+                <span class="text-bold">{{ "ADD USER: " }}</span>
+                {{ "Type @ and select user from the dropdown menu that pops up, or paste user's public key"
                 }}
                 <!-- <code>{{`"@<pubkey-id>"`}}</code> -->
               </div>
               <!-- <br> -->
               <div>
-                <span class="text-bold">{{ "to mention a post: " }}</span>
+                <span class="text-bold">{{ "ADD POST: " }}</span>
                 <span
-                  >paste in note id (you can copy note id from embed
+                  >Paste the event ID, which can be copied from the
                   <q-icon name="link" size="sm" /> button at the bottom of every
-                  post)"</span
+                  post"</span
                 >
                 <!-- <code>{{`"&<event-id>"`}}</code> -->
               </div>
@@ -283,7 +282,7 @@
           dense
           @click.stop="closeTools"
         >
-          <q-tooltip> cancel </q-tooltip>
+          <q-tooltip class="tooltip"> CANCEL </q-tooltip>
         </q-btn>
 
         <!-- <div v-if='charLeft() <= 0'>
@@ -340,17 +339,17 @@
             <q-icon
               name="short_text"
               size="xs"
-              :style="longForm ? '' : 'color: var(--q-background'"
+              :style="longForm ? '' : 'color: var(--q-background)'"
             />
-            <q-tooltip> short form post </q-tooltip>
+            <q-tooltip class="tooltip"> SHORT FORM POST </q-tooltip>
           </template>
           <template #long>
             <q-icon
               name="format_align_left"
               size="xs"
-              :style="longForm ? 'color: var(--q-background' : ''"
+              :style="longForm ? 'color: var(--q-background)' : ''"
             />
-            <q-tooltip> long form post </q-tooltip>
+            <q-tooltip class="tooltip"> LONG FORM LOST </q-tooltip>
           </template>
         </q-btn-toggle>
         <q-btn
@@ -1195,23 +1194,23 @@ li {
   overflow: visible;
   display: flex;
   flex-direction: column;
+  background: none;
 }
+
 .avatar-image {
   position: absolute;
-  opacity: 0.4;
+  opacity: 0.0;
   pointer-events: none;
   top: -0.2rem;
 }
 
-.char-left-label {
-}
+.char-left-label
 .over-limit {
   font-size: 0.9rem;
   line-height: 0.8rem;
   color: $negative;
 }
-.toolbox {
-}
+.toolbox
 .button-image,
 .button-emoji,
 .button-link,

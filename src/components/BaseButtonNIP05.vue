@@ -51,10 +51,14 @@
     @click.stop="openNIP05"
   >
 <<<<<<< HEAD
+<<<<<<< HEAD
     <q-tooltip> NIP05 verified </q-tooltip>
 =======
     <q-tooltip class="tooltip"> NIP-05 verified </q-tooltip>
 >>>>>>> dostral-8268ea5
+=======
+    <q-tooltip class="tooltip" anchor="center left" self="center right" :offset="[10, 10]"> NIP-05 verified </q-tooltip>
+>>>>>>> dostral
   </q-btn>
 </template>
 
@@ -107,11 +111,16 @@ export default {
       } catch (_) {
         Notify.create({
 <<<<<<< HEAD
+<<<<<<< HEAD
           message: 'failed to fetch NIP05 identifier',
 =======
           message: 'Failed to fetch NIP-05 Identifier',
 >>>>>>> dostral-8268ea5
+=======
+          message: '❌ Failed to fetch NIP-05 Identifier',
+>>>>>>> dostral
           color: 'negative',
+          classes: 'notify'
         })
       }
     },

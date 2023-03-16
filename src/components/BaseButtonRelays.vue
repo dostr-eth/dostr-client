@@ -12,10 +12,14 @@
     align="left"
   >
 <<<<<<< HEAD
+<<<<<<< HEAD
     <q-tooltip v-if="!verbose"> seen on relays </q-tooltip>
 =======
     <q-tooltip v-if="!verbose" class="tooltip"> SEEN ON RELAYS </q-tooltip>
 >>>>>>> dostral-8268ea5
+=======
+    <q-tooltip v-if="!verbose" class="tooltip" anchor="center left" self="center right" :offset="[10, 10]"> SEEN ON RELAYS </q-tooltip>
+>>>>>>> dostral
     <q-dialog v-model="relayListDialog" @before-hide="$emit('hide')">
       <q-card>
         <div class="flex row justify-end">

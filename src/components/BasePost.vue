@@ -77,7 +77,7 @@
               tagged && $route.name != 'event' && !(isReply || isChildReply)
             "
             class="q-pl-sm"
-            style="font-size: 0.8rem"
+            style="font-size: 0.8rem; opacity: 0.7;"
           >
             <span>in reply to&nbsp;</span>
             <a @click.stop="toEvent(tagged)">
@@ -238,18 +238,22 @@
                 <q-tooltip> quote </q-tooltip>
 =======
               <q-icon name="link" size="sm">
-                <q-tooltip class="tooltip"> EMBED </q-tooltip>
+                <q-tooltip class="tooltip" anchor="top middle" self="bottom middle" :offset="[10, 10]"> EMBED </q-tooltip>
               </q-icon>
             </q-tab>
             <q-tab name="repost" class="no-padding">
               <q-icon name="repeat" size="sm">
-                <q-tooltip class="tooltip"> REPOST </q-tooltip>
+                <q-tooltip class="tooltip" anchor="top middle" self="bottom middle" :offset="[10, 10]"> REPOST </q-tooltip>
               </q-icon>
             </q-tab>
             <q-tab name="quote" class="no-padding">
               <q-icon name="format_quote" size="sm">
+<<<<<<< HEAD
                 <q-tooltip class="tooltip"> QUOTE </q-tooltip>
 >>>>>>> dostral-8268ea5
+=======
+                <q-tooltip class="tooltip" anchor="top middle" self="bottom middle" :offset="[10, 10]"> QUOTE </q-tooltip>
+>>>>>>> dostral
               </q-icon>
             </q-tab>
             <q-tab name="reply" class="no-padding no-wrap flex row">
@@ -268,8 +272,12 @@
                   name="chat_bubble_outline"
                   class="flip-horizontal relative-position"
                 >
+<<<<<<< HEAD
                   <q-tooltip class="tooltip"> REPLY </q-tooltip>
 >>>>>>> dostral-8268ea5
+=======
+                  <q-tooltip class="tooltip" anchor="top middle" self="bottom middle" :offset="[10, 10]"> REPLY </q-tooltip>
+>>>>>>> dostral
                 </q-icon>
                 <span v-if="replyCount" style="position: abosolute; right: 0">{{
                   replyCount
@@ -283,10 +291,14 @@
             >
               <q-icon name="close" color="accent">
 <<<<<<< HEAD
+<<<<<<< HEAD
                 <q-tooltip> cancel </q-tooltip>
 =======
                 <q-tooltip class="tooltip"> CANCEL </q-tooltip>
 >>>>>>> dostral-8268ea5
+=======
+                <q-tooltip class="tooltip" anchor="top middle" self="bottom middle" :offset="[10, 10]"> CANCEL </q-tooltip>
+>>>>>>> dostral
               </q-icon>
             </q-tab>
           </q-tabs>
@@ -305,22 +317,28 @@
           @transition="calcConnectorValues(10)"
         >
           <q-tab-panel name="embed" class="no-padding" @click.stop>
+<<<<<<< HEAD
             <span class="text-caption">
 <<<<<<< HEAD
               copy the formatted event ID below and paste it in any post to
 =======
               Copy the formatted event ID below and paste it in any post to
 >>>>>>> dostral-8268ea5
+=======
+            <q-icon name="info"></q-icon>
+            <span class="text-caption" style="letter-spacing: -0.5px;">
+              Copy event ID below and paste it in any post to
+>>>>>>> dostral
               embed this event
             </span>
             <BaseButtonCopy
               :button-text="hexToBech32(event.id, 'note')"
               color="primary"
               flat
-              tooltip-text="copy event ID"
+              tooltip-text="COPY EVENT ID"
             />
             <br />
-            <span class="text-primary" style="word-break: break-all">
+            <span class="code" style="word-break: break-all">
               {{ hexToBech32(event.id, "note") }}
             </span>
           </q-tab-panel>
@@ -605,16 +623,20 @@ export default defineComponent({
   max-width: 100%;
   overflow: hidden;
 <<<<<<< HEAD
+<<<<<<< HEAD
   font-size: 0.9rem;
 }
 =======
   font-size: 16px;
+=======
+  font-size: 15px;
+>>>>>>> dostral
 }
 
 >>>>>>> dostral-8268ea5
 .post-highlighted {
   width: "100%";
-  font-size: 1.2rem;
+  font-size: 1.0rem;
   border: 0;
 }
 .post-highlighted .reposts {
@@ -627,11 +649,10 @@ export default defineComponent({
 .reposts .post-padding {
   border: 0;
 }
-.post-is-reply,
-.post-has-reply,
-.post-is-child-reply,
-.post-has-child-reply {
-}
+.post-is-reply
+.post-has-reply
+.post-is-child-reply
+.post-has-child-reply
 .post-is-child-reply,
 .post-has-reply {
   border-bottom: 0;

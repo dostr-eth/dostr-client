@@ -25,7 +25,7 @@
               <div>{{ selectedWallet.name }}</div>
             </div>
             <div v-else style="font-size: 1.1rem; width: 100%">
-              select a wallet
+              Select a ⚡ Wallet
             </div>
           </template>
           <template #list-items>
@@ -96,12 +96,12 @@
       class="flex column justify-center items-center"
       style="font-size: 0.9rem; width: 100%"
     >
-      <span v-if="!selectedWallet">please select a wallet</span>
+      <span v-if="!selectedWallet">Please select a Wallet</span>
       <span v-else-if="!isInvoice && selectedWallet && tipAmount === 0"
-        >please enter an amount greater than 0</span
+        >Please enter an amount greater than 0</span
       >
       <span v-else-if="!isInvoice && selectedWallet && !tipAmount"
-        >please enter an amount</span
+        >Please enter an amount</span
       >
       <q-btn
         v-else
@@ -285,9 +285,9 @@ export default defineComponent({
 
       if (invoice.startsWith('lnurl')) {
         Notify.create({
-          message: `invoice couldn't be fetched for ${this.$store.getters.displayName(
+          message: `⚠️ Invoice couldn't be fetched for ${this.$store.getters.displayName(
             this.pubkey
-          )}, please an different pay method`,
+          )}. Please try a different method`,
         })
         this.loadingInvoice = false
         return
@@ -301,13 +301,13 @@ export default defineComponent({
         try {
           await window.webln.sendPayment(invoice)
           Notify.create({
-            message: `${
+            message: `⚡ Successfully sent ${
               this.bolt11 ? this.bolt11.amount : this.tipAmount
-            } sats sent`,
+            } sats 💸🥳🎉`,
           })
         } catch {
           Notify.create({
-            message: `payment unsuccessful`,
+            message: `❌ Payment Unsuccessful`,
           })
         }
       } else {

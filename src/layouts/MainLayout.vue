@@ -13,7 +13,7 @@
     />
     <q-dialog v-if="!$store.state.keys.pub" v-model="initializeKeys" persistent>
       <TheKeyInitializationDialog
-        style="max-height: 85vh"
+        style="max-height: 85vh;"
         @look-around="setLookingAroundMode"
       />
     </q-dialog>
@@ -21,8 +21,12 @@
     <div id="layout-container" :ripple="false">
 =======
     <div id="layout-container" :ripple="false" class="backdrop">
+<<<<<<< HEAD
 >>>>>>> dostral-8268ea5
       <div id="left-drawer" class="flex justify-end">
+=======
+      <div id="left-drawer" class="flex justify-end" style="margin-right: 25px;">
+>>>>>>> dostral
         <TheUserMenu
           :item-mode="$q.screen.width < 1023"
           :show-compact-mode-items="$q.screen.width < 700"
@@ -34,10 +38,14 @@
       </div>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
       <div id="middle-page">
 =======
       <div id="middle-page" style="margin-left: 15px;">
 >>>>>>> dostral-8268ea5
+=======
+      <div id="middle-page">
+>>>>>>> dostral
         <q-page-container ref="pageContainer">
           <!-- <TheKeyInitializationDialog v-if='!$store.state.keys.pub && !lookingAround' @look-around='lookingAround=true'/> -->
           <router-view v-slot="{ Component }">
@@ -155,10 +163,14 @@
       >
         <template #tooltip>
 <<<<<<< HEAD
+<<<<<<< HEAD
           <q-tooltip style="font-size: 12px;">Click to Collapse/Expand or Drag to Move</q-tooltip>
 =======
           <q-tooltip class="tooltip">CLICK TO COLLAPSE/EXPAND OR DRAG TO MOVE</q-tooltip>
 >>>>>>> dostral-8268ea5
+=======
+          <q-tooltip class="tooltip" anchor="center left" self="center right" :offset="[10, 10]">CLICK TO COLLAPSE/EXPAND OR DRAG TO MOVE</q-tooltip>
+>>>>>>> dostral
         </template>
         <template #icon>
           <q-icon name="drag_indicator" />
@@ -176,10 +188,14 @@
           :disable="draggingFab"
         >
 <<<<<<< HEAD
+<<<<<<< HEAD
           <q-tooltip style="font-size: 12px;">Forward</q-tooltip>
 =======
           <q-tooltip class="tooltip">FORWARD</q-tooltip>
 >>>>>>> dostral-8268ea5
+=======
+          <q-tooltip class="tooltip" anchor="center left" self="center right" :offset="[10, 10]">FORWARD</q-tooltip>
+>>>>>>> dostral
         </q-btn>
         <q-btn
           @click.stop="scrollToTop"
@@ -193,10 +209,14 @@
           "
         >
 <<<<<<< HEAD
+<<<<<<< HEAD
           <q-tooltip style="font-size: 12px;">Scroll to top</q-tooltip>
 =======
           <q-tooltip class="tooltip">SCROLL TO TOP</q-tooltip>
 >>>>>>> dostral-8268ea5
+=======
+          <q-tooltip class="tooltip" anchor="center left" self="center right" :offset="[10, 10]">SCROLL TO TOP</q-tooltip>
+>>>>>>> dostral
         </q-btn>
         <q-btn
           @click.stop="back"
@@ -208,10 +228,14 @@
           :disable="draggingFab"
         >
 <<<<<<< HEAD
+<<<<<<< HEAD
           <q-tooltip style="font-size: 12px;">Back</q-tooltip>
 =======
           <q-tooltip class="tooltip">BACK</q-tooltip>
 >>>>>>> dostral-8268ea5
+=======
+          <q-tooltip class="tooltip" anchor="center left" self="center right" :offset="[10, 10]">BACK</q-tooltip>
+>>>>>>> dostral
         </q-btn>
         <!-- <q-btn label='get relay status' @click='getRelayStat'/>s -->
       </q-fab>
@@ -527,6 +551,7 @@ body {
   position: relative;
   flex-wrap: nowrap;
 <<<<<<< HEAD
+<<<<<<< HEAD
   font-family: "Titillium Web", "Helvetica Neue", Helvetica, Arial,
     "Noto Color Emoji", sans-serif;
   background-image: url('/background_alpha.png');
@@ -535,6 +560,11 @@ body {
   font-family: "Rajdhani", "Titillium Web", "Helvetica Neue", Helvetica, Arial,
     "Noto Color Emoji", sans-serif;
 >>>>>>> dostral-8268ea5
+=======
+  font-family: "SF Mono", "Rajdhani", "Titillium Web", "Helvetica Neue", Helvetica, Arial,
+    "Noto Color Emoji", sans-serif;
+  letter-spacing: -0.5px;
+>>>>>>> dostral
 }
 #left-drawer,
 #right-drawer {
