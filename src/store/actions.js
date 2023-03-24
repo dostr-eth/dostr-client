@@ -126,7 +126,7 @@ export async function sendChatMessage(store, { now, pubkey, text, tags }) {
     ) {
       ciphertext = await window.nostr.nip04.encrypt(pubkey, text)
     } else {
-      throw new Error('no private key available to encrypt!')
+      throw new Error('No private key available to encrypt!')
     }
 
     let unpublishedEvent = {
@@ -145,7 +145,7 @@ export async function sendChatMessage(store, { now, pubkey, text, tags }) {
     // return event
   } catch (error) {
     Notify.create({
-      message: `❌ Could not encrypt message: ${error}`,
+      message: `❌ Could not encrypted message: ${error}`,
       color: 'negative',
       classes: 'notify'
     })

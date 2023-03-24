@@ -92,26 +92,50 @@ a {
 .copy-btn-priv {
   margin-left: 75%;
   margin-top: -53px;
+  margin-right: 10px;
   padding: 4px 8px 4px 8px;
   border: 0px solid orange;
   border-radius: 3px;
   color: orange;
-  width: 90px;
-  font-size: 12px;
+  width: 25%;
+  font-size: 14px;
 }
 
 .copy-btn-pub {
   margin-left: 75%;
   margin-top: -53px;
+  margin-right: 10px;
   padding: 4px 8px 4px 8px;
   border: 0px solid lightgreen;
   border-radius: 3px;
   color: lightgreen;
-  width: 90px;
-  font-size: 12px;
+  width: 25%;
+  font-size: 14px;
+}
+
+.input-siwe {
+  width: 70%
+}
+
+@media screen and (max-width: 600px) {
+  .copy-btn-priv {
+    margin-left: 65%;
+    width: 30%;
+    font-size: 12px;
+  }
+  .copy-btn-pub {
+    margin-left: 65%;
+    width: 30%;
+    font-size: 12px;
+  }
+  .input-siwe {
+    width: 100%
+  }
 }
 
 .tooltip {
+  font-family: 'SF Mono';
+  letter-spacing: -0.5px;
   font-size: 12px;
   background: black;
 }

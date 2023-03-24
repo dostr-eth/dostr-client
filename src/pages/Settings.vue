@@ -188,7 +188,7 @@ dense expand-icon="info" expanded-icon="expand_less" class="full-width items-cen
         <q-card-section>
           <p><b class="spotnik" style="color: orange;">PRIVATE KEY</b>:</p>
           <q-btn
-icon="content_copy" size="sm" flat
+icon="content_copy" size="md" flat
             @click="copyCode(this.hexToBech32(this.$store.state.keys.priv, 'nsec'))" class="copy-btn-priv">
             &nbsp;Private Key
             <q-tooltip class="tooltip" anchor="center left" self="center right" :offset="[10, 10]">{{ $t("COPY PRIVATE KEY") }}</q-tooltip>
@@ -197,7 +197,7 @@ icon="content_copy" size="sm" flat
           <div style="margin-top: 10px; border-top: 0px solid #b6c6e39f"></div>
           <p><b class="spotnik" style="color: lightgreen;">PUBLIC KEY</b>:</p>
           <q-btn
-icon="content_copy" size="sm" flat
+icon="content_copy" size="md" flat
             @click="copyCode(this.hexToBech32(this.$store.state.keys.pub, 'npub'))" class="copy-btn-pub">
             &nbsp;Public Key
             <q-tooltip class="tooltip" anchor="center left" self="center right" :offset="[10, 10]">{{ $t("COPY PUBLIC KEY") }}</q-tooltip>

@@ -37,7 +37,7 @@ v-model="keys.bech32" filled dense label='enter public key ("npub") or event ID 
         <q-tab-panel name="nip05Tester">
           <q-input v-model="nip05Id" filled dense label="enter NIP-05 identifier here" class="full-width" />
           <q-btn spread label="test" color="primary" outline class="full-width q-mt-md" @click="fetchNip05" />
-          <pre id="nip05-response"></pre>
+          <pre class="sf-mono" id="nip05-response"></pre>
         </q-tab-panel>
       </q-tab-panels>
     </div>

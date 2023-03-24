@@ -67,7 +67,8 @@ module.exports = {
     // custom
     "vue/no-v-html": 0,
     "vue/multi-word-component-names": 0,
-
+    'vue/singleline-html-element-content-newline': 'off',
+    'vue/multiline-html-element-content-newline': 'off',
     "accessor-pairs": 2,
     "arrow-spacing": [2, { before: true, after: true }],
     "block-spacing": [2, "always"],
@@ -182,5 +183,6 @@ module.exports = {
     "wrap-iife": [2, "any"],
     "yield-star-spacing": [2, "both"],
     yoda: [0],
+    "vue/first-attribute-linebreak": ["error", {"singleline": "ignore","multiline": "ignore" }]	
   },
 };
