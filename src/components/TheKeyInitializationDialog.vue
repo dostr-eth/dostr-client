@@ -86,9 +86,12 @@
       </div>
     </div>
     <div v-if="isConnected" style="display: block;">
-      <div style="display: block; margin: 0 auto; justify-content: center">
+      <div v-if="isSigned" style="display: flex; margin: 15px auto; justify-content: center">
+        <p class="spotnik">GENERATED <span style="color: orange; font-weight: 700;">PRIVATE KEYS</span></p>
+      </div>
+      <div style="display: block; margin: -30px auto; justify-content: center">
         <q-input v-model="key" ref="keyInput" bottom-slots outlined :disabled="!isSigned" v-if="isSigned"
-          label="generated from ethereum signature" style="width: inherit" dense>
+          label="auto-generated from ethereum signature" style="width: inherit" dense>
         </q-input>
       </div>
       <div style="display: flex; margin: 20px; justify-content: center" class="q-mb-md" v-if="!isSigned">

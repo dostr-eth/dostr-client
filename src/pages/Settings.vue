@@ -12,8 +12,7 @@
       </div>
       <div class="text-bold flex justify-between no-wrap spotnik" style="font-size: 1.1rem;">
         {{ $t("profile") }}
-        <q-btn
-v-if="!editingMetadata" label="edit" color="primary" outline size="sm"
+        <q-btn v-if="!editingMetadata" label="edit" color="primary" outline size="sm"
           :disable="!$store.getters.canSignEventsAutomatically" @click="editingMetadata = true" />
       </div>
       <q-input v-model="metadata.name" dense filled type="text" label="Name" :disable="!editingMetadata">
@@ -21,25 +20,20 @@ v-if="!editingMetadata" label="edit" color="primary" outline size="sm"
           <q-icon name="alternate_email" />
         </template>
       </q-input>
-      <q-input
-v-model="metadata.about" :disable="!editingMetadata" filled autogrow dense type="text"
+      <q-input v-model="metadata.about" :disable="!editingMetadata" filled autogrow dense type="text"
         label="About [max. 150 characters]" maxlength="300" />
-      <q-input
-v-model.trim="metadata.picture" :disable="!editingMetadata" filled dense type="text" label="Picture URL"
+      <q-input v-model.trim="metadata.picture" :disable="!editingMetadata" filled dense type="text" label="Picture URL"
         maxlength="150">
         <template #after>
           <BaseUserAvatar v-if="metadata.picture" :pubkey="$store.state.keys.pub" rounded />
         </template>
       </q-input>
-      <q-input
-v-model.trim="metadata.nip05" :disable="!editingMetadata" filled dense type="text"
+      <q-input v-model.trim="metadata.nip05" :disable="!editingMetadata" filled dense type="text"
         label="NIP-05 Identifier" maxlength="100" />
       <div class="flex row no-wrap" style="gap: 1rem">
-        <q-input
-v-model.trim="metadata.lud06" :disable="!editingMetadata" filled dense type="text"
+        <q-input v-model.trim="metadata.lud06" :disable="!editingMetadata" filled dense type="text"
           label="Lightning Address or LUD-06 Identifier" maxlength="150" class="full-width" />
-        <q-btn
-v-if="hasLnAddr" :label="showLnAddr ? 'show lnurl' : 'show ln address'" @click="convertLud06" outline dense
+        <q-btn v-if="hasLnAddr" :label="showLnAddr ? 'show lnurl' : 'show ln address'" @click="convertLud06" outline dense
           no-wrap />
       </div>
     </q-form>
@@ -59,46 +53,40 @@ v-if="hasLnAddr" :label="showLnAddr ? 'show lnurl' : 'show ln address'" @click="
       <div class="text-bold flex justify-between no-wrap spotnik" style="font-size: 1.1rem">
         {{ $t("relays") }}
         <div class="text-normal flex row no-wrap" style="font-size: 0.6rem; gap: 0.4rem">
-          <q-btn
-v-if="!editingRelays" label="edit" color="primary" outline size="sm"
+          <q-btn v-if="!editingRelays" label="edit" color="primary" outline size="sm"
             :disable="!$store.getters.canSignEventsAutomatically" @click="editingRelays = true" />
           <div v-if="editingRelays" style="margin: 10px 7px 0 0; color: lightgreen;">read</div>
           <div v-if="editingRelays" style="margin: 10px 0 0; color: orange;">write</div>
         </div>
       </div>
       <q-list class="flex column q-pt-xs" style="gap: 0.2rem">
-        <q-item
-v-for="url in Object.keys(relays)" :key="url" class="flex justify-between items-center no-wrap no-padding"
+        <q-item v-for="url in Object.keys(relays)" :key="url" class="flex justify-between items-center no-wrap no-padding"
           style="min-height: 1.2rem;">
-          <div
-class="flex row justify-between no-wrap"
+          <div class="flex row justify-between no-wrap"
             style="display: inline-block; overflow-y: hidden; white-space: nowrap;">
-            <q-btn
-v-if="!editingRelays && (relays[url].read || relays[url].write)" color="secondary" outline size="sm"
+            <q-btn v-if="!editingRelays && (relays[url].read || relays[url].write)" color="secondary" outline size="sm"
               label="Share" :disable="
                 hasJustSharedRelay || !$store.getters.canSignEventsAutomatically
               " @click="shareRelay(url)">
-              <q-tooltip anchor="top right" self="center left" :offset="[0, 40]" class="tooltip-url lt-md">{{ url }}</q-tooltip>
+              <q-tooltip anchor="top right" self="center left" :offset="[0, 40]" class="tooltip-url lt-md">{{ url
+              }}</q-tooltip>
             </q-btn>
             <q-btn v-if="editingRelays" color="negative" label="remove" outline size="sm" @click="removeRelay(url)">
-              <q-tooltip anchor="center right" self="center left" :offset="[0, 40]" class="tooltip-url lt-md">{{ url }}</q-tooltip>
+              <q-tooltip anchor="center right" self="center left" :offset="[0, 40]" class="tooltip-url lt-md">{{ url
+              }}</q-tooltip>
             </q-btn>
-            <span
-class="sf-mono ellipses gt-sm"
+            <span class="sf-mono ellipses gt-sm"
               style="margin-left: 10px; margin-right: 5px; max-width: 90%; font-size: 13px; letter-spacing: -0.5px; white-space: nowrap; overflow: auto;">{{
                 url }}</span>
-            <span
-class="sf-mono ellipses lt-md"
+            <span class="sf-mono ellipses lt-md"
               style="margin-left: 10px; margin-right: 5px; max-width: 90%; font-size: 13px; letter-spacing: -0.5px; white-space: nowrap; overflow: auto;">{{
                 shortUrl(url) }}</span>
           </div>
           <div class="flex no-wrap items-center" style="gap: 0.6rem; margin-right: 5px;">
-            <q-toggle
-v-if="editingRelays" v-model="relays[url].read" size="sm" dense checked-icon="check"
+            <q-toggle v-if="editingRelays" v-model="relays[url].read" size="sm" dense checked-icon="check"
               unchecked-icon="clear" color="green-6" keep-color class="no-padding"
               :disable="!$store.getters.canSignEventsAutomatically" />
-            <q-toggle
-v-if="editingRelays" v-model="relays[url].write" size="sm" dense color="orange" checked-icon="check"
+            <q-toggle v-if="editingRelays" v-model="relays[url].write" size="sm" dense color="orange" checked-icon="check"
               unchecked-icon="clear" keep-color class="no-padding"
               :disable="!$store.getters.canSignEventsAutomatically" />
           </div>
@@ -106,8 +94,7 @@ v-if="editingRelays" v-model="relays[url].write" size="sm" dense color="orange" 
       </q-list>
       <q-form v-if="editingRelays" class="q-py-xs" @submit="addRelay">
         <div class="flex row no-wrap q-mx-sm q-mt-sm" id="new-relay-input" style="margin-bottom: 10px;">
-          <q-input
-v-model="newRelay" placeholder="add a relay..." autofocus class="full-width"
+          <q-input v-model="newRelay" placeholder="add a relay..." autofocus class="full-width"
             input-style="padding: 2px 2px 2px 2px;" @keypress.enter="addRelay" dense borderless />
           <q-btn icon="add" color="positive" size="sm" flat dense @click.stop="addRelay" />
         </div>
@@ -115,18 +102,18 @@ v-model="newRelay" placeholder="add a relay..." autofocus class="full-width"
           <template #options>
             <div style="max-height: 6.75rem">
               <pre class="relay-list">
-                          <li
-                            v-for='(relay, index) in optionalRelays'
-                            :key='index + "-" + relay'
-                            class='relay-item'
-                            @click.stop='relays[relay] = { read: true, write: true }'
-                          >
-                            <div class='flex row justify-between no-wrap'>
-                              <span>{{ relay }}</span>
-                              <q-icon name='add' size='xs' color='positive' flat/>
-                            </div>
-                          </li>
-                        </pre>
+                            <li
+                              v-for='(relay, index) in optionalRelays'
+                              :key='index + "-" + relay'
+                              class='relay-item'
+                              @click.stop='relays[relay] = { read: true, write: true }'
+                            >
+                              <div class='flex row justify-between no-wrap'>
+                                <span>{{ relay }}</span>
+                                <q-icon name='add' size='xs' color='positive' flat/>
+                              </div>
+                            </li>
+                          </pre>
             </div>
           </template>
         </BaseSelectMultiple>
@@ -134,8 +121,7 @@ v-model="newRelay" placeholder="add a relay..." autofocus class="full-width"
     </div>
 
     <q-separator color="accent" />
-    <q-expansion-item
-dense expand-icon="info" expanded-icon="expand_less" class="full-width items-center"
+    <q-expansion-item dense expand-icon="info" expanded-icon="expand_less" class="full-width items-center"
       header-class="items-center">
       <template #header>
         <div class="text-bold flex justify-between no-wrap full-width" style="font-size: 1.1rem">
@@ -186,18 +172,16 @@ dense expand-icon="info" expanded-icon="expand_less" class="full-width items-cen
           </div>
         </q-card-section>
         <q-card-section>
-          <p><b class="spotnik" style="color: orange;">PRIVATE KEY</b>:</p>
-          <q-btn
-icon="content_copy" size="md" flat
+          <p><b class="spotnik" style="color: orange; font-size: 20px;">PRIVATE KEY</b>:</p>
+          <q-btn icon="content_copy" size="md" flat
             @click="copyCode(this.hexToBech32(this.$store.state.keys.priv, 'nsec'))" class="copy-btn-priv">
             &nbsp;Private Key
             <q-tooltip class="tooltip" anchor="center left" self="center right" :offset="[10, 10]">{{ $t("COPY PRIVATE KEY") }}</q-tooltip>
           </q-btn>
           <q-input style="margin-top: -20px;" v-model="nsecKey" class="mb-2 code-flat" readonly filled />
           <div style="margin-top: 10px; border-top: 0px solid #b6c6e39f"></div>
-          <p><b class="spotnik" style="color: lightgreen;">PUBLIC KEY</b>:</p>
-          <q-btn
-icon="content_copy" size="md" flat
+          <p><b class="spotnik" style="color: lightgreen; font-size: 20px;">PUBLIC KEY</b>:</p>
+          <q-btn icon="content_copy" size="md" flat
             @click="copyCode(this.hexToBech32(this.$store.state.keys.pub, 'npub'))" class="copy-btn-pub">
             &nbsp;Public Key
             <q-tooltip class="tooltip" anchor="center left" self="center right" :offset="[10, 10]">{{ $t("COPY PUBLIC KEY") }}</q-tooltip>
@@ -523,7 +507,7 @@ export default {
         })
         .onOk(async () => {
           LocalStorage.clear()
-          window.location.reload()
+          window.location.href = '/dostr-client'
         })
     },
     async hardReset() {

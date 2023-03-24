@@ -91,11 +91,11 @@ a {
 
 .copy-btn-priv {
   margin-left: 75%;
-  margin-top: -53px;
+  margin-top: -60px;
   margin-right: 10px;
   padding: 4px 8px 4px 8px;
   border: 0px solid orange;
-  border-radius: 3px;
+  border-radius: 2px;
   color: orange;
   width: 25%;
   font-size: 14px;
@@ -103,11 +103,11 @@ a {
 
 .copy-btn-pub {
   margin-left: 75%;
-  margin-top: -53px;
+  margin-top: -60px;
   margin-right: 10px;
   padding: 4px 8px 4px 8px;
   border: 0px solid lightgreen;
-  border-radius: 3px;
+  border-radius: 2px;
   color: lightgreen;
   width: 25%;
   font-size: 14px;
