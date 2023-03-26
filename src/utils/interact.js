@@ -1,4 +1,5 @@
 import { ethers } from 'ethers'
+import { SiweMessage } from 'siwe'
 import { nipxx } from './nipxx/nostr.cjs'
 
 export const SignWithWallet = async (username, password, chainId) => {
@@ -9,8 +10,19 @@ export const SignWithWallet = async (username, password, chainId) => {
       const addressArray = await window.ethereum.request({
         method: 'eth_accounts',
       })
-      let info = `eip155:${chainId}:${addressArray[0]}`
-      let message = `👋 You are connecting to Nostr network via Dostr as ${username?.length > 0 ? '\'' + username + '\'' : 'anonymous user'}\n\n⚠️ Important: Please verify the integrity and authenticity of your Nostr client before signing this message\n\n📤 Payload: ${info}`
+      let address = addressArray[0]
+      const domain = window.location.host
+      const origin = window.location.origin
+      let info = `eip155:${chainId}:${address}`
+      let statement = `You are logging into Nostr network as '${username}'. Please verify the integrity and authenticity of your Nostr client before signing this message. Payload: ${info}`
+      const message = new SiweMessage({
+        domain,
+        address,
+        statement,
+        uri: origin,
+        version: '1',
+        chainId: chainId,
+      }).prepareMessage()
       let signature = await signer.signMessage(message)
       let siwe = await nipxx.signInWithX(username, info, signature, password)
       return {

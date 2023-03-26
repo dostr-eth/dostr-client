@@ -67,15 +67,6 @@
     </div>
     <div v-if="isConnected" style="position: relative;">
       <div class="input-siwe" style="margin: 0px auto;">
-        <q-input v-model="username" ref="keyInput" bottom-slots outlined label='enter username (optional)' dense>
-          <q-icon name="info" style="font-size: 20px; margin-top: 10px;">
-            <q-tooltip class="tooltip" anchor="top left" self="bottom right" style="width: 25%" :offset="[1, 1]">
-              <b style="color: orange">USERNAME</b> SHOULD IDEALLY BE YOUR NIP-02 OR NIP-05 IDENTIFIER. IT IS USED TO 'SALT' NOSTR-SPECIFIC KEY GENERATION
-            </q-tooltip>
-          </q-icon>
-        </q-input>
-      </div>
-      <div class="input-siwe" style="margin: -20px auto;">
         <q-input v-model="password" ref="keyInput" bottom-slots outlined label='enter password (optional)' dense>
           <q-icon name="info" style="font-size: 20px; margin-top: 10px;">
             <q-tooltip class="tooltip" anchor="top left" self="bottom right" style="width: 25%" :offset="[1, 1]">
@@ -84,17 +75,29 @@
           </q-icon>
         </q-input>
       </div>
+      <div class="input-siwe" style="margin: -20px auto;">
+        <q-input v-model="username" ref="keyInput" bottom-slots outlined label='enter username'
+          dense class="q-field__bottom"
+          :rules="[(val) => (val && val.length > 0) || 'cannot be empty',]"
+          >
+          <q-icon name="info" style="font-size: 20px; margin-top: 10px;">
+            <q-tooltip class="tooltip" anchor="top left" self="bottom right" style="width: 25%" :offset="[1, 1]">
+              <b style="color: orange">USERNAME</b> <b>MUST</b> BE YOUR NIP-02 OR NIP-05 IDENTIFIER. IT IS USED TO GENERATE UNIQUE KEYS FOR YOUR USERNAME
+            </q-tooltip>
+          </q-icon>
+        </q-input>
+      </div>
     </div>
     <div v-if="isConnected" style="display: block;">
       <div v-if="isSigned" style="display: flex; margin: 15px auto; justify-content: center">
-        <p class="spotnik">GENERATED <span style="color: orange; font-weight: 700;">PRIVATE KEYS</span></p>
+        <p class="spotnik">↓ GENERATED <span style="color: orange; font-weight: 700;">PRIVATE KEYS</span> ↓</p>
       </div>
       <div style="display: block; margin: -30px auto; justify-content: center">
         <q-input v-model="key" ref="keyInput" bottom-slots outlined :disabled="!isSigned" v-if="isSigned"
           label="auto-generated from ethereum signature" style="width: inherit" dense>
         </q-input>
       </div>
-      <div style="display: flex; margin: 20px; justify-content: center" class="q-mb-md" v-if="!isSigned">
+      <div style="display: flex; margin: 30px; justify-content: center" class="q-mb-md" v-if="!isSigned && username.length > 0">
         <div style="width: 4%; display: flex; margin-right: 5px">
           <img src="ethereum.svg" alt="mascot_round" class="image-fit" />
         </div>
@@ -427,7 +430,9 @@ export default defineComponent({
       let signResponse = await SignWithWallet(this.username, this.password, this.chainId)
       this.key = signResponse.data.privkey
       this.watchOnly = false
-      this.isSigned = true
+      if (this.key.length > 0) {
+        this.isSigned = true
+      }
     },
 
     generate() {
