@@ -27,14 +27,14 @@
       <BaseLightningCard
         v-for="(invoice, index) in invoices"
         :key="index"
-        :ln-string="invoice"
+        :ln-string="Invoice"
         class="lt-sm"
         style="padding: 1rem"
       />
       <BaseLightningCard
         v-for="(invoice, index) in invoices"
         :key="index"
-        :ln-string="invoice"
+        :ln-string="Invoice"
         class="gt-xs"
         row-or-column="row"
         style="padding: 1rem"

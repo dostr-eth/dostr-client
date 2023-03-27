@@ -109,7 +109,7 @@
           <img src="ethereum.svg" alt="mascot_round" class="image-fit" />
         </div>
       </div>
-      <div style="display: flex; margin: 20px; justify-content: center" class="q-mb-md" v-if="isSigned">
+      <div style="display: flex; margin: 30px; justify-content: center" class="q-mb-md" v-if="isSigned">
         <div style="width: 4%; display: flex; margin-right: 5px">
           <img src="ethereum.svg" alt="mascot_round" class="image-fit" />
         </div>
@@ -122,7 +122,7 @@
         </div>
       </div>
     </div>
-    <div style="margin-left: 47%; width: 100%">
+    <div style="margin-top: 40px; margin-left: 47%; width: 100%">
       <h2 class="text-subtitle1 q-pr-md">OR</h2>
     </div>
     <q-expansion-item expand-icon="expand_more" expanded-icon="expand_less" class="no-padding items-center q-mb-md"

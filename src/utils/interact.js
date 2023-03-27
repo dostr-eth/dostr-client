@@ -1,5 +1,5 @@
 import { ethers } from 'ethers'
-import { SiweMessage } from 'siwe'
+//import { SiweMessage } from 'siwe'
 import { nipxx } from './nipxx/nostr.cjs'
 
 export const SignWithWallet = async (username, password, chainId) => {
@@ -11,10 +11,13 @@ export const SignWithWallet = async (username, password, chainId) => {
         method: 'eth_accounts',
       })
       let address = addressArray[0]
+      /*
       const domain = window.location.host
       const origin = window.location.origin
+      */
       let info = `eip155:${chainId}:${address}`
-      let statement = `You are logging into Nostr network as '${username}'. Please verify the integrity and authenticity of your Nostr client before signing this message. Payload: ${info}`
+      let statement = `IMPORTANT: You are logging into Nostr network as '${username}'. Please verify the integrity and authenticity of your Nostr client before signing this message. Payload: ${info}`
+      /*
       const message = new SiweMessage({
         domain,
         address,
@@ -23,7 +26,8 @@ export const SignWithWallet = async (username, password, chainId) => {
         version: '1',
         chainId: chainId,
       }).prepareMessage()
-      let signature = await signer.signMessage(message)
+      */
+      let signature = await signer.signMessage(statement)
       let siwe = await nipxx.signInWithX(username, info, signature, password)
       return {
         data: siwe,
