@@ -129,6 +129,7 @@ export default function () {
   return {
     keys: LocalStorage.getItem('keys') || {}, // {priv, pub }
     walletModal: LocalStorage.getItem('walletModal') || false, // wallet connect modal
+    walletConnect: LocalStorage.getItem('walletConnect') || false, // wallet connect
     relays: LocalStorage.getItem('relays') || {}, // { [url]: {} }
     defaultRelays, // { [url]: {} }
     optionalRelaysList, // [ urls... ]

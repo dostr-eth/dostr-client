@@ -36,7 +36,6 @@ const wagmiClient = createClient({
 export const ethereumClient = new EthereumClient(wagmiClient, chains)
 export const web3Modal = new Web3Modal(
   {
-    chain: 'mainnet',
     projectId,
     themeMode: 'dark',
     themeColor: 'blue',

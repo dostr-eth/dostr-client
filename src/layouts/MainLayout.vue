@@ -12,7 +12,7 @@
       :href="`https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display-swap`"
     />
     <div>
-      <q-dialog v-if="!$store.state.keys.pub" v-model="initializeKeys" persistent @click:backdrop="lookingAround = true">
+      <q-dialog v-if="!this.$store.state.keys.pub && !this.$store.state.walletModal" v-model="initializeKeys" seemless position="bottom" @click:backdrop="lookingAround = true">
         <TheKeyInitializationDialog
           style="max-height: 85vh;"
           @look-around="lookingAround = true"
@@ -28,7 +28,7 @@
           :posting="postEntryOpen"
           @toggle-post-entry="togglePostEntry"
           @scroll-to-rect="scrollToRect"
-          @set-user="lookingAround = false"
+          @set-user="lookingAround = false, this.$store.state.walletModal = false"
         />
       </div>
 
@@ -234,6 +234,7 @@ export default defineComponent({
       googleFontsName: 'Open Sans',
       updatingFont: true,
       lookingAround: false,
+      walletConnect: this.$store.state.walletModal,
     }
   },
 

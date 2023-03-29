@@ -9,6 +9,9 @@ export default function (store) {
       case 'setWalletModal':
           LocalStorage.set('walletModal', state.walletModal)
           break
+      case 'setWalletConnect':
+        LocalStorage.set('walletConnect', state.walletConnect)
+        break
       case 'setFollows':
         LocalStorage.set('follows', state.follows)
         break

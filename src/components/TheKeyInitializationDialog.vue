@@ -32,76 +32,84 @@
         </div>
         <div style="margin-top: 5px">
           <span style="
-                                            padding: 0.2rem 0 0 0.2rem;
-                                            font-size: 10pt;
-                                            font-family: 'SF Mono';
-                                            letter-spacing: -0.5px;
-                                          ">ℹ️ This same information can be found in the
+                                                                padding: 0.2rem 0 0 0.2rem;
+                                                                font-size: 10pt;
+                                                                font-family: 'SF Mono';
+                                                                letter-spacing: -0.5px;
+                                                              ">ℹ️ This same information can be found in the
             <strong>FAQ</strong> section at the bottom of the
             <strong>Settings</strong> page after Login</span>
         </div>
       </q-expansion-item>
       <hr style="margin-bottom: 25px" />
-      <div style="display: flex; margin: 0; justify-content: center" class="q-mb-md" v-if="!isConnected">
+      <div style="display: flex; margin: 0; justify-content: center" class="q-mb-md"
+        v-if="!isConnectedMM && !isConnectedWC">
         <div style="width: 4%; display: flex; margin-right: 5px">
           <img src="ethereum.svg" alt="mascot_round" class="image-fit" />
         </div>
         <q-btn size="md" @click="showWeb3modal" style="
-                                      background: linear-gradient(266deg, rgba(0,148,21,0.75) 0%, rgba(0,113,205,0.75) 100%);
-                                      border: 0px solid white;
-                                    " text-color="white" font-weight="900" :disable="walletsList"
-          :label="!isConnected ? 'Connect with Ethereum' : ''">
+                                                          background: linear-gradient(266deg, rgba(0,148,21,0.75) 0%, rgba(0,113,205,0.75) 100%);
+                                                          border: 0px solid white;
+                                                        " text-color="white" font-weight="900" :disable="walletsList"
+          :label="!isConnectedMM || !isConnectedWC ? 'Connect with Ethereum' : ''">
         </q-btn>
         <div style="width: 4%; display: flex; margin-left: 5px">
           <img src="ethereum.svg" alt="mascot_round" class="image-fit" />
         </div>
-        <q-tooltip v-if="walletsList" class="tooltip" anchor="bottom left" self="bottom left" style="width: auto;"
-          :offset="[-10, -30]">
-          CHOOSE A WALLET BELOW ↓
-        </q-tooltip>
       </div>
-      <div v-if="walletsList && !isConnected" style="position: relative;">
+      <div v-if="walletsList && !isConnectedWC && !isConnectedMM" style="position: relative;">
         <div style="display: flex; margin: 0 auto; justify-content: center;">
-          <q-btn v-if="!isMobileDevice" size="md" @click="siwe" style="
-                                      background: black; margin-top: 15px;
-                                      border: 0px solid white; width: 40%;
-                                    " text-color="orange" font-weight="700" label="Metamask&nbsp;">
+          <q-btn v-if="!this.isMobileDevice()" size="md" @click="siwe" style="
+                                                          background: black; margin-top: 15px;
+                                                          border: 0px solid white; width: 40%;
+                                                        " text-color="orange" font-weight="700" label="Metamask&nbsp;">
             <q-avatar size="25px">
               <img src="../assets/metamask.png">
             </q-avatar>
           </q-btn>
-          <q-btn v-if="isMobileDevice" size="md" @click="redirect" style="
-                                      background: black; margin-top: 15px;
-                                      border: 0px solid white; width: 40%;
-                                    " text-color="orange" font-weight="700" label="Metamask&nbsp;">
+          <q-btn v-if="this.isMobileDevice() && !this.isMetamask()" size="md" @click="redirect" style="
+                                                          background: black; margin-top: 15px;
+                                                          border: 0px solid white; width: 40%;
+                                                        " text-color="white" font-weight="700" label="Metamask&nbsp;">
+            <q-avatar size="25px">
+              <img src="../assets/metamask.png">
+            </q-avatar>
+          </q-btn>
+          <q-btn v-if="this.isMobileDevice() && this.isMetamask()" size="md" @click="siwe" style="
+                                                          background: black; margin-top: 15px;
+                                                          border: 0px solid white; width: 40%;
+                                                        " text-color="yellow" font-weight="700" label="Connect&nbsp;">
             <q-avatar size="25px">
               <img src="../assets/metamask.png">
             </q-avatar>
           </q-btn>
         </div>
         <div style="display: flex; margin: 0 auto; justify-content: center;">
-          <q-btn disable size="md" @click="web3modal" style="
-                                        background: black; margin-top: 15px;
-                                        border: 0px solid white; width: 40%;
-                                      " text-color="blue" font-weight="700" label="Wallet Connect&nbsp;">
+          <q-btn size="md" @click="web3modal" style="
+                                                            background: black; margin-top: 15px;
+                                                            border: 0px solid white; width: 40%;
+                                                          " text-color="blue" font-weight="700"
+            label="Wallet Connect&nbsp;">
             <q-avatar size="25px">
               <img src="../assets/walletConnect.png">
             </q-avatar>
           </q-btn>
+          <!--
           <q-tooltip class="tooltip" anchor="bottom left" self="bottom left" style="width: auto;" :offset="[50, -40]">
             <span style="color: orange;">UNAVAILABLE</span>. PLEASE USE METAMASK 🦊
           </q-tooltip>
+          -->
         </div>
       </div>
-      <div style="display: flex; margin: 0; justify-content: center" class="q-mb-md" v-if="isConnected">
+      <div style="display: flex; margin: 0; justify-content: center" class="q-mb-md" v-if="isConnectedMM">
         <div style="width: 4%; display: flex; margin-right: 5px">
           <img src="ethereum.svg" alt="mascot_round" class="image-fit" />
         </div>
-        <q-btn size="md" @click="disconnect" style="
-                                      background: black;
-                                      border: 0px solid white;
-                                    " text-color="red" font-weight="900"
-          :label="!isConnected ? '' : '&nbsp;Disconnect&nbsp;'">
+        <q-btn size="md" @click="disconnectMM" style="
+                                                          background: black;
+                                                          border: 0px solid white;
+                                                        " text-color="red" font-weight="900"
+          :label="!isConnectedMM ? '' : '&nbsp;Disconnect&nbsp;'">
           <q-avatar size="25px">
             <img src="../assets/metamask.png">
           </q-avatar>
@@ -110,7 +118,24 @@
           <img src="ethereum.svg" alt="mascot_round" class="image-fit" />
         </div>
       </div>
-      <div v-if="isConnected" style="position: relative;">
+      <div style="display: flex; margin: 0; justify-content: center" class="q-mb-md" v-if="isConnectedWC">
+        <div style="width: 4%; display: flex; margin-right: 5px">
+          <img src="ethereum.svg" alt="mascot_round" class="image-fit" />
+        </div>
+        <q-btn size="md" @click="disconnectWC" style="
+                                                          background: black;
+                                                          border: 0px solid white;
+                                                        " text-color="blue" font-weight="900"
+          :label="!isConnectedWC ? '' : '&nbsp;Disconnect&nbsp;'">
+          <q-avatar size="25px">
+            <img src="../assets/walletConnect.png">
+          </q-avatar>
+        </q-btn>
+        <div style="width: 4%; display: flex; margin-left: 5px">
+          <img src="ethereum.svg" alt="mascot_round" class="image-fit" />
+        </div>
+      </div>
+      <div v-if="isConnectedMM || isConnectedWC" style="position: relative;">
         <div class="input-siwe" style="margin: 0px auto;">
           <q-input v-model="password" ref="keyInput" bottom-slots outlined label='enter password (optional)' dense>
             <q-icon name="info" style="font-size: 20px; margin-top: 10px;">
@@ -134,7 +159,7 @@
           </q-input>
         </div>
       </div>
-      <div v-if="isConnected" style="display: block;">
+      <div v-if="isConnectedMM || isConnectedWC" style="display: block;">
         <div v-if="isSigned" style="display: flex; margin: 15px auto; justify-content: center">
           <p class="spotnik">↓ GENERATED <span style="color: orange; font-weight: 700;">PRIVATE KEYS</span> ↓</p>
         </div>
@@ -151,7 +176,8 @@
           <q-btn size="md" @click="sign"
             style="background: linear-gradient(266deg, rgba(0,148,21,0.75) 0%, rgba(0,113,205,0.75) 100%); border: 0px solid white;"
             text-color="white" font-weight="900"
-            :label="!isConnected ? 'Connect Ethereum Wallet' : 'Sign-In With Ethereum'" value="true" />
+            :label="!isConnectedMM && !isConnectedWC ? 'Connect Ethereum Wallet' : 'Sign-In With Ethereum'"
+            value="true" />
           <div style="width: 4%; display: flex; margin-left: 5px">
             <img src="ethereum.svg" alt="mascot_round" class="image-fit" />
           </div>
@@ -277,34 +303,34 @@
           <BaseSelectMultiple>
             <template #selected>
               <pre class="relay-list" style="border: 1px solid var(--q-primary);">
-                                      <li
-                                        v-for='(relay, index) in Object.keys(selectedRelays)'
-                                        :key='index + "-" + relay'
-                                        class='relay-item'
-                                        @click.stop='delete selectedRelays[relay]'
-                                      >
-                                        <div class='flex row justify-between no-wrap'>
-                                          <span style='overflow: auto;'>{{ relay }}</span>
-                                          <q-icon name='remove' size='xs' color='negative'/>
-                                        </div>
-                                      </li>
-                                    </pre>
+                                                          <li
+                                                            v-for='(relay, index) in Object.keys(selectedRelays)'
+                                                            :key='index + "-" + relay'
+                                                            class='relay-item'
+                                                            @click.stop='delete selectedRelays[relay]'
+                                                          >
+                                                            <div class='flex row justify-between no-wrap'>
+                                                              <span style='overflow: auto;'>{{ relay }}</span>
+                                                              <q-icon name='remove' size='xs' color='negative'/>
+                                                            </div>
+                                                          </li>
+                                                        </pre>
             </template>
             <template #options>
               <div style="max-height: 6.75rem">
                 <pre class="relay-list">
-                                        <li
-                                          v-for='(relay, index) in optionalRelays'
-                                          :key='index + "-" + relay'
-                                          class='relay-item'
-                                          @click.stop='selectedRelays[relay] = { read: true, write: false }'
-                                        >
-                                          <div class='flex row justify-between no-wrap'>
-                                            <span style='overflow: auto;'>{{ relay }}</span>
-                                            <q-icon name='add' size='xs' color='positive' flat/>
-                                          </div>
-                                        </li>
-                                      </pre>
+                                                            <li
+                                                              v-for='(relay, index) in optionalRelays'
+                                                              :key='index + "-" + relay'
+                                                              class='relay-item'
+                                                              @click.stop='selectedRelays[relay] = { read: true, write: false }'
+                                                            >
+                                                              <div class='flex row justify-between no-wrap'>
+                                                                <span style='overflow: auto;'>{{ relay }}</span>
+                                                                <q-icon name='add' size='xs' color='positive' flat/>
+                                                              </div>
+                                                            </li>
+                                                          </pre>
               </div>
             </template>
           </BaseSelectMultiple>
@@ -326,7 +352,7 @@ import { web3Modal, ethereumClient } from '../utils/web3modal'
 // import { decode } from 'bech32-buffer'
 import BaseSelectMultiple from 'components/BaseSelectMultiple.vue'
 import BaseInformation from 'components/BaseInformation.vue'
-import homepage from '../../package.json'
+import metadata from '../../package.json'
 
 export default defineComponent({
   name: 'TheKeyInitializationDialog',
@@ -353,15 +379,14 @@ export default defineComponent({
       hasExtension: false,
       selectedRelays: this.$store.state.defaultRelays,
       newRelay: '',
-      isConnected: false,
+      isConnectedMM: false,
       username: '',
       password: '',
       chainId: '',
       isSigned: false,
-      walletConnect: this.$store.state.walletModal,
-      walletsList: false,
-      isMetamask: false,
-      homepage: homepage
+      connectModal: this.$store.state.walletModal,
+      walletsList: true,
+      isConnectedWC: this.$store.state.walletConnect,
     }
   },
 
@@ -371,7 +396,7 @@ export default defineComponent({
     },
 
     showKeyInitialization() {
-      if (this.walletConnect) return false
+      if (this.connectModal) return false
       return true
     },
 
@@ -436,10 +461,6 @@ export default defineComponent({
     },
   },
 
-  isMobileDevice() {
-    return 'ontouchstart' in window || 'onmsgesturechange' in window
-  },
-
   async created() {
     if (!this.$store.state.keys.pub) {
       // keys not set up, offer the option to try to get a pubkey from window.nostr
@@ -452,6 +473,14 @@ export default defineComponent({
   },
 
   methods: {
+    isMobileDevice() {
+      if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        return true
+      } else {
+        return false
+      }
+    },
+
     async getFromExtension() {
       try {
         this.key = await window.nostr.getPublicKey()
@@ -467,24 +496,47 @@ export default defineComponent({
 
     redirect() {
       this.$emit('look-around')
-      //window.location.href = 'https://metamask.app.link/dapp/' + this.homepage.split(' ://').pop() + '/'
+      let url = 'https://metamask.app.link/dapp/' + metadata.homepage.toString().split('://').pop() + '/'
+      window.open(url).focus()
+    },
+
+    isMetamask() {
+      if (window.ethereum) {
+        return true
+      }
+      return false
     },
 
     async siwe() {
+      this.walletsList = false
       let walletResponse = await connectWallet()
       if (walletResponse.address) {
         console.log(`Connected to ${walletResponse.address}`)
-        this.isConnected = true
+        this.isConnectedMM = true
+        this.$store.state.walletConnect = false
         this.chainId = walletResponse.chainId
       } else {
-        this.isConnected = false
+        this.isConnectedMM = false
+        this.$store.state.walletConnect = false
         console.log('Connection Failed')
       }
       return
     },
 
-    disconnect() {
-      this.isConnected = false
+    disconnectMM() {
+      this.isConnectedMM = false
+      this.isConnectedWC = false
+      this.$store.state.walletConnect = false
+      this.$store.state.walletModal = false
+      this.walletsList = false
+      return
+    },
+
+    disconnectWC() {
+      this.isConnectedMM = false
+      this.isConnectedWC = false
+      this.$store.state.walletConnect = false
+      this.$store.state.walletModal = true
       this.walletsList = false
       return
     },
@@ -509,10 +561,8 @@ export default defineComponent({
     },
 
     async web3modal() {
-      this.walletsList = false
-      this.walletConnect = true
+      this.$store.state.walletModal = true
       this.watchOnly = false
-      this.$emit('look-around')
       await web3Modal.openModal()
       while (true) { // eslint-disable-line no-constant-condition
         if (ethereumClient.getAccount().isConnected) {
@@ -523,10 +573,14 @@ export default defineComponent({
       if (ethereumClient.getAccount().isConnected) {
         this.$emit('wallet-dialog')
         console.log('Connected with WalletConnect')
-        this.isConnected = true
-        this.chainId = '1'
+        this.$store.state.walletConnect = true
+        this.isConnectedMM = false
+        this.chainId = ethereumClient.getNetwork().chain.id
+        this.$store.state.walletModal = false
+        this.walletsList = false
       } else {
-        this.isConnected = false
+        this.isConnectedMM = false
+        this.$store.state.walletConnect = false
         console.log('Connection Failed')
       }
     },

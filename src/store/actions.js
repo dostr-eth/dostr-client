@@ -21,6 +21,11 @@ export function walletModal(store, value) {
   store.commit('setWalletModal', value)
 }
 
+export function walletConnect(store, value) {
+  // initialise wallet connect
+  store.commit('setWalletConnect', value)
+}
+
 export function initKeys(store, keys) {
   // passing no arguments will cause a new seed to be generated
   store.commit('setKeys', keys)
