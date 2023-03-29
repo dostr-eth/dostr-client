@@ -90,47 +90,31 @@ a {
 }
 
 .copy-btn-priv {
-  margin-left: 75%;
+  margin-left: 85%;
   margin-top: -60px;
   margin-right: 10px;
   padding: 4px 8px 4px 8px;
   border: 0px solid orange;
   border-radius: 2px;
   color: orange;
-  width: 25%;
-  font-size: 14px;
+  width: 15%;
+  font-size: 12px;
 }
 
 .copy-btn-pub {
-  margin-left: 75%;
+  margin-left: 85%;
   margin-top: -60px;
   margin-right: 10px;
   padding: 4px 8px 4px 8px;
   border: 0px solid lightgreen;
   border-radius: 2px;
   color: lightgreen;
-  width: 25%;
-  font-size: 14px;
+  width: 15%;
+  font-size: 12px;
 }
 
 .input-siwe {
   width: 70%
-}
-
-@media screen and (max-width: 600px) {
-  .copy-btn-priv {
-    margin-left: 65%;
-    width: 30%;
-    font-size: 12px;
-  }
-  .copy-btn-pub {
-    margin-left: 65%;
-    width: 30%;
-    font-size: 12px;
-  }
-  .input-siwe {
-    width: 100%
-  }
 }
 
 .tooltip {
@@ -150,6 +134,12 @@ a {
   font-size: 13px;
   font-family: 'SF Mono';
   letter-spacing: -0.5px;
+}
+
+.keys-header {
+  font-family: 'Rajdhani';
+  font-size: 22px;
+  text-transform: uppercase;
 }
 
 .tooltip-url {
@@ -193,4 +183,23 @@ a {
 
 .w3m-modal-header {
   font-family: 'Spotnik';
+}
+
+@media screen and (max-width: 600px) {
+  .copy-btn-priv {
+    margin-left: 85%;
+    width: 15%;
+    font-size: 10px;
+  }
+  .copy-btn-pub {
+    margin-left: 85%;
+    width: 15%;
+    font-size: 10px;
+  }
+  .input-siwe {
+    width: 100%
+  }
+  .keys-header {
+    font-size: 18px;
+  }
 }

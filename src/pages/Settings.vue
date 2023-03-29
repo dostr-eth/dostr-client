@@ -135,16 +135,32 @@
     <q-separator color="accent" />
 
     <div class="flex no-wrap section gt-sm" style="gap: 0.2rem">
-      <q-btn label="view your keys" color="primary" outline @click="keysDialog = true" />
-      <q-btn label="log out" color="orange" outline @click="logout" />
-      <q-btn label="delete local data" color="negative" outline @click="hardReset" />
-      <q-btn label="dev tools" color="secondary" outline :to="{ name: 'devTools' }" />
+      <q-btn label="view keys&nbsp;" outline color="light-green-3" @click="keysDialog = true">
+        <q-icon name="vpn_key" />
+      </q-btn>
+      <q-btn label="log out&nbsp;" outline color="red-3" @click="logout">
+        <q-icon name="logout" />
+      </q-btn>
+      <q-btn label="delete local data&nbsp;" color="negative" @click="hardReset">
+        <q-icon name="power_settings_new" />
+      </q-btn>
+      <q-btn label="dev tools&nbsp;" outline color="blue-3" :to="{ name: 'devTools' }">
+        <q-icon name="build" />
+      </q-btn>
     </div>
     <div class="flex section lt-md" style="align: center; gap: 0.2rem">
-      <q-btn style="width: 100%;" label="view your keys" color="primary" outline @click="keysDialog = true" />
-      <q-btn style="width: 100%;" label="logout" color="orange" outline @click="logout" />
-      <q-btn style="width: 100%;" label="delete local data" color="negative" outline @click="hardReset" />
-      <q-btn style="width: 100%;" label="dev tools" color="secondary" outline :to="{ name: 'devTools' }" />
+      <q-btn style="width: 100%;" label="view your keys&nbsp;" outline color="light-green-3" @click="keysDialog = true">
+        <q-icon name="vpn_key" />
+      </q-btn>
+      <q-btn style="width: 100%;" label="logout&nbsp;" outline color="red-3" @click="logout">
+        <q-icon name="logout" />
+      </q-btn>
+      <q-btn style="width: 100%;" label="delete local data&nbsp;" color="negative" @click="hardReset">
+        <q-icon name="power_settings_new" />
+      </q-btn>
+      <q-btn style="width: 100%;" label="dev tools&nbsp;" outline color="blue-3" :to="{ name: 'devTools' }">
+        <q-icon name="build" />
+      </q-btn>
     </div>
 
     <q-dialog v-model="keysDialog" style="border: 0 solid black; border-radius: 5px;" class="rajdhani">
@@ -156,34 +172,32 @@
             </div>
           </div>
           <div style="display: flex; margin: 10px auto 10px; justify-content: center;">
-            <p class="sf-mono-tight" style="font-size: 20px;" v-if="$store.state.keys.priv">
-              ⚠️&nbsp; Please backup your <b style="color: orange;">Private Key</b>!
+            <p class="keys-header" v-if="$store.state.keys.priv">
+              ⚠️&nbsp; Please backup your <b style="color: orange;">Private Key</b>
             </p>
-            <p style="font-size: 18px;" v-else>Your <b style="color: orange;">Private Key</b> is not here!</p>
+            <p class="keys-header" v-else>Your <b style="color: orange;">Private Key</b> is not here!</p>
           </div>
           <div>
-            <div class="mt-1 text-lg justify-center items-center sf-mono-tight">
-              ◦&nbsp;Posts are published using your <b style="color: orange;">Private Key</b>.
+            <div class="mt-1 text-lg justify-center items-center rajdhani">
+              <q-icon size="sm" name="bookmark_added" />&nbsp;Posts are published using your <b style="color: orange;">Private Key</b>
             </div>
-            <div class="mt-1 text-lg justify-center items-center sf-mono-tight">
-              ◦&nbsp;Others can see your posts or follow you using only your <b style="color: lightgreen;">Public
-                Key</b>.
+            <div class="mt-1 text-lg justify-center items-center rajdhani">
+              <q-icon size="sm" name="visibility" />&nbsp;Others can see your posts or follow you using only your <b style="color: lightgreen;">Public
+                Key</b>
             </div>
           </div>
         </q-card-section>
         <q-card-section>
-          <p><b class="spotnik" style="color: orange; font-size: 20px;">PRIVATE KEY</b>:</p>
-          <q-btn icon="content_copy" size="md" flat
+          <p><b class="spotnik" style="color: orange; font-size: 15px;">PRIVATE KEY</b>:</p>
+          <q-btn icon="content_copy" size="sm" flat
             @click="copyCode(this.hexToBech32(this.$store.state.keys.priv, 'nsec'))" class="copy-btn-priv">
-            &nbsp;Private Key
             <q-tooltip class="tooltip" anchor="center left" self="center right" :offset="[10, 10]">{{ $t("COPY PRIVATE KEY") }}</q-tooltip>
           </q-btn>
           <q-input style="margin-top: -20px;" v-model="nsecKey" class="mb-2 code-flat" readonly filled />
           <div style="margin-top: 10px; border-top: 0px solid #b6c6e39f"></div>
-          <p><b class="spotnik" style="color: lightgreen; font-size: 20px;">PUBLIC KEY</b>:</p>
-          <q-btn icon="content_copy" size="md" flat
+          <p><b class="spotnik" style="color: lightgreen; font-size: 15px;">PUBLIC KEY</b>:</p>
+          <q-btn icon="content_copy" size="sm" flat
             @click="copyCode(this.hexToBech32(this.$store.state.keys.pub, 'npub'))" class="copy-btn-pub">
-            &nbsp;Public Key
             <q-tooltip class="tooltip" anchor="center left" self="center right" :offset="[10, 10]">{{ $t("COPY PUBLIC KEY") }}</q-tooltip>
           </q-btn>
           <q-input style="margin-top: -20px;" v-model="npubKey" readonly filled class="code-flat" />

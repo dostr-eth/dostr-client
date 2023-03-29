@@ -61,24 +61,24 @@
         <div style="display: flex; margin: 0 auto; justify-content: center;">
           <q-btn v-if="!this.isMobileDevice()" size="md" @click="siwe" style="
                                                           background: black; margin-top: 15px;
-                                                          border: 0px solid white; width: 40%;
-                                                        " text-color="orange" font-weight="700" label="Metamask&nbsp;">
+                                                          border: 0px solid white; width: auto;
+                                                        " text-color="orange" font-weight="700" label="&nbsp;Metamask&nbsp;">
             <q-avatar size="25px">
               <img src="../assets/metamask.png">
             </q-avatar>
           </q-btn>
           <q-btn v-if="this.isMobileDevice() && !this.isMetamask()" size="md" @click="redirect" style="
                                                           background: black; margin-top: 15px;
-                                                          border: 0px solid white; width: 40%;
-                                                        " text-color="white" font-weight="700" label="Metamask&nbsp;">
+                                                          border: 0px solid white; width: auto;
+                                                        " text-color="white" font-weight="700" label="&nbsp;Metamask&nbsp;">
             <q-avatar size="25px">
               <img src="../assets/metamask.png">
             </q-avatar>
           </q-btn>
           <q-btn v-if="this.isMobileDevice() && this.isMetamask()" size="md" @click="siwe" style="
                                                           background: black; margin-top: 15px;
-                                                          border: 0px solid white; width: 40%;
-                                                        " text-color="yellow" font-weight="700" label="Connect&nbsp;">
+                                                          border: 0px solid white; width: auto;
+                                                        " text-color="yellow" font-weight="700" label="&nbsp;Connect&nbsp;">
             <q-avatar size="25px">
               <img src="../assets/metamask.png">
             </q-avatar>
@@ -87,9 +87,9 @@
         <div style="display: flex; margin: 0 auto; justify-content: center;">
           <q-btn size="md" @click="web3modal" style="
                                                             background: black; margin-top: 15px;
-                                                            border: 0px solid white; width: 40%;
+                                                            border: 0px solid white; width: auto;
                                                           " text-color="blue" font-weight="700"
-            label="Wallet Connect&nbsp;">
+            label="&nbsp;Wallet Connect&nbsp;">
             <q-avatar size="25px">
               <img src="../assets/walletConnect.png">
             </q-avatar>
@@ -220,16 +220,16 @@
             <q-input v-model="key" ref="keyInput" bottom-slots outlined
               :label="watchOnly ? 'enter public key' : 'enter private key'" style="width: inherit" dense>
               <template #hint>
-                <p v-if="!key && watchOnly" style="font-size: 12px; color: white; text-transform: uppercase;">
+                <p v-if="!key && watchOnly" class="rajdhani" style="font-size: 12px; color: white; text-transform: uppercase;">
                   <q-icon name="info" style="font-size: 16px; margin-top: -2px"></q-icon>
-                  <b style="color: lightgreen">INFO: </b> Entering <b style="color: lightgreen">Public Key</b> means
+                  <b style="color: lightgreen"> INFO: </b> Entering <b style="color: lightgreen">Public Key</b> means
                   you will need to <b style="color: orange">Sign</b> with your
                   <b style="color: orange">Private Key</b>
                   each time you post content either manually or using a browser
                   extension
                 </p>
-                <p v-if="!key && !watchOnly" style="font-size: 12px; color: white; text-transform: uppercase;">
-                  <span style="font-size: 14px;">⚠️</span> <b style="color: orange">WARNING: </b> Entering your
+                <p v-if="!key && !watchOnly" class="rajdhani" style="font-size: 12px; color: white; text-transform: uppercase;">
+                  <span style="font-size: 12px; padding-bottom: 10px;">⚠️</span> <b style="color: orange">WARNING: </b> Entering your
                   <b style="color: orange">Private Key</b> means Dostr will
                   automatically <b style="color: orange">Sign</b> with your
                   <b style="color: orange">Private Key</b> each time you post
