@@ -12,6 +12,9 @@ export default function (store) {
       case 'setWalletConnect':
         LocalStorage.set('walletConnect', state.walletConnect)
         break
+      case 'setChainId':
+        LocalStorage.set('chainId', state.chainId)
+        break
       case 'setFollows':
         LocalStorage.set('follows', state.follows)
         break

@@ -43,7 +43,7 @@
       </q-expansion-item>
       <hr style="margin-bottom: 25px" />
       <div style="display: flex; margin: 0; justify-content: center" class="q-mb-md"
-        v-if="!isConnectedMM && !isConnectedWC">
+        v-if="!isConnectedMetamask && !this.$store.state.walletConnect">
         <div style="width: 4%; display: flex; margin-right: 5px">
           <img src="ethereum.svg" alt="mascot_round" class="image-fit" />
         </div>
@@ -51,13 +51,13 @@
                                                           background: linear-gradient(266deg, rgba(0,148,21,0.75) 0%, rgba(0,113,205,0.75) 100%);
                                                           border: 0px solid white;
                                                         " text-color="white" font-weight="900" :disable="walletsList"
-          :label="!isConnectedMM || !isConnectedWC ? 'Connect with Ethereum' : ''">
+          :label="!isConnectedMetamask || !this.$store.state.walletConnect ? 'Connect with Ethereum' : ''">
         </q-btn>
         <div style="width: 4%; display: flex; margin-left: 5px">
           <img src="ethereum.svg" alt="mascot_round" class="image-fit" />
         </div>
       </div>
-      <div v-if="walletsList && !isConnectedWC && !isConnectedMM" style="position: relative;">
+      <div v-if="walletsList && !this.$store.state.walletConnect && !isConnectedMetamask" style="position: relative;">
         <div style="display: flex; margin: 0 auto; justify-content: center;">
           <q-btn v-if="!this.isMobileDevice()" size="md" @click="siwe" style="
                                                           background: black; margin-top: 15px;
@@ -101,15 +101,15 @@
           -->
         </div>
       </div>
-      <div style="display: flex; margin: 0; justify-content: center" class="q-mb-md" v-if="isConnectedMM">
+      <div style="display: flex; margin: 0; justify-content: center" class="q-mb-md" v-if="isConnectedMetamask">
         <div style="width: 4%; display: flex; margin-right: 5px">
           <img src="ethereum.svg" alt="mascot_round" class="image-fit" />
         </div>
-        <q-btn size="md" @click="disconnectMM" style="
+        <q-btn size="md" @click="disconnectMetamask" style="
                                                           background: black;
                                                           border: 0px solid white;
                                                         " text-color="red" font-weight="900"
-          :label="!isConnectedMM ? '' : '&nbsp;Disconnect&nbsp;'">
+          :label="!isConnectedMetamask ? '' : '&nbsp;Disconnect&nbsp;'">
           <q-avatar size="25px">
             <img src="../assets/metamask.png">
           </q-avatar>
@@ -118,15 +118,15 @@
           <img src="ethereum.svg" alt="mascot_round" class="image-fit" />
         </div>
       </div>
-      <div style="display: flex; margin: 0; justify-content: center" class="q-mb-md" v-if="isConnectedWC">
+      <div style="display: flex; margin: 0; justify-content: center" class="q-mb-md" v-if="this.$store.state.walletConnect">
         <div style="width: 4%; display: flex; margin-right: 5px">
           <img src="ethereum.svg" alt="mascot_round" class="image-fit" />
         </div>
-        <q-btn size="md" @click="disconnectWC" style="
+        <q-btn size="md" @click="disconnectWalletConnect" style="
                                                           background: black;
                                                           border: 0px solid white;
-                                                        " text-color="blue" font-weight="900"
-          :label="!isConnectedWC ? '' : '&nbsp;Disconnect&nbsp;'">
+                                                        " text-color="red" font-weight="900"
+          :label="!this.$store.state.walletConnect ? '' : '&nbsp;Disconnect&nbsp;'">
           <q-avatar size="25px">
             <img src="../assets/walletConnect.png">
           </q-avatar>
@@ -135,12 +135,12 @@
           <img src="ethereum.svg" alt="mascot_round" class="image-fit" />
         </div>
       </div>
-      <div v-if="isConnectedMM || isConnectedWC" style="position: relative;">
+      <div v-if="isConnectedMetamask || this.$store.state.walletConnect" style="position: relative;">
         <div class="input-siwe" style="margin: 0px auto;">
           <q-input v-model="password" ref="keyInput" bottom-slots outlined label='enter password (optional)' dense>
             <q-icon name="info" style="font-size: 20px; margin-top: 10px;">
               <q-tooltip class="tooltip" anchor="top left" self="bottom right" style="width: auto;" :offset="[1, 1]">
-                <b style="color: orange">PASSWORD</b> IS OPTIONAL ALTHOUGH WE RECOMMEND USING A VALUE. IT IS USED TO
+                <b style="color: orange">PASSWORD</b> IS OPTIONAL ALTHOUGH WE RECOMetamaskEND USING A VALUE. IT IS USED TO
                 'SALT'
                 NOSTR-SPECIFIC KEY GENERATION
               </q-tooltip>
@@ -159,7 +159,7 @@
           </q-input>
         </div>
       </div>
-      <div v-if="isConnectedMM || isConnectedWC" style="display: block;">
+      <div v-if="isConnectedMetamask || this.$store.state.walletConnect" style="display: block;">
         <div v-if="isSigned" style="display: flex; margin: 15px auto; justify-content: center">
           <p class="spotnik">↓ GENERATED <span style="color: orange; font-weight: 700;">PRIVATE KEYS</span> ↓</p>
         </div>
@@ -176,7 +176,7 @@
           <q-btn size="md" @click="sign"
             style="background: linear-gradient(266deg, rgba(0,148,21,0.75) 0%, rgba(0,113,205,0.75) 100%); border: 0px solid white;"
             text-color="white" font-weight="900"
-            :label="!isConnectedMM && !isConnectedWC ? 'Connect Ethereum Wallet' : 'Sign-In With Ethereum'"
+            :label="!isConnectedMetamask && !this.$store.state.walletConnect ? 'Connect Ethereum Wallet' : 'Sign-In With Ethereum'"
             value="true" />
           <div style="width: 4%; display: flex; margin-left: 5px">
             <img src="ethereum.svg" alt="mascot_round" class="image-fit" />
@@ -379,14 +379,11 @@ export default defineComponent({
       hasExtension: false,
       selectedRelays: this.$store.state.defaultRelays,
       newRelay: '',
-      isConnectedMM: false,
+      isConnectedMetamask: false,
       username: '',
       password: '',
-      chainId: '',
       isSigned: false,
-      connectModal: this.$store.state.walletModal,
-      walletsList: true,
-      isConnectedWC: this.$store.state.walletConnect,
+      walletsList: false,
     }
   },
 
@@ -396,7 +393,7 @@ export default defineComponent({
     },
 
     showKeyInitialization() {
-      if (this.connectModal) return false
+      if (this.$store.state.walletModal) return false
       return true
     },
 
@@ -512,37 +509,35 @@ export default defineComponent({
       let walletResponse = await connectWallet()
       if (walletResponse.address) {
         console.log(`Connected to ${walletResponse.address}`)
-        this.isConnectedMM = true
+        this.isConnectedMetamask = true
         this.$store.state.walletConnect = false
-        this.chainId = walletResponse.chainId
+        this.$store.state.chainId = walletResponse.chainId
       } else {
-        this.isConnectedMM = false
+        this.isConnectedMetamask = false
         this.$store.state.walletConnect = false
         console.log('Connection Failed')
       }
       return
     },
 
-    disconnectMM() {
-      this.isConnectedMM = false
-      this.isConnectedWC = false
+    disconnectMetamask() {
+      this.isConnectedMetamask = false
       this.$store.state.walletConnect = false
       this.$store.state.walletModal = false
       this.walletsList = false
       return
     },
 
-    disconnectWC() {
-      this.isConnectedMM = false
-      this.isConnectedWC = false
+    disconnectWalletConnect() {
+      this.isConnectedMetamask = false
       this.$store.state.walletConnect = false
-      this.$store.state.walletModal = true
+      this.$store.state.walletModal = false
       this.walletsList = false
       return
     },
 
     async sign() {
-      let signResponse = await SignWithWallet(this.username, this.password, this.chainId)
+      let signResponse = await SignWithWallet(this.username, this.password, this.$store.state.chainId)
       this.key = signResponse.data.privkey
       this.watchOnly = false
       if (this.key.length > 0) {
@@ -574,12 +569,12 @@ export default defineComponent({
         this.$emit('wallet-dialog')
         console.log('Connected with WalletConnect')
         this.$store.state.walletConnect = true
-        this.isConnectedMM = false
-        this.chainId = ethereumClient.getNetwork().chain.id
+        this.isConnectedMetamask = false
+        this.$store.state.chainId = ethereumClient.getNetwork().chain.id.toString()
         this.$store.state.walletModal = false
         this.walletsList = false
       } else {
-        this.isConnectedMM = false
+        this.isConnectedMetamask = false
         this.$store.state.walletConnect = false
         console.log('Connection Failed')
       }

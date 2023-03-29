@@ -12,7 +12,7 @@
       :href="`https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display-swap`"
     />
     <div>
-      <q-dialog v-if="!this.$store.state.keys.pub && !this.$store.state.walletModal" v-model="initializeKeys" seemless position="bottom" @click:backdrop="lookingAround = true">
+      <q-dialog v-if="!this.$store.state.keys.pub && !this.$store.state.walletModal" v-model="initializeKeys" seemless persistent @click:backdrop="lookingAround = true">
         <TheKeyInitializationDialog
           style="max-height: 85vh;"
           @look-around="lookingAround = true"
