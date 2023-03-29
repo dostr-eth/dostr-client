@@ -177,3 +177,20 @@ a {
   background-repeat: no-repeat;
   background-attachment: fixed;
 }
+
+.w3m-modal-lightbox {
+  z-index: 10 !important;
+}
+
+.w3m-modal-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+}
+
+.w3m-modal-header {
+  font-family: 'Spotnik';
+}

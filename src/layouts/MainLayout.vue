@@ -11,12 +11,15 @@
       rel="stylesheet"
       :href="`https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display-swap`"
     />
-    <q-dialog v-if="!$store.state.keys.pub" v-model="initializeKeys" persistent>
-      <TheKeyInitializationDialog
-        style="max-height: 85vh;"
-        @look-around="setLookingAroundMode"
-      />
-    </q-dialog>
+    <div>
+      <q-dialog v-if="!$store.state.keys.pub" v-model="initializeKeys" persistent @click:backdrop="lookingAround = true">
+        <TheKeyInitializationDialog
+          style="max-height: 85vh;"
+          @look-around="lookingAround = true"
+          @wallet-dialog="lookingAround = false"
+        />
+      </q-dialog>
+    </div>
     <div id="layout-container" :ripple="false" class="backdrop">
       <div id="left-drawer" class="flex justify-end" style="margin-right: 25px;">
         <TheUserMenu
@@ -454,9 +457,7 @@ export default defineComponent({
       this.$q.dark.set(this.lightOrDark(background) === 'dark')
       this.updateFont(this.$store.state.config.preferences.font)
     },
-    setLookingAroundMode() {
-      this.lookingAround = true
-    },
+
     async enableWebLn() {
       try {
         if (typeof window.webln !== 'undefined') {

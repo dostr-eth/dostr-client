@@ -6,6 +6,9 @@ export default function (store) {
       case 'setKeys':
         LocalStorage.set('keys', state.keys)
         break
+      case 'setWalletModal':
+          LocalStorage.set('walletModal', state.walletModal)
+          break
       case 'setFollows':
         LocalStorage.set('follows', state.follows)
         break

@@ -16,6 +16,11 @@ import { getPubKeyTagWithRelay } from '../utils/helpers'
 import { metadataFromEvent } from '../utils/event'
 import * as helpersMixin from '../utils/mixin'
 
+export function walletModal(store, value) {
+  // initialise wallet connect modal
+  store.commit('setWalletModal', value)
+}
+
 export function initKeys(store, keys) {
   // passing no arguments will cause a new seed to be generated
   store.commit('setKeys', keys)
