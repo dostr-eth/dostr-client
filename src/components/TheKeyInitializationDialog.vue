@@ -549,7 +549,6 @@ export default defineComponent({
     generate() {
       this.key = generatePrivateKey()
       this.watchOnly = false
-      this.focusKeyInput()
     },
 
     showWeb3modal() {
