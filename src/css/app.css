@@ -185,7 +185,16 @@ a {
   font-family: 'Spotnik';
 }
 
+.ruler-mobile {
+  margin-top: 50px;
+  margin-bottom: 25px;
+}
+
 @media screen and (max-width: 600px) {
+  .ruler-mobile {
+    margin-top: 80px; 
+    margin-bottom: 25px;
+  }
   .copy-btn-priv {
     margin-left: 85%;
     width: 15%;

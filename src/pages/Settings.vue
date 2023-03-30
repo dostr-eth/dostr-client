@@ -102,18 +102,18 @@
           <template #options>
             <div style="max-height: 6.75rem">
               <pre class="relay-list">
-                            <li
-                              v-for='(relay, index) in optionalRelays'
-                              :key='index + "-" + relay'
-                              class='relay-item'
-                              @click.stop='relays[relay] = { read: true, write: true }'
-                            >
-                              <div class='flex row justify-between no-wrap'>
-                                <span>{{ relay }}</span>
-                                <q-icon name='add' size='xs' color='positive' flat/>
-                              </div>
-                            </li>
-                          </pre>
+                <li
+                  v-for='(relay, index) in optionalRelays'
+                  :key='index + "-" + relay'
+                  class='relay-item'
+                  @click.stop='relays[relay] = { read: true, write: true }'
+                >
+                  <div class='flex row justify-between no-wrap'>
+                    <span>{{ relay }}</span>
+                    <q-icon name='add' size='xs' color='positive' flat/>
+                  </div>
+                </li>
+              </pre>
             </div>
           </template>
         </BaseSelectMultiple>
@@ -179,10 +179,10 @@
           </div>
           <div>
             <div class="mt-1 text-lg justify-center items-center rajdhani">
-              <q-icon size="sm" name="bookmark_added" />&nbsp;Posts are published using your <b style="color: orange;">Private Key</b>
+              <q-icon size="sm" name="bookmark_added" />&nbsp;&nbsp;Posts are published using your <b style="color: orange;">Private Key</b>
             </div>
             <div class="mt-1 text-lg justify-center items-center rajdhani">
-              <q-icon size="sm" name="visibility" />&nbsp;Others can see your posts or follow you using only your <b style="color: lightgreen;">Public
+              <q-icon size="sm" name="devices" />&nbsp;&nbsp;Others can see your posts or follow you using only your <b style="color: lightgreen;">Public
                 Key</b>
             </div>
           </div>

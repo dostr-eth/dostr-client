@@ -2,14 +2,12 @@
   <div style='border: 1px solid #b6c6e39f; border-radius: 5px;'>
     <q-expansion-item dense dense-toggle group='info' class="no-padding full-width" header-class='items-center'>
       <template #header>
-        <span class='full-width text-bold text-uppercase text-head'>What is Dostr?</span>
+        <span class='full-width text-bold text-uppercase'>What is Nostr/Dostr?</span>
       </template>
       <q-card-section class='tight-text'>
         <p>
-          The <a href='https://github.com/dostr-eth' target='_blank' rel='noopener noreferrer'>Dostr protocol</a>, or
-          simply Dostr, is an
-          Ethereum-flavoured
-          Nostr client. Similar to Nostr, Dostr is an <b>open</b>,
+          The <a href='https://github.com/dostr-eth' target='_blank' rel='noopener noreferrer'>Nostr protocol</a>, or
+          simply <b>NOSTR</b>, is an <b>open</b>,
           <b>permissionless</b>, <b>censorship-resistant</b> and
           <b>distributed</b> information network that relies on <b>Clients</b> and <b>Relays</b>. Both have their assigned
           duties:
@@ -26,12 +24,11 @@
             independently. This also applies to Dostr.</li>
         </ul>
         <p>
-          Dostr client provides an optional feature for users to login with Ethereum wallets. Dostr
+          <b>DOSTR</b> specifically is an Ethereum-flavoured Nostr client that provides optional feature for users to login with Ethereum wallets. Dostr
           accomplishes this by generating new Nostr user keys from users' Ethereum signatures. This essentially means that
           users can now <b>Sign-In With Ethereum (SIWE)</b> to access their Nostr profiles and even use their
           decentralised
-          Ethereum identity such as ENS. You can read the <a
-href='https://github.com/dostr-eth/resources' target='_blank'
+          Ethereum identity such as ENS. You can read the <a href='https://github.com/dostr-eth/resources' target='_blank'
             rel='noopener noreferrer'><b>full Dostr specs</b></a> here.
         </p>
       </q-card-section>
@@ -158,8 +155,7 @@ href='https://github.com/dostr-eth/resources' target='_blank'
       </q-card-section>
     </q-expansion-item>
     <div v-if='$store.state.keys.priv' style='max-height: 0; border-top: 1px solid #b6c6e39f' />
-    <q-expansion-item
-v-if='$store.state.keys.priv' dense dense-toggle group='info' class="no-padding full-width"
+    <q-expansion-item v-if='$store.state.keys.priv' dense dense-toggle group='info' class="no-padding full-width"
       header-class='items-center'>
       <template #header>
         <span class='full-width text-bold text-uppercase'>How do I remove my private key if I already entered it?</span>
@@ -195,8 +191,7 @@ v-if='$store.state.keys.priv' dense dense-toggle group='info' class="no-padding 
       <q-card-section class='tight-text'>
         <p>
           You can use any method you want to generate your keys, as long as they
-          conform to the <a
-href='https://github.com/nostr-protocol/nips/blob/master/01.md' target='_blank'
+          conform to the <a href='https://github.com/nostr-protocol/nips/blob/master/01.md' target='_blank'
             rel='noopener noreferrer'>Nostr NIP-01</a>
           specification.
         <ul>
@@ -231,25 +226,20 @@ href='https://github.com/nostr-protocol/nips/blob/master/01.md' target='_blank'
           Choose your key generation method:
         </p>
         <div style='border: 1px solid #b6c6e39f; border-radius: .5rem;'>
-          <q-expansion-item
-dense dense-toggle group='generateKeys' class="no-padding full-width"
+          <q-expansion-item dense dense-toggle group='generateKeys' class="no-padding full-width"
             header-class='items-center'>
             <template #header>
               <div class='full-width'>
-                <span class='text-bold gt-sm'>Use Ethereum<img
-src="ethereum.svg" alt="mascot_round" class="image-fit"
+                <span class='text-bold gt-sm'>Use Ethereum<img src="ethereum.svg" alt="mascot_round" class="image-fit"
                     style="width: 3%; margin: -5px -3px -6px 8px; align-items: center;" /></span>
-                <span class='text-bold lt-md'>Use Ethereum<img
-src="ethereum.svg" alt="mascot_round" class="image-fit"
+                <span class='text-bold lt-md'>Use Ethereum<img src="ethereum.svg" alt="mascot_round" class="image-fit"
                       style="width: 4%; margin: -5px -3px -6px 8px; align-items: center;" /></span>
               </div>
             </template>
             <q-card-section>
               <ol>
-                <li>Install any Ethereum wallet such as <a
-href='https://GetAlby.com/' target='_blank'
-                    rel='noopener noreferrer'>🦊 MetaMask</a> or <a
-href='https://GetAlby.com/' target='_blank'
+                <li>Install any Ethereum wallet such as <a href='https://GetAlby.com/' target='_blank'
+                    rel='noopener noreferrer'>🦊 MetaMask</a> or <a href='https://GetAlby.com/' target='_blank'
                     rel='noopener noreferrer'>🌈 Rainbow</a> etc.
                 </li>
                 <li>When prompted for login, simply use <b>SIGN-IN WITH ETHEREUM</b> button.
@@ -258,8 +248,7 @@ href='https://GetAlby.com/' target='_blank'
             </q-card-section>
           </q-expansion-item>
           <div style='max-height: 0; border-top: 1px solid #b6c6e39f' />
-          <q-expansion-item
-dense dense-toggle group='generateKeys' class="no-padding full-width"
+          <q-expansion-item dense dense-toggle group='generateKeys' class="no-padding full-width"
             header-class='items-center'>
             <template #header>
               <span class='full-width text-bold'>Use NOS2X</span>
@@ -283,8 +272,7 @@ href='https://github.com/fiatjaf/NOS2X#install' target='_blank'
             </q-card-section>
           </q-expansion-item>
           <div style='max-height: 0; border-top: 1px solid #b6c6e39f' />
-          <q-expansion-item
-dense dense-toggle group='generateKeys' class="no-padding full-width"
+          <q-expansion-item dense dense-toggle group='generateKeys' class="no-padding full-width"
             header-class='items-center'>
             <template #header>
               <div class='full-width'>
@@ -313,8 +301,7 @@ dense dense-toggle group='generateKeys' class="no-padding full-width"
             </q-card-section>
           </q-expansion-item>
           <div style='max-height: 0; border-top: 1px solid #b6c6e39f' />
-          <q-expansion-item
-dense dense-toggle group='generateKeys' class="no-padding full-width"
+          <q-expansion-item dense dense-toggle group='generateKeys' class="no-padding full-width"
             header-class='items-center'>
             <template #header>
               <span class='full-width text-bold'>Use Nostr</span>
@@ -327,8 +314,7 @@ dense dense-toggle group='generateKeys' class="no-padding full-width"
             </q-card-section>
           </q-expansion-item>
           <div style='max-height: 0; border-top: 1px solid #b6c6e39f' />
-          <q-expansion-item
-dense dense-toggle group='generateKeys' class="no-padding full-width"
+          <q-expansion-item dense dense-toggle group='generateKeys' class="no-padding full-width"
             header-class='items-center'>
             <template #header>
               <span class='full-width text-bold'>Use Local Machine</span>
@@ -348,7 +334,7 @@ dense dense-toggle group='generateKeys' class="no-padding full-width"
     <div style='max-height: 0; border-top: 1px solid #b6c6e39f' />
     <q-expansion-item dense dense-toggle group='info' class="no-padding full-width" header-class='items-center'>
       <template #header>
-        <span class='full-width text-bold text-uppercase'>how to use dostr?</span>
+        <span class='full-width text-bold text-uppercase'>how to use dostr client?</span>
       </template>
       <q-card-section>
         <ol>
@@ -394,8 +380,7 @@ dense dense-toggle group='generateKeys' class="no-padding full-width"
                     Nostr
                     profile picture</li>
                   <li><strong>NIP-05 Identifier:</strong> Intended to be a unique, human-readable identifier for
-                    Nostr (read more <a
-href='https://github.com/nostr-protocol/nips/blob/master/05.md' target='_blank'
+                    Nostr (read more <a href='https://github.com/nostr-protocol/nips/blob/master/05.md' target='_blank'
                       rel='noopener noreferrer'>here</a>)
                   </li>
                 </ul>

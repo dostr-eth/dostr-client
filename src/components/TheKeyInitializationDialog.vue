@@ -22,23 +22,22 @@
         <template #header>
           <span class="text-bold flex justify-between" style="margin: 0 auto">
             <q-icon name="info" style="margin-top: -1.25px;"></q-icon>
-            <span class="lt-md" style="font-size: 14px; margin: -4px 0 0 8px; color: yellow;">Learn about Dostr</span>
-            <span class="gt-sm" style="font-size: 14px; margin: -4px 0 0 10px; color: yellow;">Click here to learn about
-              Dostr</span>
+            <span class="lt-md" style="font-size: 14px; margin: -4px 0 0 8px; color: yellow;">
+              Learn about Dostr
+            </span>
+            <span class="gt-sm" style="font-size: 14px; margin: -4px 0 0 10px; color: yellow;">
+              Click here to learn about Nostr
+            </span>
           </span>
         </template>
         <div>
           <BaseInformation />
         </div>
         <div style="margin-top: 5px">
-          <span style="
-                                                                padding: 0.2rem 0 0 0.2rem;
-                                                                font-size: 10pt;
-                                                                font-family: 'SF Mono';
-                                                                letter-spacing: -0.5px;
-                                                              ">ℹ️ This same information can be found in the
-            <strong>FAQ</strong> section at the bottom of the
-            <strong>Settings</strong> page after Login</span>
+          <span style="padding: 0.2rem 0 0 0.2rem; font-size: 10pt; font-family: 'SF Mono'; letter-spacing: -0.5px;">
+            ℹ️ This same information can be found in the <strong>FAQ</strong> section at the bottom of the
+            <strong>Settings</strong> page after Login
+          </span>
         </div>
       </q-expansion-item>
       <hr style="margin-bottom: 25px" />
@@ -47,10 +46,9 @@
         <div style="width: 4%; display: flex; margin-right: 5px">
           <img src="ethereum.svg" alt="mascot_round" class="image-fit" />
         </div>
-        <q-btn size="md" @click="showWeb3modal" style="
-                                                          background: linear-gradient(266deg, rgba(0,148,21,0.75) 0%, rgba(0,113,205,0.75) 100%);
-                                                          border: 0px solid white;
-                                                        " text-color="white" font-weight="900" :disable="walletsList"
+        <q-btn size="md" @click="showWeb3modal"
+          style="background: linear-gradient(266deg, rgba(0,148,21,0.75) 0%, rgba(0,113,205,0.75) 100%); border: 0px solid white;"
+          text-color="white" font-weight="900" :disable="walletsList"
           :label="!isConnectedMetamask || !this.$store.state.walletConnect ? 'Connect with Ethereum' : ''">
         </q-btn>
         <div style="width: 4%; display: flex; margin-left: 5px">
@@ -59,36 +57,33 @@
       </div>
       <div v-if="walletsList && !this.$store.state.walletConnect && !isConnectedMetamask" style="position: relative;">
         <div style="display: flex; margin: 0 auto; justify-content: center;">
-          <q-btn v-if="!this.isMobileDevice()" size="md" @click="siwe" style="
-                                                          background: black; margin-top: 15px;
-                                                          border: 0px solid white; width: auto;
-                                                        " text-color="orange" font-weight="700" label="&nbsp;Metamask&nbsp;">
+          <q-btn v-if="!this.isMobileDevice()" size="md" @click="siwe"
+            style="background: black; margin-top: 15px; border: 0px solid white; width: auto;"
+            text-color="orange" font-weight="700" label="&nbsp;Metamask&nbsp;">
             <q-avatar size="25px">
               <img src="../assets/metamask.png">
             </q-avatar>
           </q-btn>
-          <q-btn v-if="this.isMobileDevice() && !this.isMetamask()" size="md" @click="redirect" style="
-                                                          background: black; margin-top: 15px;
-                                                          border: 0px solid white; width: auto;
-                                                        " text-color="white" font-weight="700" label="&nbsp;Metamask&nbsp;">
+          <q-btn v-if="this.isMobileDevice() && !this.isMetamask()" size="md" @click="redirect"
+            style="background: black; margin-top: 15px; border: 0px solid white; width: auto;"
+            text-color="white" font-weight="700" label="&nbsp;Metamask&nbsp;">
             <q-avatar size="25px">
               <img src="../assets/metamask.png">
             </q-avatar>
           </q-btn>
-          <q-btn v-if="this.isMobileDevice() && this.isMetamask()" size="md" @click="siwe" style="
-                                                          background: black; margin-top: 15px;
-                                                          border: 0px solid white; width: auto;
-                                                        " text-color="yellow" font-weight="700" label="&nbsp;Connect&nbsp;">
+          <q-btn v-if="this.isMobileDevice() && this.isMetamask()" size="md" @click="siwe"
+            style="background: black; margin-top: 15px; border: 0px solid white; width: auto;"
+            text-color="yellow" font-weight="700" label="&nbsp;Connect&nbsp;">
             <q-avatar size="25px">
               <img src="../assets/metamask.png">
             </q-avatar>
           </q-btn>
         </div>
         <div style="display: flex; margin: 0 auto; justify-content: center;">
-          <q-btn size="md" @click="web3modal" style="
-                                                            background: black; margin-top: 15px;
-                                                            border: 0px solid white; width: auto;
-                                                          " text-color="blue" font-weight="700"
+          <q-btn size="md" @click="web3modal"
+            style="background: black; margin-top: 15px; border: 0px solid white; width: auto;"
+            text-color="blue"
+            font-weight="700"
             label="&nbsp;Wallet Connect&nbsp;">
             <q-avatar size="25px">
               <img src="../assets/walletConnect.png">
@@ -106,10 +101,9 @@
           <img src="ethereum.svg" alt="mascot_round" class="image-fit" />
         </div>
         <q-btn size="md" @click="disconnectMetamask" style="
-                                                          background: black;
-                                                          border: 0px solid white;
-                                                        " text-color="red" font-weight="900"
-          :label="!isConnectedMetamask ? '' : '&nbsp;Disconnect&nbsp;'">
+              background: black;
+              border: 0px solid white;
+              " text-color="red" font-weight="900" :label="!isConnectedMetamask ? '' : '&nbsp;Disconnect&nbsp;'">
           <q-avatar size="25px">
             <img src="../assets/metamask.png">
           </q-avatar>
@@ -118,14 +112,15 @@
           <img src="ethereum.svg" alt="mascot_round" class="image-fit" />
         </div>
       </div>
-      <div style="display: flex; margin: 0; justify-content: center" class="q-mb-md" v-if="this.$store.state.walletConnect">
+      <div style="display: flex; margin: 0; justify-content: center" class="q-mb-md"
+        v-if="this.$store.state.walletConnect">
         <div style="width: 4%; display: flex; margin-right: 5px">
           <img src="ethereum.svg" alt="mascot_round" class="image-fit" />
         </div>
         <q-btn size="md" @click="disconnectWalletConnect" style="
-                                                          background: black;
-                                                          border: 0px solid white;
-                                                        " text-color="red" font-weight="900"
+              background: black;
+              border: 0px solid white;
+              " text-color="red" font-weight="900"
           :label="!this.$store.state.walletConnect ? '' : '&nbsp;Disconnect&nbsp;'">
           <q-avatar size="25px">
             <img src="../assets/walletConnect.png">
@@ -136,13 +131,13 @@
         </div>
       </div>
       <div v-if="isConnectedMetamask || this.$store.state.walletConnect" style="position: relative;">
-        <div class="input-siwe" style="margin: 0px auto;">
-          <q-input v-model="password" ref="keyInput" bottom-slots outlined label='enter password (optional)' dense>
+        <div class="input-siwe" style="margin: 10px auto;">
+          <q-input v-model="password" ref="keyInput" bottom-slots outlined label='enter password (optional)' dense
+            class="q-field__bottom">
             <q-icon name="info" style="font-size: 20px; margin-top: 10px;">
               <q-tooltip class="tooltip" anchor="top left" self="bottom right" style="width: auto;" :offset="[1, 1]">
-                <b style="color: orange">PASSWORD</b> IS OPTIONAL ALTHOUGH WE RECOMetamaskEND USING A VALUE. IT IS USED TO
-                'SALT'
-                NOSTR-SPECIFIC KEY GENERATION
+                <b style="color: orange">PASSWORD</b> IS OPTIONAL ALTHOUGH WE RECOMMEND USING A VALUE. IT IS USED TO
+                'SALT' NOSTR-SPECIFIC KEY GENERATION
               </q-tooltip>
             </q-icon>
           </q-input>
@@ -160,7 +155,7 @@
         </div>
       </div>
       <div v-if="isConnectedMetamask || this.$store.state.walletConnect" style="display: block;">
-        <div v-if="isSigned" style="display: flex; margin: 15px auto; justify-content: center">
+        <div v-if="isSigned" style="display: flex; margin: 30px auto; justify-content: center">
           <p class="spotnik">↓ GENERATED <span style="color: orange; font-weight: 700;">PRIVATE KEYS</span> ↓</p>
         </div>
         <div style="display: block; margin: -30px auto; justify-content: center">
@@ -218,22 +213,25 @@
                 :text-color="watchOnly ? '' : 'dark'" value="false" @click="watchOnly = false" :disable="isBech32Pub" />
             </q-btn-group>
             <q-input v-model="key" ref="keyInput" bottom-slots outlined
-              :label="watchOnly ? 'enter public key' : 'enter private key'" style="width: inherit" dense>
+              :label="watchOnly ? 'enter public key' : 'enter private key'" style="width: inherit;">
               <template #hint>
-                <p v-if="!key && watchOnly" class="rajdhani" style="font-size: 12px; color: white; text-transform: uppercase;">
+                <p v-if="!key && watchOnly" class="sf-mono-tight"
+                  style="font-size: 13px; color: white;">
                   <q-icon name="info" style="font-size: 16px; margin-top: -2px"></q-icon>
-                  <b style="color: lightgreen"> INFO: </b> Entering <b style="color: lightgreen">Public Key</b> means
+                  <b style="color: lightgreen"> INFO: </b> Entering your <b style="color: lightgreen">Public Key</b> means
                   you will need to <b style="color: orange">Sign</b> with your
                   <b style="color: orange">Private Key</b>
-                  each time you post content either manually or using a browser
-                  extension
+                  each time you post content either manually or with a browser
+                  extension. This method is secure but inconvenient.
                 </p>
-                <p v-if="!key && !watchOnly" class="rajdhani" style="font-size: 12px; color: white; text-transform: uppercase;">
-                  <span style="font-size: 12px; padding-bottom: 10px;">⚠️</span> <b style="color: orange">WARNING: </b> Entering your
-                  <b style="color: orange">Private Key</b> means Dostr will
+                <p v-if="!key && !watchOnly" class="sf-mono-tight"
+                  style="font-size: 13px; color: white;">
+                  <span style="font-size: 12px; padding-bottom: 10px;">⚠️</span> <b style="color: orange">WARNING: </b>
+                  Entering your
+                  <b style="color: orange">Private Key</b> to Login means Dostr will
                   automatically <b style="color: orange">Sign</b> with your
                   <b style="color: orange">Private Key</b> each time you post
-                  content
+                  content. This method is convenient although relatively insecure.
                 </p>
                 <div class="flex justify-center spotnik" style="margin-top: 10px">
                   <p v-if="key && !isKeyValid" style="font-size: 16px; color: white">
@@ -251,7 +249,7 @@
                   @click="proceed" :disabled="!isKeyValid" style="font-size: 12px; font-weight: 900"></q-btn>
               </template>
             </q-input>
-            <hr style="margin-top: 50px; margin-bottom: 25px" />
+            <hr class="ruler-mobile"/>
             <div class="flex justify-between">
               <h2 v-if="!isKeyValid" class="text-subtitle1 text-bold q-pr-md flex justify-between" style="margin: 0 auto">
                 🔑 Do not have a key?
@@ -270,67 +268,70 @@
         {{ hexKey }}
         </div> -->
         </q-form>
-        <q-expansion-item v-if="isKeyValid" class="q-mt-sm" dense dense-toggle default-opened id="bootstrap-relays">
+        <q-expansion-item v-if="isKeyValid" class="q-mt-sm" dense dense-toggle default-opened id="bootstrap-relays" style="margin-top: -25px;">
           <template #header>
             <div class="full-width flex row no-wrap justify-center">
               <h2 class="text-subtitle1 text-bold q-pr-sm gt-sm">
                 📡 &nbsp;Enter Bootstrap Relays (optional)
               </h2>
-              <h2 class="text-subtitle1 text-bold q-pr-sm lt-md" style="font-size: 12px;">
-                📡 &nbsp;Enter Bootstrap Relays (optional)
+              <h2 class="text-subtitle1 text-bold q-pr-sm lt-md" style="font-size: 13px;">
+                📡 &nbsp;Enter Relays (optional)
               </h2>
             </div>
           </template>
           <div class="flex row justify-between no-wrap items-end q-mb-sm" style="margin-top: 20px">
-            <span class="q-ml-sm text-bold gt-sm">↓ Selected relays</span>
-            <span class="q-ml-xs text-bold lt-md">↓ Relays</span>
-            <q-icon class="gt-sm" name="info" style="font-size: 20px; margin-left: -75px; margin-top: -15px">
-              <q-tooltip class="tooltip" anchor="top right" self="bottom middle" :offset="[10, 10]">
-                ◦ The selected relays below will be queried to load your user
-                profile, follows, and relay data from Nostr network.<br />
-                ◦ Please ensure the list of selected relays includes relays you
-                publish your Nostr data to, otherwise Dostr may not be able to
-                find your data.
-              </q-tooltip>
-            </q-icon>
+            <div class="flex row no-wrap items-center">
+              <q-icon name="info" style="font-size: 20px; margin-top: 0px">
+                <q-tooltip class="tooltip" anchor="top right" self="bottom middle" :offset="[10, 10]">
+                  <span style="text-transform: uppercase;">❗ The list of <span style="color: orange;">Selected Relays</span>
+                    shown below will be queried to load your user Profile, Follows, and Relay data from Nostr Network.<br />
+                    ❗ Please ensure that the <span style="color: orange;">Selected Relays</span> includes relays that you
+                    publish your Nostr data to. Otherwise, Dostr may not be able to
+                    find your data.
+                  </span>
+                </q-tooltip>
+              </q-icon>
+              <span class="q-ml-sm text-bold gt-sm">Selected relays</span>
+              <span class="q-ml-xs text-bold lt-md">Relays</span>
+            </div>
             <div class="flex items-end" id="new-relay-input">
-              <q-input v-model="addRelay" color="lightgreen" ref="keyInput" dense bottom-slots placeholder="add new relay"
-                style="padding-top: -10px">
-              </q-input>
-              <q-btn icon="add" color="positive" size="md" flat dense @click.stop="addNewRelay" />
+              <div style="display: flex; margin: 10px 5px -7px 0px; justify-content: center;">
+                <q-input v-model="addRelay" color="lightgreen" ref="keyInput" dense outlined bottom-slots placeholder="add new relay"
+                  style="padding-top: 0px">
+                  <q-btn icon="add" color="positive" size="sm" flat dense @click.stop="addNewRelay" />
+                </q-input>
+              </div>
             </div>
           </div>
           <BaseSelectMultiple>
             <template #selected>
               <pre class="relay-list" style="border: 1px solid var(--q-primary);">
-                                                          <li
-                                                            v-for='(relay, index) in Object.keys(selectedRelays)'
-                                                            :key='index + "-" + relay'
-                                                            class='relay-item'
-                                                            @click.stop='delete selectedRelays[relay]'
-                                                          >
-                                                            <div class='flex row justify-between no-wrap'>
-                                                              <span style='overflow: auto;'>{{ relay }}</span>
-                                                              <q-icon name='remove' size='xs' color='negative'/>
-                                                            </div>
-                                                          </li>
-                                                        </pre>
+                  <li
+                    v-for='(relay, index) in Object.keys(selectedRelays)'
+                    :key='index + "-" + relay'
+                    class='relay-item'
+                    @click.stop='delete selectedRelays[relay]'>
+                    <div class='flex row justify-between no-wrap'>
+                      <span style='overflow: auto;'>{{ relay }}</span>
+                      <q-icon name='remove' size='xs' color='negative'/>
+                    </div>
+                  </li>
+                </pre>
             </template>
             <template #options>
               <div style="max-height: 6.75rem">
                 <pre class="relay-list">
-                                                            <li
-                                                              v-for='(relay, index) in optionalRelays'
-                                                              :key='index + "-" + relay'
-                                                              class='relay-item'
-                                                              @click.stop='selectedRelays[relay] = { read: true, write: false }'
-                                                            >
-                                                              <div class='flex row justify-between no-wrap'>
-                                                                <span style='overflow: auto;'>{{ relay }}</span>
-                                                                <q-icon name='add' size='xs' color='positive' flat/>
-                                                              </div>
-                                                            </li>
-                                                          </pre>
+                    <li
+                      v-for='(relay, index) in optionalRelays'
+                      :key='index + "-" + relay'
+                      class='relay-item'
+                      @click.stop='selectedRelays[relay] = { read: true, write: false }'>
+                      <div class='flex row justify-between no-wrap'>
+                        <span style='overflow: auto;'>{{ relay }}</span>
+                        <q-icon name='add' size='xs' color='positive' flat/>
+                      </div>
+                    </li>
+                  </pre>
               </div>
             </template>
           </BaseSelectMultiple>
@@ -632,10 +633,10 @@ export default defineComponent({
 }
 
 .q-input {
-  padding: 1rem;
+  padding-bottom: 1rem;
   font-size: normal;
   font-family: "SF Mono";
-  font-weight: 800;
+  font-weight: 500;
 }
 </style>
 
@@ -681,6 +682,12 @@ export default defineComponent({
 }
 
 #new-relay-input .q-field--dense .q-field__control {
-  height: 1.4rem !important;
+  height: 2rem !important;
+}
+
+@media screen and (max-width: 600px) {
+  #new-relay-input {
+    width: 60%;
+  }
 }
 </style>

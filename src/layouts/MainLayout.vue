@@ -145,7 +145,9 @@
         v-touch-pan.prevent.mouse="moveFab"
       >
         <template #tooltip>
-          <q-tooltip class="tooltip" anchor="center left" self="center right" :offset="[10, 10]">CLICK TO COLLAPSE/EXPAND OR DRAG TO MOVE</q-tooltip>
+          <q-tooltip class="tooltip" anchor="center left" self="center right" :offset="[10, 10]">
+            CLICK TO COLLAPSE/EXPAND OR DRAG TO MOVE
+          </q-tooltip>
         </template>
         <template #icon>
           <q-icon name="drag_indicator" />
