@@ -521,7 +521,7 @@ export default {
         })
         .onOk(async () => {
           LocalStorage.clear()
-          window.location.href = '/dostr-client'
+          window.location.href = '/'
         })
     },
     async hardReset() {

@@ -16,7 +16,7 @@ export const SignWithWallet = async (username, password, chainId) => {
       const origin = window.location.origin
       */
       let info = `eip155:${chainId}:${address}`
-      let statement = `Log into Nostr network as '${username}'\n\nIMPORTANT: Please verify the integrity and authenticity of your Nostr client before signing this message\nPAYLOAD: ${info}`
+      let statement = `Log into Nostr client as '${username}'\n\nIMPORTANT: Please verify the integrity and authenticity of connected Nostr client before signing this message\n\nSIGNED BY: ${info}`
       /*
       const message = new SiweMessage({
         domain,
