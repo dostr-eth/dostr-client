@@ -205,7 +205,7 @@
             🔐 &nbsp;Enter your custom Nostr key
           </h2>
           <h2 class="text-subtitle1 text-bold q-pr-md flex justify-between lt-md"
-            style="margin: 0 auto; font-size: 12px;">
+            style="margin: 0 auto; font-size: 15px;">
             🔐 &nbsp;Enter your Nostr key
           </h2>
         </template>
@@ -341,8 +341,8 @@
             </template>
           </BaseSelectMultiple>
         </q-expansion-item>
-        <div style="min-height: 1rem" />
       </q-expansion-item>
+      <div class="pad-mobile" />
     </q-card>
   </div>
   <!-- </q-dialog> -->

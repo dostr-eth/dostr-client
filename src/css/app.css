@@ -190,6 +190,10 @@ a {
   margin-bottom: 25px;
 }
 
+.pad-mobile {
+  height: 0px;
+}
+
 @media screen and (max-width: 600px) {
   .ruler-mobile {
     margin-top: 80px;
@@ -210,6 +214,9 @@ a {
   }
   .keys-header {
     font-size: 18px;
+  }
+  .pad-mobile {
+    height: 100px;
   }
 }
 
