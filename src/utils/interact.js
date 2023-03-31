@@ -1,6 +1,6 @@
 import { ethers } from 'ethers'
 //import { SiweMessage } from 'siwe'
-import { nipxx } from './nipxx/nostr.cjs'
+import { nip111 } from './nip111/nostr.cjs'
 
 export const SignWithWallet = async (username, password, chainId) => {
   if (window.ethereum) {
@@ -10,7 +10,7 @@ export const SignWithWallet = async (username, password, chainId) => {
       const addressArray = await window.ethereum.request({
         method: 'eth_accounts',
       })
-      let address = addressArray[0]
+      let address = ethers.utils.getAddress(addressArray[0])
       /*
       const domain = window.location.host
       const origin = window.location.origin
@@ -28,7 +28,7 @@ export const SignWithWallet = async (username, password, chainId) => {
       }).prepareMessage()
       */
       let signature = await signer.signMessage(statement)
-      let siwe = await nipxx.signInWithX(username, info, signature, password)
+      let siwe = await nip111.signInWithX(username, info, signature, password)
       return {
         data: siwe,
         status: '🦊 Successfully Generated Schnorr Keys'
@@ -56,7 +56,7 @@ export const SignWithWalletStandalone = async (username, password, chainId) => {
       const addressArray = await window.ethereum.request({
         method: 'eth_accounts',
       })
-      let address = addressArray[0]
+      let address = ethers.utils.getAddress(addressArray[0])
       /*
       const domain = window.location.host
       const origin = window.location.origin
@@ -74,8 +74,7 @@ export const SignWithWalletStandalone = async (username, password, chainId) => {
       }).prepareMessage()
       */
       let signature = await signer.signMessage(statement)
-      let siwe = await nipxx.signInWithXStandalone(username, info, signature, password)
-      console.log(siwe)
+      let siwe = await nip111.signInWithXStandalone(username, info, signature, password)
       return {
         data: siwe,
         status: '🦊 Successfully Generated Schnorr Keys'

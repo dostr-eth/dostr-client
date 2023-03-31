@@ -155,6 +155,11 @@
         </div>
       </div>
       <div v-if="isConnectedMetamask || this.$store.state.walletConnect" style="display: block;">
+        <div v-if="isLoading" style="display: flex; margin: 30px auto; justify-content: center">
+          <p class="spotnik" style="font-size: 16px; color: yellow; font-weight: 700;">VERIFYING RECORDS
+            &nbsp;<q-icon name="hourglass_top" size="sm" style="margin-top: -2px"></q-icon>
+          </p>
+        </div>
         <div v-if="isSigned" style="display: flex; margin: 30px auto; justify-content: center">
           <p class="spotnik">↓ GENERATED <span style="color: orange; font-weight: 700;">PRIVATE KEYS</span> ↓</p>
         </div>
@@ -387,6 +392,7 @@ export default defineComponent({
       isSigned: false,
       isSignedStandalone: false,
       walletsList: false,
+      isLoading: false
     }
   },
 
@@ -571,27 +577,37 @@ export default defineComponent({
     },
 
     async sign() {
+      if (this.username.includes('@')) this.isLoading = true
       let signResponse = await SignWithWallet(this.username, this.password, this.$store.state.chainId)
+      if (this.username.includes('@')) this.isLoading = false
       this.key = signResponse.data.privkey
       this.watchOnly = false
       if (this.key && this.key?.length > 0) {
         this.isSigned = true
       } else {
-        this.$q.notify({
-          message: `❌ NIP-05 '${this.username}' doesn't exist or Public Key doesn't match the records${'\n\n'}⚠️ If you are trying to Login with 
-            your NIP-05 for the first time, you'll need to register first by generating your new Public Key in standalone mode and uploading it
-            to your NIP-05 provider. Click on 'REGISTER' to generate your Public Key`,
-          color: 'warning',
-          classes: 'notify',
-          timeout: 0,
-          actions: [
-            {
-              label: 'Register',
-              color: 'yellow',
-              handler: () => { this.signStandalone() }
-            }
-          ]
-        })
+        if (!signResponse.status.includes('user rejected signing')) {
+          this.$q.notify({
+            message: `❌ NIP-05 '${this.username}' doesn't exist or Public Key doesn't match the records${'\n\n'}⚠️ If you are trying to Login with 
+              your NIP-05 for the first time, you'll need to register first by generating your new Public Key in standalone mode and uploading it
+              to your NIP-05 provider. Click on 'REGISTER' to generate your Public Key`,
+            color: 'warning',
+            classes: 'notify',
+            timeout: 0,
+            actions: [
+              {
+                label: 'Register',
+                color: 'yellow',
+                handler: () => { this.signStandalone() }
+              }
+            ]
+          })
+        } else {
+          this.$q.notify({
+            message: `⚠️ Signature request rejected by user`,
+            color: 'negative',
+            classes: 'notify'
+          })
+        }
       }
     },
 

@@ -1,11 +1,60 @@
+"use strict";
+var __create = Object.create;
 var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __getProtoOf = Object.getPrototypeOf;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
 var __export = (target, all) => {
   for (var name in all)
     __defProp(target, name, { get: all[name], enumerable: true });
 };
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+  isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
+  mod
+));
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+
+// index.ts
+var nostr_tools_exports = {};
+__export(nostr_tools_exports, {
+  Kind: () => Kind,
+  SimplePool: () => SimplePool,
+  finishEvent: () => finishEvent,
+  fj: () => fakejson_exports,
+  generatePrivateKey: () => generatePrivateKey,
+  getBlankEvent: () => getBlankEvent,
+  getEventHash: () => getEventHash,
+  getPublicKey: () => getPublicKey,
+  matchFilter: () => matchFilter,
+  matchFilters: () => matchFilters,
+  nip04: () => nip04_exports,
+  nip05: () => nip05_exports,
+  nip06: () => nip06_exports,
+  nip111: () => nip111_exports,
+  nip19: () => nip19_exports,
+  nip26: () => nip26_exports,
+  nip39: () => nip39_exports,
+  nip57: () => nip57_exports,
+  relayInit: () => relayInit,
+  serializeEvent: () => serializeEvent,
+  signEvent: () => signEvent,
+  utils: () => utils_exports,
+  validateEvent: () => validateEvent,
+  verifySignature: () => verifySignature
+});
+module.exports = __toCommonJS(nostr_tools_exports);
 
 // keys.ts
-import * as secp256k1 from "@noble/secp256k1";
+var secp256k1 = __toESM(require("@noble/secp256k1"));
 function generatePrivateKey() {
   return secp256k1.utils.bytesToHex(secp256k1.utils.randomPrivateKey());
 }
@@ -14,8 +63,8 @@ function getPublicKey(privateKey) {
 }
 
 // event.ts
-import * as secp256k12 from "@noble/secp256k1";
-import { sha256 } from "@noble/hashes/sha256";
+var secp256k12 = __toESM(require("@noble/secp256k1"));
+var import_sha256 = require("@noble/hashes/sha256");
 
 // utils.ts
 var utils_exports = {};
@@ -162,7 +211,7 @@ function serializeEvent(evt) {
   ]);
 }
 function getEventHash(event) {
-  let eventHash = sha256(utf8Encoder.encode(serializeEvent(event)));
+  let eventHash = (0, import_sha256.sha256)(utf8Encoder.encode(serializeEvent(event)));
   return secp256k12.utils.bytesToHex(eventHash);
 }
 function validateEvent(event) {
@@ -694,13 +743,13 @@ __export(nip04_exports, {
   decrypt: () => decrypt,
   encrypt: () => encrypt
 });
-import { randomBytes } from "@noble/hashes/utils";
-import * as secp256k13 from "@noble/secp256k1";
-import { base64 } from "@scure/base";
+var import_utils3 = require("@noble/hashes/utils");
+var secp256k13 = __toESM(require("@noble/secp256k1"));
+var import_base = require("@scure/base");
 async function encrypt(privkey, pubkey, text) {
   const key = secp256k13.getSharedSecret(privkey, "02" + pubkey);
   const normalizedKey = getNormalizedX(key);
-  let iv = Uint8Array.from(randomBytes(16));
+  let iv = Uint8Array.from((0, import_utils3.randomBytes)(16));
   let plaintext = utf8Encoder.encode(text);
   let cryptoKey = await crypto.subtle.importKey(
     "raw",
@@ -714,8 +763,8 @@ async function encrypt(privkey, pubkey, text) {
     cryptoKey,
     plaintext
   );
-  let ctb64 = base64.encode(new Uint8Array(ciphertext));
-  let ivb64 = base64.encode(new Uint8Array(iv.buffer));
+  let ctb64 = import_base.base64.encode(new Uint8Array(ciphertext));
+  let ivb64 = import_base.base64.encode(new Uint8Array(iv.buffer));
   return `${ctb64}?iv=${ivb64}`;
 }
 async function decrypt(privkey, pubkey, data) {
@@ -729,8 +778,8 @@ async function decrypt(privkey, pubkey, data) {
     false,
     ["decrypt"]
   );
-  let ciphertext = base64.decode(ctb64);
-  let iv = base64.decode(ivb64);
+  let ciphertext = import_base.base64.decode(ctb64);
+  let iv = import_base.base64.decode(ivb64);
   let plaintext = await crypto.subtle.decrypt(
     { name: "AES-CBC", iv },
     cryptoKey,
@@ -799,26 +848,22 @@ __export(nip06_exports, {
   privateKeyFromSeedWords: () => privateKeyFromSeedWords,
   validateWords: () => validateWords
 });
-import * as secp256k14 from "@noble/secp256k1";
-import { wordlist } from "@scure/bip39/wordlists/english.js";
-import {
-  generateMnemonic,
-  mnemonicToSeedSync,
-  validateMnemonic
-} from "@scure/bip39";
-import { HDKey } from "@scure/bip32";
+var secp256k14 = __toESM(require("@noble/secp256k1"));
+var import_english = require("@scure/bip39/wordlists/english.js");
+var import_bip39 = require("@scure/bip39");
+var import_bip32 = require("@scure/bip32");
 function privateKeyFromSeedWords(mnemonic, passphrase) {
-  let root = HDKey.fromMasterSeed(mnemonicToSeedSync(mnemonic, passphrase));
+  let root = import_bip32.HDKey.fromMasterSeed((0, import_bip39.mnemonicToSeedSync)(mnemonic, passphrase));
   let privateKey = root.derive(`m/44'/1237'/0'/0/0`).privateKey;
   if (!privateKey)
     throw new Error("could not derive private key");
   return secp256k14.utils.bytesToHex(privateKey);
 }
 function generateSeedWords() {
-  return generateMnemonic(wordlist);
+  return (0, import_bip39.generateMnemonic)(import_english.wordlist);
 }
 function validateWords(words) {
-  return validateMnemonic(words, wordlist);
+  return (0, import_bip39.validateMnemonic)(words, import_english.wordlist);
 }
 
 // nip19.ts
@@ -832,12 +877,12 @@ __export(nip19_exports, {
   npubEncode: () => npubEncode,
   nsecEncode: () => nsecEncode
 });
-import * as secp256k15 from "@noble/secp256k1";
-import { bech32 } from "@scure/base";
+var secp256k15 = __toESM(require("@noble/secp256k1"));
+var import_base2 = require("@scure/base");
 var Bech32MaxSize = 5e3;
 function decode(nip19) {
-  let { prefix, words } = bech32.decode(nip19, Bech32MaxSize);
-  let data = new Uint8Array(bech32.fromWords(words));
+  let { prefix, words } = import_base2.bech32.decode(nip19, Bech32MaxSize);
+  let data = new Uint8Array(import_base2.bech32.fromWords(words));
   switch (prefix) {
     case "nprofile": {
       let tlv = parseTLV(data);
@@ -923,24 +968,24 @@ function noteEncode(hex) {
 }
 function encodeBytes(prefix, hex) {
   let data = secp256k15.utils.hexToBytes(hex);
-  let words = bech32.toWords(data);
-  return bech32.encode(prefix, words, Bech32MaxSize);
+  let words = import_base2.bech32.toWords(data);
+  return import_base2.bech32.encode(prefix, words, Bech32MaxSize);
 }
 function nprofileEncode(profile) {
   let data = encodeTLV({
     0: [secp256k15.utils.hexToBytes(profile.pubkey)],
     1: (profile.relays || []).map((url) => utf8Encoder.encode(url))
   });
-  let words = bech32.toWords(data);
-  return bech32.encode("nprofile", words, Bech32MaxSize);
+  let words = import_base2.bech32.toWords(data);
+  return import_base2.bech32.encode("nprofile", words, Bech32MaxSize);
 }
 function neventEncode(event) {
   let data = encodeTLV({
     0: [secp256k15.utils.hexToBytes(event.id)],
     1: (event.relays || []).map((url) => utf8Encoder.encode(url))
   });
-  let words = bech32.toWords(data);
-  return bech32.encode("nevent", words, Bech32MaxSize);
+  let words = import_base2.bech32.toWords(data);
+  return import_base2.bech32.encode("nevent", words, Bech32MaxSize);
 }
 function naddrEncode(addr) {
   let kind = new ArrayBuffer(4);
@@ -951,8 +996,8 @@ function naddrEncode(addr) {
     2: [secp256k15.utils.hexToBytes(addr.pubkey)],
     3: [new Uint8Array(kind)]
   });
-  let words = bech32.toWords(data);
-  return bech32.encode("naddr", words, Bech32MaxSize);
+  let words = import_base2.bech32.toWords(data);
+  return import_base2.bech32.encode("naddr", words, Bech32MaxSize);
 }
 function encodeTLV(tlv) {
   let entries = [];
@@ -974,8 +1019,8 @@ __export(nip26_exports, {
   createDelegation: () => createDelegation,
   getDelegator: () => getDelegator
 });
-import * as secp256k16 from "@noble/secp256k1";
-import { sha256 as sha2562 } from "@noble/hashes/sha256";
+var secp256k16 = __toESM(require("@noble/secp256k1"));
+var import_sha2562 = require("@noble/hashes/sha256");
 function createDelegation(privateKey, parameters) {
   let conditions = [];
   if ((parameters.kind || -1) >= 0)
@@ -987,7 +1032,7 @@ function createDelegation(privateKey, parameters) {
   let cond = conditions.join("&");
   if (cond === "")
     throw new Error("refusing to create a delegation without any conditions");
-  let sighash = sha2562(
+  let sighash = (0, import_sha2562.sha256)(
     utf8Encoder.encode(`nostr:delegation:${parameters.pubkey}:${cond}`)
   );
   let sig = secp256k16.utils.bytesToHex(
@@ -1019,7 +1064,7 @@ function getDelegator(event) {
     else
       return null;
   }
-  let sighash = sha2562(
+  let sighash = (0, import_sha2562.sha256)(
     utf8Encoder.encode(`nostr:delegation:${event.pubkey}:${cond}`)
   );
   if (!secp256k16.schnorr.verifySync(sig, sighash, pubkey))
@@ -1059,7 +1104,7 @@ __export(nip57_exports, {
   useFetchImplementation: () => useFetchImplementation3,
   validateZapRequest: () => validateZapRequest
 });
-import { bech32 as bech322 } from "@scure/base";
+var import_base3 = require("@scure/base");
 var _fetch3;
 try {
   _fetch3 = fetch;
@@ -1073,8 +1118,8 @@ async function getZapEndpoint(metadata) {
     let lnurl = "";
     let { lud06, lud16 } = JSON.parse(metadata.content);
     if (lud06) {
-      let { words } = bech322.decode(lud06, 1e3);
-      let data = bech322.fromWords(words);
+      let { words } = import_base3.bech32.decode(lud06, 1e3);
+      let data = import_base3.bech32.fromWords(words);
       lnurl = utf8Decoder.decode(data);
     } else if (lud16) {
       let [name, domain] = lud16.split("@");
@@ -1167,9 +1212,9 @@ function makeZapReceipt({
   return zap;
 }
 
-// nipxx.ts
-var nipxx_exports = {};
-__export(nipxx_exports, {
+// nip111.ts
+var nip111_exports = {};
+__export(nip111_exports, {
   loginWithX: () => loginWithX,
   privateKeyFromX: () => privateKeyFromX,
   registerWithX: () => registerWithX,
@@ -1177,9 +1222,9 @@ __export(nipxx_exports, {
   signInWithXStandalone: () => signInWithXStandalone,
   useFetchImplementation: () => useFetchImplementation4
 });
-import * as secp256k17 from "@noble/secp256k1";
-import { hkdf } from "@noble/hashes/hkdf";
-import { sha256 as sha2563 } from "@noble/hashes/sha256";
+var secp256k17 = __toESM(require("@noble/secp256k1"));
+var import_hkdf = require("@noble/hashes/hkdf");
+var import_sha2563 = require("@noble/hashes/sha256");
 var _fetch4;
 try {
   _fetch4 = fetch;
@@ -1191,10 +1236,10 @@ function useFetchImplementation4(fetchImplementation) {
 async function privateKeyFromX(username, caip10, sig, password) {
   if (sig.length < 64)
     throw new Error("Signature too short; length should be 65 bytes");
-  let inputKey = await sha2563(secp256k17.utils.hexToBytes(sig.toLowerCase().startsWith("0x") ? sig.slice(2) : sig));
+  let inputKey = await (0, import_sha2563.sha256)(secp256k17.utils.hexToBytes(sig.toLowerCase().startsWith("0x") ? sig.slice(2) : sig));
   let info = `${caip10}:${username}`;
-  let salt = await sha2563(`${info}:${password ? password : ""}:${sig.slice(-64)}`);
-  let hashKey = await hkdf(sha2563, inputKey, salt, info, 42);
+  let salt = await (0, import_sha2563.sha256)(`${info}:${password ? password : ""}:${sig.slice(-64)}`);
+  let hashKey = await (0, import_hkdf.hkdf)(import_sha2563.sha256, inputKey, salt, info, 42);
   return secp256k17.utils.bytesToHex(secp256k17.utils.hashToPrivateKey(hashKey));
 }
 var registerWithX = privateKeyFromX;
@@ -1240,34 +1285,8 @@ async function signInWithXStandalone(username, caip10, sig, password) {
 }
 
 // index.ts
-import * as secp256k18 from "@noble/secp256k1";
-import { hmac } from "@noble/hashes/hmac";
-import { sha256 as sha2564 } from "@noble/hashes/sha256";
-secp256k18.utils.hmacSha256Sync = (key, ...msgs) => hmac(sha2564, key, secp256k18.utils.concatBytes(...msgs));
-secp256k18.utils.sha256Sync = (...msgs) => sha2564(secp256k18.utils.concatBytes(...msgs));
-export {
-  Kind,
-  SimplePool,
-  finishEvent,
-  fakejson_exports as fj,
-  generatePrivateKey,
-  getBlankEvent,
-  getEventHash,
-  getPublicKey,
-  matchFilter,
-  matchFilters,
-  nip04_exports as nip04,
-  nip05_exports as nip05,
-  nip06_exports as nip06,
-  nip19_exports as nip19,
-  nip26_exports as nip26,
-  nip39_exports as nip39,
-  nip57_exports as nip57,
-  nipxx_exports as nipxx,
-  relayInit,
-  serializeEvent,
-  signEvent,
-  utils_exports as utils,
-  validateEvent,
-  verifySignature
-};
+var secp256k18 = __toESM(require("@noble/secp256k1"));
+var import_hmac = require("@noble/hashes/hmac");
+var import_sha2564 = require("@noble/hashes/sha256");
+secp256k18.utils.hmacSha256Sync = (key, ...msgs) => (0, import_hmac.hmac)(import_sha2564.sha256, key, secp256k18.utils.concatBytes(...msgs));
+secp256k18.utils.sha256Sync = (...msgs) => (0, import_sha2564.sha256)(secp256k18.utils.concatBytes(...msgs));

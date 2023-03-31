@@ -196,8 +196,8 @@
           specification.
         <ul>
           <li>If you wish to generate your keys using Ethereum Signatures <a
-              href='https://github.com/dostr-eth/nips/blob/ethkeygen/xx.md' target='_blank'
-              rel='noopener noreferrer'>(NIP-XX specification)</a> and use your ENS identity on Nostr, please use <b
+              href='https://github.com/dostr-eth/nips/blob/ethkeygen/111.md' target='_blank'
+              rel='noopener noreferrer'>(NIP-111 specification)</a> and use your ENS identity on Nostr, please use <b
               style="color: lightgreen;">SIGN-IN WITH
               ETHEREUM</b> button. You can use this on desktop as well as mobile devices.
           </li>
