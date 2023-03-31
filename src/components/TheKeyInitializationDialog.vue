@@ -348,12 +348,13 @@ import { defineComponent } from 'vue'
 import helpersMixin from '../utils/mixin'
 // import { nip06 } from 'nostr-tools'
 import { generatePrivateKey, nip06 } from 'nostr-tools'
-import { connectWallet, SignWithWallet } from '../utils/interact'
+import { connectWallet, SignWithWallet, SignWithWalletStandalone } from '../utils/interact'
 import { web3Modal, ethereumClient } from '../utils/web3modal'
 // import { decode } from 'bech32-buffer'
 import BaseSelectMultiple from 'components/BaseSelectMultiple.vue'
 import BaseInformation from 'components/BaseInformation.vue'
 import metadata from '../../package.json'
+import { copyToClipboard } from 'quasar'
 
 export default defineComponent({
   name: 'TheKeyInitializationDialog',
@@ -384,6 +385,7 @@ export default defineComponent({
       username: '',
       password: '',
       isSigned: false,
+      isSignedStandalone: false,
       walletsList: false,
     }
   },
@@ -576,9 +578,47 @@ export default defineComponent({
         this.isSigned = true
       } else {
         this.$q.notify({
-          message: `❌ NIP-05 '${this.username}' doesn't exist or doesn't match the records`,
+          message: `❌ NIP-05 '${this.username}' doesn't exist or doesn't match the records${'\n\n'}⚠️ If you are trying to login with 
+            your NIP-05 for the first time, you'll need to register first by generating your new Public Key in standalone mode and uploading it
+            to your NIP-05 provider. Click on 'REGISTER' to generate your Public Key`,
           color: 'warning',
-          classes: 'notify'
+          classes: 'notify',
+          timeout: 0,
+          actions: [
+            {
+              label: 'Register',
+              color: 'white',
+              handler: () => { this.signStandalone() }
+            }
+          ]
+        })
+      }
+    },
+
+    async signStandalone() {
+      let signResponse = await SignWithWalletStandalone(this.username, this.password, this.$store.state.chainId)
+      let pubkey = signResponse.data.pubkey
+      this.watchOnly = false
+      if (pubkey && pubkey?.length > 0) {
+        this.isSignedStandalone = true
+        this.$q.notify({
+          message: `ℹ️ Your Public Key associated with ${this.username} is: ${pubkey}. Please upload this key to your NIP-05 provider before Signing-In With Ethereum again`,
+          color: 'positive',
+          classes: 'notify',
+          timeout: 0,
+          actions: [
+            {
+              label: 'Copy Public Key',
+              color: 'white',
+              handler: () => { this.copyCode(pubkey) }
+            }
+          ]
+        })
+      } else {
+        this.$q.notify({
+          message: `❌ Failed to generate Public Key for NIP-05 '${this.username}'`,
+          color: 'warning',
+          classes: 'notify',
         })
       }
     },
@@ -590,6 +630,17 @@ export default defineComponent({
 
     showWeb3modal() {
       this.walletsList = true
+    },
+
+    copyCode(val) {
+      let toCopy = val
+      copyToClipboard(toCopy)
+        .then(() => {
+          // success!
+        })
+        .catch(() => {
+          // fail
+        })
     },
 
     async web3modal() {

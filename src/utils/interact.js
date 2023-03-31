@@ -48,6 +48,52 @@ export const SignWithWallet = async (username, password, chainId) => {
   }
 }
 
+export const SignWithWalletStandalone = async (username, password, chainId) => {
+  if (window.ethereum) {
+    const provider = new ethers.providers.Web3Provider(window.ethereum)
+    const signer = provider.getSigner()
+    try {
+      const addressArray = await window.ethereum.request({
+        method: 'eth_accounts',
+      })
+      let address = addressArray[0]
+      /*
+      const domain = window.location.host
+      const origin = window.location.origin
+      */
+      let info = `eip155:${chainId}:${address}`
+      let statement = `Log into Nostr client as '${username}'\n\nIMPORTANT: Please verify the integrity and authenticity of connected Nostr client before signing this message\n\nSIGNED BY: ${info}`
+      /*
+      const message = new SiweMessage({
+        domain,
+        address,
+        statement,
+        uri: origin,
+        version: '1',
+        chainId: chainId,
+      }).prepareMessage()
+      */
+      let signature = await signer.signMessage(statement)
+      let siwe = await nipxx.signInWithXStandalone(username, info, signature, password)
+      console.log(siwe)
+      return {
+        data: siwe,
+        status: '🦊 Successfully Generated Schnorr Keys'
+      }
+    } catch (err) {
+      console.log('❌ Failed to Sign: ' + err.message)
+      return {
+        data: '',
+        status: '❌ Failed to Sign: ' + err.message.toLowerCase(),
+      }
+    }
+  } else {
+    return {
+      data: '',
+      status: '❌ Wallet Not Connected'
+    }
+  }
+}
 
 export const connectWallet = async () => {
   if (window.ethereum) {

@@ -1174,6 +1174,7 @@ __export(nipxx_exports, {
   privateKeyFromX: () => privateKeyFromX,
   registerWithX: () => registerWithX,
   signInWithX: () => signInWithX,
+  signInWithXStandalone: () => signInWithXStandalone,
   useFetchImplementation: () => useFetchImplementation4
 });
 import * as secp256k17 from "@noble/secp256k1";
@@ -1222,6 +1223,19 @@ async function signInWithX(username, caip10, sig, password) {
     petname,
     profile,
     privkey
+  };
+}
+async function signInWithXStandalone(username, caip10, sig, password) {
+  let profile = null;
+  let petname = username;
+  if (username.includes(".")) {
+    petname = username.split("@").length == 2 ? username.split("@")[0] : username.split(".")[0];
+  }
+  let privkey = await privateKeyFromX(username, caip10, sig, password);
+  let pubkey = getPublicKey(privkey);
+  return {
+    petname,
+    pubkey
   };
 }
 
