@@ -480,7 +480,7 @@ export default defineComponent({
         if (val.includes('@')) {
           if (val.split('@').length === 2) {
             if (val.split('@')[1].includes('.')) {
-              if (val.split('@')[0].match(/^[a-z0-9-_]+$/)) {
+              if (val.split('@')[0].match(/^[a-z0-9-_]+$/) && val.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
                 this.$store.state.username = val
                 return true
               } else {
@@ -578,7 +578,7 @@ export default defineComponent({
         this.isSigned = true
       } else {
         this.$q.notify({
-          message: `❌ NIP-05 '${this.username}' doesn't exist or doesn't match the records${'\n\n'}⚠️ If you are trying to login with 
+          message: `❌ NIP-05 '${this.username}' doesn't exist or Public Key doesn't match the records${'\n\n'}⚠️ If you are trying to Login with 
             your NIP-05 for the first time, you'll need to register first by generating your new Public Key in standalone mode and uploading it
             to your NIP-05 provider. Click on 'REGISTER' to generate your Public Key`,
           color: 'warning',
@@ -606,11 +606,17 @@ export default defineComponent({
           color: 'positive',
           classes: 'notify',
           timeout: 0,
+          closeBtn: false,
           actions: [
             {
               label: 'Copy Public Key',
               color: 'white',
               handler: () => { this.copyCode(pubkey) }
+            },
+            {
+              label: 'Close',
+              color: 'white',
+              handler: () => { this.username = '' }
             }
           ]
         })
@@ -636,10 +642,10 @@ export default defineComponent({
       let toCopy = val
       copyToClipboard(toCopy)
         .then(() => {
-          // success!
+          this.username = ''
         })
         .catch(() => {
-          // fail
+          this.username = ''
         })
     },
 
