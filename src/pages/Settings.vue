@@ -15,7 +15,12 @@
         <q-btn v-if="!editingMetadata" label="edit" color="primary" outline size="sm"
           :disable="!$store.getters.canSignEventsAutomatically" @click="editingMetadata = true" />
       </div>
-      <q-input v-model="metadata.name" dense filled type="text" label="Name" :disable="!editingMetadata">
+      <q-input v-if="!this.$store.state.chainId" v-model="metadata.name" dense filled type="text" label="Name" :disable="!editingMetadata">
+        <template #before>
+          <q-icon name="alternate_email" />
+        </template>
+      </q-input>
+      <q-input v-if="this.$store.state.chainId" dense filled type="text" :label="this.petname ? this.petname : ''" :disable="this.$store.state.chainId.length > 0">
         <template #before>
           <q-icon name="alternate_email" />
         </template>
@@ -28,8 +33,9 @@
           <BaseUserAvatar v-if="metadata.picture" :pubkey="$store.state.keys.pub" rounded />
         </template>
       </q-input>
-      <q-input v-model.trim="metadata.nip05" :disable="!editingMetadata" filled dense type="text"
+      <q-input v-if="!this.$store.state.chainId" v-model.trim="metadata.nip05" :disable="!editingMetadata" filled dense type="text"
         label="NIP-05 Identifier" maxlength="100" />
+      <q-input v-if="this.$store.state.chainId" dense filled type="text" :label="this.username !== this.petname ? this.username : 'NIP-05 Identifier'" :disable="this.$store.state.chainId.length > 0" maxlength="100" />
       <div class="flex row no-wrap" style="gap: 1rem">
         <q-input v-model.trim="metadata.lud06" :disable="!editingMetadata" filled dense type="text"
           label="Lightning Address or LUD-06 Identifier" maxlength="150" class="full-width" />
@@ -269,6 +275,8 @@ export default {
       newRelay: '',
       unsubscribe: null,
       hasJustSharedRelay: false,
+      petname: '',
+      username: ''
     }
   },
 
@@ -320,6 +328,13 @@ export default {
   },
 
   mounted() {
+    if (this.$store.state.chainId) {
+      this.setInfo()
+      console.log('ChainID :', this.$store.state.chainId)
+    } else {
+      console.log('No ChainID')
+      console.log(this.$store.state)
+    }
     if (!this.$store.state.keys.pub) this.$router.push('/')
     if (this.$store.state.keys.pub && this.$route.params.initUser) {
       nextTick(() => {
@@ -361,6 +376,14 @@ export default {
   },
 
   methods: {
+    setInfo() {
+      if (this.$store.state.chainId) {
+        this.username = this.$store.state.username
+        this.petname = this.username.includes('@') ? this.username.split('@')[0] : this.username
+        this.metadata.name = this.petname
+        this.metadata.nip05 = this.username.includes('@') ? this.username : ''
+      }
+    },
     copyCode(val) {
       let toCopy = val
       copyToClipboard(toCopy)
@@ -417,6 +440,7 @@ export default {
           this.$q.notify({
             message: 'Failed to verify NIP-05 identifier at endpoint',
             color: 'warning',
+            classes: 'notify'
           })
 
           return
@@ -435,6 +459,7 @@ export default {
           this.$q.notify({
             message: 'Invalid LUD-06 identifier. LUD-06 identifiers must start with LNURL',
             color: 'warning',
+            classes: 'notify'
           })
           return
         }
@@ -445,6 +470,7 @@ export default {
           this.$q.notify({
             message: 'Invalid LUD-16 identifier. LUD-16 identifier must be a Lightning address',
             color: 'warning',
+            classes: 'notify'
           })
           return
         }

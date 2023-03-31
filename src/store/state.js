@@ -128,6 +128,7 @@ export default function () {
 
   return {
     keys: LocalStorage.getItem('keys') || {}, // {priv, pub }
+    username: LocalStorage.getItem('username') || '', // NIP-02/05 username
     walletModal: LocalStorage.getItem('walletModal') || false, // wallet connect modal
     walletConnect: LocalStorage.getItem('walletConnect') || false, // wallet connect
     chainId: LocalStorage.getItem('chainId') || '', // chainId

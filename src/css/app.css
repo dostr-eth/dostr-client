@@ -192,7 +192,7 @@ a {
 
 @media screen and (max-width: 600px) {
   .ruler-mobile {
-    margin-top: 80px; 
+    margin-top: 80px;
     margin-bottom: 25px;
   }
   .copy-btn-priv {
@@ -210,5 +210,11 @@ a {
   }
   .keys-header {
     font-size: 18px;
+  }
+}
+
+@media screen and (max-width: 1400px) {
+  .backdrop {
+    background-image: linear-gradient(319deg, rgba(5,11,6,1) 0%, rgba(0,0,0,1) 33%, rgba(0,0,0,1) 50%, rgba(20,18,18,1) 72%, rgba(41,32,32,1) 84%, rgba(82,62,62,1) 91%, rgba(153,73,73,1) 96%, rgba(172,51,184,1) 100%);
   }
 }

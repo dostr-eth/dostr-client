@@ -16,6 +16,11 @@ import { getPubKeyTagWithRelay } from '../utils/helpers'
 import { metadataFromEvent } from '../utils/event'
 import * as helpersMixin from '../utils/mixin'
 
+export function username(store, value) {
+  // set NIP-02/05 username
+  store.commit('setUsername', value)
+}
+
 export function walletModal(store, value) {
   // initialise wallet connect modal
   store.commit('setWalletModal', value)

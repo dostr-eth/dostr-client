@@ -143,11 +143,11 @@
           </q-input>
         </div>
         <div class="input-siwe" style="margin: -20px auto;">
-          <q-input v-model="username" ref="keyInput" bottom-slots outlined label='enter username' dense
-            class="q-field__bottom" :rules="[(val) => (val && val.length > 0) || 'cannot be empty',]">
+          <q-input v-model="username" ref="keyInput" bottom-slots outlined label='NIP-02/05 username' dense
+            class="q-field__bottom" :rules="[(val) => isLegitUser(val) || 'empty or illegal username',]">
             <q-icon name="info" style="font-size: 20px; margin-top: 10px;">
               <q-tooltip class="tooltip" anchor="top left" self="bottom right" style="width: auto;" :offset="[1, 1]">
-                <b style="color: orange">USERNAME</b> <b>MUST</b> BE YOUR NIP-02 OR NIP-05 IDENTIFIER. IT IS USED TO
+                <b style="color: orange">USERNAME</b> <b>MUST</b> BE YOUR NIP-02 OR NIP-05 IDENTIFIER (HINT: lowercase 'user' or 'user@domain.wtf'). IT IS USED TO
                 GENERATE UNIQUE KEYS FOR YOUR USERNAME
               </q-tooltip>
             </q-icon>
@@ -163,7 +163,7 @@
             label="auto-generated from ethereum signature" style="width: inherit" dense>
           </q-input>
         </div>
-        <div style="display: flex; margin: 30px; justify-content: center" class="q-mb-md"
+        <div style="display: flex; margin: 40px; justify-content: center" class="q-mb-md"
           v-if="!isSigned && username.length > 0">
           <div style="width: 4%; display: flex; margin-right: 5px">
             <img src="ethereum.svg" alt="mascot_round" class="image-fit" />
@@ -471,6 +471,36 @@ export default defineComponent({
   },
 
   methods: {
+    isLegitUser(val) {
+      if (val.length === 0 || val.length > 100) {
+        return false
+      } else {
+        if (val.includes('@')) {
+          if (val.split('@').length === 2) {
+            if (val.split('@')[1].includes('.')) {
+              if (val.split('@')[0].match(/^[a-z0-9-_]+$/)) {
+                this.$store.state.username = val
+                return true
+              } else {
+                return false
+              }
+            } else {
+              return false
+            }
+          } else {
+            return false
+          }
+        } else {
+          if (val.match(/^[a-z0-9-_]+$/)) {
+            this.$store.state.username = val
+            return true
+          } else {
+            return false
+          }
+        }
+      }
+    },
+
     isMobileDevice() {
       if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
         return true
@@ -486,8 +516,9 @@ export default defineComponent({
         this.focusKeyInput()
       } catch (err) {
         this.$q.notify({
-          message: `Failed to get a public key from a Nostr extension: ${err}`,
+          message: `❌ Failed to get a public key from a Nostr extension: ${err}`,
           color: 'warning',
+          classes: 'notify'
         })
       }
     },
@@ -541,8 +572,14 @@ export default defineComponent({
       let signResponse = await SignWithWallet(this.username, this.password, this.$store.state.chainId)
       this.key = signResponse.data.privkey
       this.watchOnly = false
-      if (this.key.length > 0) {
+      if (this.key && this.key?.length > 0) {
         this.isSigned = true
+      } else {
+        this.$q.notify({
+          message: `❌ NIP-05 '${this.username}' doesn't exist or doesn't match the records`,
+          color: 'warning',
+          classes: 'notify'
+        })
       }
     },
 
