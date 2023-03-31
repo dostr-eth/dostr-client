@@ -587,7 +587,7 @@ export default defineComponent({
           actions: [
             {
               label: 'Register',
-              color: 'white',
+              color: 'yellow',
               handler: () => { this.signStandalone() }
             }
           ]
@@ -602,7 +602,7 @@ export default defineComponent({
       if (pubkey && pubkey?.length > 0) {
         this.isSignedStandalone = true
         this.$q.notify({
-          message: `ℹ️ Your Public Key associated with ${this.username} is: ${pubkey}. Please upload this key to your NIP-05 provider before Signing-In With Ethereum again`,
+          message: `ℹ️ Your Public Key associated with ${this.username} is: ${!this.isMobileDevice() ? pubkey : pubkey.slice(0, 10) + '...' + pubkey.slice(-10)}. Please copy and upload this key to your NIP-05 provider to use Sign-In With Ethereum`,
           color: 'positive',
           classes: 'notify',
           timeout: 0,
@@ -615,7 +615,7 @@ export default defineComponent({
             },
             {
               label: 'Close',
-              color: 'white',
+              color: 'black',
               handler: () => { this.username = '' }
             }
           ]

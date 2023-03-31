@@ -276,7 +276,8 @@ export default {
       unsubscribe: null,
       hasJustSharedRelay: false,
       petname: '',
-      username: ''
+      username: '',
+      trigger: false
     }
   },
 
@@ -329,11 +330,10 @@ export default {
 
   mounted() {
     if (this.$store.state.chainId) {
+      this.trigger = true
       this.setInfo()
-      console.log('ChainID :', this.$store.state.chainId)
     } else {
-      console.log('No ChainID')
-      console.log(this.$store.state)
+      console.log('No ChainID; non-ETH Login')
     }
     if (!this.$store.state.keys.pub) this.$router.push('/')
     if (this.$store.state.keys.pub && this.$route.params.initUser) {
@@ -382,6 +382,7 @@ export default {
         this.petname = this.username.includes('@') ? this.username.split('@')[0] : this.username
         this.metadata.name = this.petname
         this.metadata.nip05 = this.username.includes('@') ? this.username : ''
+        this.setMetadata()
       }
     },
     copyCode(val) {
@@ -476,7 +477,7 @@ export default {
         }
       }
 
-      if (!Object.keys(this.$store.state.relays).length) this.saveRelays()
+      if (!Object.keys(this.$store.state.relays).length && !this.trigger) this.saveRelays()
       this.$store.dispatch('setMetadata', this.metadata)
       this.editingMetadata = false
     },
@@ -497,8 +498,9 @@ export default {
           .dialog({
             title: 'NO RELAYS SAVED!',
             message:
-              '⚠️ You must select at least one replay to save',
+              '⚠️ You must select at least one relay to broadcast',
             ok: { color: 'accent' },
+            class: 'dialog'
           })
           .onOk(() => {
             return
@@ -583,5 +585,9 @@ export default {
       rgba(28, 85, 113, 1) 50%,
       rgba(164, 90, 90, 1) 100%);
   padding: 0.2rem;
+}
+
+.q-dialog .q-dialog__content {
+  font-family: 'SF Mono', sans-serif;
 }
 </style>
