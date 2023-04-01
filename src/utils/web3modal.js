@@ -1,5 +1,11 @@
 import { configureChains, createClient } from '@wagmi/core'
-import { arbitrum, avalanche, mainnet, polygon, goerli } from '@wagmi/core/chains'
+import {
+  arbitrum,
+  avalanche,
+  mainnet,
+  polygon,
+  goerli,
+} from '@wagmi/core/chains'
 import {
   EthereumClient,
   w3mConnectors,

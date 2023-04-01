@@ -1,6 +1,6 @@
 <template>
-  <q-page style="margin-top: 15px;">
-    <BaseHeader style="margin-left: 30px;">
+  <q-page style="margin-top: 15px">
+    <BaseHeader style="margin-left: 30px">
       <div class="flex row no-wrap justify-start" style="gap: 1rem">
         <span class="spotnik">{{ $t("inbox") }}</span>
         <q-btn
@@ -43,7 +43,7 @@
             v-if="$store.state.unreadMessages[chat.peer]"
             color="warning"
             outline
-            class="text-bold q-my-auto"
+            class="text-bold q-my-auto sf-mono"
           >
             {{ $store.state.unreadMessages[chat.peer] }}
           </q-badge>
@@ -80,7 +80,10 @@ const metaData = {
   // meta tags
   meta: {
     description: { name: 'description', content: 'Dostr Direct Message Inbox' },
-    keywords: { name: 'keywords', content: 'nostr dostr decentralized social media siwe siwx' },
+    keywords: {
+      name: 'keywords',
+      content: 'nostr dostr decentralized social media siwe siwx',
+    },
     equiv: {
       'http-equiv': 'Content-Type',
       content: 'text/html; charset=UTF-8',

@@ -24,7 +24,7 @@
       <q-tab name="followers" label="followers" />
       <q-tab name="relays" label="relays" />
     </q-tabs>
-    <q-tab-panels v-model="tab" animated style="margin-top: 10px;">
+    <q-tab-panels v-model="tab" animated style="margin-top: 10px">
       <q-tab-panel name="posts" class="no-padding">
         <q-form v-if="threads.length" class="q-pa-sm" @submit="search">
           <q-input

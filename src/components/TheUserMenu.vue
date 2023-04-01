@@ -1,42 +1,78 @@
 <template>
   <q-list
-:class="
-    compactMode
-      ? 'flex row no-wrap justify-around items-center full-width'
-      : 'text-right'
-  " :dense="compactMode">
+    :class="
+      compactMode
+        ? 'flex row no-wrap justify-around items-center full-width'
+        : 'text-right'
+    "
+    :dense="compactMode"
+  >
     <q-item
-v-if="$store.state.keys.pub" class="col no-padding flex items-center"
-      :class="compactMode ? 'justify-center' : 'justify-end'" clickable @click="toProfile($store.state.keys.pub)">
-      <BaseUserCard v-if="!compactMode" :pubkey="$store.state.keys.pub" :align-right="true" :wrap="true" class="gt-sm" />
+      v-if="$store.state.keys.pub"
+      class="col no-padding flex items-center"
+      :class="compactMode ? 'justify-center' : 'justify-end'"
+      clickable
+      @click="toProfile($store.state.keys.pub)"
+    >
+      <BaseUserCard
+        v-if="!compactMode"
+        :pubkey="$store.state.keys.pub"
+        :align-right="true"
+        :wrap="true"
+        class="gt-sm"
+      />
       <BaseUserAvatar
-v-if="!compactMode" :pubkey="$store.state.keys.pub" :align-right="true" :show-verified="true"
-        size="lg" class="q-mr-sm lt-md" />
+        v-if="!compactMode"
+        :pubkey="$store.state.keys.pub"
+        :align-right="true"
+        :show-verified="true"
+        size="lg"
+        class="q-mr-sm lt-md"
+      />
       <BaseUserAvatar
-v-if="$store.state.keys.pub && compactMode" :pubkey="$store.state.keys.pub" :align-right="true"
-        size="1.5rem" />
+        v-if="$store.state.keys.pub && compactMode"
+        :pubkey="$store.state.keys.pub"
+        :align-right="true"
+        size="1.5rem"
+      />
     </q-item>
     <!-- <q-separator v-if='!compactMode' color='accent' spaced/> -->
     <div v-if="!compactMode" style="min-height: 1rem" />
     <q-item
-v-for="item in filteredUserMenuItems" clickable class="menu-item" :dense="compactMode"
-      :style="compactMode ? '' : 'min-height: 2.75rem;'" :active="
+      v-for="item in filteredUserMenuItems"
+      clickable
+      class="menu-item"
+      :dense="compactMode"
+      :style="compactMode ? '' : 'min-height: 2.75rem;'"
+      :active="
         $route.name === item.title || $route.path.split('/')[1] === item.title
-      " active-class="" @click="(event) => handleClick(event, item)" :key="item.title" :class="
-  ($route.name === item.title || $route.path.split('/')[1] === item.title
-    ? 'menu-item-active text-accent '
-    : '') +
-  (compactMode ? 'no-margin no-padding col' : 'self-end q-px-none')
-">
-      <q-item-section v-if="!compactMode" class="gt-sm text-uppercase" style="font-size: 1rem">
+      "
+      active-class=""
+      @click="(event) => handleClick(event, item)"
+      :key="item.title"
+      :class="
+        ($route.name === item.title || $route.path.split('/')[1] === item.title
+          ? 'menu-item-active text-accent '
+          : '') +
+        (compactMode ? 'no-margin no-padding col' : 'self-end q-px-none')
+      "
+    >
+      <q-item-section
+        v-if="!compactMode"
+        class="gt-sm text-uppercase"
+        style="font-size: 1rem"
+      >
         <div>
           {{ $t(item.title) }}
         </div>
       </q-item-section>
 
       <q-item-section
-v-if="item.icon && !compactMode" avatar class="relative-position no-padding"
-        style="min-width: 2.5rem">
+        v-if="item.icon && !compactMode"
+        avatar
+        class="relative-position no-padding"
+        style="min-width: 2.5rem"
+      >
         <q-icon outline :name="item.icon" />
         <!-- <q-badge
           v-if="item.badge && $store.getters[item.badge]"
@@ -48,36 +84,71 @@ v-if="item.icon && !compactMode" avatar class="relative-position no-padding"
           {{ $store.getters[item.badge] }}
         </q-badge> -->
         <q-badge
-v-if="
-          item.title === 'notifications' && $store.state.unreadNotifications
-        " color="secondary" floating class="q-mr-md text-bold" outline>
+          v-if="
+            item.title === 'notifications' && $store.state.unreadNotifications
+          "
+          color="secondary"
+          floating
+          class="q-mr-md text-bold sf-mono"
+          outline
+        >
           {{ $store.state.unreadNotifications }}
         </q-badge>
         <q-badge
-v-if="item.title === 'messages' && $store.getters.unreadChats" color="secondary" floating
-          class="q-mr-md text-bold" outline>
+          v-if="item.title === 'messages' && $store.getters.unreadChats"
+          color="secondary"
+          floating
+          class="q-mr-md text-bold sf-mono"
+          outline
+        >
           {{ $store.getters.unreadChats }}
         </q-badge>
       </q-item-section>
 
-      <div v-if="item.icon && compactMode" avatar class="q-mx-auto no-padding relative-position">
+      <div
+        v-if="item.icon && compactMode"
+        avatar
+        class="q-mx-auto no-padding relative-position"
+      >
         <q-icon :name="item.icon" size="sm" />
         <q-badge
-v-if="item.badge && $store.getters[item.badge]" color="secondary" floating rounded
-          style="margin-top: 0.2rem; margin-left: 0.1rem" />
+          v-if="item.badge && $store.getters[item.badge]"
+          color="secondary"
+          floating
+          rounded
+          class="sf-mono"
+          style="margin-top: 0.2rem; margin-left: 0.1rem"
+        />
       </div>
     </q-item>
     <!-- <q-separator v-if='!compactMode' color='accent' spaced/> -->
     <div v-if="!compactMode" style="min-height: 1rem" />
-    <div color="primary" class="flex" :class="compactMode ? 'col justify-center' : 'q-my-md justify-end'">
+    <div
+      color="primary"
+      class="flex"
+      :class="compactMode ? 'col justify-center' : 'q-my-md justify-end'"
+    >
       <BaseButtonPost
-v-if="$store.state.keys.pub" :is-open="posting" :verbose="true" @open="$emit('toggle-post-entry')"
-        :outline="!compactMode" :flat="compactMode" color="primary" :size="compactMode ? 'sm' : 'lg'"
-        :class="compactMode ? '' : 'q-px-sm'" />
+        v-if="$store.state.keys.pub"
+        :is-open="posting"
+        :verbose="true"
+        @open="$emit('toggle-post-entry')"
+        :outline="!compactMode"
+        :flat="compactMode"
+        color="primary"
+        :size="compactMode ? 'sm' : 'lg'"
+        :class="compactMode ? '' : 'q-px-sm'"
+      />
       <BaseButtonSetUser
-v-if="!$store.state.keys.pub" @click="(event) => handleClick(event, { title: 'set-user' })"
-        :verbose="true" :outline="!compactMode" :flat="compactMode" color="primary" :size="compactMode ? 'sm' : 'lg'"
-        :class="compactMode ? '' : 'q-px-sm'" />
+        v-if="!$store.state.keys.pub"
+        @click="(event) => handleClick(event, { title: 'set-user' })"
+        :verbose="true"
+        :outline="!compactMode"
+        :flat="compactMode"
+        color="primary"
+        :size="compactMode ? 'sm' : 'lg'"
+        :class="compactMode ? '' : 'q-px-sm'"
+      />
     </div>
     <!-- <q-dialog
       v-model='post'
@@ -221,7 +292,7 @@ export default defineComponent({
 .menu-item {
   letter-spacing: 0.1rem;
   opacity: 1;
-  font-family: 'Spotnik';
+  font-family: "Spotnik";
 }
 
 .menu-item:hover {

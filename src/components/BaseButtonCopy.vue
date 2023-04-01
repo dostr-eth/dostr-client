@@ -12,7 +12,13 @@
     :label="verbose || buttonLabel ? buttonLabel || 'copy' : ''"
     align="left"
   >
-    <q-tooltip anchor="top middle" self="bottom middle" :offset="[10, 10]" class="tooltip" v-if="tooltipText">
+    <q-tooltip
+      anchor="top middle"
+      self="bottom middle"
+      :offset="[10, 10]"
+      class="tooltip"
+      v-if="tooltipText"
+    >
       {{ tooltipText }}
     </q-tooltip>
   </q-btn>
@@ -79,7 +85,7 @@ export default defineComponent({
             ? this.copyText
             : this.shorten(this.copyText, 30)
         }`,
-        classes: 'notify'
+        classes: 'notify',
       })
     },
   },

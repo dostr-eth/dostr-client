@@ -1,9 +1,15 @@
 ![Banner](https://raw.githubusercontent.com/dostr-eth/resources/main/graphics/banner.png)
+
 # Dostr Technical Design
+
 ![Icon](https://raw.githubusercontent.com/dostr-eth/resources/main/graphics/icon_smol.png)
+
 #### Authors: `sshmatrix`, `c0de4c0ffee`
-#### Links: [[GitHub](https://github.com/dostr-eth)]  [[.ETH](https://dostr.eth.limo)]  [[.XYZ](https://dostr.xyz)]
+
+#### Links: [[GitHub](https://github.com/dostr-eth)] [[.ETH](https://dostr.eth.limo)] [[.XYZ](https://dostr.xyz)]
+
 ###### tags: `specification` `design` `architecture` `nostr` `dostr`
+
 # DOSTR 📡
 
 ## Abstract
@@ -16,7 +22,7 @@ Ethereum was originally designed as a 3-in-1 protocol: Ethereum/EVM as **Consens
 
 To understand Dostr, one must understand Nostr. Nostr is a minimal peer-to-peer networking protocol with following properties:
 
-- Nostr consists of **Clients**  and **Relays**. Clients are local instances run by users and relays are websocket servers which communicate between clients.
+- Nostr consists of **Clients** and **Relays**. Clients are local instances run by users and relays are websocket servers which communicate between clients.
 - Nostr clients have the ability to talk to relays and make requests for filtered information, which the relay fetches from another client and returns to the original requester.
 - Nostr clients are identified by their private keys and may have a **nickname**. Nostr clients must sign the information they send and relays must validate the information before transmitting it.
 
@@ -24,7 +30,7 @@ More details about the Nostr protocol may be found [here](https://github.com/raj
 
 ## Protocol Design
 
-Dostr design is identitical to the Nostr specifications described in [NIP-01](https://github.com/nostr-protocol/nips/blob/master/01.md) except for two main differences -  using ECDSA signatures to derive user keys, and use of ENS via a gateway to access the user properties instead of a web2 DNS server. The detailed [NIP-XX proposal](https://github.com/dostr-eth/nips/blob/ethkeygen/xx.md) covering these two aspects is currently [under review](https://github.com/nostr-protocol/nips/pull/268). In summary, the Dostr implementation can be summarised with the following pseudo-code:
+Dostr design is identitical to the Nostr specifications described in [NIP-01](https://github.com/nostr-protocol/nips/blob/master/01.md) except for two main differences - using ECDSA signatures to derive user keys, and use of ENS via a gateway to access the user properties instead of a web2 DNS server. The detailed [NIP-XX proposal](https://github.com/dostr-eth/nips/blob/ethkeygen/xx.md) covering these two aspects is currently [under review](https://github.com/nostr-protocol/nips/pull/268). In summary, the Dostr implementation can be summarised with the following pseudo-code:
 
 ![](https://raw.githubusercontent.com/dostr-eth/resources/main/graphics/dostr.png)
 

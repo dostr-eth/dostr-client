@@ -65,7 +65,9 @@
       </div>
     </q-card-section>
     <div v-if="$store.state.keys.pub" class="flex row justify-between no-wrap">
-      <h5 style="margin-left: 10px;" class="text-bold q-my-none spotnik">{{ $t("follows") }}</h5>
+      <h5 style="margin-left: 10px" class="text-bold q-my-none spotnik">
+        {{ $t("follows") }}
+      </h5>
       <div>
         <q-btn
           v-if="!reordering"
@@ -73,17 +75,29 @@
           icon="reorder"
           @click.stop="reorderFollows"
         >
-          <q-tooltip class="tooltip" anchor="center left" self="center right" :offset="[10, 10]">{{ $t("reorderFollows") }}</q-tooltip>
+          <q-tooltip
+            class="tooltip"
+            anchor="center left"
+            self="center right"
+            :offset="[10, 10]"
+            >{{ $t("reorderFollows") }}</q-tooltip
+          >
         </q-btn>
         <q-btn v-if="reordering" flat icon="close" @click.stop="cancelReorder">
-          <q-tooltip class="tooltip" anchor="center left" self="center right" :offset="[10, 10]">{{ $t("cancel") }}</q-tooltip>
+          <q-tooltip
+            class="tooltip"
+            anchor="center left"
+            self="center right"
+            :offset="[10, 10]"
+            >{{ $t("cancel") }}</q-tooltip
+          >
         </q-btn>
       </div>
     </div>
     <q-card-section
       v-if="$store.state.keys.pub"
       class="no-padding"
-      style="overflow-y: auto; margin-left: 10px;"
+      style="overflow-y: auto; margin-left: 10px"
     >
       <div v-if="$store.state.follows.length" class="q-mt-xs q-pl-sm">
         <q-list v-if="!reordering">
@@ -101,8 +115,19 @@
           :item-key="pubkey + '_reordering'"
         >
           <template #header>
-            <div style="margin-bottom: 15px;" class="flex row justify-between items-start">
-              <span style="font-size: 13px; color: grey; margin-left: 5px; margin-top: 4px;">{{ $t("dragDropReorder") }}</span>
+            <div
+              style="margin-bottom: 15px"
+              class="flex row justify-between items-start"
+            >
+              <span
+                style="
+                  font-size: 13px;
+                  color: grey;
+                  margin-left: 5px;
+                  margin-top: 4px;
+                "
+                >{{ $t("dragDropReorder") }}</span
+              >
               <q-btn
                 outline
                 size="sm"
@@ -200,7 +225,7 @@ export default defineComponent({
           message:
             'Invalid format! Please enter full public key or NIP-05 identifier',
           color: 'negative',
-          classes: 'notify'
+          classes: 'notify',
         })
         return
       }
@@ -263,7 +288,7 @@ export default defineComponent({
         message:
           'No user found! Please enter full public key or NIP-05 Identifier and double-check search string',
         color: 'negative',
-        classes: 'notify'
+        classes: 'notify',
       })
     },
 

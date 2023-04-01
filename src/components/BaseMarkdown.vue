@@ -171,17 +171,15 @@ md.use(subscript)
       return defaultRender(tokens, idx, options, env, self)
     }
 
-    // md.renderer.rules.code_inline = function (tokens, idx, options, env, self) {
-    //   var token = tokens[idx]
+    md.renderer.rules.code_inline = function (tokens, idx, options, env, self) {
+      var token = tokens[idx]
+      return `<code class="code" ${self.renderAttrs(token)}>${token.content}</code>`
+    }
 
-    //   return `<code ${self.renderAttrs(token)}>${token.content}</code>`
-    // }
-
-    // md.renderer.rules.code_block = function (tokens, idx, options, env, self) {
-    //   var token = tokens[idx]
-
-    //   return `<code ${self.renderAttrs(token)}>${token.content}</code>`
-    // }
+    md.renderer.rules.code_block = function (tokens, idx, options, env, self) {
+      var token = tokens[idx]
+      return `<code class="code" ${self.renderAttrs(token)}>${token.content}</code>`
+    }
   })
 
 md.linkify

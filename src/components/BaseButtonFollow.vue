@@ -1,9 +1,22 @@
 <template>
   <q-btn
-:class="buttonClass + (isFollowing ? 'button-unfollow' : 'button-follow')" :size="buttonSize" unelevated
-    :text-color="isFollowing ? '' : 'secondary'" dense @click.stop="toggleFollowing">
-    <q-icon :name="isFollowing ? 'person_remove' : 'person_add'" :class="isFollowing ? 'flip-horizontal' : ''" />
-    <q-tooltip class="tooltip" anchor="center left" self="center right" :offset="[10, 10]">
+    :class="buttonClass + (isFollowing ? 'button-unfollow' : 'button-follow')"
+    :size="buttonSize"
+    unelevated
+    :text-color="isFollowing ? '' : 'secondary'"
+    dense
+    @click.stop="toggleFollowing"
+  >
+    <q-icon
+      :name="isFollowing ? 'person_remove' : 'person_add'"
+      :class="isFollowing ? 'flip-horizontal' : ''"
+    />
+    <q-tooltip
+      class="tooltip"
+      anchor="center left"
+      self="center right"
+      :offset="[10, 10]"
+    >
       {{ isFollowing ? "unfollow".toUpperCase() : "follow".toUpperCase() }}
     </q-tooltip>
   </q-btn>
@@ -69,8 +82,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.button-follow
-.button-unfollow {
+.button-follow .button-unfollow {
   opacity: 0.6;
   transition: all 0.3s ease-in-out;
 }

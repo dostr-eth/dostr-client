@@ -38,7 +38,14 @@
     clickable
     @click.stop="openNIP05"
   >
-    <q-tooltip class="tooltip" anchor="center left" self="center right" :offset="[10, 10]"> NIP-05 VERIFIED </q-tooltip>
+    <q-tooltip
+      class="tooltip"
+      anchor="center left"
+      self="center right"
+      :offset="[10, 10]"
+    >
+      NIP-05 VERIFIED
+    </q-tooltip>
   </q-btn>
 </template>
 
@@ -92,7 +99,7 @@ export default {
         Notify.create({
           message: '❌ Failed to fetch NIP-05 Identifier',
           color: 'negative',
-          classes: 'notify'
+          classes: 'notify',
         })
       }
     },

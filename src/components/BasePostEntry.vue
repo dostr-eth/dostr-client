@@ -193,7 +193,7 @@
           </template>
           <template #link>
             <q-btn
-              style="margin-left: 5px;"
+              style="margin-left: 5px"
               unelevated
               class="no-padding button-link"
               dense
@@ -207,7 +207,7 @@
           </template>
           <template #help>
             <q-btn
-              style="margin-left: 5px;"
+              style="margin-left: 5px"
               unelevated
               class="no-padding button-link"
               dense
@@ -216,7 +216,9 @@
             >
               <q-icon name="info" size="xs" />
               <!-- </q-icon> -->
-              <q-tooltip class="tooltip"> HOW TO MENTION USERS AND POSTS </q-tooltip>
+              <q-tooltip class="tooltip">
+                HOW TO MENTION USERS AND POSTS
+              </q-tooltip>
             </q-btn>
           </template>
           <!-- <template #image>
@@ -251,7 +253,8 @@
             <q-tab-panel name="help" class="q-pa-xs" @click.stop>
               <div>
                 <span class="text-bold">{{ "ADD USER: " }}</span>
-                {{ "Type @ and select user from the dropdown menu that pops up, or paste user's public key"
+                {{
+                  "Type @ and select user from the dropdown menu that pops up, or paste user's public key"
                 }}
                 <!-- <code>{{`"@<pubkey-id>"`}}</code> -->
               </div>
@@ -1195,19 +1198,17 @@ li {
 
 .avatar-image {
   position: absolute;
-  opacity: 0.0;
+  opacity: 0;
   pointer-events: none;
   top: -0.2rem;
 }
 
-.char-left-label
-.over-limit {
+.char-left-label .over-limit {
   font-size: 0.9rem;
   line-height: 0.8rem;
   color: $negative;
 }
-.toolbox
-.button-image,
+.toolbox .button-image,
 .button-emoji,
 .button-link,
 .button-close {

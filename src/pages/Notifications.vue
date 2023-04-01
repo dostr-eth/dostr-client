@@ -1,6 +1,8 @@
 <template>
-  <q-page style="margin-top: 15px;">
-    <BaseHeader style="margin-left: 30px;" class="spotnik">{{ $t("notifications") }}</BaseHeader>
+  <q-page style="margin-top: 15px">
+    <BaseHeader style="margin-left: 30px" class="spotnik">{{
+      $t("notifications")
+    }}</BaseHeader>
     <div>
       <div v-for="event in notifications" :key="event.id">
         <BasePost
@@ -9,12 +11,12 @@
         />
         <div class="bottom-border"></div>
       </div>
-      <div style="margin-top: 45px;">
+      <div style="margin-top: 45px">
         <BaseButtonLoadMore
-        :loading-more="loadingMore"
-        :reached-end="reachedEnd"
-        @click="loadMore"
-      />
+          :loading-more="loadingMore"
+          :reached-end="reachedEnd"
+          @click="loadMore"
+        />
       </div>
     </div>
   </q-page>
@@ -37,7 +39,10 @@ const metaData = {
       name: 'description',
       content: 'Nostr notifications on Dostr',
     },
-    keywords: { name: 'keywords', content: 'nostr dostr decentralized social media siwe siwx' },
+    keywords: {
+      name: 'keywords',
+      content: 'nostr dostr decentralized social media siwe siwx',
+    },
     equiv: {
       'http-equiv': 'Content-Type',
       content: 'text/html; charset=UTF-8',

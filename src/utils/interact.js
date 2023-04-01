@@ -31,7 +31,7 @@ export const SignWithWallet = async (username, password, chainId) => {
       let siwe = await nip111.signInWithX(username, info, signature, password)
       return {
         data: siwe,
-        status: '🦊 Successfully Generated Schnorr Keys'
+        status: '🦊 Successfully Generated Schnorr Keys',
       }
     } catch (err) {
       console.log('❌ Failed to Sign: ' + err.message)
@@ -43,7 +43,7 @@ export const SignWithWallet = async (username, password, chainId) => {
   } else {
     return {
       data: '',
-      status: '❌ Wallet Not Connected'
+      status: '❌ Wallet Not Connected',
     }
   }
 }
@@ -74,10 +74,15 @@ export const SignWithWalletStandalone = async (username, password, chainId) => {
       }).prepareMessage()
       */
       let signature = await signer.signMessage(statement)
-      let siwe = await nip111.signInWithXStandalone(username, info, signature, password)
+      let siwe = await nip111.signInWithXStandalone(
+        username,
+        info,
+        signature,
+        password
+      )
       return {
         data: siwe,
-        status: '🦊 Successfully Generated Schnorr Keys'
+        status: '🦊 Successfully Generated Schnorr Keys',
       }
     } catch (err) {
       console.log('❌ Failed to Sign: ' + err.message)
@@ -89,7 +94,7 @@ export const SignWithWalletStandalone = async (username, password, chainId) => {
   } else {
     return {
       data: '',
-      status: '❌ Wallet Not Connected'
+      status: '❌ Wallet Not Connected',
     }
   }
 }
@@ -118,7 +123,8 @@ export const connectWallet = async () => {
     return {
       chainId: '',
       address: '',
-      status: "🦊 You must install MetaMask browser extension & connect using 'Connect Wallet' button",
+      status:
+        "🦊 You must install MetaMask browser extension & connect using 'Connect Wallet' button",
     }
   }
 }
@@ -149,7 +155,8 @@ export const getCurrentWalletConnected = async () => {
   } else {
     return {
       address: '',
-      status: "🦊 You must install MetaMask browser extension & connect using 'Connect Wallet' button",
+      status:
+        "🦊 You must install MetaMask browser extension & connect using 'Connect Wallet' button",
     }
   }
 }

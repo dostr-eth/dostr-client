@@ -10,18 +10,27 @@ var __export = (target, all) => {
     __defProp(target, name, { get: all[name], enumerable: true });
 };
 var __copyProps = (to, from, except, desc) => {
-  if (from && typeof from === "object" || typeof from === "function") {
+  if ((from && typeof from === "object") || typeof from === "function") {
     for (let key of __getOwnPropNames(from))
       if (!__hasOwnProp.call(to, key) && key !== except)
-        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+        __defProp(to, key, {
+          get: () => from[key],
+          enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable,
+        });
   }
   return to;
 };
-var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
-  isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
-  mod
-));
-var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+var __toESM = (mod, isNodeMode, target) => (
+  (target = mod != null ? __create(__getProtoOf(mod)) : {}),
+  __copyProps(
+    isNodeMode || !mod || !mod.__esModule
+      ? __defProp(target, "default", { value: mod, enumerable: true })
+      : target,
+    mod
+  )
+);
+var __toCommonJS = (mod) =>
+  __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
 // index.ts
 var nostr_tools_exports = {};
@@ -49,7 +58,7 @@ __export(nostr_tools_exports, {
   signEvent: () => signEvent,
   utils: () => utils_exports,
   validateEvent: () => validateEvent,
-  verifySignature: () => verifySignature
+  verifySignature: () => verifySignature,
 });
 module.exports = __toCommonJS(nostr_tools_exports);
 
@@ -73,16 +82,18 @@ __export(utils_exports, {
   insertEventIntoDescendingList: () => insertEventIntoDescendingList,
   normalizeURL: () => normalizeURL,
   utf8Decoder: () => utf8Decoder,
-  utf8Encoder: () => utf8Encoder
+  utf8Encoder: () => utf8Encoder,
 });
 var utf8Decoder = new TextDecoder("utf-8");
 var utf8Encoder = new TextEncoder();
 function normalizeURL(url) {
   let p = new URL(url);
   p.pathname = p.pathname.replace(/\/+/g, "/");
-  if (p.pathname.endsWith("/"))
-    p.pathname = p.pathname.slice(0, -1);
-  if (p.port === "80" && p.protocol === "ws:" || p.port === "443" && p.protocol === "wss:")
+  if (p.pathname.endsWith("/")) p.pathname = p.pathname.slice(0, -1);
+  if (
+    (p.port === "80" && p.protocol === "ws:") ||
+    (p.port === "443" && p.protocol === "wss:")
+  )
     p.port = "";
   p.searchParams.sort();
   p.hash = "";
@@ -119,7 +130,7 @@ function insertEventIntoDescendingList(sortedArray, event) {
     return [
       ...sortedArray.slice(0, position),
       event,
-      ...sortedArray.slice(position)
+      ...sortedArray.slice(position),
     ];
   }
   return sortedArray;
@@ -155,7 +166,7 @@ function insertEventIntoAscendingList(sortedArray, event) {
     return [
       ...sortedArray.slice(0, position),
       event,
-      ...sortedArray.slice(position)
+      ...sortedArray.slice(position),
     ];
   }
   return sortedArray;
@@ -163,24 +174,24 @@ function insertEventIntoAscendingList(sortedArray, event) {
 
 // event.ts
 var Kind = /* @__PURE__ */ ((Kind2) => {
-  Kind2[Kind2["Metadata"] = 0] = "Metadata";
-  Kind2[Kind2["Text"] = 1] = "Text";
-  Kind2[Kind2["RecommendRelay"] = 2] = "RecommendRelay";
-  Kind2[Kind2["Contacts"] = 3] = "Contacts";
-  Kind2[Kind2["EncryptedDirectMessage"] = 4] = "EncryptedDirectMessage";
-  Kind2[Kind2["EventDeletion"] = 5] = "EventDeletion";
-  Kind2[Kind2["Reaction"] = 7] = "Reaction";
-  Kind2[Kind2["ChannelCreation"] = 40] = "ChannelCreation";
-  Kind2[Kind2["ChannelMetadata"] = 41] = "ChannelMetadata";
-  Kind2[Kind2["ChannelMessage"] = 42] = "ChannelMessage";
-  Kind2[Kind2["ChannelHideMessage"] = 43] = "ChannelHideMessage";
-  Kind2[Kind2["ChannelMuteUser"] = 44] = "ChannelMuteUser";
-  Kind2[Kind2["Report"] = 1984] = "Report";
-  Kind2[Kind2["ZapRequest"] = 9734] = "ZapRequest";
-  Kind2[Kind2["Zap"] = 9735] = "Zap";
-  Kind2[Kind2["RelayList"] = 10002] = "RelayList";
-  Kind2[Kind2["ClientAuth"] = 22242] = "ClientAuth";
-  Kind2[Kind2["Article"] = 30023] = "Article";
+  Kind2[(Kind2["Metadata"] = 0)] = "Metadata";
+  Kind2[(Kind2["Text"] = 1)] = "Text";
+  Kind2[(Kind2["RecommendRelay"] = 2)] = "RecommendRelay";
+  Kind2[(Kind2["Contacts"] = 3)] = "Contacts";
+  Kind2[(Kind2["EncryptedDirectMessage"] = 4)] = "EncryptedDirectMessage";
+  Kind2[(Kind2["EventDeletion"] = 5)] = "EventDeletion";
+  Kind2[(Kind2["Reaction"] = 7)] = "Reaction";
+  Kind2[(Kind2["ChannelCreation"] = 40)] = "ChannelCreation";
+  Kind2[(Kind2["ChannelMetadata"] = 41)] = "ChannelMetadata";
+  Kind2[(Kind2["ChannelMessage"] = 42)] = "ChannelMessage";
+  Kind2[(Kind2["ChannelHideMessage"] = 43)] = "ChannelHideMessage";
+  Kind2[(Kind2["ChannelMuteUser"] = 44)] = "ChannelMuteUser";
+  Kind2[(Kind2["Report"] = 1984)] = "Report";
+  Kind2[(Kind2["ZapRequest"] = 9734)] = "ZapRequest";
+  Kind2[(Kind2["Zap"] = 9735)] = "Zap";
+  Kind2[(Kind2["RelayList"] = 10002)] = "RelayList";
+  Kind2[(Kind2["ClientAuth"] = 22242)] = "ClientAuth";
+  Kind2[(Kind2["Article"] = 30023)] = "Article";
   return Kind2;
 })(Kind || {});
 function getBlankEvent() {
@@ -188,7 +199,7 @@ function getBlankEvent() {
     kind: 255,
     content: "",
     tags: [],
-    created_at: 0
+    created_at: 0,
   };
 }
 function finishEvent(t, privateKey) {
@@ -207,35 +218,28 @@ function serializeEvent(evt) {
     evt.created_at,
     evt.kind,
     evt.tags,
-    evt.content
+    evt.content,
   ]);
 }
 function getEventHash(event) {
-  let eventHash = (0, import_sha256.sha256)(utf8Encoder.encode(serializeEvent(event)));
+  let eventHash = (0, import_sha256.sha256)(
+    utf8Encoder.encode(serializeEvent(event))
+  );
   return secp256k12.utils.bytesToHex(eventHash);
 }
 function validateEvent(event) {
-  if (typeof event !== "object")
-    return false;
-  if (typeof event.kind !== "number")
-    return false;
-  if (typeof event.content !== "string")
-    return false;
-  if (typeof event.created_at !== "number")
-    return false;
-  if (typeof event.pubkey !== "string")
-    return false;
-  if (!event.pubkey.match(/^[a-f0-9]{64}$/))
-    return false;
-  if (!Array.isArray(event.tags))
-    return false;
+  if (typeof event !== "object") return false;
+  if (typeof event.kind !== "number") return false;
+  if (typeof event.content !== "string") return false;
+  if (typeof event.created_at !== "number") return false;
+  if (typeof event.pubkey !== "string") return false;
+  if (!event.pubkey.match(/^[a-f0-9]{64}$/)) return false;
+  if (!Array.isArray(event.tags)) return false;
   for (let i = 0; i < event.tags.length; i++) {
     let tag = event.tags[i];
-    if (!Array.isArray(tag))
-      return false;
+    if (!Array.isArray(tag)) return false;
     for (let j = 0; j < tag.length; j++) {
-      if (typeof tag[j] === "object")
-        return false;
+      if (typeof tag[j] === "object") return false;
     }
   }
   return true;
@@ -255,32 +259,30 @@ function signEvent(event, key) {
 
 // filter.ts
 function matchFilter(filter, event) {
-  if (filter.ids && filter.ids.indexOf(event.id) === -1)
-    return false;
-  if (filter.kinds && filter.kinds.indexOf(event.kind) === -1)
-    return false;
+  if (filter.ids && filter.ids.indexOf(event.id) === -1) return false;
+  if (filter.kinds && filter.kinds.indexOf(event.kind) === -1) return false;
   if (filter.authors && filter.authors.indexOf(event.pubkey) === -1)
     return false;
   for (let f in filter) {
     if (f[0] === "#") {
       let tagName = f.slice(1);
       let values = filter[`#${tagName}`];
-      if (values && !event.tags.find(
-        ([t, v]) => t === f.slice(1) && values.indexOf(v) !== -1
-      ))
+      if (
+        values &&
+        !event.tags.find(
+          ([t, v]) => t === f.slice(1) && values.indexOf(v) !== -1
+        )
+      )
         return false;
     }
   }
-  if (filter.since && event.created_at < filter.since)
-    return false;
-  if (filter.until && event.created_at >= filter.until)
-    return false;
+  if (filter.since && event.created_at < filter.since) return false;
+  if (filter.until && event.created_at >= filter.until) return false;
   return true;
 }
 function matchFilters(filters, event) {
   for (let i = 0; i < filters.length; i++) {
-    if (matchFilter(filters[i], event))
-      return true;
+    if (matchFilter(filters[i], event)) return true;
   }
   return false;
 }
@@ -293,7 +295,7 @@ __export(fakejson_exports, {
   getSubscriptionId: () => getSubscriptionId,
   matchEventId: () => matchEventId,
   matchEventKind: () => matchEventKind,
-  matchEventPubkey: () => matchEventPubkey
+  matchEventPubkey: () => matchEventPubkey,
 });
 function getHex64(json, field) {
   let len = field.length + 3;
@@ -310,15 +312,12 @@ function getInt(json, field) {
 }
 function getSubscriptionId(json) {
   let idx = json.slice(0, 22).indexOf(`"EVENT"`);
-  if (idx === -1)
-    return null;
+  if (idx === -1) return null;
   let pstart = json.slice(idx + 7 + 1).indexOf(`"`);
-  if (pstart === -1)
-    return null;
+  if (pstart === -1) return null;
   let start = idx + 7 + 1 + pstart;
   let pend = json.slice(start + 1, 80).indexOf(`"`);
-  if (pend === -1)
-    return null;
+  if (pend === -1) return null;
   let end = start + 1 + pend;
   return json.slice(start + 1, end);
 }
@@ -341,7 +340,7 @@ function relayInit(url, options = {}) {
     connect: [],
     disconnect: [],
     error: [],
-    notice: []
+    notice: [],
   };
   var subListeners = {};
   var pubListeners = {};
@@ -378,12 +377,15 @@ function relayInit(url, options = {}) {
           return;
         }
         var json = incomingMessageQueue.shift();
-        if (!json)
-          return;
+        if (!json) return;
         let subid = getSubscriptionId(json);
         if (subid) {
           let so = openSubs[subid];
-          if (so && so.alreadyHaveEvent && so.alreadyHaveEvent(getHex64(json, "id"), url)) {
+          if (
+            so &&
+            so.alreadyHaveEvent &&
+            so.alreadyHaveEvent(getHex64(json, "id"), url)
+          ) {
             return;
           }
         }
@@ -393,7 +395,12 @@ function relayInit(url, options = {}) {
             case "EVENT":
               let id = data[1];
               let event = data[2];
-              if (validateEvent(event) && openSubs[id] && (openSubs[id].skipVerification || verifySignature(event)) && matchFilters(openSubs[id].filters, event)) {
+              if (
+                validateEvent(event) &&
+                openSubs[id] &&
+                (openSubs[id].skipVerification || verifySignature(event)) &&
+                matchFilters(openSubs[id].filters, event)
+              ) {
                 openSubs[id];
                 (subListeners[id]?.event || []).forEach((cb) => cb(event));
               }
@@ -411,10 +418,8 @@ function relayInit(url, options = {}) {
               let ok = data[2];
               let reason = data[3] || "";
               if (id2 in pubListeners) {
-                if (ok)
-                  pubListeners[id2].ok.forEach((cb) => cb());
-                else
-                  pubListeners[id2].failed.forEach((cb) => cb(reason));
+                if (ok) pubListeners[id2].ok.forEach((cb) => cb());
+                else pubListeners[id2].failed.forEach((cb) => cb(reason));
                 pubListeners[id2].ok = [];
                 pubListeners[id2].failed = [];
               }
@@ -435,8 +440,7 @@ function relayInit(url, options = {}) {
     return ws?.readyState === 1;
   }
   async function connect() {
-    if (connected())
-      return;
+    if (connected()) return;
     await connectRelay();
   }
   async function trySend(params) {
@@ -453,25 +457,29 @@ function relayInit(url, options = {}) {
       console.log(err);
     }
   }
-  const sub = (filters, {
-    skipVerification = false,
-    alreadyHaveEvent = null,
-    id = Math.random().toString().slice(2)
-  } = {}) => {
+  const sub = (
+    filters,
+    {
+      skipVerification = false,
+      alreadyHaveEvent = null,
+      id = Math.random().toString().slice(2),
+    } = {}
+  ) => {
     let subid = id;
     openSubs[subid] = {
       id: subid,
       filters,
       skipVerification,
-      alreadyHaveEvent
+      alreadyHaveEvent,
     };
     trySend(["REQ", subid, ...filters]);
     return {
-      sub: (newFilters, newOpts = {}) => sub(newFilters || filters, {
-        skipVerification: newOpts.skipVerification || skipVerification,
-        alreadyHaveEvent: newOpts.alreadyHaveEvent || alreadyHaveEvent,
-        id: subid
-      }),
+      sub: (newFilters, newOpts = {}) =>
+        sub(newFilters || filters, {
+          skipVerification: newOpts.skipVerification || skipVerification,
+          alreadyHaveEvent: newOpts.alreadyHaveEvent || alreadyHaveEvent,
+          id: subid,
+        }),
       unsub: () => {
         delete openSubs[subid];
         delete subListeners[subid];
@@ -480,16 +488,15 @@ function relayInit(url, options = {}) {
       on: (type, cb) => {
         subListeners[subid] = subListeners[subid] || {
           event: [],
-          eose: []
+          eose: [],
         };
         subListeners[subid][type].push(cb);
       },
       off: (type, cb) => {
         let listeners2 = subListeners[subid];
         let idx = listeners2[type].indexOf(cb);
-        if (idx >= 0)
-          listeners2[type].splice(idx, 1);
-      }
+        if (idx >= 0) listeners2[type].splice(idx, 1);
+      },
     };
   };
   return {
@@ -498,64 +505,61 @@ function relayInit(url, options = {}) {
     on: (type, cb) => {
       listeners[type].push(cb);
       if (type === "connect" && ws?.readyState === 1) {
-        ;
         cb();
       }
     },
     off: (type, cb) => {
       let index = listeners[type].indexOf(cb);
-      if (index !== -1)
-        listeners[type].splice(index, 1);
+      if (index !== -1) listeners[type].splice(index, 1);
     },
-    list: (filters, opts) => new Promise((resolve) => {
-      let s = sub(filters, opts);
-      let events = [];
-      let timeout = setTimeout(() => {
-        s.unsub();
-        resolve(events);
-      }, listTimeout);
-      s.on("eose", () => {
-        s.unsub();
-        clearTimeout(timeout);
-        resolve(events);
-      });
-      s.on("event", (event) => {
-        events.push(event);
-      });
-    }),
-    get: (filter, opts) => new Promise((resolve) => {
-      let s = sub([filter], opts);
-      let timeout = setTimeout(() => {
-        s.unsub();
-        resolve(null);
-      }, getTimeout);
-      s.on("event", (event) => {
-        s.unsub();
-        clearTimeout(timeout);
-        resolve(event);
-      });
-    }),
+    list: (filters, opts) =>
+      new Promise((resolve) => {
+        let s = sub(filters, opts);
+        let events = [];
+        let timeout = setTimeout(() => {
+          s.unsub();
+          resolve(events);
+        }, listTimeout);
+        s.on("eose", () => {
+          s.unsub();
+          clearTimeout(timeout);
+          resolve(events);
+        });
+        s.on("event", (event) => {
+          events.push(event);
+        });
+      }),
+    get: (filter, opts) =>
+      new Promise((resolve) => {
+        let s = sub([filter], opts);
+        let timeout = setTimeout(() => {
+          s.unsub();
+          resolve(null);
+        }, getTimeout);
+        s.on("event", (event) => {
+          s.unsub();
+          clearTimeout(timeout);
+          resolve(event);
+        });
+      }),
     publish(event) {
-      if (!event.id)
-        throw new Error(`event ${event} has no id`);
+      if (!event.id) throw new Error(`event ${event} has no id`);
       let id = event.id;
       trySend(["EVENT", event]);
       return {
         on: (type, cb) => {
           pubListeners[id] = pubListeners[id] || {
             ok: [],
-            failed: []
+            failed: [],
           };
           pubListeners[id][type].push(cb);
         },
         off: (type, cb) => {
           let listeners2 = pubListeners[id];
-          if (!listeners2)
-            return;
+          if (!listeners2) return;
           let idx = listeners2[type].indexOf(cb);
-          if (idx >= 0)
-            listeners2[type].splice(idx, 1);
-        }
+          if (idx >= 0) listeners2[type].splice(idx, 1);
+        },
       };
     },
     connect,
@@ -569,7 +573,7 @@ function relayInit(url, options = {}) {
     },
     get status() {
       return ws?.readyState ?? 3;
-    }
+    },
   };
 }
 
@@ -587,22 +591,20 @@ var SimplePool = class {
   close(relays) {
     relays.forEach((url) => {
       let relay = this._conn[normalizeURL(url)];
-      if (relay)
-        relay.close();
+      if (relay) relay.close();
     });
   }
   async ensureRelay(url) {
     const nm = normalizeURL(url);
     const existing = this._conn[nm];
-    if (existing && existing.status === 1)
-      return existing;
+    if (existing && existing.status === 1) return existing;
     if (existing) {
       await existing.connect();
       return existing;
     }
     const relay = relayInit(nm, {
       getTimeout: this.getTimeout * 0.9,
-      listTimeout: this.getTimeout * 0.9
+      listTimeout: this.getTimeout * 0.9,
     });
     this._conn[nm] = relay;
     await relay.connect();
@@ -610,7 +612,7 @@ var SimplePool = class {
   }
   sub(relays, filters, opts) {
     let _knownIds = /* @__PURE__ */ new Set();
-    let modifiedOpts = { ...opts || {} };
+    let modifiedOpts = { ...(opts || {}) };
     modifiedOpts.alreadyHaveEvent = (id, url) => {
       if (opts?.alreadyHaveEvent?.(id, url)) {
         return true;
@@ -627,8 +629,7 @@ var SimplePool = class {
     let eoseSent = false;
     let eoseTimeout = setTimeout(() => {
       eoseSent = true;
-      for (let cb of eoseListeners.values())
-        cb();
+      for (let cb of eoseListeners.values()) cb();
     }, this.eoseSubTimeout);
     relays.forEach(async (relay) => {
       let r;
@@ -638,17 +639,14 @@ var SimplePool = class {
         handleEose();
         return;
       }
-      if (!r)
-        return;
+      if (!r) return;
       let s = r.sub(filters, modifiedOpts);
       s.on("event", (event) => {
         _knownIds.add(event.id);
-        for (let cb of eventListeners.values())
-          cb(event);
+        for (let cb of eventListeners.values()) cb(event);
       });
       s.on("eose", () => {
-        if (eoseSent)
-          return;
+        if (eoseSent) return;
         handleEose();
       });
       subs.push(s);
@@ -656,8 +654,7 @@ var SimplePool = class {
         eosesMissing--;
         if (eosesMissing === 0) {
           clearTimeout(eoseTimeout);
-          for (let cb of eoseListeners.values())
-            cb();
+          for (let cb of eoseListeners.values()) cb();
         }
       }
     });
@@ -679,9 +676,8 @@ var SimplePool = class {
       off(type, cb) {
         if (type === "event") {
           eventListeners.delete(cb);
-        } else if (type === "eose")
-          eoseListeners.delete(cb);
-      }
+        } else if (type === "eose") eoseListeners.delete(cb);
+      },
     };
     return greaterSub;
   }
@@ -719,8 +715,7 @@ var SimplePool = class {
       try {
         r = await this.ensureRelay(relay);
         pubs.push(r.publish(event));
-      } catch (_) {
-      }
+      } catch (_) {}
     });
     return {
       on(type, cb) {
@@ -728,8 +723,7 @@ var SimplePool = class {
           pub.on(type, () => cb(relays[i]));
         });
       },
-      off() {
-      }
+      off() {},
     };
   }
   seenOn(id) {
@@ -741,7 +735,7 @@ var SimplePool = class {
 var nip04_exports = {};
 __export(nip04_exports, {
   decrypt: () => decrypt,
-  encrypt: () => encrypt
+  encrypt: () => encrypt,
 });
 var import_utils3 = require("@noble/hashes/utils");
 var secp256k13 = __toESM(require("@noble/secp256k1"));
@@ -797,19 +791,20 @@ var nip05_exports = {};
 __export(nip05_exports, {
   queryProfile: () => queryProfile,
   searchDomain: () => searchDomain,
-  useFetchImplementation: () => useFetchImplementation
+  useFetchImplementation: () => useFetchImplementation,
 });
 var _fetch;
 try {
   _fetch = fetch;
-} catch {
-}
+} catch {}
 function useFetchImplementation(fetchImplementation) {
   _fetch = fetchImplementation;
 }
 async function searchDomain(domain, query = "") {
   try {
-    let res = await (await _fetch(`https://${domain}/.well-known/nostr.json?name=${query}`)).json();
+    let res = await (
+      await _fetch(`https://${domain}/.well-known/nostr.json?name=${query}`)
+    ).json();
     return res.names;
   } catch (_) {
     return {};
@@ -821,23 +816,22 @@ async function queryProfile(fullname) {
     domain = name;
     name = "_";
   }
-  if (!name.match(/^[A-Za-z0-9-_]+$/))
-    return null;
-  if (!domain.includes("."))
-    return null;
+  if (!name.match(/^[A-Za-z0-9-_]+$/)) return null;
+  if (!domain.includes(".")) return null;
   let res;
   try {
-    res = await (await _fetch(`https://${domain}/.well-known/nostr.json?name=${name}`)).json();
+    res = await (
+      await _fetch(`https://${domain}/.well-known/nostr.json?name=${name}`)
+    ).json();
   } catch (err) {
     return null;
   }
-  if (!res?.names?.[name])
-    return null;
+  if (!res?.names?.[name]) return null;
   let pubkey = res.names[name];
   let relays = res.relays?.[pubkey] || [];
   return {
     pubkey,
-    relays
+    relays,
   };
 }
 
@@ -846,17 +840,18 @@ var nip06_exports = {};
 __export(nip06_exports, {
   generateSeedWords: () => generateSeedWords,
   privateKeyFromSeedWords: () => privateKeyFromSeedWords,
-  validateWords: () => validateWords
+  validateWords: () => validateWords,
 });
 var secp256k14 = __toESM(require("@noble/secp256k1"));
 var import_english = require("@scure/bip39/wordlists/english.js");
 var import_bip39 = require("@scure/bip39");
 var import_bip32 = require("@scure/bip32");
 function privateKeyFromSeedWords(mnemonic, passphrase) {
-  let root = import_bip32.HDKey.fromMasterSeed((0, import_bip39.mnemonicToSeedSync)(mnemonic, passphrase));
+  let root = import_bip32.HDKey.fromMasterSeed(
+    (0, import_bip39.mnemonicToSeedSync)(mnemonic, passphrase)
+  );
   let privateKey = root.derive(`m/44'/1237'/0'/0/0`).privateKey;
-  if (!privateKey)
-    throw new Error("could not derive private key");
+  if (!privateKey) throw new Error("could not derive private key");
   return secp256k14.utils.bytesToHex(privateKey);
 }
 function generateSeedWords() {
@@ -875,7 +870,7 @@ __export(nip19_exports, {
   noteEncode: () => noteEncode,
   nprofileEncode: () => nprofileEncode,
   npubEncode: () => npubEncode,
-  nsecEncode: () => nsecEncode
+  nsecEncode: () => nsecEncode,
 });
 var secp256k15 = __toESM(require("@noble/secp256k1"));
 var import_base2 = require("@scure/base");
@@ -886,52 +881,43 @@ function decode(nip19) {
   switch (prefix) {
     case "nprofile": {
       let tlv = parseTLV(data);
-      if (!tlv[0]?.[0])
-        throw new Error("missing TLV 0 for nprofile");
-      if (tlv[0][0].length !== 32)
-        throw new Error("TLV 0 should be 32 bytes");
+      if (!tlv[0]?.[0]) throw new Error("missing TLV 0 for nprofile");
+      if (tlv[0][0].length !== 32) throw new Error("TLV 0 should be 32 bytes");
       return {
         type: "nprofile",
         data: {
           pubkey: secp256k15.utils.bytesToHex(tlv[0][0]),
-          relays: tlv[1] ? tlv[1].map((d) => utf8Decoder.decode(d)) : []
-        }
+          relays: tlv[1] ? tlv[1].map((d) => utf8Decoder.decode(d)) : [],
+        },
       };
     }
     case "nevent": {
       let tlv = parseTLV(data);
-      if (!tlv[0]?.[0])
-        throw new Error("missing TLV 0 for nevent");
-      if (tlv[0][0].length !== 32)
-        throw new Error("TLV 0 should be 32 bytes");
+      if (!tlv[0]?.[0]) throw new Error("missing TLV 0 for nevent");
+      if (tlv[0][0].length !== 32) throw new Error("TLV 0 should be 32 bytes");
       return {
         type: "nevent",
         data: {
           id: secp256k15.utils.bytesToHex(tlv[0][0]),
-          relays: tlv[1] ? tlv[1].map((d) => utf8Decoder.decode(d)) : []
-        }
+          relays: tlv[1] ? tlv[1].map((d) => utf8Decoder.decode(d)) : [],
+        },
       };
     }
     case "naddr": {
       let tlv = parseTLV(data);
-      if (!tlv[0]?.[0])
-        throw new Error("missing TLV 0 for naddr");
-      if (!tlv[2]?.[0])
-        throw new Error("missing TLV 2 for naddr");
-      if (tlv[2][0].length !== 32)
-        throw new Error("TLV 2 should be 32 bytes");
-      if (!tlv[3]?.[0])
-        throw new Error("missing TLV 3 for naddr");
-      if (tlv[3][0].length !== 4)
-        throw new Error("TLV 3 should be 4 bytes");
+      if (!tlv[0]?.[0]) throw new Error("missing TLV 0 for naddr");
+      if (!tlv[2]?.[0]) throw new Error("missing TLV 2 for naddr");
+      if (tlv[2][0].length !== 32) throw new Error("TLV 2 should be 32 bytes");
+      if (!tlv[3]?.[0]) throw new Error("missing TLV 3 for naddr");
+      if (tlv[3][0].length !== 4) throw new Error("TLV 3 should be 4 bytes");
       return {
         type: "naddr",
         data: {
           identifier: utf8Decoder.decode(tlv[0][0]),
           pubkey: secp256k15.utils.bytesToHex(tlv[2][0]),
           kind: parseInt(secp256k15.utils.bytesToHex(tlv[3][0]), 16),
-          relays: tlv[1] ? tlv[1].map((d) => utf8Decoder.decode(d)) : []
-        }
+          relays: tlv[1] ? tlv[1].map((d) => utf8Decoder.decode(d)) : [],
+        },
       };
     }
     case "nsec":
@@ -950,8 +936,7 @@ function parseTLV(data) {
     let l = rest[1];
     let v = rest.slice(2, 2 + l);
     rest = rest.slice(2 + l);
-    if (v.length < l)
-      continue;
+    if (v.length < l) continue;
     result[t] = result[t] || [];
     result[t].push(v);
   }
@@ -974,7 +959,7 @@ function encodeBytes(prefix, hex) {
 function nprofileEncode(profile) {
   let data = encodeTLV({
     0: [secp256k15.utils.hexToBytes(profile.pubkey)],
-    1: (profile.relays || []).map((url) => utf8Encoder.encode(url))
+    1: (profile.relays || []).map((url) => utf8Encoder.encode(url)),
   });
   let words = import_base2.bech32.toWords(data);
   return import_base2.bech32.encode("nprofile", words, Bech32MaxSize);
@@ -982,7 +967,7 @@ function nprofileEncode(profile) {
 function neventEncode(event) {
   let data = encodeTLV({
     0: [secp256k15.utils.hexToBytes(event.id)],
-    1: (event.relays || []).map((url) => utf8Encoder.encode(url))
+    1: (event.relays || []).map((url) => utf8Encoder.encode(url)),
   });
   let words = import_base2.bech32.toWords(data);
   return import_base2.bech32.encode("nevent", words, Bech32MaxSize);
@@ -994,7 +979,7 @@ function naddrEncode(addr) {
     0: [utf8Encoder.encode(addr.identifier)],
     1: (addr.relays || []).map((url) => utf8Encoder.encode(url)),
     2: [secp256k15.utils.hexToBytes(addr.pubkey)],
-    3: [new Uint8Array(kind)]
+    3: [new Uint8Array(kind)],
   });
   let words = import_base2.bech32.toWords(data);
   return import_base2.bech32.encode("naddr", words, Bech32MaxSize);
@@ -1017,18 +1002,15 @@ function encodeTLV(tlv) {
 var nip26_exports = {};
 __export(nip26_exports, {
   createDelegation: () => createDelegation,
-  getDelegator: () => getDelegator
+  getDelegator: () => getDelegator,
 });
 var secp256k16 = __toESM(require("@noble/secp256k1"));
 var import_sha2562 = require("@noble/hashes/sha256");
 function createDelegation(privateKey, parameters) {
   let conditions = [];
-  if ((parameters.kind || -1) >= 0)
-    conditions.push(`kind=${parameters.kind}`);
-  if (parameters.until)
-    conditions.push(`created_at<${parameters.until}`);
-  if (parameters.since)
-    conditions.push(`created_at>${parameters.since}`);
+  if ((parameters.kind || -1) >= 0) conditions.push(`kind=${parameters.kind}`);
+  if (parameters.until) conditions.push(`created_at<${parameters.until}`);
+  if (parameters.since) conditions.push(`created_at>${parameters.since}`);
   let cond = conditions.join("&");
   if (cond === "")
     throw new Error("refusing to create a delegation without any conditions");
@@ -1042,13 +1024,14 @@ function createDelegation(privateKey, parameters) {
     from: getPublicKey(privateKey),
     to: parameters.pubkey,
     cond,
-    sig
+    sig,
   };
 }
 function getDelegator(event) {
-  let tag = event.tags.find((tag2) => tag2[0] === "delegation" && tag2.length >= 4);
-  if (!tag)
-    return null;
+  let tag = event.tags.find(
+    (tag2) => tag2[0] === "delegation" && tag2.length >= 4
+  );
+  if (!tag) return null;
   let pubkey = tag[1];
   let cond = tag[2];
   let sig = tag[3];
@@ -1057,18 +1040,24 @@ function getDelegator(event) {
     let [key, operator, value] = conditions[i].split(/\b/);
     if (key === "kind" && operator === "=" && event.kind === parseInt(value))
       continue;
-    else if (key === "created_at" && operator === "<" && event.created_at < parseInt(value))
+    else if (
+      key === "created_at" &&
+      operator === "<" &&
+      event.created_at < parseInt(value)
+    )
       continue;
-    else if (key === "created_at" && operator === ">" && event.created_at > parseInt(value))
+    else if (
+      key === "created_at" &&
+      operator === ">" &&
+      event.created_at > parseInt(value)
+    )
       continue;
-    else
-      return null;
+    else return null;
   }
   let sighash = (0, import_sha2562.sha256)(
     utf8Encoder.encode(`nostr:delegation:${event.pubkey}:${cond}`)
   );
-  if (!secp256k16.schnorr.verifySync(sig, sighash, pubkey))
-    return null;
+  if (!secp256k16.schnorr.verifySync(sig, sighash, pubkey)) return null;
   return pubkey;
 }
 
@@ -1076,20 +1065,24 @@ function getDelegator(event) {
 var nip39_exports = {};
 __export(nip39_exports, {
   useFetchImplementation: () => useFetchImplementation2,
-  validateGithub: () => validateGithub
+  validateGithub: () => validateGithub,
 });
 var _fetch2;
 try {
   _fetch2 = fetch;
-} catch {
-}
+} catch {}
 function useFetchImplementation2(fetchImplementation) {
   _fetch2 = fetchImplementation;
 }
 async function validateGithub(pubkey, username, proof) {
   try {
-    let res = await (await _fetch2(`https://gist.github.com/${username}/${proof}/raw`)).text();
-    return res === `Verifying that I control the following Nostr public key: ${pubkey}`;
+    let res = await (
+      await _fetch2(`https://gist.github.com/${username}/${proof}/raw`)
+    ).text();
+    return (
+      res ===
+      `Verifying that I control the following Nostr public key: ${pubkey}`
+    );
   } catch (_) {
     return false;
   }
@@ -1102,14 +1095,13 @@ __export(nip57_exports, {
   makeZapReceipt: () => makeZapReceipt,
   makeZapRequest: () => makeZapRequest,
   useFetchImplementation: () => useFetchImplementation3,
-  validateZapRequest: () => validateZapRequest
+  validateZapRequest: () => validateZapRequest,
 });
 var import_base3 = require("@scure/base");
 var _fetch3;
 try {
   _fetch3 = fetch;
-} catch {
-}
+} catch {}
 function useFetchImplementation3(fetchImplementation) {
   _fetch3 = fetchImplementation;
 }
@@ -1132,21 +1124,12 @@ async function getZapEndpoint(metadata) {
     if (body.allowsNostr && body.nostrPubkey) {
       return body.callback;
     }
-  } catch (err) {
-  }
+  } catch (err) {}
   return null;
 }
-function makeZapRequest({
-  profile,
-  event,
-  amount,
-  relays,
-  comment = ""
-}) {
-  if (!amount)
-    throw new Error("amount not given");
-  if (!profile)
-    throw new Error("profile not given");
+function makeZapRequest({ profile, event, amount, relays, comment = "" }) {
+  if (!amount) throw new Error("amount not given");
+  if (!profile) throw new Error("profile not given");
   let zr = {
     kind: 9734,
     created_at: Math.round(Date.now() / 1e3),
@@ -1154,8 +1137,8 @@ function makeZapRequest({
     tags: [
       ["p", profile],
       ["amount", amount.toString()],
-      ["relays", ...relays]
-    ]
+      ["relays", ...relays],
+    ],
   };
   if (event) {
     zr.tags.push(["e", event]);
@@ -1171,27 +1154,19 @@ function validateZapRequest(zapRequestString) {
   }
   if (!validateEvent(zapRequest))
     return "Zap request is not a valid Nostr event.";
-  if (!verifySignature(zapRequest))
-    return "Invalid signature on zap request.";
+  if (!verifySignature(zapRequest)) return "Invalid signature on zap request.";
   let p = zapRequest.tags.find(([t, v]) => t === "p" && v);
-  if (!p)
-    return "Zap request doesn't have a 'p' tag.";
+  if (!p) return "Zap request doesn't have a 'p' tag.";
   if (!p[1].match(/^[a-f0-9]{64}$/))
     return "Zap request 'p' tag is not valid hex.";
   let e = zapRequest.tags.find(([t, v]) => t === "e" && v);
   if (e && !e[1].match(/^[a-f0-9]{64}$/))
     return "Zap request 'e' tag is not valid hex.";
   let relays = zapRequest.tags.find(([t, v]) => t === "relays" && v);
-  if (!relays)
-    return "Zap request doesn't have a 'relays' tag.";
+  if (!relays) return "Zap request doesn't have a 'relays' tag.";
   return null;
 }
-function makeZapReceipt({
-  zapRequest,
-  preimage,
-  bolt11,
-  paidAt
-}) {
+function makeZapReceipt({ zapRequest, preimage, bolt11, paidAt }) {
   let zr = JSON.parse(zapRequest);
   let tagsFromZapRequest = zr.tags.filter(
     ([t]) => t === "e" || t === "p" || t === "a"
@@ -1203,8 +1178,8 @@ function makeZapReceipt({
     tags: [
       ...tagsFromZapRequest,
       ["bolt11", bolt11],
-      ["description", zapRequest]
-    ]
+      ["description", zapRequest],
+    ],
   };
   if (preimage) {
     zap.tags.push(["preimage", preimage]);
@@ -1220,7 +1195,7 @@ __export(nip111_exports, {
   registerWithX: () => registerWithX,
   signInWithX: () => signInWithX,
   signInWithXStandalone: () => signInWithXStandalone,
-  useFetchImplementation: () => useFetchImplementation4
+  useFetchImplementation: () => useFetchImplementation4,
 });
 var secp256k17 = __toESM(require("@noble/secp256k1"));
 var import_hkdf = require("@noble/hashes/hkdf");
@@ -1228,19 +1203,32 @@ var import_sha2563 = require("@noble/hashes/sha256");
 var _fetch4;
 try {
   _fetch4 = fetch;
-} catch {
-}
+} catch {}
 function useFetchImplementation4(fetchImplementation) {
   _fetch4 = fetchImplementation;
 }
 async function privateKeyFromX(username, caip10, sig, password) {
   if (sig.length < 64)
     throw new Error("Signature too short; length should be 65 bytes");
-  let inputKey = await (0, import_sha2563.sha256)(secp256k17.utils.hexToBytes(sig.toLowerCase().startsWith("0x") ? sig.slice(2) : sig));
+  let inputKey = await (0, import_sha2563.sha256)(
+    secp256k17.utils.hexToBytes(
+      sig.toLowerCase().startsWith("0x") ? sig.slice(2) : sig
+    )
+  );
   let info = `${caip10}:${username}`;
-  let salt = await (0, import_sha2563.sha256)(`${info}:${password ? password : ""}:${sig.slice(-64)}`);
-  let hashKey = await (0, import_hkdf.hkdf)(import_sha2563.sha256, inputKey, salt, info, 42);
-  return secp256k17.utils.bytesToHex(secp256k17.utils.hashToPrivateKey(hashKey));
+  let salt = await (0, import_sha2563.sha256)(
+    `${info}:${password ? password : ""}:${sig.slice(-64)}`
+  );
+  let hashKey = await (0, import_hkdf.hkdf)(
+    import_sha2563.sha256,
+    inputKey,
+    salt,
+    info,
+    42
+  );
+  return secp256k17.utils.bytesToHex(
+    secp256k17.utils.hashToPrivateKey(hashKey)
+  );
 }
 var registerWithX = privateKeyFromX;
 var loginWithX = signInWithX;
@@ -1257,7 +1245,10 @@ async function signInWithX(username, caip10, sig, password) {
     if (profile == null) {
       throw new Error("Nostr Profile Not Found");
     }
-    petname = username.split("@").length == 2 ? username.split("@")[0] : username.split(".")[0];
+    petname =
+      username.split("@").length == 2
+        ? username.split("@")[0]
+        : username.split(".")[0];
   }
   let privkey = await privateKeyFromX(username, caip10, sig, password);
   let pubkey = getPublicKey(privkey);
@@ -1267,20 +1258,23 @@ async function signInWithX(username, caip10, sig, password) {
   return {
     petname,
     profile,
-    privkey
+    privkey,
   };
 }
 async function signInWithXStandalone(username, caip10, sig, password) {
   let profile = null;
   let petname = username;
   if (username.includes(".")) {
-    petname = username.split("@").length == 2 ? username.split("@")[0] : username.split(".")[0];
+    petname =
+      username.split("@").length == 2
+        ? username.split("@")[0]
+        : username.split(".")[0];
   }
   let privkey = await privateKeyFromX(username, caip10, sig, password);
   let pubkey = getPublicKey(privkey);
   return {
     petname,
-    pubkey
+    pubkey,
   };
 }
 
@@ -1288,5 +1282,11 @@ async function signInWithXStandalone(username, caip10, sig, password) {
 var secp256k18 = __toESM(require("@noble/secp256k1"));
 var import_hmac = require("@noble/hashes/hmac");
 var import_sha2564 = require("@noble/hashes/sha256");
-secp256k18.utils.hmacSha256Sync = (key, ...msgs) => (0, import_hmac.hmac)(import_sha2564.sha256, key, secp256k18.utils.concatBytes(...msgs));
-secp256k18.utils.sha256Sync = (...msgs) => (0, import_sha2564.sha256)(secp256k18.utils.concatBytes(...msgs));
+secp256k18.utils.hmacSha256Sync = (key, ...msgs) =>
+  (0, import_hmac.hmac)(
+    import_sha2564.sha256,
+    key,
+    secp256k18.utils.concatBytes(...msgs)
+  );
+secp256k18.utils.sha256Sync = (...msgs) =>
+  (0, import_sha2564.sha256)(secp256k18.utils.concatBytes(...msgs));

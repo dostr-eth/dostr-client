@@ -1,5 +1,5 @@
 <template>
-  <q-page class="fit flex column no-wrap" style="padding-top: 100px;">
+  <q-page class="fit flex column no-wrap" style="padding-top: 100px">
     <TheSearchMenu />
   </q-page>
 </template>
@@ -18,7 +18,10 @@ const metaData = {
       name: 'description',
       content: 'Nostr Search and Follows on Dostr',
     },
-    keywords: { name: 'keywords', content: 'nostr dostr decentralized social media siwe siwx' },
+    keywords: {
+      name: 'keywords',
+      content: 'nostr dostr decentralized social media siwe siwx',
+    },
     equiv: {
       'http-equiv': 'Content-Type',
       content: 'text/html; charset=UTF-8',

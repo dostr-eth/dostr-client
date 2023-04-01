@@ -1,14 +1,17 @@
 <template>
-  <q-page style="margin-top: 15px;">
+  <q-page style="margin-top: 15px">
     <!-- <div id='feed-scroll' style='max-height: 700px; overflow: auto;'> -->
     <!-- <div> -->
     <!-- <q-infinite-scroll @load='loadMore()' :offset='500' scroll-target='#feed-scroll'> -->
-    <BaseHeader style="margin-left: 30px;" :separator="false">
-      <div class="flex row justify-start" style="gap: 1rem; font-family: 'Spotnik'">
+    <BaseHeader style="margin-left: 30px" :separator="false">
+      <div
+        class="flex row justify-start"
+        style="gap: 1rem; font-family: 'Spotnik'"
+      >
         <div class="gt-sm">
           {{ $t("dostr") }}
         </div>
-        <div style="margin-top: -10px;" class="gt-sm">
+        <div style="margin-top: -10px" class="gt-sm">
           <q-select
             borderless
             v-model="feedName"
@@ -21,7 +24,7 @@
             popup-content-class="spotnik"
           />
         </div>
-        <div style="margin-top: -8px; margin-left: 5%;" class="lt-md">
+        <div style="margin-top: -8px; margin-left: 5%" class="lt-md">
           <q-select
             borderless
             v-model="feedName"
@@ -39,11 +42,13 @@
         </div>
       </div>
     </BaseHeader>
-    <div style="margin-top: 5px;">
+    <div style="margin-top: 5px">
       <BaseButtonLoadMore
         v-if="unreadFeed.length"
         :loading-more="loadingUnread"
-        :label="'load '.toUpperCase() + unreadFeed.length + ' unread'.toUpperCase()"
+        :label="
+          'load '.toUpperCase() + unreadFeed.length + ' unread'.toUpperCase()
+        "
         @click="loadUnread"
       />
     </div>
@@ -119,7 +124,7 @@ const metaData = {
     },
     keywords: {
       name: 'keywords',
-      content: 'nostr dostr decentralized social media siwe siwx'
+      content: 'nostr dostr decentralized social media siwe siwx',
     },
     equiv: {
       'http-equiv': 'Content-Type',
@@ -161,18 +166,18 @@ export default defineComponent({
         },
         {
           value: 'global',
-          description: 'GLOBAL'
+          description: 'GLOBAL',
         },
         {
           value: 'bots',
           description: 'BOTS',
-          icon: 'donut_small'
+          icon: 'donut_small',
         },
         {
           value: 'ai',
           description: 'AI',
-          inactive: true
-        }
+          inactive: true,
+        },
       ],
       feed: [],
       // feed: {
@@ -417,7 +422,7 @@ export default defineComponent({
 }
 
 .q-select {
-  font-family: 'Spotnik';
+  font-family: "Spotnik";
   font-size: 10px;
   overflow: hidden;
 }

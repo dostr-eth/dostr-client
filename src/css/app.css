@@ -190,6 +190,11 @@ a {
   height: 0px;
 }
 
+.siwe-button {
+  background: linear-gradient(266deg, rgba(0, 148, 21, 0.75) 0%, rgba(0, 113, 205, 0.75) 100%);
+  border: 0px solid white;
+}
+
 @media screen and (max-width: 600px) {
   .ruler-mobile {
     margin-top: 80px;

@@ -25,7 +25,11 @@
     </div>
     <q-item-section
       :class="headerMode ? 'self-start' : ''"
-      :style="!headerMode ? 'white-space: nowrap; overflow: auto; padding-left: 8px;' : ''"
+      :style="
+        !headerMode
+          ? 'white-space: nowrap; overflow: auto; padding-left: 8px;'
+          : ''
+      "
     >
       <BaseUserName
         :pubkey="pubkey"
@@ -36,9 +40,7 @@
         :show-following="showFollowing"
         :wrap="wrap"
       />
-      <div
-        class="text-primary sf-mono"
-      >
+      <div class="text-primary sf-mono">
         {{ shorten(npubKey) }}
       </div>
       <BaseMarkdown

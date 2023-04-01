@@ -1,41 +1,109 @@
 <template>
   <div style="padding: 0.2rem 0.5rem 1rem" @click="closeSelects">
     <div v-if="Object.keys(preferences).length">
-      <div v-if="editingPreferences" class="flex gt-sm" style="margin-left: 77%; gap: 0.2rem">
-        <q-btn label="save" color="positive" outline size="sm" @click="savePreferences" />
-        <q-btn label="cancel" color="negative" outline size="sm" @click="cancel('preferences')" />
+      <div
+        v-if="editingPreferences"
+        class="flex gt-sm"
+        style="margin-left: 77%; gap: 0.2rem"
+      >
+        <q-btn
+          label="save"
+          color="positive"
+          outline
+          size="sm"
+          @click="savePreferences"
+        />
+        <q-btn
+          label="cancel"
+          color="negative"
+          outline
+          size="sm"
+          @click="cancel('preferences')"
+        />
       </div>
-      <div v-if="editingPreferences" class="flex lt-md" style="margin-left: 65%; gap: 0.2rem">
-        <q-btn label="save" color="positive" outline size="sm" @click="savePreferences" />
-        <q-btn label="cancel" color="negative" outline size="sm" @click="cancel('preferences')" />
+      <div
+        v-if="editingPreferences"
+        class="flex lt-md"
+        style="margin-left: 65%; gap: 0.2rem"
+      >
+        <q-btn
+          label="save"
+          color="positive"
+          outline
+          size="sm"
+          @click="savePreferences"
+        />
+        <q-btn
+          label="cancel"
+          color="negative"
+          outline
+          size="sm"
+          @click="cancel('preferences')"
+        />
       </div>
-      <div class="text-bold flex justify-between no-wrap spotnik" style="font-size: 1.1rem">
+      <div
+        class="text-bold flex justify-between no-wrap spotnik"
+        style="font-size: 1.1rem"
+      >
         {{ $t("preferences") }}
-        <div class="text-normal flex row no-wrap" style="font-size: 0.9rem; gap: 0.4rem">
+        <div
+          class="text-normal flex row no-wrap"
+          style="font-size: 0.9rem; gap: 0.4rem"
+        >
           <q-btn
-v-if="!editingPreferences" label="edit" color="primary" outline size="sm"
-            @click="editingPreferences = true" />
+            v-if="!editingPreferences"
+            label="edit"
+            color="primary"
+            outline
+            size="sm"
+            @click="editingPreferences = true"
+          />
         </div>
       </div>
-      <div class="flex column q-px-sm" style="gap: 0.3rem; margin-top: 10px;">
-        <div class="text-bold flex justify-between no-wrap spotnik" style="font-size: 13px; color: skyblue;">
+      <div class="flex column q-px-sm" style="gap: 0.3rem; margin-top: 10px">
+        <div
+          class="text-bold flex justify-between no-wrap spotnik"
+          style="font-size: 13px; color: skyblue"
+        >
           {{ $t("colors") }}
         </div>
-        <div v-if="preferences.color" style="padding-left: 0.2rem; gap: 1rem" class="flex row">
-          <div v-for="(colorName, index) in Object.keys(preferences.color)" :key="index" class="flex column items-center">
-            <label :for="colorName" style="font-size: 12px;">{{ colorName.toUpperCase() }}</label>
+        <div
+          v-if="preferences.color"
+          style="padding-left: 0.2rem; gap: 1rem"
+          class="flex row"
+        >
+          <div
+            v-for="(colorName, index) in Object.keys(preferences.color)"
+            :key="index"
+            class="flex column items-center"
+          >
+            <label :for="colorName" style="font-size: 12px">{{
+              colorName.toUpperCase()
+            }}</label>
             <input
-type="color" :id="colorName" :name="colorName" :value="preferences.color[colorName]"
-              :disabled="!editingPreferences" @input="(event) => updateColor(event.target.value, colorName)" />
+              type="color"
+              :id="colorName"
+              :name="colorName"
+              :value="preferences.color[colorName]"
+              :disabled="!editingPreferences"
+              @input="(event) => updateColor(event.target.value, colorName)"
+            />
           </div>
           <!-- <div v-for='(colorName, index) in Object.keys(preferences.color)' :key='index' class='flex column items-center'>
             <label :for="colorName">{{ colorName }}</label> -->
           <BaseSelect
-:allow-selection="editingPreferences" :selecting="choosingTheme" style="width: 200px;"
-            @toggle="choosingTheme = !choosingTheme">
+            :allow-selection="editingPreferences"
+            :selecting="choosingTheme"
+            style="width: 200px"
+            @toggle="choosingTheme = !choosingTheme"
+          >
             <template #default>{{ "Customise Theme" }}</template>
             <template #list-items>
-              <li v-for="(theme, index) in Object.keys(themes)" :key="index" @click.stop="updateTheme(themes[theme])">
+              <li
+                v-for="(theme, index) in Object.keys(themes)"
+                :key="index"
+                @click.stop="updateTheme(themes[theme])"
+              >
                 <span>{{ theme }}</span>
               </li>
             </template>
@@ -61,28 +129,52 @@ type="color" :id="colorName" :name="colorName" :value="preferences.color[colorNa
         </BaseSelect>
         -->
         <div
-class="text-bold flex justify-between no-wrap spotnik"
-          style="font-size: 13px; margin-top: 10px; color: skyblue;">
+          class="text-bold flex justify-between no-wrap spotnik"
+          style="font-size: 13px; margin-top: 10px; color: skyblue"
+        >
           {{ $t("Lightning Tips ⚡") }}
         </div>
         <div class="flex column q-px-sm" style="gap: 0.3rem">
           <div>
             OFF
             <q-toggle
-v-model="preferences.lightningTips.enabled" :disable="!editingPreferences" checked-icon="check" unchecked-icon="clear" color="yellow" keep-color
-              size="sm" />
+              v-model="preferences.lightningTips.enabled"
+              :disable="!editingPreferences"
+              checked-icon="check"
+              unchecked-icon="clear"
+              color="yellow"
+              keep-color
+              size="sm"
+            />
             ON
           </div>
-          <span style="white-space: nowrap; font-size: 12px;" class="spotnik"><strong>tip presets</strong></span>
-          <div v-if="preferences.lightningTips.enabled" class="flex row no-wrap items-center" style="gap: 2rem">
+          <span style="white-space: nowrap; font-size: 12px" class="spotnik"
+            ><strong>tip presets</strong></span
+          >
+          <div
+            v-if="preferences.lightningTips.enabled"
+            class="flex row no-wrap items-center"
+            style="gap: 2rem"
+          >
             <q-input
-v-for="(preset, index) in preferences.lightningTips.presets" :key="index"
-              v-model="preferences.lightningTips.presets[index]" type="number" :label="'default ' + (index + 1)"
-              :disable="!editingPreferences" dense filled suffix="sats" input-class="sf-mono" />
+              v-for="(preset, index) in preferences.lightningTips.presets"
+              :key="index"
+              v-model="preferences.lightningTips.presets[index]"
+              type="number"
+              :label="'default ' + (index + 1)"
+              :disable="!editingPreferences"
+              dense
+              filled
+              suffix="sats"
+              input-class="sf-mono"
+            />
           </div>
-          <div v-if="hasWebLn" style="margin-top: 10px;">
-            <span style="white-space: nowrap; font-size: 12px; color: yellow;" class="spotnik"><strong>one-click
-                tip</strong></span>
+          <div v-if="hasWebLn" style="margin-top: 10px">
+            <span
+              style="white-space: nowrap; font-size: 12px; color: yellow"
+              class="spotnik"
+              ><strong>one-click tip</strong></span
+            >
             <div style="font-size: 0.9rem">
               Note: you will need a webln enabled wallet like Alby to use this
               feature, and setting a budget in your webln wallet for dostr will
@@ -94,18 +186,32 @@ v-for="(preset, index) in preferences.lightningTips.presets" :key="index"
               down button to the left will take you through the normal lightning
               tip pay flow.
             </div>
-            <div v-if="preferences.lightningTips.enabled" class="flex row no-wrap items-center" style="gap: 2rem">
+            <div
+              v-if="preferences.lightningTips.enabled"
+              class="flex row no-wrap items-center"
+              style="gap: 2rem"
+            >
               <div>
                 OFF
                 <q-toggle
-v-model="preferences.lightningTips.oneClick.enabled" :disable="!editingPreferences"
-                  color="accent" size="sm" />
+                  v-model="preferences.lightningTips.oneClick.enabled"
+                  :disable="!editingPreferences"
+                  color="accent"
+                  size="sm"
+                />
                 ON
               </div>
               <q-input
-v-if="preferences.lightningTips.oneClick.enabled"
-                v-model="preferences.lightningTips.oneClick.amount" type="number" label="webln default tip amount"
-                :disable="!editingPreferences" dense filled suffix="sats" style="width: 10rem" />
+                v-if="preferences.lightningTips.oneClick.enabled"
+                v-model="preferences.lightningTips.oneClick.amount"
+                type="number"
+                label="webln default tip amount"
+                :disable="!editingPreferences"
+                dense
+                filled
+                suffix="sats"
+                style="width: 10rem"
+              />
             </div>
           </div>
         </div>

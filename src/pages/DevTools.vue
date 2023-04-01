@@ -1,6 +1,6 @@
 <template>
-  <q-page style="margin-top: 15px;">
-    <BaseHeader style="margin-left: 30px;">{{ $t("devTools") }}</BaseHeader>
+  <q-page style="margin-top: 15px">
+    <BaseHeader style="margin-left: 30px">{{ $t("devTools") }}</BaseHeader>
     <div class="q-py-md q-px-sm">
       <q-tabs v-model="tab" dense outline align="left" active-color="accent">
         <q-tab name="keyConverter" label="key converter" />
@@ -10,33 +10,71 @@
       <!-- <div class="text-bold">sql query</div> -->
       <q-tab-panels v-model="tab">
         <q-tab-panel
-name="keyConverter" class="flex column items-center full-width"
-          style="gap: 0.5rem; background: var(--q-background)">
+          name="keyConverter"
+          class="flex column items-center full-width"
+          style="gap: 0.5rem; background: var(--q-background)"
+        >
           <q-input
-v-model="keys.bech32" filled dense label='enter public key ("npub") or event ID ("note") here'
-            class="full-width">
+            v-model="keys.bech32"
+            filled
+            dense
+            label='enter public key ("npub") or event ID ("note") here'
+            class="full-width"
+          >
             <template #append>
               <BaseButtonCopy color="secondary" :button-text="keys.bech32" />
             </template>
           </q-input>
           <div>- or -</div>
           <div class="flex row no-wrap full-width" style="gap: 1rem">
-            <q-input v-model="keys.prefix" filled dense label="prefix" style="width: 10rem" />
-            <q-input v-model="keys.hex" filled dense label="enter hexadecimal key here" class="full-width">
+            <q-input
+              v-model="keys.prefix"
+              filled
+              dense
+              label="prefix"
+              style="width: 10rem"
+            />
+            <q-input
+              v-model="keys.hex"
+              filled
+              dense
+              label="enter hexadecimal key here"
+              class="full-width"
+            >
               <template #append>
                 <BaseButtonCopy color="secondary" :button-text="keys.hex" />
               </template>
             </q-input>
           </div>
-          <q-btn spread label="convert" color="primary" outline class="full-width q-mt-md" @click="convertKeys" />
+          <q-btn
+            spread
+            label="convert"
+            color="primary"
+            outline
+            class="full-width q-mt-md"
+            @click="convertKeys"
+          />
         </q-tab-panel>
 
         <q-tab-panel name="sqlQuery">
           <TheSqlEditor />
         </q-tab-panel>
         <q-tab-panel name="nip05Tester">
-          <q-input v-model="nip05Id" filled dense label="enter NIP-05 identifier here" class="full-width" />
-          <q-btn spread label="test" color="primary" outline class="full-width q-mt-md" @click="fetchNip05" />
+          <q-input
+            v-model="nip05Id"
+            filled
+            dense
+            label="enter NIP-05 identifier here"
+            class="full-width"
+          />
+          <q-btn
+            spread
+            label="test"
+            color="primary"
+            outline
+            class="full-width q-mt-md"
+            @click="fetchNip05"
+          />
           <pre class="sf-mono" id="nip05-response"></pre>
         </q-tab-panel>
       </q-tab-panels>
@@ -58,8 +96,14 @@ const metaData = {
 
   // meta tags
   meta: {
-    description: { name: 'description', content: 'Developer tools for Dostr client' },
-    keywords: { name: 'keywords', content: 'nostr dostr decentralized social media siwe siwx' },
+    description: {
+      name: 'description',
+      content: 'Developer tools for Dostr client',
+    },
+    keywords: {
+      name: 'keywords',
+      content: 'nostr dostr decentralized social media siwe siwx',
+    },
     equiv: {
       'http-equiv': 'Content-Type',
       content: 'text/html; charset=UTF-8',
@@ -107,7 +151,7 @@ export default defineComponent({
         Notify.create({
           message: `Invalid Key ❌`,
           color: 'negative',
-          classes: 'notify'
+          classes: 'notify',
         })
     },
     // handleError(e) {

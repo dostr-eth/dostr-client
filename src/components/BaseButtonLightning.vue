@@ -15,7 +15,13 @@
       dense
       :disable="loading"
     >
-      <q-tooltip class="tooltip" v-if="!loading" anchor="center left" self="center right" :offset="[10, 10]">
+      <q-tooltip
+        class="tooltip"
+        v-if="!loading"
+        anchor="center left"
+        self="center right"
+        :offset="[10, 10]"
+      >
         TIP WITH BITCOIN LIGHTNING ⚡
       </q-tooltip>
       <q-dialog v-model="showLightningCard">
@@ -96,7 +102,7 @@ export default defineComponent({
           message: `⚠️ Invoice couldn't be fetched for ${this.$store.getters.displayName(
             this.pubkey
           )}. Please use a different pay method`,
-          classes: 'notify'
+          classes: 'notify',
         })
         this.loading = false
         return
@@ -108,12 +114,12 @@ export default defineComponent({
           message: `⚡ ${
             this.amount
           } sats sent to ${this.$store.getters.displayName(this.pubkey)} 🎉`,
-          classes: 'notify'
+          classes: 'notify',
         })
       } catch {
         Notify.create({
           message: `❌ One-Click Tip Unsuccessful`,
-          classes: 'notify'
+          classes: 'notify',
         })
       }
 

@@ -1,6 +1,6 @@
 <template>
   <div
-    style="margin-right: 10px; margin-left: 5px;"
+    style="margin-right: 10px; margin-left: 5px"
     :class="
       (bordered ? 'bordered-avatar' : '') +
       (hoverEffect ? ' hovered-avatar' : '')

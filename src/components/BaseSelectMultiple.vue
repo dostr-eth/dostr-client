@@ -4,28 +4,35 @@
       <span class='q-pl-sm' ><slot /></span>
       <q-icon :name='selecting ? "arrow_drop_up" : "arrow_drop_down"' size='xs'/>
     </div> -->
-    <div class="base-select-list" style="max-height: 15rem; overflow: auto; width: 100%; cursor: pointer">
+    <div
+      class="base-select-list"
+      style="max-height: 15rem; overflow: auto; width: 100%; cursor: pointer"
+    >
       <ul
         style="
-              margin-block-start: 10px;
-              margin-block-end: 10px;
-              padding-inline-start: 10px;
-              padding-inline-end: 10px;
-            ">
+          margin-block-start: 10px;
+          margin-block-end: 10px;
+          padding-inline-start: 10px;
+          padding-inline-end: 10px;
+        "
+      >
         <slot name="selected" />
       </ul>
     </div>
-    <div class="base-select-list" style="max-height: 15rem; overflow: auto; width: 100%; cursor: pointer">
+    <div
+      class="base-select-list"
+      style="max-height: 15rem; overflow: auto; width: 100%; cursor: pointer"
+    >
       <ul
         style="
-              margin-block-start: 10px;
-              margin-block-end: 10px;
-              padding-inline-start: 10px;
-              padding-inline-end: 10px;
-            ">
+          margin-block-start: 10px;
+          margin-block-end: 10px;
+          padding-inline-start: 10px;
+          padding-inline-end: 10px;
+        "
+      >
         <slot name="options" />
       </ul>
-
     </div>
   </div>
 </template>

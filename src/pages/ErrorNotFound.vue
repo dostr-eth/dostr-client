@@ -21,10 +21,10 @@
     </div>
   </div> -->
   <q-page class="flex-center">
-    <div style="display: flex; margin: 0 auto; justify-content: center;">
+    <div style="display: flex; margin: 0 auto; justify-content: center">
       <div style="font-size: 30vh">404</div>
     </div>
-    <div style="display: flex; margin: 0 auto; justify-content: center;">
+    <div style="display: flex; margin: 0 auto; justify-content: center">
       <div class="text-h2" style="opacity: 0.4">
         {{ $t("404: Source Not Found") }}
       </div>

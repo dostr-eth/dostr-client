@@ -2,9 +2,15 @@
   <div class="w-full ml-2">
     <q-card class="cursor-pointer flex row justify-start items-center" flat>
       <q-btn
-rounded flat color="positive" size="md" :icon="url in $store.state.relays ? 'check' : 'add'"
-        :label="url in $store.state.relays ? 'added' : 'add relay'" :disable="url in $store.state.relays"
-        @click.stop="addRelay" />
+        rounded
+        flat
+        color="positive"
+        size="md"
+        :icon="url in $store.state.relays ? 'check' : 'add'"
+        :label="url in $store.state.relays ? 'added' : 'add relay'"
+        :disable="url in $store.state.relays"
+        @click.stop="addRelay"
+      />
       <div class="text-bold">{{ cleanUrl }}</div>
     </q-card>
   </div>

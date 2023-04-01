@@ -12,23 +12,31 @@
       :href="`https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display-swap`"
     />
     <div>
-      <q-dialog v-if="!this.$store.state.keys.pub && !this.$store.state.walletModal" v-model="initializeKeys" seemless persistent @click:backdrop="lookingAround = true">
+      <q-dialog
+        v-if="!this.$store.state.keys.pub && !this.$store.state.walletModal"
+        v-model="initializeKeys"
+        seemless
+        persistent
+        @click:backdrop="lookingAround = true"
+      >
         <TheKeyInitializationDialog
-          style="max-height: 85vh;"
+          style="max-height: 85vh"
           @look-around="lookingAround = true"
           @wallet-dialog="lookingAround = false"
         />
       </q-dialog>
     </div>
     <div id="layout-container" :ripple="false" class="backdrop">
-      <div id="left-drawer" class="flex justify-end" style="margin-right: 25px;">
+      <div id="left-drawer" class="flex justify-end" style="margin-right: 25px">
         <TheUserMenu
           :item-mode="$q.screen.width < 1023"
           :show-compact-mode-items="$q.screen.width < 700"
           :posting="postEntryOpen"
           @toggle-post-entry="togglePostEntry"
           @scroll-to-rect="scrollToRect"
-          @set-user="lookingAround = false, this.$store.state.walletModal = false"
+          @set-user="
+            (lookingAround = false), (this.$store.state.walletModal = false)
+          "
         />
       </div>
 
@@ -128,7 +136,7 @@
       />
     </q-page-sticky>
     <q-page-sticky
-      style="margin-top: 20px;"
+      style="margin-top: 20px"
       position="top-right"
       :offset="fabPos"
       id="navagation-buttons"
@@ -145,7 +153,12 @@
         v-touch-pan.prevent.mouse="moveFab"
       >
         <template #tooltip>
-          <q-tooltip class="tooltip" anchor="center left" self="center right" :offset="[10, 10]">
+          <q-tooltip
+            class="tooltip"
+            anchor="center left"
+            self="center right"
+            :offset="[10, 10]"
+          >
             CLICK TO COLLAPSE/EXPAND OR DRAG TO MOVE
           </q-tooltip>
         </template>
@@ -164,7 +177,13 @@
           icon="keyboard_arrow_right"
           :disable="draggingFab"
         >
-          <q-tooltip class="tooltip" anchor="center left" self="center right" :offset="[10, 10]">FORWARD</q-tooltip>
+          <q-tooltip
+            class="tooltip"
+            anchor="center left"
+            self="center right"
+            :offset="[10, 10]"
+            >FORWARD</q-tooltip
+          >
         </q-btn>
         <q-btn
           @click.stop="scrollToTop"
@@ -177,7 +196,13 @@
             draggingFab || $route.name === 'inbox' || $route.name === 'messages'
           "
         >
-          <q-tooltip class="tooltip" anchor="center left" self="center right" :offset="[10, 10]">SCROLL TO TOP</q-tooltip>
+          <q-tooltip
+            class="tooltip"
+            anchor="center left"
+            self="center right"
+            :offset="[10, 10]"
+            >SCROLL TO TOP</q-tooltip
+          >
         </q-btn>
         <q-btn
           @click.stop="back"
@@ -188,7 +213,13 @@
           icon="keyboard_arrow_left"
           :disable="draggingFab"
         >
-          <q-tooltip class="tooltip" anchor="center left" self="center right" :offset="[10, 10]">BACK</q-tooltip>
+          <q-tooltip
+            class="tooltip"
+            anchor="center left"
+            self="center right"
+            :offset="[10, 10]"
+            >BACK</q-tooltip
+          >
         </q-btn>
         <!-- <q-btn label='get relay status' @click='getRelayStat'/>s -->
       </q-fab>
@@ -494,8 +525,8 @@ body {
   width: 100%;
   position: relative;
   flex-wrap: nowrap;
-  font-family: "SF Mono", "Rajdhani", "Titillium Web", "Helvetica Neue", Helvetica, Arial,
-    "Noto Color Emoji", sans-serif;
+  font-family: "SF Mono", "Rajdhani", "Titillium Web", "Helvetica Neue",
+    Helvetica, Arial, "Noto Color Emoji", sans-serif;
   letter-spacing: -0.5px;
 }
 #left-drawer,

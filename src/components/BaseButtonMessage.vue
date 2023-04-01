@@ -11,7 +11,14 @@
     @click.stop
     dense
   >
-    <q-tooltip class="tooltip" anchor="center left" self="center right" :offset="[10, 10]"> ENCRYPTED MESSAGE </q-tooltip>
+    <q-tooltip
+      class="tooltip"
+      anchor="center left"
+      self="center right"
+      :offset="[10, 10]"
+    >
+      ENCRYPTED MESSAGE
+    </q-tooltip>
   </q-btn>
 </template>
 

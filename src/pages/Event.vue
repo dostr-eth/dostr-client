@@ -1,7 +1,13 @@
 <template>
-  <q-page ref="page" style="margin-top: 15px;">
-    <BaseHeader style="margin-left: 30px;" class="gt-sm spotnik">{{ $t("thread") }}</BaseHeader>
-    <BaseHeader style="margin-left: 30px; margin-bottom: 50px;" class="lt-md spotnik">{{ $t("thread") }}</BaseHeader>
+  <q-page ref="page" style="margin-top: 15px">
+    <BaseHeader style="margin-left: 30px" class="gt-sm spotnik">{{
+      $t("thread")
+    }}</BaseHeader>
+    <BaseHeader
+      style="margin-left: 30px; margin-bottom: 50px"
+      class="lt-md spotnik"
+      >{{ $t("thread") }}</BaseHeader
+    >
     <div ref="ancestors" v-if="ancestorsCompiled.length || rootAncestor">
       <BasePostThread
         :events="ancestorsCompiled"
@@ -67,7 +73,10 @@ const metaData = {
   // meta tags
   meta: {
     description: { name: 'description', content: 'Nostr Event Thread' },
-    keywords: { name: 'keywords', content: 'nostr dostr decentralized social media siwe siwx' },
+    keywords: {
+      name: 'keywords',
+      content: 'nostr dostr decentralized social media siwe siwx',
+    },
     equiv: {
       'http-equiv': 'Content-Type',
       content: 'text/html; charset=UTF-8',

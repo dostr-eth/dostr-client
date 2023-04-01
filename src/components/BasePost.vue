@@ -72,7 +72,7 @@
               tagged && $route.name != 'event' && !(isReply || isChildReply)
             "
             class="q-pl-sm"
-            style="font-size: 0.8rem; opacity: 0.7;"
+            style="font-size: 0.8rem; opacity: 0.7"
           >
             <span>in reply to&nbsp;</span>
             <a @click.stop="toEvent(tagged)">
@@ -86,9 +86,11 @@
         style="z-index: 1"
         @click.stop
       >
-        <q-item-label class="q-pr-xs sf-mono" style="opacity: 0.8; font-size: 90%">{{
-          niceDate(event.created_at)
-        }}</q-item-label>
+        <q-item-label
+          class="q-pr-xs sf-mono"
+          style="opacity: 0.8; font-size: 90%"
+          >{{ niceDate(event.created_at) }}</q-item-label
+        >
         <q-fab
           color="secondary"
           icon="more_vert"
@@ -215,17 +217,38 @@
             </q-tab>
             <q-tab name="embed" class="no-padding">
               <q-icon name="link" size="sm">
-                <q-tooltip class="tooltip" anchor="top middle" self="bottom middle" :offset="[10, 10]"> EMBED </q-tooltip>
+                <q-tooltip
+                  class="tooltip"
+                  anchor="top middle"
+                  self="bottom middle"
+                  :offset="[10, 10]"
+                >
+                  EMBED
+                </q-tooltip>
               </q-icon>
             </q-tab>
             <q-tab name="repost" class="no-padding">
               <q-icon name="repeat" size="sm">
-                <q-tooltip class="tooltip" anchor="top middle" self="bottom middle" :offset="[10, 10]"> REPOST </q-tooltip>
+                <q-tooltip
+                  class="tooltip"
+                  anchor="top middle"
+                  self="bottom middle"
+                  :offset="[10, 10]"
+                >
+                  REPOST
+                </q-tooltip>
               </q-icon>
             </q-tab>
             <q-tab name="quote" class="no-padding">
               <q-icon name="format_quote" size="sm">
-                <q-tooltip class="tooltip" anchor="top middle" self="bottom middle" :offset="[10, 10]"> QUOTE </q-tooltip>
+                <q-tooltip
+                  class="tooltip"
+                  anchor="top middle"
+                  self="bottom middle"
+                  :offset="[10, 10]"
+                >
+                  QUOTE
+                </q-tooltip>
               </q-icon>
             </q-tab>
             <q-tab name="reply" class="no-padding no-wrap flex row">
@@ -238,7 +261,14 @@
                   name="chat_bubble_outline"
                   class="flip-horizontal relative-position"
                 >
-                  <q-tooltip class="tooltip" anchor="top middle" self="bottom middle" :offset="[10, 10]"> REPLY </q-tooltip>
+                  <q-tooltip
+                    class="tooltip"
+                    anchor="top middle"
+                    self="bottom middle"
+                    :offset="[10, 10]"
+                  >
+                    REPLY
+                  </q-tooltip>
                 </q-icon>
                 <span v-if="replyCount" style="position: abosolute; right: 0">{{
                   replyCount
@@ -251,7 +281,14 @@
               @click.stop="replyMode = null"
             >
               <q-icon name="close" color="accent">
-                <q-tooltip class="tooltip" anchor="top middle" self="bottom middle" :offset="[10, 10]"> CANCEL </q-tooltip>
+                <q-tooltip
+                  class="tooltip"
+                  anchor="top middle"
+                  self="bottom middle"
+                  :offset="[10, 10]"
+                >
+                  CANCEL
+                </q-tooltip>
               </q-icon>
             </q-tab>
           </q-tabs>
@@ -271,9 +308,8 @@
         >
           <q-tab-panel name="embed" class="no-padding" @click.stop>
             <q-icon name="info"></q-icon>
-            <span class="text-caption" style="letter-spacing: -0.5px;">
-              Copy event ID below and paste it in any post to
-              embed this event
+            <span class="text-caption" style="letter-spacing: -0.5px">
+              Copy event ID below and paste it in any post to embed this event
             </span>
             <BaseButtonCopy
               :button-text="hexToBech32(event.id, 'note')"
@@ -571,7 +607,7 @@ export default defineComponent({
 
 .post-highlighted {
   width: "100%";
-  font-size: 1.0rem;
+  font-size: 1rem;
   border: 0;
 }
 .post-highlighted .reposts {
@@ -585,10 +621,10 @@ export default defineComponent({
   border: 0;
 }
 .post-is-reply
-.post-has-reply
-.post-is-child-reply
-.post-has-child-reply
-.post-is-child-reply,
+  .post-has-reply
+  .post-is-child-reply
+  .post-has-child-reply
+  .post-is-child-reply,
 .post-has-reply {
   border-bottom: 0;
 }

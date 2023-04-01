@@ -1,7 +1,6 @@
 <template>
-  <q-page class="flex column no-wrap" style="padding-top: 75px;">
-    <div id="header-placeholder">
-    </div>
+  <q-page class="flex column no-wrap" style="padding-top: 75px">
+    <div id="header-placeholder"></div>
     <div id="header" ref="header">
       <div class="flex row justify-evenly no-wrap full-width q-pt-sm q-px-sm">
         <BaseUserCard
@@ -119,7 +118,10 @@ const metaData = {
       name: 'description',
       content: `Nostr messages with ${window.location.pathname.split('/')[2]}`,
     },
-    keywords: { name: 'keywords', content: 'nostr dostr decentralized social media siwe siwx' },
+    keywords: {
+      name: 'keywords',
+      content: 'nostr dostr decentralized social media siwe siwx',
+    },
     equiv: {
       'http-equiv': 'Content-Type',
       content: 'text/html; charset=UTF-8',

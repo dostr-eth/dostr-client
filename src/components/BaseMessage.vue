@@ -72,21 +72,21 @@
           <q-list dense class="flex column q-gutter-xs q-pa-xs">
             <div v-close-popup>
               <BaseButtonReply
-                button-class="text-accent full-width justify-start"
+                button-class="text-primary full-width justify-start"
                 :verbose="true"
                 @reply="reply(evt)"
               />
             </div>
             <div v-close-popup>
               <BaseButtonCopy
-                button-class="text-accent full-width justify-start"
+                button-class="text-primary full-width justify-start"
                 :button-text="evt.interpolated.text"
                 :verbose="true"
               />
             </div>
             <div>
               <BaseButtonInfo
-                button-class="text-accent full-width justify-start"
+                button-class="text-primary full-width justify-start"
                 :event="evt"
                 :verbose="true"
                 @hide="hideMenu"
@@ -95,7 +95,7 @@
             </div>
             <div>
               <BaseButtonRelays
-                button-class="text-accent full-width justify-start"
+                button-class="text-primary full-width justify-start"
                 :event="evt"
                 :verbose="true"
                 @hide="hideMenu"
@@ -224,8 +224,7 @@ export default {
 .message-received .message-bubbles {
   border-left: 3px solid var(--q-secondary);
 }
-.message-sent .message-bubble
-.message-sent .first-message,
+.message-sent .message-bubble .message-sent .first-message,
 .message-received .message-sent .first-message {
   border-top-left-radius: 0.8rem;
   border-top-right-radius: 0rem;
@@ -235,8 +234,7 @@ export default {
   border-bottom-left-radius: 0.8rem;
   border-bottom-right-radius: 0;
 }
-.message-received .message-bubble
-.message-received .first-message,
+.message-received .message-bubble .message-received .first-message,
 .message-sent .message-received .first-message {
   border-top-right-radius: 0.8rem;
   border-top-left-radius: 0rem;
