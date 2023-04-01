@@ -4,7 +4,7 @@ node_modules
 
 # Quasar core related directories
 .quasar
-dist
+#dist
 
 # Cordova related directories and files
 /src-cordova/node_modules
@@ -33,4 +33,3 @@ yarn-error.log*
 *.sln
 
 # misc
-/src/zzz*

@@ -1,6 +1,6 @@
 {
   "name": "Dostr",
-  "version": "0.9.1",
+  "version": "0.9.9-beta",
   "description": "Ethereum-flavoured Nostr Client",
   "productName": "Dostr",
   "author": "sshmatrix, 0xc0de4c0ffee",
