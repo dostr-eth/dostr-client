@@ -11,12 +11,12 @@
     "build:pwa": "eslint --ext .js,.vue ./ --fix && quasar build -m pwa",
     "build:spa": "eslint --ext .js,.vue ./ --fix && quasar build",
     "build:ghp": "eslint --ext .js,.vue ./ --fix && quasar build && node postbuild/replacer_ghp.js",
-    "build:xyz": "eslint --ext .js,.vue ./ --fix && quasar build && node postbuild/replacer_xyz.js && rm -r ../homepage/app/* && cp -r dist/spa/* ../homepage/app/",
-    "build:eth": "eslint --ext .js,.vue ./ --fix && quasar build && node postbuild/replacer_eth.js && rm -r ../homepage/app/*",
+    "build:xyz": "eslint --ext .js,.vue ./ --fix && quasar build && node postbuild/replacer_xyz.js && rm -r ../homepage/app/* 2>/dev/null; cp -r dist/spa/* ../homepage/app/",
+    "build:eth": "eslint --ext .js,.vue ./ --fix && quasar build && node postbuild/replacer_eth.js && rm -r ../homepage/app/* 2>/dev/null",
     "force-ghp-deploy": "git add dist && git commit -m 'gh-pages' && git push origin `git subtree split --prefix dist/spa origin gh-pages`:gh-pages --force && git subtree push --prefix dist/spa origin gh-pages",
     "ghp-deploy": "git add dist && git commit -m 'gh-pages' && git subtree push --prefix dist/spa origin gh-pages",
     "lint": "eslint --ext .js,.vue ./",
-    "format": "prettier --write \"**/*.{js,vue,scss,html,md,json}\" --ignore-path .gitignore",
+    "format": "prettier --write \"**/*.{js,vue,scss,html,md,json}\" --ignore-path .prettierignore",
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {

@@ -482,8 +482,8 @@
                   class="sf-mono-tight"
                   style="font-size: 13px; color: white"
                 >
-                  <span style="font-size: 12px; padding-bottom: 10px">⚠️</span>
-                  <b style="color: orange">WARNING: </b>
+                  <span style="font-size: 12px; padding-bottom: 10px">⚠️&nbsp;</span>
+                  <b style="color: orange">WARNING:</b>
                   Entering your
                   <b style="color: orange">Private Key</b> to Login means Dostr
                   will automatically <b style="color: orange">Sign</b> with your
