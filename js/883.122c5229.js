@@ -1,1 +1,4 @@
-(globalThis["webpackChunkDostr"]=globalThis["webpackChunkDostr"]||[]).push([[883],{35883:()=>{}}]);
+(globalThis["webpackChunkDostr"] = globalThis["webpackChunkDostr"] || []).push([
+  [883],
+  { 35883: () => {} },
+]);
