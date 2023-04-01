@@ -149,7 +149,7 @@ export default defineComponent({
         this.keys.bech32 = this.hexToBech32(this.keys.hex, this.keys.prefix)
       else
         Notify.create({
-          message: `Invalid Key ❌`,
+          message: `Invalid Key`,
           color: 'negative',
           classes: 'notify',
         })

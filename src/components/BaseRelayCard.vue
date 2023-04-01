@@ -39,6 +39,7 @@ export default {
             able to find it yet. If you hit PROCEED, it will clear your relay list and replace it with this single relay.`,
             cancel: { color: 'negative' },
             ok: { color: 'positive', label: 'PROCEED' },
+            class: 'dialog',
           })
           .onOk(() => {
             this.$store.commit('addRelay', this.url)
@@ -47,9 +48,10 @@ export default {
         this.$q
           .dialog({
             title: 'Add new relay?',
-            message: `Add ${this.url} to your list of relays?`,
+            message: `Add '${this.url}' to your list of relays?`,
             cancel: { color: 'negative' },
             ok: { color: 'positive' },
+            class: 'dialog',
           })
           .onOk(() => {
             this.$store.commit('addRelay', this.url)

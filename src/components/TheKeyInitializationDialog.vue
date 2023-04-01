@@ -344,24 +344,8 @@
         >
           <p class="spotnik">
             ↓ GENERATED
-            <span style="color: orange; font-weight: 700">PRIVATE KEYS</span> ↓
+            <span style="color: orange; font-weight: 700">PRIVATE KEY</span> ↓
           </p>
-        </div>
-        <div
-          style="display: block; margin: -30px auto; justify-content: center"
-        >
-          <q-input
-            v-model="key"
-            ref="keyInput"
-            bottom-slots
-            outlined
-            :disabled="!isSigned"
-            v-if="isSigned"
-            label="auto-generated from ethereum signature"
-            style="width: inherit"
-            dense
-          >
-          </q-input>
         </div>
         <div
           style="display: flex; margin: 40px; justify-content: center"
@@ -409,7 +393,47 @@
         </div>
       </div>
       <div
-        v-if="!this.$store.state.chainId"
+          v-if="isExtension"
+          style="display: flex; margin: 30px auto; justify-content: center"
+        >
+          <p class="spotnik">
+            ↓ IMPORTED
+            <span style="color: orange; font-weight: 700">PUBLIC KEY</span> ↓
+          </p>
+        </div>
+        <div
+          style="display: block; margin: -30px auto 50px; justify-content: center"
+        >
+          <q-input
+            v-model="key"
+            ref="keyInput"
+            bottom-slots
+            outlined
+            :disabled="!isExtension"
+            v-if="isExtension"
+            label="imported from nostr extension"
+            style="width: inherit"
+            dense
+          >
+          <template #append>
+            <q-btn
+              type="submit"
+              unelevated
+              size="sm"
+              :color="isKeyValid ? 'positive' : 'negative'"
+              :font-weight="isKeyValid ? 'normal' : 'bold'"
+              :text-color="isKeyValid ? 'white' : 'white'"
+              :label="isKeyValid ? 'PROCEED' : 'ENTER KEY'"
+              :icon-right="isKeyValid ? 'login' : 'close'"
+              @click="proceed"
+              :disabled="!isKeyValid"
+              style="font-size: 12px; font-weight: 900"
+            ></q-btn>
+          </template>
+          </q-input>
+        </div>
+      <div
+        v-if="!this.$store.state.chainId && !isExtension"
         style="margin-top: 40px; margin-left: 47%; width: 100%"
       >
         <h2 class="text-subtitle1 q-pr-md">OR</h2>
@@ -419,7 +443,7 @@
         style="margin-top: 100px; width: 100%"
       ></div>
       <q-expansion-item
-        v-if="!this.$store.state.chainId"
+        v-if="!this.$store.state.chainId && !isExtension"
         expand-icon="expand_more"
         expanded-icon="expand_less"
         class="no-padding items-center q-mb-md"
@@ -731,6 +755,7 @@ export default defineComponent({
       isSignedStandalone: false,
       walletsList: false,
       isLoading: false,
+      isExtension: false,
     }
   },
 
@@ -813,7 +838,7 @@ export default defineComponent({
         if (window.nostr) {
           this.hasExtension = true
         }
-      }, 1000)
+      }, 100)
     }
   },
 
@@ -868,11 +893,12 @@ export default defineComponent({
     async getFromExtension() {
       try {
         this.key = await window.nostr.getPublicKey()
+        this.isExtension = true
         this.watchOnly = true
         this.focusKeyInput()
       } catch (err) {
         this.$q.notify({
-          message: `❌ Failed to get a public key from a Nostr extension`,
+          message: `Failed to get a public key from a Nostr extension`,
           color: 'warning',
           classes: 'notify',
         })
@@ -942,9 +968,9 @@ export default defineComponent({
       } else {
         if (!signResponse.status.includes('user rejected signing')) {
           this.$q.notify({
-            message: `❌ NIP-05 '${
+            message: `⚠️ NIP-05 '${
               this.username
-            }' doesn't exist or Public Key doesn't match the records${'\n\n'}⚠️ If you are trying to Login with 
+            }' doesn't exist or Public Key doesn't match the records</br>⚠️ If you are trying to Login with 
               your NIP-05 for the first time, you'll need to register first by generating your new Public Key in standalone mode and uploading it
               to your NIP-05 provider. Click on 'REGISTER' to generate your Public Key`,
             color: 'warning',
@@ -1009,7 +1035,7 @@ export default defineComponent({
         })
       } else {
         this.$q.notify({
-          message: `❌ Failed to generate Public Key for NIP-05 '${this.username}'`,
+          message: `Failed to generate Public Key for NIP-05 '${this.username}'`,
           color: 'warning',
           classes: 'notify',
         })

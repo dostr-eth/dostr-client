@@ -97,7 +97,7 @@
             style="width: 200px"
             @toggle="choosingTheme = !choosingTheme"
           >
-            <template #default>{{ "Customise Theme" }}</template>
+            <template #default>{{ "customise theme" }}</template>
             <template #list-items>
               <li
                 v-for="(theme, index) in Object.keys(themes)"
@@ -175,16 +175,16 @@
               class="spotnik"
               ><strong>one-click tip</strong></span
             >
-            <div style="font-size: 0.9rem">
-              Note: you will need a webln enabled wallet like Alby to use this
-              feature, and setting a budget in your webln wallet for dostr will
-              give you a true one click experience. this will authorize a tip of
+            <div style="font-size: 0.9rem; margin-top: 5px;">
+              You will need a <span style="color: yellow;">webln</span> enabled wallet like <strong>Alby</strong>
+              to use this
+              feature, and setting a budget in your <span style="color: yellow;">webln</span> wallet for NOSTR will
+              give you a true one-click experience. This will authorize a tip of
               a set default amount to the author of a note with one click of the
-              <q-icon name="bolt" style="font-size: 1.2rem" /> lightning tip
-              button. the
-              <q-icon name="arrow_drop_down" style="font-size: 1.2rem" /> drop
-              down button to the left will take you through the normal lightning
-              tip pay flow.
+              <q-icon name="bolt" style="font-size: 1.5rem" /> <span style="color: yellow;">Lightning Tip</span>
+              button. The
+              <q-icon name="arrow_drop_down" style="font-size: 2rem" /> dropdown button to the left
+              will take you through the normal <span style="color: yellow;">Lightning Tip</span> pay-flow.
             </div>
             <div
               v-if="preferences.lightningTips.enabled"
@@ -205,12 +205,12 @@
                 v-if="preferences.lightningTips.oneClick.enabled"
                 v-model="preferences.lightningTips.oneClick.amount"
                 type="number"
-                label="webln default tip amount"
+                label="webln default tip"
                 :disable="!editingPreferences"
-                dense
                 filled
+                dense
                 suffix="sats"
-                style="width: 10rem"
+                style="width: 10rem; padding: 10px 5px 5px 5px; margin-top: 10px;"
               />
             </div>
           </div>
