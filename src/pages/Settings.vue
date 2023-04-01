@@ -20,7 +20,7 @@
           <q-icon name="alternate_email" />
         </template>
       </q-input>
-      <q-input v-if="this.$store.state.chainId" dense filled type="text" :label="this.petname ? this.petname : ''" :disable="this.$store.state.chainId.length > 0">
+      <q-input v-if="this.$store.state.chainId" v-model="metadata.name" :value="nickname" dense filled type="text" label="Name" :disable="this.$store.state.chainId.length > 0">
         <template #before>
           <q-icon name="alternate_email" />
         </template>
@@ -35,7 +35,7 @@
       </q-input>
       <q-input v-if="!this.$store.state.chainId" v-model.trim="metadata.nip05" :disable="!editingMetadata" filled dense type="text"
         label="NIP-05 Identifier" maxlength="100" />
-      <q-input v-if="this.$store.state.chainId" dense filled type="text" :label="this.username !== this.petname ? this.username : 'NIP-05 Identifier'" :disable="this.$store.state.chainId.length > 0" maxlength="100" />
+      <q-input v-if="this.$store.state.chainId" v-model.trim="metadata.nip05" dense filled type="text" :placeholder="this.username !== this.petname ? this.username : 'NIP-05 Identifier'" :disable="this.$store.state.chainId.length > 0" maxlength="100" />
       <div class="flex row no-wrap" style="gap: 1rem">
         <q-input v-model.trim="metadata.lud06" :disable="!editingMetadata" filled dense type="text"
           label="Lightning Address or LUD-06 Identifier" maxlength="150" class="full-width" />
@@ -184,29 +184,33 @@
             <p class="keys-header" v-else>Your <b style="color: orange;">Private Key</b> is not here!</p>
           </div>
           <div>
-            <div class="mt-1 text-lg justify-center items-center rajdhani">
-              <q-icon size="sm" name="bookmark_added" />&nbsp;&nbsp;Posts are published using your <b style="color: orange;">Private Key</b>
+            <div class="mt-1 text-lg justify-center items-center">
+              <q-icon size="sm" name="bookmark_added" />
+              <span class="sf-mono-tight-small">&nbsp;Your posts are published with your <b style="color: orange;">PRIVATE KEY</b></span>
             </div>
-            <div class="mt-1 text-lg justify-center items-center rajdhani">
-              <q-icon size="sm" name="devices" />&nbsp;&nbsp;Others can see your posts or follow you using only your <b style="color: lightgreen;">Public
-                Key</b>
+            <div class="mt-1 text-lg justify-center items-center">
+              <q-icon size="sm" name="devices" />
+              <span class="sf-mono-tight-small">&nbsp;Others can find or follow you with your <b style="color: lightgreen;">PUBLIC
+                KEY</b></span>
             </div>
           </div>
         </q-card-section>
         <q-card-section>
           <p><b class="spotnik" style="color: orange; font-size: 15px;">PRIVATE KEY</b>:</p>
-          <q-btn icon="content_copy" size="sm" flat
-            @click="copyCode(this.hexToBech32(this.$store.state.keys.priv, 'nsec'))" class="copy-btn-priv">
-            <q-tooltip class="tooltip" anchor="center left" self="center right" :offset="[10, 10]">{{ $t("COPY PRIVATE KEY") }}</q-tooltip>
-          </q-btn>
-          <q-input style="margin-top: -20px;" v-model="nsecKey" class="mb-2 code-flat" readonly filled />
-          <div style="margin-top: 10px; border-top: 0px solid #b6c6e39f"></div>
+          <q-input style="margin-top: -5px;" v-model="nsecKey" class="mb-2 code-flat" readonly filled>
+            <q-btn icon="content_copy" size="sm" flat
+              @click="copyCode(this.hexToBech32(this.$store.state.keys.priv, 'nsec'))" class="copy-btn-priv">
+              <q-tooltip class="tooltip" anchor="center left" self="center right" :offset="[10, 10]">{{ $t("COPY PRIVATE KEY") }}</q-tooltip>
+            </q-btn>
+          </q-input>
+          <div style="margin-top: 15px; border-top: 0px solid #b6c6e39f"></div>
           <p><b class="spotnik" style="color: lightgreen; font-size: 15px;">PUBLIC KEY</b>:</p>
-          <q-btn icon="content_copy" size="sm" flat
-            @click="copyCode(this.hexToBech32(this.$store.state.keys.pub, 'npub'))" class="copy-btn-pub">
-            <q-tooltip class="tooltip" anchor="center left" self="center right" :offset="[10, 10]">{{ $t("COPY PUBLIC KEY") }}</q-tooltip>
-          </q-btn>
-          <q-input style="margin-top: -20px;" v-model="npubKey" readonly filled class="code-flat" />
+          <q-input style="margin-top: -5px;" v-model="npubKey" readonly filled class="code-flat">
+            <q-btn icon="content_copy" size="sm" flat
+              @click="copyCode(this.hexToBech32(this.$store.state.keys.pub, 'npub'))" class="copy-btn-pub">
+              <q-tooltip class="tooltip" anchor="center left" self="center right" :offset="[10, 10]">{{ $t("COPY PUBLIC KEY") }}</q-tooltip>
+            </q-btn>
+          </q-input>
         </q-card-section>
 
         <q-card-actions align="right" class="text-primary">
@@ -276,8 +280,7 @@ export default {
       unsubscribe: null,
       hasJustSharedRelay: false,
       petname: '',
-      username: '',
-      trigger: false
+      username: ''
     }
   },
 
@@ -294,6 +297,9 @@ export default {
     },
   },
   computed: {
+    nickname() {
+      return this.petname
+    },
     optionalRelays() {
       let options = this.$store.state.optionalRelaysList.filter((relay) => {
         if (
@@ -329,21 +335,6 @@ export default {
   },
 
   mounted() {
-    if (this.$store.state.chainId) {
-      this.trigger = true
-      this.setInfo()
-    } else {
-      console.log('No ChainID; non-ETH Login')
-    }
-    if (!this.$store.state.keys.pub) this.$router.push('/')
-    if (this.$store.state.keys.pub && this.$route.params.initUser) {
-      nextTick(() => {
-        setTimeout(() => {
-          this.keysDialog = true
-        }, 1000)
-      })
-    }
-
     this.unsubscribe = this.$store.subscribe((mutation, state) => {
       switch (mutation.type) {
         case 'addProfileToCache': {
@@ -367,8 +358,24 @@ export default {
         // }
       }
     })
+
     this.cloneMetadata()
     this.cloneRelays()
+
+    if (this.$store.state.chainId) {
+      if (!Object.keys(this.$store.state.relays).length) this.saveRelays()
+        this.setInfo()
+      } else {
+        console.log('No ChainID; non-ETH Login')
+      }
+    if (!this.$store.state.keys.pub) this.$router.push('/')
+    if (this.$store.state.keys.pub && this.$route.params.initUser) {
+      nextTick(() => {
+        setTimeout(() => {
+          this.keysDialog = true
+        }, 1000)
+      })
+    }
   },
 
   beforeUnmount() {
@@ -376,13 +383,32 @@ export default {
   },
 
   methods: {
-    setInfo() {
+    async setInfo() {
       if (this.$store.state.chainId) {
+        if (this.metadata.created_at) delete this.metadata.created_at
         this.username = this.$store.state.username
         this.petname = this.username.includes('@') ? this.username.split('@')[0] : this.username
         this.metadata.name = this.petname
         this.metadata.nip05 = this.username.includes('@') ? this.username : ''
-        this.setMetadata()
+        try {
+          if ((await nip05.queryProfile(this.metadata.nip05)).pubkey !== this.$store.state.keys.pub) {
+            throw new Error('Failed to verify NIP-05 identifier at endpoint')
+          } else {
+            this.$q.notify({
+            message: 'NIP-05 successfully verified',
+            color: 'positive',
+            classes: 'notify'
+          })
+          }
+        } catch (error) {
+          this.$q.notify({
+            message: 'Failed to verify NIP-05 identifier at endpoint',
+            color: 'warning',
+            classes: 'notify'
+          })
+        }
+        console.log(this.$store.state.relays)
+        this.$store.dispatch('setMetadata', this.metadata)
       }
     },
     copyCode(val) {
@@ -443,7 +469,6 @@ export default {
             color: 'warning',
             classes: 'notify'
           })
-
           return
         }
       }
@@ -477,7 +502,7 @@ export default {
         }
       }
 
-      if (!Object.keys(this.$store.state.relays).length && !this.trigger) this.saveRelays()
+      if (!Object.keys(this.$store.state.relays).length) this.saveRelays()
       this.$store.dispatch('setMetadata', this.metadata)
       this.editingMetadata = false
     },

@@ -132,7 +132,7 @@
       </div>
       <div v-if="isConnectedMetamask || this.$store.state.walletConnect" style="position: relative;">
         <div class="input-siwe" style="margin: 10px auto;">
-          <q-input v-model="password" ref="keyInput" bottom-slots outlined label='enter password (optional)' dense
+          <q-input v-model="password" ref="keyInput" bottom-slots type="password" outlined label='enter password (optional)' dense
             class="q-field__bottom">
             <q-icon name="info" style="font-size: 20px; margin-top: 10px;">
               <q-tooltip class="tooltip" anchor="top left" self="bottom right" style="width: auto;" :offset="[1, 1]">
@@ -195,10 +195,12 @@
           </div>
         </div>
       </div>
-      <div style="margin-top: 40px; margin-left: 47%; width: 100%">
+      <div v-if="!this.$store.state.chainId" style="margin-top: 40px; margin-left: 47%; width: 100%">
         <h2 class="text-subtitle1 q-pr-md">OR</h2>
       </div>
-      <q-expansion-item expand-icon="expand_more" expanded-icon="expand_less" class="no-padding items-center q-mb-md"
+      <div v-if="this.$store.state.chainId" style="margin-top: 100px; width: 100%">
+      </div>
+      <q-expansion-item v-if="!this.$store.state.chainId" expand-icon="expand_more" expanded-icon="expand_less" class="no-padding items-center q-mb-md"
         header-class="items-center">
         <template #header>
           <h2 class="text-subtitle1 text-bold q-pr-md flex justify-between gt-sm" style="margin: 0 auto">
@@ -273,74 +275,75 @@
         {{ hexKey }}
         </div> -->
         </q-form>
-        <q-expansion-item v-if="isKeyValid" class="q-mt-sm" dense dense-toggle default-opened id="bootstrap-relays" style="margin-top: -25px;">
-          <template #header>
-            <div class="full-width flex row no-wrap justify-center">
-              <h2 class="text-subtitle1 text-bold q-pr-sm gt-sm">
-                📡 &nbsp;Enter Bootstrap Relays (optional)
-              </h2>
-              <h2 class="text-subtitle1 text-bold q-pr-sm lt-md" style="font-size: 13px;">
-                📡 &nbsp;Enter Relays (optional)
-              </h2>
-            </div>
-          </template>
-          <div class="flex row justify-between no-wrap items-end q-mb-sm" style="margin-top: 20px">
-            <div class="flex row no-wrap items-center">
-              <q-icon name="info" style="font-size: 20px; margin-top: 0px">
-                <q-tooltip class="tooltip" anchor="top right" self="bottom middle" :offset="[10, 10]">
-                  <span style="text-transform: uppercase;">❗ The list of <span style="color: orange;">Selected Relays</span>
-                    shown below will be queried to load your user Profile, Follows, and Relay data from Nostr Network.<br />
-                    ❗ Please ensure that the <span style="color: orange;">Selected Relays</span> includes relays that you
-                    publish your Nostr data to. Otherwise, Dostr may not be able to
-                    find your data.
-                  </span>
-                </q-tooltip>
-              </q-icon>
-              <span class="q-ml-sm text-bold gt-sm">Selected relays</span>
-              <span class="q-ml-xs text-bold lt-md">Relays</span>
-            </div>
-            <div class="flex items-end" id="new-relay-input">
-              <div style="display: flex; margin: 10px 5px -7px 0px; justify-content: center;">
-                <q-input v-model="addRelay" color="lightgreen" ref="keyInput" dense outlined bottom-slots placeholder="add new relay"
-                  style="padding-top: 0px">
-                  <q-btn icon="add" color="positive" size="sm" flat dense @click.stop="addNewRelay" />
-                </q-input>
-              </div>
+      </q-expansion-item>
+      <div v-if="isKeyValid && this.$store.state.chainId" style="margin-top: -75px" />
+      <q-expansion-item v-if="isKeyValid" class="q-mt-sm" dense dense-toggle default-opened id="bootstrap-relays" style="margin-top: -50px;">
+        <template #header>
+          <div class="full-width flex row no-wrap justify-center">
+            <h2 class="text-subtitle1 text-bold q-pr-sm gt-sm">
+              📡 &nbsp;Enter Bootstrap Relays (optional)
+            </h2>
+            <h2 class="text-subtitle1 text-bold q-pr-sm lt-md" style="font-size: 13px;">
+              📡 &nbsp;Enter Relays (optional)
+            </h2>
+          </div>
+        </template>
+        <div class="flex row justify-between no-wrap items-end q-mb-sm" style="margin-top: 20px">
+          <div class="flex row no-wrap items-center">
+            <q-icon name="info" style="font-size: 20px; margin-top: 0px">
+              <q-tooltip class="tooltip" anchor="top right" self="bottom middle" :offset="[10, 10]">
+                <span style="text-transform: uppercase;">❗ The list of <span style="color: orange;">Selected Relays</span>
+                  shown below will be queried to load your user Profile, Follows, and Relay data from Nostr Network.<br />
+                  ❗ Please ensure that the <span style="color: orange;">Selected Relays</span> includes relays that you
+                  publish your Nostr data to. Otherwise, Dostr may not be able to
+                  find your data.
+                </span>
+              </q-tooltip>
+            </q-icon>
+            <span class="q-ml-sm text-bold gt-sm">Selected relays</span>
+            <span class="q-ml-xs text-bold lt-md">Relays</span>
+          </div>
+          <div class="flex items-end" id="new-relay-input">
+            <div style="display: flex; margin: 10px 5px -7px 0px; justify-content: center;">
+              <q-input v-model="addRelay" color="lightgreen" ref="keyInput" dense outlined bottom-slots placeholder="add new relay"
+                style="padding-top: 0px">
+                <q-btn icon="add" color="positive" size="sm" flat dense @click.stop="addNewRelay" />
+              </q-input>
             </div>
           </div>
-          <BaseSelectMultiple>
-            <template #selected>
-              <pre class="relay-list" style="border: 1px solid var(--q-primary);">
+        </div>
+        <BaseSelectMultiple>
+          <template #selected>
+            <pre class="relay-list" style="border: 1px solid var(--q-primary);">
+                <li
+                  v-for='(relay, index) in Object.keys(selectedRelays)'
+                  :key='index + "-" + relay'
+                  class='relay-item'
+                  @click.stop='delete selectedRelays[relay]'>
+                  <div class='flex row justify-between no-wrap'>
+                    <span style='overflow: auto;'>{{ relay }}</span>
+                    <q-icon name='remove' size='xs' color='negative'/>
+                  </div>
+                </li>
+              </pre>
+          </template>
+          <template #options>
+            <div style="max-height: 6.75rem">
+              <pre class="relay-list">
                   <li
-                    v-for='(relay, index) in Object.keys(selectedRelays)'
+                    v-for='(relay, index) in optionalRelays'
                     :key='index + "-" + relay'
                     class='relay-item'
-                    @click.stop='delete selectedRelays[relay]'>
+                    @click.stop='selectedRelays[relay] = { read: true, write: false }'>
                     <div class='flex row justify-between no-wrap'>
                       <span style='overflow: auto;'>{{ relay }}</span>
-                      <q-icon name='remove' size='xs' color='negative'/>
+                      <q-icon name='add' size='xs' color='positive' flat/>
                     </div>
                   </li>
                 </pre>
-            </template>
-            <template #options>
-              <div style="max-height: 6.75rem">
-                <pre class="relay-list">
-                    <li
-                      v-for='(relay, index) in optionalRelays'
-                      :key='index + "-" + relay'
-                      class='relay-item'
-                      @click.stop='selectedRelays[relay] = { read: true, write: false }'>
-                      <div class='flex row justify-between no-wrap'>
-                        <span style='overflow: auto;'>{{ relay }}</span>
-                        <q-icon name='add' size='xs' color='positive' flat/>
-                      </div>
-                    </li>
-                  </pre>
-              </div>
-            </template>
-          </BaseSelectMultiple>
-        </q-expansion-item>
+            </div>
+          </template>
+        </BaseSelectMultiple>
       </q-expansion-item>
       <div class="pad-mobile" />
     </q-card>

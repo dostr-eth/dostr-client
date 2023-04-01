@@ -54,7 +54,7 @@ export default defineComponent({
     buttonSize: {
       type: String,
       required: false,
-      default: 'sm',
+      default: 'md',
     },
     verbose: {
       type: Boolean,
@@ -80,7 +80,7 @@ export default defineComponent({
 
 <style>
 .button-info {
-  opacity: 0.7;
+  opacity: 1;
   transition: all 0.3s ease-in-out;
 }
 .button-info:hover {
