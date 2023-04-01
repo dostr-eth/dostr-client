@@ -339,13 +339,44 @@
           </p>
         </div>
         <div
-          v-if="isSigned"
+          v-if="isSigned && !isExtension"
           style="display: flex; margin: 30px auto; justify-content: center"
         >
           <p class="spotnik">
             ↓ GENERATED
             <span style="color: orange; font-weight: 700">PRIVATE KEY</span> ↓
           </p>
+        </div>
+        <div
+          style="display: block; margin: -30px auto; justify-content: center"
+        >
+          <q-input
+            v-model="key"
+            ref="keyInput"
+            bottom-slots
+            outlined
+            :disabled="!isSigned"
+            v-if="isSigned && !isExtension"
+            label="auto-generated from ethereum signature"
+            style="width: inherit"
+            dense
+          >
+            <template #append>
+              <q-btn
+                type="submit"
+                unelevated
+                size="sm"
+                :color="isKeyValid ? 'positive' : 'negative'"
+                :font-weight="isKeyValid ? 'normal' : 'bold'"
+                :text-color="isKeyValid ? 'white' : 'white'"
+                :label="isKeyValid ? 'PROCEED' : 'ENTER KEY'"
+                :icon-right="isKeyValid ? 'login' : 'close'"
+                @click="proceed"
+                :disabled="!isKeyValid"
+                style="font-size: 12px; font-weight: 900"
+              ></q-btn>
+            </template>
+          </q-input>
         </div>
         <div
           style="display: flex; margin: 40px; justify-content: center"
@@ -355,8 +386,8 @@
           <q-btn
             size="md"
             @click="sign"
-            class="siwe-button"
-            text-color="white"
+            outline
+            color="blue-3"
             font-weight="900"
             :label="
               !isConnectedMetamask && !this.$store.state.walletConnect
@@ -371,6 +402,7 @@
             <span>&nbsp;</span>
           </q-btn>
         </div>
+        <!--
         <div
           style="display: flex; margin: 30px; justify-content: center"
           class="q-mb-md"
@@ -379,8 +411,8 @@
           <q-btn
             size="md"
             @click="proceed"
-            class="siwe-button"
-            text-color="white"
+            outline
+            color="blue-3"
             font-weight="900"
             :label="!isSigned ? '' : '&nbsp;Proceed to Login'"
             value="true"
@@ -391,14 +423,15 @@
             <span>&nbsp;</span>
           </q-btn>
         </div>
+        -->
       </div>
       <div
-          v-if="isExtension"
+          v-if="isExtension && !isSigned"
           style="display: flex; margin: 30px auto; justify-content: center"
         >
           <p class="spotnik">
             ↓ IMPORTED
-            <span style="color: orange; font-weight: 700">PUBLIC KEY</span> ↓
+            <span style="color: yellowgreen; font-weight: 700">PUBLIC KEY</span> ↓
           </p>
         </div>
         <div
@@ -410,7 +443,7 @@
             bottom-slots
             outlined
             :disabled="!isExtension"
-            v-if="isExtension"
+            v-if="isExtension && !isSigned"
             label="imported from nostr extension"
             style="width: inherit"
             dense
@@ -894,6 +927,7 @@ export default defineComponent({
       try {
         this.key = await window.nostr.getPublicKey()
         this.isExtension = true
+        this.isSigned = false
         this.watchOnly = true
         this.focusKeyInput()
       } catch (err) {
@@ -1049,6 +1083,7 @@ export default defineComponent({
 
     showWeb3modal() {
       this.walletsList = true
+      this.isExtension = false
     },
 
     copyCode(val) {
