@@ -88,26 +88,40 @@
         class="q-mb-md"
         v-if="!isConnectedMetamask && !this.$store.state.walletConnect"
       >
-        <div style="width: 4%; display: flex; margin-right: 5px">
-          <img src="ethereum.svg" alt="mascot_round" class="image-fit" />
-        </div>
         <q-btn
           size="md"
           @click="showWeb3modal"
-          class="siwe-button"
-          text-color="white"
+          outline
+          color="blue-2"
           font-weight="900"
           :disable="walletsList"
           :label="
             !isConnectedMetamask || !this.$store.state.walletConnect
-              ? 'Connect with Ethereum'
+              ? '&nbsp;Connect with Ethereum'
               : ''
           "
         >
+        <span>&nbsp;</span>
+        <q-avatar size="20px">
+          <img src="ethereum.svg" />
+        </q-avatar>
         </q-btn>
-        <div style="width: 4%; display: flex; margin-left: 5px">
-          <img src="ethereum.svg" alt="mascot_round" class="image-fit" />
-        </div>
+      </div>
+      <div
+        style="display: flex; margin: 20px; justify-content: center"
+        class="q-mb-md"
+        v-if="hasExtension && !walletsList"
+      >
+        <q-btn
+          size="md"
+          outline
+          color="yellow-3"
+          font-weight="900"
+          :disable="!hasExtension"
+          @click="getFromExtension"
+        >
+          &nbsp;Connect Nostr Extension&nbsp;
+        </q-btn>
       </div>
       <div
         v-if="
@@ -164,7 +178,7 @@
               border: 0px solid white;
               width: auto;
             "
-            text-color="yellow"
+            text-color="yellow-8"
             font-weight="700"
             label="&nbsp;Connect&nbsp;"
           >
@@ -191,11 +205,22 @@
               <img src="../assets/walletConnect.png" />
             </q-avatar>
           </q-btn>
-          <!--
-          <q-tooltip class="tooltip" anchor="bottom left" self="bottom left" style="width: auto;" :offset="[50, -40]">
-            <span style="color: orange;">UNAVAILABLE</span>. PLEASE USE METAMASK 🦊
-          </q-tooltip>
-          -->
+        </div>
+        <div
+          style="display: flex; margin: 20px; justify-content: center"
+          class="q-mb-md"
+          v-if="hasExtension && walletsList"
+        >
+          <q-btn
+            size="md"
+            outline
+            color="yellow-3"
+            font-weight="900"
+            :disable="!hasExtension"
+            @click="getFromExtension"
+          >
+            &nbsp;Connect Nostr Extension&nbsp;
+          </q-btn>
         </div>
       </div>
       <div
@@ -203,9 +228,6 @@
         class="q-mb-md"
         v-if="isConnectedMetamask"
       >
-        <div style="width: 4%; display: flex; margin-right: 5px">
-          <img src="ethereum.svg" alt="mascot_round" class="image-fit" />
-        </div>
         <q-btn
           size="md"
           @click="disconnectMetamask"
@@ -218,18 +240,12 @@
             <img src="../assets/metamask.png" />
           </q-avatar>
         </q-btn>
-        <div style="width: 4%; display: flex; margin-left: 5px">
-          <img src="ethereum.svg" alt="mascot_round" class="image-fit" />
-        </div>
       </div>
       <div
         style="display: flex; margin: 0; justify-content: center"
         class="q-mb-md"
         v-if="this.$store.state.walletConnect"
       >
-        <div style="width: 4%; display: flex; margin-right: 5px">
-          <img src="ethereum.svg" alt="mascot_round" class="image-fit" />
-        </div>
         <q-btn
           size="md"
           @click="disconnectWalletConnect"
@@ -244,9 +260,6 @@
             <img src="../assets/walletConnect.png" />
           </q-avatar>
         </q-btn>
-        <div style="width: 4%; display: flex; margin-left: 5px">
-          <img src="ethereum.svg" alt="mascot_round" class="image-fit" />
-        </div>
       </div>
       <div
         v-if="isConnectedMetamask || this.$store.state.walletConnect"
@@ -355,9 +368,6 @@
           class="q-mb-md"
           v-if="!isSigned && username.length > 0"
         >
-          <div style="width: 4%; display: flex; margin-right: 5px">
-            <img src="ethereum.svg" alt="mascot_round" class="image-fit" />
-          </div>
           <q-btn
             size="md"
             @click="sign"
@@ -366,35 +376,36 @@
             font-weight="900"
             :label="
               !isConnectedMetamask && !this.$store.state.walletConnect
-                ? 'Connect Ethereum Wallet'
-                : 'Sign-In With Ethereum'
+                ? ''
+                : '&nbsp;Sign-In With Ethereum'
             "
             value="true"
-          />
-          <div style="width: 4%; display: flex; margin-left: 5px">
-            <img src="ethereum.svg" alt="mascot_round" class="image-fit" />
-          </div>
+          >
+            <q-avatar size="20px">
+              <img src="ethereum.svg" />
+            </q-avatar>
+            <span>&nbsp;</span>
+          </q-btn>
         </div>
         <div
           style="display: flex; margin: 30px; justify-content: center"
           class="q-mb-md"
           v-if="isSigned"
         >
-          <div style="width: 4%; display: flex; margin-right: 5px">
-            <img src="ethereum.svg" alt="mascot_round" class="image-fit" />
-          </div>
           <q-btn
             size="md"
             @click="proceed"
             class="siwe-button"
             text-color="white"
             font-weight="900"
-            :label="!isSigned ? 'Connect Ethereum Wallet' : 'Proceed to Login'"
+            :label="!isSigned ? '' : '&nbsp;Proceed to Login'"
             value="true"
-          />
-          <div style="width: 4%; display: flex; margin-left: 5px">
-            <img src="ethereum.svg" alt="mascot_round" class="image-fit" />
-          </div>
+          >
+            <q-avatar size="20px">
+              <img src="ethereum.svg" />
+            </q-avatar>
+            <span>&nbsp;</span>
+          </q-btn>
         </div>
       </div>
       <div
@@ -540,16 +551,7 @@
                 outline
                 @click="generate"
               >
-                Generate Keys
-              </q-btn>
-              <q-btn
-                v-if="hasExtension && !isKeyValid"
-                size="md"
-                color="primary"
-                outline
-                @click="getFromExtension"
-              >
-                Use Nostr Extension
+                Generate Nostr Keys
               </q-btn>
             </q-btn-group>
           </q-card-section>
@@ -807,7 +809,6 @@ export default defineComponent({
 
   async created() {
     if (!this.$store.state.keys.pub) {
-      // keys not set up, offer the option to try to get a pubkey from window.nostr
       setTimeout(() => {
         if (window.nostr) {
           this.hasExtension = true
@@ -871,7 +872,7 @@ export default defineComponent({
         this.focusKeyInput()
       } catch (err) {
         this.$q.notify({
-          message: `❌ Failed to get a public key from a Nostr extension: ${err}`,
+          message: `❌ Failed to get a public key from a Nostr extension`,
           color: 'warning',
           classes: 'notify',
         })

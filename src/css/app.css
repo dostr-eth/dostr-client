@@ -195,6 +195,11 @@ a {
   border: 0px solid white;
 }
 
+.nostr-button {
+  background: linear-gradient(45deg, rgba(24,14,14,1) 0%, rgba(55,98,75,1) 100%);
+  border: 0px solid white;
+}
+
 @media screen and (max-width: 600px) {
   .ruler-mobile {
     margin-top: 80px;
