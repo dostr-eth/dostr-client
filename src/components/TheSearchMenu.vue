@@ -223,7 +223,7 @@ export default defineComponent({
       if (!this.validSearch) {
         Notify.create({
           message:
-            'Invalid format! Please enter full public key or NIP-05 identifier',
+            '⚠️ Invalid format! Please enter full Public Key or NIP-05 identifier',
           color: 'negative',
           classes: 'notify',
         })
@@ -286,7 +286,7 @@ export default defineComponent({
       this.searching = false
       Notify.create({
         message:
-          'No user found! Please enter full public key or NIP-05 Identifier and double-check search string',
+          '⚠️ No user found! Please enter full Public Key or NIP-05 Identifier and double-check search string',
         color: 'negative',
         classes: 'notify',
       })

@@ -307,7 +307,7 @@ export default defineComponent({
           })
         } catch {
           Notify.create({
-            message: `❌ Payment Unsuccessful`,
+            message: `⚠️ Payment Unsuccessful`,
           })
         }
       } else {

@@ -118,7 +118,7 @@ export default defineComponent({
         })
       } catch {
         Notify.create({
-          message: `❌ One-Click Tip Unsuccessful`,
+          message: `⚠️ One-Click Tip Unsuccessful`,
           classes: 'notify',
         })
       }

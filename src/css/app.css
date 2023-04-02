@@ -200,7 +200,22 @@ a {
   border: 0px solid white;
 }
 
+#w3m-container .my-modal-top .modal-dialog {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+}
+
 @media screen and (max-width: 600px) {
+  #w3m-container .my-modal-top .modal-dialog {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+  }
   .ruler-mobile {
     margin-top: 80px;
     margin-bottom: 25px;

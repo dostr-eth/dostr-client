@@ -80,7 +80,7 @@ export default defineComponent({
       console.log(text)
       await navigator.clipboard.writeText(text)
       Notify.create({
-        message: `Copied ${
+        message: `ℹ️ Copied ${
           this.copyText.length < 70
             ? this.copyText
             : this.shorten(this.copyText, 30)

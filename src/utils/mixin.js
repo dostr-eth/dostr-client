@@ -514,7 +514,7 @@ export default {
               .catch((err) => {
                 Notify.create({
                   message:
-                    '❌ Error fetching invoice from LN-URL: ' + err.toString(),
+                    '⚠️ Error fetching invoice from LN-URL: ' + err.toString(),
                   classes: 'notify',
                 })
               })
@@ -524,7 +524,7 @@ export default {
         return invoice
       } catch (e) {
         Notify.create({
-          message: '❌ Error fetching invoice from LN-URL: ' + e.toString(),
+          message: '⚠️ Error fetching invoice from LN-URL: ' + e.toString(),
           classes: 'notify',
         })
 

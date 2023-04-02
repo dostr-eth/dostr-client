@@ -165,7 +165,7 @@ export async function sendChatMessage(store, { now, pubkey, text, tags }) {
     // return event
   } catch (error) {
     Notify.create({
-      message: `❌ Could not encrypted message: ${error}`,
+      message: `⚠️ Could not encrypted message: ${error}`,
       color: 'negative',
       classes: 'notify',
     })
@@ -344,7 +344,7 @@ export async function publishEvent(store, { unpublishedEvent }) {
   } catch (error) {
     console.log(`could not publish ${eventTypeWordy} event: ${error}`)
     Notify.create({
-      message: `❌ Could not publish ${eventTypeWordy} event: ${error}`,
+      message: `⚠️ Could not publish ${eventTypeWordy} event: ${error}`,
       color: 'negative',
       classes: 'notify',
     })

@@ -56,8 +56,8 @@ export default defineComponent({
         this.$q
           .dialog({
             title: 'set your first follow?'.toUpperCase(),
-            message: `✅ If you are a new user, click PROCEED.</br>⚠️ If you are a user who already has a 'Follows' list, Dostr has not been
-            able to find it yet. If you hit PROCEED, it will clear your 'Follows' list and replace it with this single follow.`,
+            message: `ℹ️ If you are a new user, click PROCEED.</br>⚠️ If you are a user who already has a 'Follows' list, Dostr has not been
+            able to find it yet. If you hit PROCEED, it will clear your 'Follows' list and replace it with this single follow`,
             cancel: { color: 'accent' },
             ok: { color: 'accent', label: 'proceed' },
             html: true,

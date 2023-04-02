@@ -35,8 +35,8 @@ export default {
         this.$q
           .dialog({
             title: 'Did you set your first relay?',
-            message: `If you are a new user, click PROCEED. If you are a user with existing relay list, Dostr has not been
-            able to find it yet. If you hit PROCEED, it will clear your relay list and replace it with this single relay.`,
+            message: `ℹ️ If you are a new user, click PROCEED. If you are a user with existing relay list, Dostr has not been
+            able to find it yet. ⚠️ If you hit PROCEED, it will clear your relay list and replace it with this single relay.`,
             cancel: { color: 'negative' },
             ok: { color: 'positive', label: 'PROCEED' },
             class: 'dialog',
@@ -48,7 +48,7 @@ export default {
         this.$q
           .dialog({
             title: 'Add new relay?',
-            message: `Add '${this.url}' to your list of relays?`,
+            message: `Do you wish to add '${this.url}' to your list of relays?`,
             cancel: { color: 'negative' },
             ok: { color: 'positive' },
             class: 'dialog',

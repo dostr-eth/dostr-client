@@ -932,7 +932,7 @@ export default defineComponent({
         this.focusKeyInput()
       } catch (err) {
         this.$q.notify({
-          message: `Failed to get a public key from a Nostr extension`,
+          message: `⚠️ Failed to get a public key from a Nostr extension`,
           color: 'warning',
           classes: 'notify',
         })
@@ -1000,32 +1000,50 @@ export default defineComponent({
       if (this.key && this.key?.length > 0) {
         this.isSigned = true
       } else {
-        if (!signResponse.status.includes('user rejected signing')) {
-          this.$q.notify({
-            message: `⚠️ NIP-05 '${
-              this.username
-            }' doesn't exist or Public Key doesn't match the records</br>⚠️ If you are trying to Login with 
-              your NIP-05 for the first time, you'll need to register first by generating your new Public Key in standalone mode and uploading it
-              to your NIP-05 provider. Click on 'REGISTER' to generate your Public Key`,
-            color: 'warning',
-            classes: 'notify',
-            timeout: 0,
-            actions: [
-              {
-                label: 'Register',
-                color: 'yellow',
-                handler: () => {
-                  this.signStandalone()
+        if (this.username.includes('@')) {
+          if (!signResponse.status.includes('user rejected signing')) {
+            this.$q.notify({
+              message: `⚠️ NIP-05 '${
+                this.username
+              }' doesn't exist or Public Key doesn't match the records. IMPORTANT: If you are trying to Login with 
+                your NIP-05 for the first time, you'll need to register it first by generating your new Public Key in standalone mode and uploading it
+                to your NIP-05 provider. Click on 'REGISTER' to generate your Public Key`,
+              color: 'warning',
+              classes: 'notify',
+              timeout: 0,
+              actions: [
+                {
+                  label: 'Register',
+                  color: 'yellow',
+                  handler: () => {
+                    this.signStandalone()
+                  },
                 },
-              },
-            ],
-          })
+              ],
+            })
+          } else {
+            this.$q.notify({
+              message: `⚠️ Signature request rejected by user`,
+              color: 'negative',
+              classes: 'notify',
+            })
+          }
         } else {
-          this.$q.notify({
-            message: `⚠️ Signature request rejected by user`,
-            color: 'negative',
-            classes: 'notify',
-          })
+          if (!signResponse.status.includes('user rejected signing')) {
+            this.$q.notify({
+              message: `⚠️ Signature request refused by wallet. This is a known issue affecting Android phones when using Metamask
+              through WalletConnect. Please connect with the Metamask wallet directly.`,
+              color: 'warning',
+              classes: 'notify',
+              timeout: 0,
+            })
+          } else {
+            this.$q.notify({
+              message: `⚠️ Signature request rejected by user`,
+              color: 'negative',
+              classes: 'notify',
+            })
+          }
         }
       }
     },
@@ -1069,7 +1087,7 @@ export default defineComponent({
         })
       } else {
         this.$q.notify({
-          message: `Failed to generate Public Key for NIP-05 '${this.username}'`,
+          message: `⚠️ Failed to generate Public Key for NIP-05 '${this.username}'`,
           color: 'warning',
           classes: 'notify',
         })
@@ -1126,7 +1144,6 @@ export default defineComponent({
 
     proceed() {
       let key = this.hexKey
-
       var keys = {}
       // eslint-disable-next-line no-undef
       // if (validateWords(key)) {

@@ -779,14 +779,14 @@ export default {
             throw new Error('Failed to verify NIP-05 identifier at endpoint')
           } else {
             this.$q.notify({
-              message: 'NIP-05 successfully verified',
+              message: '✅ NIP-05 successfully verified 🎉',
               color: 'positive',
               classes: 'notify',
             })
           }
         } catch (error) {
           this.$q.notify({
-            message: 'Failed to verify NIP-05 identifier at endpoint',
+            message: '⚠️ Failed to verify NIP-05 identifier at endpoint',
             color: 'warning',
             classes: 'notify',
           })
@@ -849,7 +849,7 @@ export default {
             throw new Error('Failed to verify NIP-05 identifier at endpoint')
         } catch (error) {
           this.$q.notify({
-            message: 'Failed to verify NIP-05 identifier at endpoint',
+            message: '⚠️ Failed to verify NIP-05 identifier at endpoint',
             color: 'warning',
             classes: 'notify',
           })
@@ -868,7 +868,7 @@ export default {
         if (!utils.isLnurl(this.metadata.lud06)) {
           this.$q.notify({
             message:
-              'Invalid LUD-06 identifier. LUD-06 identifiers must start with LNURL',
+              '⚠️ Invalid LUD-06 identifier. LUD-06 identifiers must start with LNURL',
             color: 'warning',
             classes: 'notify',
           })
@@ -880,7 +880,7 @@ export default {
         ) {
           this.$q.notify({
             message:
-              'Invalid LUD-16 identifier. LUD-16 identifier must be a Lightning address',
+              '⚠️ Invalid LUD-16 identifier. LUD-16 identifier must be a Lightning address',
             color: 'warning',
             classes: 'notify',
           })

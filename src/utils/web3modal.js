@@ -46,6 +46,10 @@ export const web3Modal = new Web3Modal(
     themeMode: 'dark',
     themeColor: 'blue',
     themeBackground: 'gradient',
+    container: '#w3m-container',
+    customClasses: {
+      container: 'my-modal-top',
+    },
     themeVariables: {
       '--w3m-font-family': 'Spotnik',
       '--w3m-letter-spacing': '-0.5px',
