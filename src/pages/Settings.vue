@@ -114,7 +114,25 @@
         type="text"
         label="NIP-05 Identifier"
         maxlength="100"
-      />
+      >
+        <q-icon
+          class="items-end"
+          name="info"
+          size="sm"
+          style="margin-top: 7px;"
+          @click="openExternalLink('https://gist.github.com/sshmatrix/ad172b4f0daa5f03560eef94f11f73c3#file-nip-05_ens-md')"
+        >
+          <q-tooltip
+            class="tooltip"
+            anchor="center left"
+            self="center right"
+            :offset="[10, 10]"
+            style="text-transform: uppercase;"
+            >
+              Click to manually set your NIP-05 on ENS domain. This process will be automated soon
+            </q-tooltip>
+        </q-icon>
+      </q-input>
       <q-input
         v-if="this.$store.state.chainId"
         v-model.trim="metadata.nip05"
@@ -126,7 +144,8 @@
         "
         :disable="this.$store.state.chainId.length > 0"
         maxlength="100"
-      />
+      >
+      </q-input>
       <div class="flex row no-wrap" style="gap: 1rem">
         <q-input
           v-model.trim="metadata.lud06"
@@ -137,10 +156,42 @@
           label="Lightning Address or LUD-06 Identifier"
           maxlength="150"
           class="full-width"
-        />
+        >
+          <q-icon
+            class="items-end"
+            name="info"
+            size="sm"
+            style="margin-top: 7px;"
+            @click="dialogVisible = false, openExternalLink('https://gist.github.com/sshmatrix/59fccb1279ffe5f0d548f31c5c544246#file-lud-06_ens-md')"
+          >
+            <template>
+              <q-dialog v-model="dialogVisible">
+                <q-card>
+                  <q-card-section>
+                    <q-markdown :tree="markdownTree">
+                      {{ markdownContent }}
+                    </q-markdown>
+                  </q-card-section>
+                  <q-card-actions align="right">
+                    <q-btn label="Close" color="black" @click="dialogVisible = false" @error="handleMarkdownError" />
+                  </q-card-actions>
+                </q-card>
+              </q-dialog>
+            </template>
+            <q-tooltip
+              class="tooltip"
+              anchor="center left"
+              self="center right"
+              :offset="[10, 10]"
+              style="text-transform: uppercase;"
+              >
+                Click to manually set your LUD-06 on ENS domain. This process will be automated soon
+              </q-tooltip>
+          </q-icon>
+        </q-input>
         <q-btn
           v-if="hasLnAddr"
-          :label="showLnAddr ? 'show lnurl' : 'show ln address'"
+          :label="showLnAddr ? 'Show LN-URL (lnurl)' : 'Show Lightning address'"
           @click="convertLud06"
           outline
           dense
@@ -611,6 +662,7 @@ import ThePreferences from 'components/ThePreferences.vue'
 import { createMetaMixin } from 'quasar'
 import { utils } from 'lnurl-pay'
 import { shortenUrl } from '../utils/helpers'
+import MarkdownIt from 'markdown-it'
 
 const metaData = {
   // sets document title
@@ -660,6 +712,9 @@ export default {
       hasJustSharedRelay: false,
       petname: '',
       username: '',
+      dialogVisible: false,
+      markdownContent: '',
+      markdownTree: ''
     }
   },
 
@@ -740,6 +795,7 @@ export default {
 
     this.cloneMetadata()
     this.cloneRelays()
+    //this.loadMarkdownContent('https://gist.githubusercontent.com/sshmatrix/59fccb1279ffe5f0d548f31c5c544246/raw/af847f699ccbe909f4e45b0e70068030ba80f349/LUD-06_ENS.md')
 
     if (this.$store.state.chainId) {
       if (!Object.keys(this.$store.state.relays).length) this.saveRelays()
@@ -762,6 +818,24 @@ export default {
   },
 
   methods: {
+    openExternalLink(link) {
+      window.open(link, '_blank').focus()
+    },
+    handleMarkdownError(error) {
+      console.error('Failed to parse markdown:', error)
+    },
+    loadMarkdownContent(link) {
+      fetch(link)
+        .then(response => response.text())
+        .then(content => {
+          const md = new MarkdownIt()
+          this.markdownTree = md.parse(content)
+          this.markdownContent = content
+        })
+        .catch(error => {
+          console.error('Failed to load markdown content:', error)
+        })
+    },
     async setInfo() {
       if (this.$store.state.chainId) {
         if (this.metadata.created_at) delete this.metadata.created_at
