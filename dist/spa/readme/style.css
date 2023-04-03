@@ -19,7 +19,7 @@ body {
   font-weight: 700;
 }
 
-#mdcontainer pre {
+#mdcontainer pre .language-js {
   font-family: 'SF Mono', monospace; !important
 }
 
@@ -27,7 +27,7 @@ body {
   font-family: 'SF Mono', monospace; !important
 }
 
-#mdcontainer .markdown-body {
+#mdcontainer .markdown-body .language-js {
   font-family: 'SF Mono', monospace; !important
 }
 
