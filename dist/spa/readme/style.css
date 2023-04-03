@@ -41,6 +41,7 @@ body {
   font-weight: 400;
   letter-spacing: -0.35px;
 	margin-bottom: 100px;
+	font-family: 'SF Mono'; !important
 }
 
 .button {
