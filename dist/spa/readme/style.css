@@ -19,18 +19,6 @@ body {
   font-weight: 700;
 }
 
-#mdcontainer pre .language-js {
-  font-family: 'SF Mono', monospace; !important
-}
-
-#mdcontainer code {
-  font-family: 'SF Mono', monospace; !important
-}
-
-#mdcontainer .markdown-body .language-js {
-  font-family: 'SF Mono', monospace; !important
-}
-
 .header {
   max-width: 500px;
   margin: 0% auto;
