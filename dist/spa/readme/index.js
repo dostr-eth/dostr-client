@@ -77,5 +77,4 @@ window.onload = function () {
   md.setAttribute('src', getQuery('src'))
   md.setAttribute('no-shadow', '')
   document.getElementById('mdcontainer').append(md)
-  document.getElementById('pingGateway').addEventListener('click', pingGateway)
 }
