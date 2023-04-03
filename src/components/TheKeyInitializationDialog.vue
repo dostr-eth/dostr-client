@@ -876,6 +876,9 @@ export default defineComponent({
   },
 
   methods: {
+    openExternalLink(link) {
+      window.open(link, '_blank').focus()
+    },
     isLegitUser(val) {
       if (val.length === 0 || val.length > 100) {
         return false
@@ -1007,7 +1010,7 @@ export default defineComponent({
                 this.username
               }' doesn't exist or Public Key doesn't match the records. IMPORTANT: If you are trying to Login with 
                 your NIP-05 for the first time, you'll need to register it first by generating your new Public Key in standalone mode and uploading it
-                to your NIP-05 provider. Click on 'REGISTER' to generate your Public Key`,
+                to your NIP-05 provider. Click on 'REGISTER' to generate your Public Key. If you wish to use ENS as your NIP-05 provider, Click on 'LEARN TO USE ENS'`,
               color: 'warning',
               classes: 'notify',
               timeout: 0,
@@ -1017,6 +1020,13 @@ export default defineComponent({
                   color: 'yellow',
                   handler: () => {
                     this.signStandalone()
+                  },
+                },
+                {
+                  label: 'Learn to use ENS',
+                  color: 'blue-2',
+                  handler: () => {
+                    this.openExternalLink('/readme/readme.htm?src=https://gist.githubusercontent.com/sshmatrix/ad172b4f0daa5f03560eef94f11f73c3/raw/53ff500269cb467cb04559e6bd411b8853e5e23d/NIP-05_ENS.md')
                   },
                 },
               ],
