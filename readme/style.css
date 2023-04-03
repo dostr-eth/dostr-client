@@ -20,15 +20,15 @@ body {
 }
 
 pre {
-  font-family: 'SF Mono', monospace;
+  font-family: 'SF Mono', monospace; !important
 }
 
 code {
-  font-family: 'SF Mono', monospace;
+  font-family: 'SF Mono', monospace; !important
 }
 
 .markdown-body {
-  font-family: 'SF Mono', monospace;
+  font-family: 'SF Mono', monospace; !important
 }
 
 .header {
