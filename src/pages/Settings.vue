@@ -120,7 +120,7 @@
           name="info"
           size="sm"
           style="margin-top: 7px;"
-          @click="openExternalLink('https://gist.github.com/sshmatrix/ad172b4f0daa5f03560eef94f11f73c3#file-nip-05_ens-md')"
+          @click="openExternalLink('/readme/readme.htm?src=https://gist.githubusercontent.com/sshmatrix/ad172b4f0daa5f03560eef94f11f73c3/raw/53ff500269cb467cb04559e6bd411b8853e5e23d/NIP-05_ENS.md')"
         >
           <q-tooltip
             class="tooltip"
@@ -162,7 +162,7 @@
             name="info"
             size="sm"
             style="margin-top: 7px;"
-            @click="dialogVisible = false, openExternalLink('https://gist.github.com/sshmatrix/59fccb1279ffe5f0d548f31c5c544246#file-lud-06_ens-md')"
+            @click="dialogVisible = false, openExternalLink('/readme/readme.htm?src=https://gist.githubusercontent.com/sshmatrix/59fccb1279ffe5f0d548f31c5c544246/raw/1289a2c3de349e53d71198dc7abb514b6825caa7/LUD-06_ENS.md')"
           >
             <template>
               <q-dialog v-model="dialogVisible">

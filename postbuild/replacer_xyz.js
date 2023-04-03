@@ -7,8 +7,8 @@ const optionsCss = {
 }
 const optionsJs = {
   files: './dist/spa/js/*.js',
-  from: [/dostr-eth.github.io\/dostr-client/g],
-  to: ['dostr.xyz/app'],
+  from: [/dostr-eth.github.io\/dostr-client/g, /readme\//g],
+  to: ['dostr.xyz/app', 'app/readme/'],
 }
 const optionsJs2 = {
   files: ['./dist/spa/js/399.*.js', './dist/spa/js/226.*.js'],

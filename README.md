@@ -4,9 +4,9 @@
 
 ![Icon](https://raw.githubusercontent.com/dostr-eth/resources/main/graphics/icon_smol.png)
 
-#### Authors: `sshmatrix`, `c0de4c0ffee`
+#### author(s): `sshmatrix`, `c0de4c0ffee`
 
-#### Links: [[GitHub](https://github.com/dostr-eth)] [[.ETH](https://dostr.eth.limo)] [[.XYZ](https://dostr.xyz)]
+#### links: [[GitHub](https://github.com/dostr-eth)] [[.ETH](https://dostr.eth.limo)] [[.XYZ](https://dostr.xyz)]
 
 ###### tags: `specification` `design` `architecture` `nostr` `dostr`
 

@@ -13,6 +13,11 @@ const optionsJs2 = {
   files: ['./dist/spa/js/176.*.js'],
   from: [/js\//g],
   to: [''],
+}
+const optionsJs3 = {
+  files: ['./dist/spa/js/*.js'],
+  from: [/readme\//g],
+  to: ['dostr-client/readme/'],
 };
 (async function () {
   try {
@@ -32,5 +37,11 @@ const optionsJs2 = {
     console.log('Replacement results in JS2:', resultsJs2)
   } catch (error) {
     console.error('Error occurred in JS2 replacement:', error)
+  }
+  try {
+    const resultsJs3 = await replace(optionsJs3)
+    console.log('Replacement results in JS3:', resultsJs3)
+  } catch (error) {
+    console.error('Error occurred in JS3 replacement:', error)
   }
 })()
