@@ -23,6 +23,10 @@ pre {
   font-family: 'SF Mono', monospace;
 }
 
+code {
+  font-family: 'SF Mono', monospace;
+}
+
 .header {
   max-width: 500px;
   margin: 0% auto;
