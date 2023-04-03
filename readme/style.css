@@ -8,7 +8,7 @@
 	src: url('SF-Mono.woff2') format('woff2');
 }
 
-#mdcontainer body {
+body {
   font-family: 'Spotnik', sans-serif;
   background-color: #f8f8f8;
   color: #333333;
@@ -27,7 +27,7 @@
   font-family: 'SF Mono', monospace; !important
 }
 
-.markdown-body {
+#mdcontainer .markdown-body {
   font-family: 'SF Mono', monospace; !important
 }
 
