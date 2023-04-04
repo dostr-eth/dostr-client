@@ -120,7 +120,7 @@
           name="info"
           size="sm"
           style="margin-top: 7px;"
-          @click="openExternalLink('/readme/readme.htm?src=https://gist.githubusercontent.com/sshmatrix/ad172b4f0daa5f03560eef94f11f73c3/raw/53ff500269cb467cb04559e6bd411b8853e5e23d/NIP-05_ENS.md')"
+          @click="openExternalLink('/readme/readme.htm?src=https://gist.githubusercontent.com/sshmatrix/ad172b4f0daa5f03560eef94f11f73c3/raw/dbc8a73c537d42383c3cd173f7db4d7c1ac4421c/NIP-05_ENS.md')"
         >
           <q-tooltip
             class="tooltip"
@@ -162,7 +162,7 @@
             name="info"
             size="sm"
             style="margin-top: 7px;"
-            @click="dialogVisible = false, openExternalLink('/readme/readme.htm?src=https://gist.githubusercontent.com/sshmatrix/59fccb1279ffe5f0d548f31c5c544246/raw/1289a2c3de349e53d71198dc7abb514b6825caa7/LUD-06_ENS.md')"
+            @click="dialogVisible = false, openExternalLink('/readme/readme.htm?src=https://gist.githubusercontent.com/sshmatrix/59fccb1279ffe5f0d548f31c5c544246/raw/55ffcfefbeafb494eec899146275c79c40f4bc25/LUD-06_ENS.md')"
           >
             <template>
               <q-dialog v-model="dialogVisible">
@@ -714,7 +714,8 @@ export default {
       username: '',
       dialogVisible: false,
       markdownContent: '',
-      markdownTree: ''
+      markdownTree: '',
+      isLoading: true
     }
   },
 
@@ -773,7 +774,6 @@ export default {
       switch (mutation.type) {
         case 'addProfileToCache': {
           if (mutation.payload.pubkey !== state.keys.pub) return
-
           nextTick(() => {
             setTimeout(() => {
               this.cloneMetadata()
@@ -792,15 +792,29 @@ export default {
         // }
       }
     })
-
-    this.cloneMetadata()
     this.cloneRelays()
     //this.loadMarkdownContent('https://gist.githubusercontent.com/sshmatrix/59fccb1279ffe5f0d548f31c5c544246/raw/af847f699ccbe909f4e45b0e70068030ba80f349/LUD-06_ENS.md')
-
     if (this.$store.state.chainId) {
-      if (!Object.keys(this.$store.state.relays).length) this.saveRelays()
-      this.setInfo()
+      if (Object.keys(this.$store.state.relays).length) this.saveRelays()
+      this.cloneMetadata()
+      let counter = 0
+      const intervalId = setInterval(() => {
+        if (counter === 5) { // intervals to wait to retrieve profile
+          console.log('No profile found; updating profile')
+          this.setInfo()
+          clearInterval(intervalId)
+        } else {
+          if (!this.isEmptyOrUnresolved(this.metadata)) {
+            console.log('Detected profile')
+            clearInterval(intervalId)
+          } else {
+            console.log(`Making attempt ${counter}/5 to fetch profile...`)
+            counter++
+          }
+        }
+      }, 5000)
     } else {
+      this.cloneMetadata()
       console.log('No ChainID; non-ETH Login')
     }
     if (!this.$store.state.keys.pub) this.$router.push('/')
@@ -836,36 +850,57 @@ export default {
           console.error('Failed to load markdown content:', error)
         })
     },
+    isEmptyOrUnresolved(proxyObject) {
+      const target = proxyObject.__proxy__ ? proxyObject.__proxy__ : proxyObject
+      if (Object.keys(target).length === 0) {
+        return true
+      }
+      for (const prop in target) {
+        if (Object.prototype.hasOwnProperty.call(target, prop)) {
+          return false
+        }
+      }
+      return true
+    },
     async setInfo() {
-      if (this.$store.state.chainId) {
-        if (this.metadata.created_at) delete this.metadata.created_at
-        this.username = this.$store.state.username
-        this.petname = this.username.includes('@')
-          ? this.username.split('@')[0]
-          : this.username
-        this.metadata.name = this.petname
-        this.metadata.nip05 = this.username.includes('@') ? this.username : ''
-        try {
-          if (
-            (await nip05.queryProfile(this.metadata.nip05)).pubkey !==
-            this.$store.state.keys.pub
-          ) {
-            throw new Error('Failed to verify NIP-05 identifier at endpoint')
-          } else {
+      // this function is triggered after 10 seconds wait
+      console.log(this.metadata.picture)
+      this.username = this.$store.state.username
+      this.petname = this.username.includes('@')
+        ? this.username.split('@')[0]
+        : this.username
+      if (this.username.includes('@')) {
+        if (this.metadata.name !== this.petname && this.metadata.nip05 !== this.username) {
+          if (this.metadata.created_at) delete this.metadata.created_at
+          this.metadata.name = this.petname
+          this.metadata.nip05 = this.username.includes('@') ? this.username : ''
+          try {
+            if (
+              (await nip05.queryProfile(this.metadata.nip05)).pubkey !==
+              this.$store.state.keys.pub
+            ) {
+              throw new Error('Failed to verify NIP-05 identifier at endpoint')
+            } else {
+              this.$q.notify({
+                message: '✅ NIP-05 successfully verified 🎉',
+                color: 'positive',
+                classes: 'notify',
+              })
+            }
+          } catch (error) {
             this.$q.notify({
-              message: '✅ NIP-05 successfully verified 🎉',
-              color: 'positive',
+              message: '⚠️ Failed to verify NIP-05 identifier at endpoint',
+              color: 'warning',
               classes: 'notify',
             })
           }
-        } catch (error) {
-          this.$q.notify({
-            message: '⚠️ Failed to verify NIP-05 identifier at endpoint',
-            color: 'warning',
-            classes: 'notify',
-          })
+          this.$store.dispatch('setMetadata', this.metadata)
+        } else {
+          console.log('Profile matches records; retrieved')
         }
-        console.log(this.$store.state.relays)
+      } else {
+        if (this.metadata.created_at) delete this.metadata.created_at
+        this.metadata.name = this.petname
         this.$store.dispatch('setMetadata', this.metadata)
       }
     },

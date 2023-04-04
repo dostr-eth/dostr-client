@@ -871,7 +871,7 @@ export default defineComponent({
         if (window.nostr) {
           this.hasExtension = true
         }
-      }, 100)
+      }, 1000)
     }
   },
 
@@ -1026,7 +1026,7 @@ export default defineComponent({
                   label: 'Learn to use ENS',
                   color: 'blue-2',
                   handler: () => {
-                    this.openExternalLink('/readme/readme.htm?src=https://gist.githubusercontent.com/sshmatrix/ad172b4f0daa5f03560eef94f11f73c3/raw/53ff500269cb467cb04559e6bd411b8853e5e23d/NIP-05_ENS.md')
+                    this.openExternalLink('/readme/readme.htm?src=https://gist.githubusercontent.com/sshmatrix/ad172b4f0daa5f03560eef94f11f73c3/raw/dbc8a73c537d42383c3cd173f7db4d7c1ac4421c/NIP-05_ENS.md')
                   },
                 },
               ],

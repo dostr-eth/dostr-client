@@ -176,7 +176,7 @@ export async function sendChatMessage(store, { now, pubkey, text, tags }) {
 export async function publishContactList(store) {
   // extend the existing tags
   let [oldEvent] = await dbFollows(store.state.keys.pub)
-  console.log('oldEvent poblishContactList', oldEvent)
+  console.log('oldEvent publishContactList', oldEvent)
   var tags = oldEvent?.tags || []
 
   // check existing event because it might contain more data in the
