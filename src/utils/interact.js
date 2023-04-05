@@ -1,33 +1,53 @@
 import { ethers } from 'ethers'
 //import { SiweMessage } from 'siwe'
 import { nip111 } from './nip111/nostr.cjs'
+import { ethereumClient } from './web3modal'
+//import { SignClient } from '@walletconnect/sign-client'
+import Web3Modal from 'web3modal'
+import WalletConnectProvider from '@walletconnect/web3-provider'
+import Web3 from './web3.min.js'
 
-export const SignWithWallet = async (username, password, chainId) => {
-  if (window.ethereum) {
-    const provider = new ethers.providers.Web3Provider(window.ethereum)
-    const signer = provider.getSigner()
+export const SignWithWallet = async (username, password, chainId, vueProvider) => {
+  if (window.ethereum || ethereumClient.getAccount().isConnected) {
+    let provider
+    let signer
+    if (window.ethereum) {
+      provider = new ethers.providers.Web3Provider(window.ethereum)
+      console.log('Browser access detected')
+      signer = provider.getSigner()
+    } else if (ethereumClient.getAccount().isConnected) {
+      console.log('Injected access detected')
+      let infuraId = '2fc78878dee74429b7032a6ed33db36d'
+      let providerOptions = {
+        walletconnect: {
+          package: WalletConnectProvider,
+          options: {
+            infuraId: infuraId,
+          },
+        },
+      }
+      const web3Modal = new Web3Modal({
+        providerOptions,
+      })
+      let connecter = await web3Modal.connect()
+      provider = new Web3(connecter)
+    }
+
     try {
       const addressArray = await window.ethereum.request({
         method: 'eth_accounts',
       })
       let address = ethers.utils.getAddress(addressArray[0])
-      /*
-      const domain = window.location.host
-      const origin = window.location.origin
-      */
       let info = `eip155:${chainId}:${address}`
       let statement = `Log into Nostr client as '${username}'\n\nIMPORTANT: Please verify the integrity and authenticity of connected Nostr client before signing this message\n\nSIGNED BY: ${info}`
-      /*
-      const message = new SiweMessage({
-        domain,
-        address,
-        statement,
-        uri: origin,
-        version: '1',
-        chainId: chainId,
-      }).prepareMessage()
-      */
-      let signature = await signer.signMessage(statement)
+      let signature
+      if (window.ethereum) {
+        signature = await signer.signMessage(statement)
+      } else if (ethereumClient.getAccount().isConnected) {
+        signer = provider.eth.personal
+        let account = ethers.utils.getAddress(ethereumClient.getAccount().address)
+        signature = await signer.sign(statement, account)
+      }
       let siwe = await nip111.signInWithX(username, info, signature, password)
       return {
         data: siwe,
@@ -49,31 +69,46 @@ export const SignWithWallet = async (username, password, chainId) => {
 }
 
 export const SignWithWalletStandalone = async (username, password, chainId) => {
-  if (window.ethereum) {
-    const provider = new ethers.providers.Web3Provider(window.ethereum)
-    const signer = provider.getSigner()
+  if (window.ethereum || ethereumClient.getAccount().isConnected) {
+    let provider
+    let signer
+    if (window.ethereum) {
+      provider = new ethers.providers.Web3Provider(window.ethereum)
+      console.log('Browser access detected')
+      signer = provider.getSigner()
+    } else if (ethereumClient.getAccount().isConnected) {
+      console.log('Injected access detected')
+      let infuraId = '2fc78878dee74429b7032a6ed33db36d'
+      let providerOptions = {
+        walletconnect: {
+          package: WalletConnectProvider,
+          options: {
+            infuraId: infuraId,
+          },
+        },
+      }
+      const web3Modal = new Web3Modal({
+        providerOptions,
+      })
+      let connecter = await web3Modal.connect()
+      provider = new Web3(connecter)
+    }
+
     try {
       const addressArray = await window.ethereum.request({
         method: 'eth_accounts',
       })
       let address = ethers.utils.getAddress(addressArray[0])
-      /*
-      const domain = window.location.host
-      const origin = window.location.origin
-      */
       let info = `eip155:${chainId}:${address}`
       let statement = `Log into Nostr client as '${username}'\n\nIMPORTANT: Please verify the integrity and authenticity of connected Nostr client before signing this message\n\nSIGNED BY: ${info}`
-      /*
-      const message = new SiweMessage({
-        domain,
-        address,
-        statement,
-        uri: origin,
-        version: '1',
-        chainId: chainId,
-      }).prepareMessage()
-      */
-      let signature = await signer.signMessage(statement)
+      let signature
+      if (window.ethereum) {
+        signature = await signer.signMessage(statement)
+      } else if (ethereumClient.getAccount().isConnected) {
+        signer = provider.eth.personal
+        let account = ethers.utils.getAddress(ethereumClient.getAccount().address)
+        signature = await signer.sign(statement, account)
+      }
       let siwe = await nip111.signInWithXStandalone(
         username,
         info,
@@ -122,38 +157,6 @@ export const connectWallet = async () => {
   } else {
     return {
       chainId: '',
-      address: '',
-      status:
-        "🦊 You must install MetaMask browser extension & connect using 'Connect Wallet' button",
-    }
-  }
-}
-
-export const getCurrentWalletConnected = async () => {
-  if (window.ethereum) {
-    try {
-      const addressArray = await window.ethereum.request({
-        method: 'eth_accounts',
-      })
-      if (addressArray.length > 0) {
-        return {
-          address: addressArray[0],
-          status: '🦊 Connected',
-        }
-      } else {
-        return {
-          address: '',
-          status: "🦊 Connect to MetaMask using 'Connect Wallet' button",
-        }
-      }
-    } catch (err) {
-      return {
-        address: '',
-        status: '❌ ' + err.message.toLowerCase(),
-      }
-    }
-  } else {
-    return {
       address: '',
       status:
         "🦊 You must install MetaMask browser extension & connect using 'Connect Wallet' button",

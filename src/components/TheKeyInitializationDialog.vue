@@ -789,6 +789,7 @@ export default defineComponent({
       walletsList: false,
       isLoading: false,
       isExtension: false,
+      provider: null
     }
   },
 
@@ -995,7 +996,8 @@ export default defineComponent({
       let signResponse = await SignWithWallet(
         this.username,
         this.password,
-        this.$store.state.chainId
+        this.$store.state.chainId,
+        this.provider
       )
       if (this.username.includes('@')) this.isLoading = false
       this.key = signResponse.data.privkey

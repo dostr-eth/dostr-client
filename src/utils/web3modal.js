@@ -12,23 +12,20 @@ import {
   w3mProvider,
 } from '@web3modal/ethereum'
 import { Web3Modal } from '@web3modal/html'
-//import WalletConnectProvider from "@walletconnect/web3-provider";
+import { InfuraProvider } from '@ethersproject/providers'
 
 // Define constants
-//const projectId = process.env.WALLET_CONNECT_PROJECT_ID
-const projectId = '58107e13d36d52fd554cd1ece3258891'
+const projectId = '58107e13d36d52fd554cd1ece3258891' // WalletConnect ID
+const infuraId = '2fc78878dee74429b7032a6ed33db36d' // Infure ID
 const chains = [arbitrum, avalanche, mainnet, polygon, goerli]
-//const infuraId = process.env.WALLET_CONNECT_INFURA_ID
-/*
 const providerOptions = {
-  walletconnect: {
-    package: WalletConnectProvider,
+  infura: {
+    package: InfuraProvider,
     options: {
-      infuraId: "d3d0d9ca60b04e51b6eb4d0a8e0d518f",
+      projectId: infuraId,
     },
   },
-};
-*/
+}
 
 // Configure wagmi client
 const { provider } = configureChains(chains, [w3mProvider({ projectId })])
@@ -40,15 +37,18 @@ const wagmiClient = createClient({
 
 // Create ethereum and modal clients
 export const ethereumClient = new EthereumClient(wagmiClient, chains)
+export const ethereumProvider = new InfuraProvider('mainnet', infuraId)
 export const web3Modal = new Web3Modal(
   {
     projectId,
+    providerOptions,
+    cacheProvider: true,
     themeMode: 'dark',
     themeColor: 'blue',
     themeBackground: 'gradient',
     container: '#w3m-container',
     customClasses: {
-      container: 'my-modal-top',
+      container: 'walletConnectModal',
     },
     themeVariables: {
       '--w3m-font-family': 'Spotnik',

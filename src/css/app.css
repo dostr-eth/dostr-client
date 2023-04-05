@@ -200,7 +200,7 @@ a {
   border: 0px solid white;
 }
 
-#w3m-container .my-modal-top .modal-dialog {
+#w3m-container .walletConnectModal .modal-dialog {
   position: absolute;
   top: 0;
   left: 0;
@@ -209,7 +209,7 @@ a {
 }
 
 @media screen and (max-width: 600px) {
-  #w3m-container .my-modal-top .modal-dialog {
+  #w3m-container .walletConnectModal .modal-dialog {
     position: absolute;
     top: 0;
     left: 0;
