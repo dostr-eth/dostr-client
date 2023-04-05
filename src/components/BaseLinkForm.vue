@@ -15,7 +15,7 @@
     />
     <q-input
       v-model="name"
-      label="url name"
+      label="name"
       :disable="url.length === 0"
       outlined
       dense

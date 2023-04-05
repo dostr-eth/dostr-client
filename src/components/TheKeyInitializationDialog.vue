@@ -1043,8 +1043,9 @@ export default defineComponent({
         } else {
           if (!signResponse.status.includes('user rejected signing')) {
             this.$q.notify({
-              message: `⚠️ Signature request refused by wallet. This is a known issue affecting Android phones when using Metamask
-              through WalletConnect. Please connect with the Metamask wallet directly.`,
+              message: signResponse.status,
+              //message: `⚠️ Signature request refused by wallet. This is a known issue affecting Android phones when using Metamask
+              //through WalletConnect. Please connect with the Metamask wallet directly.`,
               color: 'warning',
               classes: 'notify',
               timeout: 0,
