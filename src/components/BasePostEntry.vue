@@ -493,7 +493,7 @@ export default {
       else if (this.messageMode) return "what's your message?"
       else if (this.replyMode) {
         if (this.replyMode === 'reply') return "what's your reply?"
-        else if (this.replyMode === 'quote') return "what's your thought?"
+        else if (this.replyMode === 'quote') return "what d'ya think?"
       }
       return "what's happening?"
     },
@@ -504,7 +504,7 @@ export default {
       else if (this.replyMode) {
         if (this.replyMode === 'reply') return "what's your reply?"
         else if (this.replyMode === 'quote')
-          return "what's your thought on this?"
+          return "what d'ya think?"
       }
       return "what's happening?"
     },
@@ -1229,6 +1229,7 @@ li {
   border: none;
   display: block;
   margin: 0.3rem 0 0;
+  font-family: 'SF Mono';
 }
 .input-area::-webkit-scrollbar {
   width: 0px;

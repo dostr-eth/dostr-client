@@ -515,7 +515,7 @@ body {
   -webkit-font-smoothing: antialiased;
   display: block;
   overflow: auto;
-  font-family: "Rajdhani", "Titillium Web", "Helvetica Neue", Helvetica, Arial,
+  font-family: "SF Mono", "Rajdhani", "Titillium Web", "Helvetica Neue", Helvetica, Arial,
     "Noto Color Emoji", sans-serif;
 }
 #layout-container {

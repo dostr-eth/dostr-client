@@ -7,4 +7,6 @@
 import { precacheAndRoute } from 'workbox-precaching'
 
 // Use with precache injection
-precacheAndRoute(self.__WB_MANIFEST)
+precacheAndRoute(self.__WB_MANIFEST, {
+  maximumFileSizeToCacheInBytes: 10 * 1024 * 1024 // 10MB
+})

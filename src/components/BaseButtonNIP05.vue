@@ -9,10 +9,10 @@
           <div
             class="text-subtitle1 flex row overflow-auto items-end q-gutter-sm"
           >
-            NIP-05 Identifier
+            <q-icon name="verified" color="info" size="lg" />&nbsp;NIP-05 Identifier
             <a :href="NIP05Link" target="_">{{ NIP05Link }}</a>
           </div>
-          <pre v-if="NIP05Loaded">{{ NIP05Formatted }}</pre>
+          <pre class="sf-mono-tight-note" v-if="NIP05Loaded">{{ NIP05Formatted }}</pre>
           <q-inner-loading :showing="!NIP05Loaded">
             <q-spinner-orbit color="accent" size="2rem" />
           </q-inner-loading>

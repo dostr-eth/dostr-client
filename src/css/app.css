@@ -23,8 +23,8 @@ html {
 }
 
 a {
-   text-decoration: none;
-   color: skyblue;
+   text-decoration: none  !important;
+   color: #00a8db !important;
 }
 
 /* declare a class which applies it */

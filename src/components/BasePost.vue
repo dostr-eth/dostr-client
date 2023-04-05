@@ -149,7 +149,7 @@
     </div>
     <div class="flex column no-wrap col full-width">
       <q-item-section ref="postContent">
-        <div class="q-py-sm q-px-lg">
+        <div class="q-py-sm q-px-lg overflow-auto">
           <BaseMarkdown
             v-if="event.kind === 1"
             :content="event.interpolated.text"
