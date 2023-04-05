@@ -166,7 +166,7 @@
             :pubkey="event.pubkey"
             :header-mode="true"
           />
-          <pre v-else> {{ cleanEvent }} </pre>
+          <pre class="sf-mono-tight-note" v-else> {{ cleanEvent }} </pre>
           <div
             v-if="!isEmbeded && (isQuote || isRepost)"
             class="reposts flex column q-pr-md"

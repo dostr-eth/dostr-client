@@ -49,6 +49,15 @@ a {
   font-family: 'SF Mono', monospace;
   letter-spacing: -0.5px;
   margin-bottom: -13px;
+  font-size: 10px;
+}
+
+.sf-mono-tight-note {
+  font-family: 'SF Mono', monospace;
+  letter-spacing: -0.4px;
+  font-size: 12px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }
 
 .jetbrains-mono {
