@@ -526,17 +526,17 @@
               bottom-slots
               outlined
               :label="watchOnly ? 'enter public key' : 'enter private key'"
-              style="width: inherit"
+              style="width: inherit;"
             >
               <template #hint>
                 <p
                   v-if="!key && watchOnly"
                   class="sf-mono-tight"
-                  style="font-size: 13px; color: white"
+                  style="font-size: 13px; color: white; line-height: 17px;"
                 >
                   <q-icon
                     name="info"
-                    style="font-size: 16px; margin-top: -2px"
+                    style="font-size: 16px; margin-top: -3px;"
                   ></q-icon>
                   <b style="color: lightgreen"> INFO: </b> Entering your
                   <b style="color: lightgreen">Public Key</b> means you will
@@ -548,9 +548,9 @@
                 <p
                   v-if="!key && !watchOnly"
                   class="sf-mono-tight"
-                  style="font-size: 13px; color: white"
+                  style="font-size: 13px; color: white; line-height: 17px;"
                 >
-                  <span style="font-size: 12px; padding-bottom: 10px">⚠️&nbsp;</span>
+                  <span style="font-size: 13px; margin-top: 0px">⚠️&nbsp;</span>
                   <b style="color: orange">WARNING:</b>
                   Entering your
                   <b style="color: orange">Private Key</b> to Login means Dostr

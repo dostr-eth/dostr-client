@@ -49,7 +49,6 @@ a {
   font-family: 'SF Mono', monospace;
   letter-spacing: -0.5px;
   margin-bottom: -13px;
-  font-size: 10px;
 }
 
 .sf-mono-tight-note {
@@ -191,7 +190,7 @@ a {
 }
 
 .ruler-mobile {
-  margin-top: 50px;
+  margin-top: 70px;
   margin-bottom: 25px;
 }
 
@@ -226,7 +225,7 @@ a {
     margin: 0 auto;
   }
   .ruler-mobile {
-    margin-top: 80px;
+    margin-top: 90px;
     margin-bottom: 25px;
   }
   .copy-btn-priv {
